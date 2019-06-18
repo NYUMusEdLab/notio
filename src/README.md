@@ -1,0 +1,11 @@
+# The Notio Project
+
+![alt text](https://i.ibb.co/RHDjH85/notio-logo.png "Notio Logo")
+
+The Notio Project focuses on developing new pedagogies and technologies for improving the teaching of music theory together within the creative music practices of songwriting and improvisation to improve music education in schools in Finland. This project is funded as a Bridging the Theory and Practice of Music through Educational Research and Technology research grant from the Åbo Academy University Foundation (Finland). The MusEDLab is collaborating with PI Cecilia Björk (Åbo Academy), Mats Granfors (Novia University of Applied Sciences), and Jan Jansson (Vasa Övningsskola).
+
+![alt text](http://res.cloudinary.com/dfwzmr3kv/image/upload/v1541950072/libpjli26z1bue7z4hs1.png "Notio Proto")
+
+Detailed info about Notio [here](http://musedlab.org/notio) 
+
+You can see the project [here](https://notio.stackblitz.io)
