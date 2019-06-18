@@ -1,20 +1,15 @@
-import React, { Component } from 'react';
-import rootNote from '../data/rootNote';
-import CircleFifthsImg from '../assets/img/CircleFifthsImg';
+import React, { Component } from "react";
+import CircleFifthsImg from "../assets/img/CircleFifthsImg";
 
 class CircleFifthsSVG extends Component {
-	constructor(props) {
-		super(props);
-	}
-
-   componentDidMount() {
+  constructor(props) {
+    super(props);
   }
 
-  render(){
-    return (
-     <CircleFifthsImg />
-    );
+  componentDidMount() {}
 
+  render() {
+    return <CircleFifthsImg />;
   }
 }
 

@@ -1,19 +1,21 @@
-h1, p {
+h1,
+p {
   font-family: Lato;
 }
 
 body {
   width: 100vw;
   height: 100vh;
-  background-color: #F1F1DA;
+  background-color: #f1f1da;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 
-#root, .Piano {
+#root,
+.Piano {
   height: 100%;
   min-width: 100%;
 }
@@ -21,7 +23,7 @@ body {
 .Piano {
   display: flex;
   flex: 1;
-  flex-direction: column;
+  /*flex-direction: column;*/
 }
 
 .MainMenuDot {
@@ -46,7 +48,9 @@ body {
 
 /* taken from https://ianlunn.github.io/Hover/ */
 
-.MainMenuDot:hover, .MainMenuDot:focus, .MainMenuDot:active {
+.MainMenuDot:hover,
+.MainMenuDot:focus,
+.MainMenuDot:active {
   -webkit-transform: scale(1.2);
   transform: scale(1.2);
   -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
@@ -88,7 +92,7 @@ body {
 }
 
 .modalCover {
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 10;
   position: absolute;
   width: 100%;
@@ -151,7 +155,7 @@ body {
   border-left: 3px solid #000000;
 }
 
-.Key .seventh{
+.Key .seventh {
   position: absolute;
   top: 15%;
   font-size: 24px;
@@ -164,10 +168,10 @@ body {
   opacity: 1;
 }
 
-.note .off { /*do not display the note names */
+.note .off {
+  /*do not display the note names */
   display: none;
 }
-
 
 .Key .piano-key {
   border-top: 0px;
@@ -217,10 +221,18 @@ body {
   text-align: center;
 }
 
-.octave button, .octave p {
+.octave button,
+.octave p {
   display: inline-block;
 }
 .octave button {
   margin: 3px 3px;
   width: 40px;
+}
+
+#musical-staff {
+  position: absolute;
+  z-index: 10;
+  align-self: center;
+  pointer-events: none; /* makes it click thru */
 }
