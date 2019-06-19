@@ -1,57 +1,56 @@
 const rootNote = [
   {
-    note: 'C',
-    index: 0,
+    note: "C",
+    index: 0
   },
   {
-    note: 'G',
-    index: 7,
+    note: "G",
+    index: 7
   },
   {
-    note: 'D',
+    note: "D",
     index: 2
   },
   {
-    note: 'A',
+    note: "A",
     index: 9
   },
   {
-    note: 'E',
+    note: "E",
     index: 4
   },
   {
-    note: 'B',
+    note: "B",
     index: 11
   },
   {
-    note: 'F#',
+    note: "F#",
     index: 6
   },
   {
-    note: 'Gb',
+    note: "Gb",
     index: 6
   },
   {
-    note: 'Db',
+    note: "Db",
     index: 1
   },
   {
-    note: 'Ab',
+    note: "Ab",
     index: 8
   },
   {
-    note: 'Eb',
+    note: "Eb",
     index: 3
   },
   {
-    note: 'Bb',
+    note: "Bb",
     index: 10
   },
   {
-    note: 'F',
-    index: 4
+    note: "F",
+    index: 5
   }
-
 ];
 
 export default rootNote;

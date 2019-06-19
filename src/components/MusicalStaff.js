@@ -38,6 +38,8 @@ class MusicalStaff extends Component {
         this.props.note.substr(match.index, this.props.note.length - 1);
     }
 
+    console.log("note in MusicalStaff", daNote);
+
     let singleNote = [{ keys: [daNote], duration: "w" }];
 
     let oneNote = singleNote.map(function(note) {
