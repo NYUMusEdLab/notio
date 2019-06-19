@@ -230,10 +230,14 @@ body {
   width: 40px;
 }
 
-#musical-staff {
+.musical-staff {
   position: absolute;
-  top: 100px;
+  top: 20%;
   z-index: 10;
   align-self: center;
   pointer-events: none; /* makes it click thru */
+}
+
+.musical-staff svg > rect {
+  width: 0 !important;
 }

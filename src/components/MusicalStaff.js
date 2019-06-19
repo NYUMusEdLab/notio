@@ -21,9 +21,9 @@ class MusicalStaff extends Component {
   setupStaff() {
     let containerSVG = this.musicalStaff.current;
     renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
-    renderer.resize(this.props.width, 200);
+    renderer.resize(this.props.width, 250);
     ctx = renderer.getContext();
-
+    ctx.setViewBox(0, 0, 70, 70); //size
     stave = new Stave(0, 0, this.props.width);
     stave.setContext(ctx).draw();
   }
@@ -37,8 +37,6 @@ class MusicalStaff extends Component {
         "/" +
         this.props.note.substr(match.index, this.props.note.length - 1);
     }
-
-    console.log("note in MusicalStaff", daNote);
 
     let singleNote = [{ keys: [daNote], duration: "w" }];
 

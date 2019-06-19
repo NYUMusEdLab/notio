@@ -332,6 +332,8 @@ class Keyboard extends Component {
           isMouseDown={that.state.mouse_is_down}
           pianoOn={that.props.pianoOn}
           theme={that.props.theme}
+          trebleStaffOn={that.props.trebleStaffOn}
+          //showOffNotes={that.props.showOffNotes}
         />
       );
     });

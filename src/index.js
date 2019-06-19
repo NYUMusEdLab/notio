@@ -15,8 +15,10 @@ class Piano extends Component {
       baseNote: "C",
       notation: ["Colors"],
       pianoOn: true,
+      trebleStaffOn: true,
       menuOpen: false,
       theme: "light"
+      //showOffNotes: true
     };
   }
   handleClickOctave = action => {
@@ -111,6 +113,12 @@ class Piano extends Component {
   togglePiano = () => {
     this.setState({ pianoOn: !this.state.pianoOn });
   };
+  toggleStaff = () => {
+    this.setState({ trebleStaffOn: !this.state.trebleStaffOn });
+  };
+  // toggleShowOffNotes = () => {
+  //   this.setState({ showOffNotes: !this.state.showOffNotes });
+  // };
 
   render() {
     return (
@@ -147,6 +155,13 @@ class Piano extends Component {
               theme={this.state.theme}
               handleSelect={this.handleSelectTheme}
             />
+            <button onClick={this.toggleStaff}>
+              Musical Staff (Treble) {this.state.trebleStaffOn ? "ON" : "OFF"}
+            </button>
+            {/* <button onClick={this.toggleShowOffNotes}>
+              Show notes that are not in scale:
+              {this.state.showOffNotes ? "ON" : "OFF"}
+            </button> */}
           </div>
         </div>
         <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} />
@@ -157,6 +172,8 @@ class Piano extends Component {
           baseNote={this.state.baseNote}
           notation={this.state.notation}
           pianoOn={this.state.pianoOn}
+          trebleStaffOn={this.state.trebleStaffOn}
+          //showOffNotes={this.state.showOffNotes}
           theme={this.state.theme}
         />
       </div>

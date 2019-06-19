@@ -6,12 +6,12 @@ import MusicalStaff from "./MusicalStaff";
 class Key extends Component {
   constructor(props) {
     super(props);
+    this.keyRef = React.createRef();
 
     this.state = {
       clicked: false
     };
   }
-
   touchDown = e => {
     if (e.cancelable) {
       e.preventDefault();
@@ -68,14 +68,16 @@ class Key extends Component {
   };
 
   componentDidMount() {
-    this.keyRef.addEventListener("mouseenter", this.mouseEnter);
-    this.keyRef.addEventListener("mouseleave", this.mouseLeave);
+    this.keyRef.current.addEventListener("mouseenter", this.mouseEnter);
+    this.keyRef.current.addEventListener("mouseleave", this.mouseLeave);
+    // const myWidth = this.keyRef.current.clientWidth;
+    // this.setState({ myWidth: myWidth });
   }
 
   componentWillUnmount() {
     // Make sure to remove the DOM listener when the component is unmounted.
-    this.keyRef.removeEventListener("mouseenter", this.mouseEnter);
-    this.keyRef.removeEventListener("mouseleave", this.mouseLeave);
+    this.keyRef.current.removeEventListener("mouseenter", this.mouseEnter);
+    this.keyRef.current.removeEventListener("mouseleave", this.mouseLeave);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -85,7 +87,15 @@ class Key extends Component {
   }
 
   render() {
-    const { keyColor, color, offColor, isOn, noteName, theme } = this.props;
+    const {
+      keyColor,
+      color,
+      offColor,
+      isOn,
+      noteName,
+      theme,
+      trebleStaffOn
+    } = this.props;
 
     let offKeyColorWithTheme;
 
@@ -118,7 +128,7 @@ class Key extends Component {
 
     return (
       <div
-        ref={elem => (this.keyRef = elem)}
+        ref={this.keyRef}
         className={`Key ${keyColor} ${
           this.state.clicked && isOn ? "active" : ""
         } ${isOn ? "on" : "off"} ${
@@ -157,7 +167,9 @@ class Key extends Component {
             </div>
           ) : null}
         </div>
-        {isOn ? <MusicalStaff width={118} note={this.props.note} /> : null}
+        {isOn && trebleStaffOn ? (
+          <MusicalStaff width={118} note={this.props.note} />
+        ) : null}
       </div>
     );
   }
