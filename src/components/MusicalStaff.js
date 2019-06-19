@@ -2,57 +2,83 @@ import React, { Component } from "react";
 import Vex from "vexflow";
 const { Renderer, Stave, Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
 
-let octave = 4;
-
-//TODO: update
+let stave, ctx, renderer;
 
 class MusicalStaff extends Component {
-  componentDidMount() {
-    this.setupStaff();
+  constructor(props) {
+    super(props);
+    this.musicalStaff = React.createRef();
   }
+
+  removePrevious() {
+    if (this.musicalStaff.current.hasChildNodes()) {
+      this.musicalStaff.current.removeChild(
+        this.musicalStaff.current.lastChild
+      );
+    }
+  }
+
   setupStaff() {
-    //var containerSVG = document.getElementById("musical-staff");
-    var containerSVG = document.getElementsByClassName("musical-staff")[
-      this.props.testIndex
-    ];
-    console.log(
-      document.getElementsByClassName("musical-staff"),
-      this.props.testIndex
-    );
-    var renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
-    //renderer.resize(window.innerWidth, 200);
+    let containerSVG = this.musicalStaff.current;
+    renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
     renderer.resize(this.props.width, 200);
-    var ctx = renderer.getContext();
-    // const stave = new Stave(0, 0, window.innerWidth);
-    const stave = new Stave(0, 0, this.props.width);
+    ctx = renderer.getContext();
+
+    stave = new Stave(0, 0, this.props.width);
     stave.setContext(ctx).draw();
+  }
 
-    let daNote = this.props.note[0] + "/" + octave;
+  drawNotes() {
+    let daNote;
+    let match = /[0-9]/.exec(this.props.note);
+    if (match) {
+      daNote =
+        this.props.note.substr(0, match.index) +
+        "/" +
+        this.props.note.substr(match.index, this.props.note.length - 1);
+    }
 
-    var singleNote = [{ keys: [daNote], duration: "w" }];
+    let singleNote = [{ keys: [daNote], duration: "w" }];
 
-    var oneNote = singleNote.map(function(note) {
-      return new StaveNote(note);
+    let oneNote = singleNote.map(function(note) {
+      if (note.keys[0].includes("b")) {
+        return new StaveNote(note).addAccidental(0, new Accidental("b"));
+      } else if (note.keys[0].includes("#")) {
+        return new StaveNote(note).addAccidental(0, new Accidental("#"));
+      } else {
+        return new StaveNote(note);
+      }
     });
 
-    var voice = new Voice({
-      num_beats: oneNote.length, //was notes.length
+    let voice = new Voice({
+      num_beats: oneNote.length,
       beat_value: 1
     });
 
     voice.addTickables(oneNote);
-    //voice.addTickables(notes);
 
     // Format and justify the notes to window.innerwidth pixels
-    var formatter = new Formatter()
-      .joinVoices([voice])
-      .format([voice], window.innerWidth);
+    new Formatter().joinVoices([voice]).format([voice], window.innerWidth);
 
     // Render voice
     voice.draw(ctx, stave);
   }
+
+  componentDidMount() {
+    this.setupStaff();
+    this.drawNotes();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.note !== this.props.note) {
+      this.removePrevious();
+      this.setupStaff();
+      this.drawNotes();
+    }
+  }
+
   render() {
-    return <div className="musical-staff" />;
+    return <div ref={this.musicalStaff} className="musical-staff" />;
   }
 }
 

@@ -10,8 +10,6 @@ import { makeScaleMajorMinor, makeScalePentatonicBlues } from "./theory";
 //keys 1 to 0
 const keycodes = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48];
 
-let testIndex = -1;
-
 let targetArr, activeElementsforKeyboard;
 
 const pressedKeys = new Set();
@@ -315,10 +313,6 @@ class Keyboard extends Component {
           //note.note_english;
         }
       }
-      if (isKeyInScale) {
-        testIndex++;
-      }
-
       return (
         <Key
           key={index}
@@ -338,7 +332,6 @@ class Keyboard extends Component {
           isMouseDown={that.state.mouse_is_down}
           pianoOn={that.props.pianoOn}
           theme={that.props.theme}
-          testIndex={testIndex}
         />
       );
     });

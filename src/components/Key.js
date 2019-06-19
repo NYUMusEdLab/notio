@@ -157,13 +157,7 @@ class Key extends Component {
             </div>
           ) : null}
         </div>
-        {isOn ? (
-          <MusicalStaff
-            width={118}
-            note={this.props.note}
-            testIndex={this.props.testIndex}
-          />
-        ) : null}
+        {isOn ? <MusicalStaff width={118} note={this.props.note} /> : null}
       </div>
     );
   }

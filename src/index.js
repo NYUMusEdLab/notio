@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import Keyboard from "./components/Keyboard";
-import MusicalStaff from "./components/MusicalStaff";
 import { Octaves, Scale, Notation, Theme } from "./components/InputComponents";
 import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import "./style.css";
@@ -11,7 +10,7 @@ class Piano extends Component {
     super(props);
 
     this.state = {
-      octave: 3,
+      octave: 4,
       scale: "Major (Ionian)",
       baseNote: "C",
       notation: ["Colors"],
@@ -95,9 +94,11 @@ class Piano extends Component {
       //console.log(rootNode.classList.remove('active'));
 
       rootNode.addEventListener("click", e => {
-        console.log(e);
-        //   console.log('rootNode', rootNode.classList);
-        //  rootNode.classList.remove('active');
+        //console.log(e);
+        //console.log("rootNode", rootNode.classList);
+        //rootNode.classList.remove("active");
+        //console.log("noteName", noteName);
+
         e.path[1].classList.add("active");
         that.setState({ baseNote: noteName });
       });
