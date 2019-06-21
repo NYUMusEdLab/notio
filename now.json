@@ -9,11 +9,5 @@
         "distDir": "build"
       }
     }
-  ],
-  "routes": [
-    {
-      "src": "^/(.*)",
-      "dest": "/index.html"
-    }
   ]
 }
