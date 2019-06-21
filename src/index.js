@@ -17,8 +17,8 @@ class Piano extends Component {
       pianoOn: true,
       trebleStaffOn: true,
       menuOpen: false,
-      theme: "light"
-      //showOffNotes: true
+      theme: "light",
+      showOffNotes: true
     };
   }
   handleClickOctave = action => {
@@ -177,7 +177,7 @@ class Piano extends Component {
           notation={this.state.notation}
           pianoOn={this.state.pianoOn}
           trebleStaffOn={this.state.trebleStaffOn}
-          //showOffNotes={this.state.showOffNotes}
+          showOffNotes={this.state.showOffNotes}
           theme={this.state.theme}
         />
       </div>

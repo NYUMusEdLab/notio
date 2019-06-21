@@ -21,9 +21,9 @@ class MusicalStaff extends Component {
   setupStaff() {
     let containerSVG = this.musicalStaff.current;
     renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
-    renderer.resize(this.props.width, 350);
+    renderer.resize(this.props.width, 400);
     ctx = renderer.getContext();
-    ctx.setViewBox(0, 0, 70, 70); //size
+    ctx.setViewBox(0, 0, 65, 65); //size
     //this works for scaling too: ctx.scale(2, 2); // scale X and Y
     stave = new Stave(0, 0, this.props.width);
     stave.setContext(ctx).draw();
@@ -71,7 +71,10 @@ class MusicalStaff extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.note !== this.props.note) {
+    if (
+      prevProps.note !== this.props.note ||
+      prevProps.showOffNote !== this.props.showOffNotes
+    ) {
       this.removePrevious();
       this.setupStaff();
       this.drawNotes();

@@ -67,17 +67,31 @@ class Key extends Component {
     this.props.synth.triggerRelease(note);
   };
 
+  updateDimensions = () => {
+    const myWidth = this.keyRef.current.clientWidth;
+    this.setState({ myWidth: myWidth });
+  };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.showOffNotes !== prevProps.showOffNotes) {
+      this.updateDimensions();
+    }
+  }
+
   componentDidMount() {
     this.keyRef.current.addEventListener("mouseenter", this.mouseEnter);
     this.keyRef.current.addEventListener("mouseleave", this.mouseLeave);
-    // const myWidth = this.keyRef.current.clientWidth;
-    // this.setState({ myWidth: myWidth });
+    //run it the first time
+    this.updateDimensions();
+    // and then run it on resize
+    window.addEventListener("resize", this.updateDimensions);
   }
 
   componentWillUnmount() {
     // Make sure to remove the DOM listener when the component is unmounted.
     this.keyRef.current.removeEventListener("mouseenter", this.mouseEnter);
     this.keyRef.current.removeEventListener("mouseleave", this.mouseLeave);
+    window.removeEventListener("resize", this.updateDimensions);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -167,8 +181,12 @@ class Key extends Component {
             </div>
           ) : null}
         </div>
-        {isOn && trebleStaffOn ? (
-          <MusicalStaff width={118} note={this.props.note} />
+        {isOn && trebleStaffOn && this.state.myWidth ? (
+          <MusicalStaff
+            width={this.state.myWidth}
+            note={this.props.note}
+            showOffNotes={this.props.showOffNotes}
+          />
         ) : null}
       </div>
     );

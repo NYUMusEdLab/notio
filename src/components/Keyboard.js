@@ -333,7 +333,7 @@ class Keyboard extends Component {
           pianoOn={that.props.pianoOn}
           theme={that.props.theme}
           trebleStaffOn={that.props.trebleStaffOn}
-          //showOffNotes={that.props.showOffNotes}
+          showOffNotes={that.props.showOffNotes}
         />
       );
     });

@@ -173,11 +173,11 @@ body {
   display: none;
 }
 
-.Piano.showOffNotes .Key.off {
+.Piano .Key.off {
   display: none;
 }
 
-.Piano.showOffNotes .Key.on {
+.Piano.showOffNotes .Key.off {
   display: flex;
 }
 
