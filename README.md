@@ -6,6 +6,8 @@ The Notio Project focuses on developing new pedagogies and technologies for impr
 
 ![alt text](http://res.cloudinary.com/dfwzmr3kv/image/upload/v1541950072/libpjli26z1bue7z4hs1.png "Notio Proto")
 
-Detailed info about Notio [here](http://musedlab.org/notio) 
+Detailed info about Notio [here](http://musedlab.org/notio)
 
-You can see the project [here](https://notio.stackblitz.io)
+You can see the project [here. NEW ADDRESS OF PROJECT](https://notio.pestanias.now.sh/)
+
+[Old address of project](https://notio.stackblitz.io)
