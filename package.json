@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "firebase": "^6.2.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
+    "react-router-dom": "^5.0.1",
     "tone": "^13.7.5",
     "vexflow": "^1.2.89"
   },
