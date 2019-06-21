@@ -9,5 +9,11 @@
         "distDir": "build"
       }
     }
+  ],
+  "routes": [
+    {
+      "src": "/shared/.*",
+      "continue": true
+    }
   ]
 }
