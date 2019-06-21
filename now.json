@@ -12,8 +12,11 @@
   ],
   "routes": [
     {
-      "src": "/shared/.*",
-      "continue": true
+      "src": "/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=0"
+      },
+      "dest": "/index.html"
     }
   ]
 }
