@@ -116,13 +116,17 @@ class Piano extends Component {
   toggleStaff = () => {
     this.setState({ trebleStaffOn: !this.state.trebleStaffOn });
   };
-  // toggleShowOffNotes = () => {
-  //   this.setState({ showOffNotes: !this.state.showOffNotes });
-  // };
+  toggleShowOffNotes = () => {
+    this.setState({ showOffNotes: !this.state.showOffNotes });
+  };
 
   render() {
     return (
-      <div className="Piano">
+      <div
+        className={`Piano${
+          this.state.showOffNotes === true ? " showOffNotes" : ""
+        }`}
+      >
         <div className="MainMenuDot" onClick={this.toggleMenu} />
         <div className={`MainMenu ${this.state.menuOpen ? "open" : ""}`}>
           <div
@@ -158,10 +162,10 @@ class Piano extends Component {
             <button onClick={this.toggleStaff}>
               Musical Staff (Treble) {this.state.trebleStaffOn ? "ON" : "OFF"}
             </button>
-            {/* <button onClick={this.toggleShowOffNotes}>
+            <button onClick={this.toggleShowOffNotes}>
               Show notes that are not in scale:
               {this.state.showOffNotes ? "ON" : "OFF"}
-            </button> */}
+            </button>
           </div>
         </div>
         <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} />
