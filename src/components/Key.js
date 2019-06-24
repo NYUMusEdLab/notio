@@ -73,7 +73,10 @@ class Key extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (this.props.showOffNotes !== prevProps.showOffNotes) {
+    if (
+      this.props.showOffNotes !== prevProps.showOffNotes ||
+      this.props.noteName !== prevProps.noteName
+    ) {
       this.updateDimensions();
     }
   }
