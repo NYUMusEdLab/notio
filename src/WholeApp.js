@@ -15,7 +15,9 @@ class WholeApp extends Component {
     trebleStaffOn: true,
     menuOpen: false,
     theme: "light",
-    showOffNotes: true
+    showOffNotes: true,
+    sessionID: null,
+    sessionError: null
   };
   handleClickOctave = action => {
     switch (action) {
@@ -74,6 +76,7 @@ class WholeApp extends Component {
       theme,
       showOffNotes
     } = this.state;
+    const that = this;
     db.collection("sessions")
       .add({
         octave: octave,
@@ -87,9 +90,11 @@ class WholeApp extends Component {
       })
       .then(function(docRef) {
         console.log("Session written with ID: ", docRef.id);
+        that.setState({ sessionID: docRef.id });
       })
       .catch(function(error) {
         console.error("Error adding document: ", error);
+        that.setState({ sessionError: error });
       });
   };
 
@@ -223,22 +228,50 @@ class WholeApp extends Component {
             <CircleFifthsSVG />
           </div>
           <div className="Menu-Row">
-            <button onClick={this.togglePiano}>
-              Piano {this.state.pianoOn ? "ON" : "OFF"}
-            </button>
+            <div class="Menu-label">Piano</div>
+            <div class="Menu-label" />
+            <div class="Menu-label">
+              Musical Staff (Treble){" "}
+              <img height="30" src="/img/treble-clef.png" />
+            </div>
+            <div className="Menu-label">Show notes that are not in scale</div>
+            <div className="Menu-label">Share this setup</div>
+          </div>
+          <div className="Menu-Row">
+            <div class="toggle-switch">
+              <div class="checkbox" onClick={this.togglePiano}>
+                <input type="checkbox" checked={this.state.pianoOn} />
+                <label />
+              </div>
+            </div>
             <Theme
               theme={this.state.theme}
               handleSelect={this.handleSelectTheme}
             />
-            <button onClick={this.toggleStaff}>
-              Musical Staff (Treble) {this.state.trebleStaffOn ? "ON" : "OFF"}
-            </button>
-            <button onClick={this.toggleShowOffNotes}>
-              Show notes that are not in scale:
-              {this.state.showOffNotes ? "ON" : "OFF"}
-            </button>
-            <button onClick={this.saveSessionToDB}>Share this setup</button>
+            <div class="toggle-switch">
+              <div class="checkbox" onClick={this.toggleStaff}>
+                <input type="checkbox" checked={this.state.trebleStaffOn} />
+                <label />
+              </div>
+            </div>
+            <div class="toggle-switch">
+              <div class="checkbox" onClick={this.toggleShowOffNotes}>
+                <input type="checkbox" checked={this.state.showOffNotes} />
+                <label />
+              </div>
+            </div>
+            <div className="share" onClick={this.saveSessionToDB}>
+              <img width="50" src="/img/share.png" />
+            </div>
           </div>
+          {this.state.sessionID ? (
+            <div className="Bottom-Info-Row">
+              Your configuration has been saved here:{" "}
+              <a href="#">
+                https://notio.pestanias.now.sh/shared/{this.state.sessionID}
+              </a>
+            </div>
+          ) : null}
         </div>
         <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} />
         <Keyboard
