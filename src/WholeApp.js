@@ -267,7 +267,10 @@ class WholeApp extends Component {
           {this.state.sessionID ? (
             <div className="Bottom-Info-Row">
               Your configuration has been saved here:{" "}
-              <a href="#">
+              <a
+                target="_blank"
+                href="https://notio.pestanias.now.sh/shared/{this.state.sessionID}"
+              >
                 https://notio.pestanias.now.sh/shared/{this.state.sessionID}
               </a>
             </div>
