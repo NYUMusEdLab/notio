@@ -211,7 +211,9 @@ class WholeApp extends Component {
           this.state.showOffNotes === true ? " showOffNotes" : ""
         }`}
       >
-        <div className="MainMenuDot" onClick={this.toggleMenu} />
+        <div className="MainMenuDot" onClick={this.toggleMenu}>
+          <span>&#9835;</span>
+        </div>
         <div className={`MainMenu ${this.state.menuOpen ? "open" : ""}`}>
           <div
             className="closeMenu"

@@ -44,6 +44,12 @@ body {
   background-color: #129614;
   border-radius: 50%;
   z-index: 10;
+  text-align: center;
+}
+
+.MainMenuDot span {
+  font-size: 34px;
+  color: yellow;
 }
 
 /* taken from https://ianlunn.github.io/Hover/ */
