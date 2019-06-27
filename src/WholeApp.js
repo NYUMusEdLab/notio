@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Keyboard from "./components/Keyboard";
 import { Octaves, Scale, Notation, Theme } from "./components/InputComponents";
 import CircleFifthsSVG from "./components/CircleFifthsSVG";
+import LoadingScreen from "./components/LoadingScreen";
 import "./style.css";
 import db from "./Firebase";
 
@@ -11,13 +12,14 @@ class WholeApp extends Component {
     scale: "Major (Ionian)",
     baseNote: "C",
     notation: ["Colors"],
-    pianoOn: true,
+    pianoOn: false,
     trebleStaffOn: true,
     menuOpen: false,
     theme: "light",
     showOffNotes: true,
     sessionID: null,
-    sessionError: null
+    sessionError: null,
+    loading: true
   };
   handleClickOctave = action => {
     switch (action) {
@@ -113,9 +115,11 @@ class WholeApp extends Component {
           trebleStaffOn: result.trebleStaffOn,
           menuOpen: result.menuOpen,
           theme: result.theme,
-          showOffNotes: result.showOffNotes
+          showOffNotes: result.showOffNotes,
+          loading: false
         });
       } else {
+        this.setState({ loading: false });
         console.log("No such document!");
       }
     });
@@ -142,6 +146,8 @@ class WholeApp extends Component {
 
     if (sessionId) {
       this.openSavedSession(sessionId);
+    } else {
+      this.setState({ loading: false });
     }
 
     /**
@@ -197,7 +203,9 @@ class WholeApp extends Component {
   };
 
   render() {
-    return (
+    return this.state.loading ? (
+      <LoadingScreen />
+    ) : (
       <div
         className={`Piano${
           this.state.showOffNotes === true ? " showOffNotes" : ""
@@ -228,9 +236,9 @@ class WholeApp extends Component {
             <CircleFifthsSVG />
           </div>
           <div className="Menu-Row">
-            <div class="Menu-label">Piano</div>
-            <div class="Menu-label" />
-            <div class="Menu-label">
+            <div className="Menu-label">Piano</div>
+            <div className="Menu-label" />
+            <div className="Menu-label">
               Musical Staff (Treble){" "}
               <img height="30" src="/img/treble-clef.png" alt="treble cleff" />
             </div>
@@ -238,9 +246,13 @@ class WholeApp extends Component {
             <div className="Menu-label">Share this setup</div>
           </div>
           <div className="Menu-Row">
-            <div class="toggle-switch">
-              <div class="checkbox" onClick={this.togglePiano}>
-                <input type="checkbox" checked={this.state.pianoOn} />
+            <div className="toggle-switch">
+              <div className="checkbox" /*onClick={this.togglePiano}*/>
+                <input
+                  type="checkbox"
+                  checked={this.state.pianoOn}
+                  onChange={this.togglePiano}
+                />
                 <label />
               </div>
             </div>
@@ -248,15 +260,23 @@ class WholeApp extends Component {
               theme={this.state.theme}
               handleSelect={this.handleSelectTheme}
             />
-            <div class="toggle-switch">
-              <div class="checkbox" onClick={this.toggleStaff}>
-                <input type="checkbox" checked={this.state.trebleStaffOn} />
+            <div className="toggle-switch">
+              <div className="checkbox">
+                <input
+                  type="checkbox"
+                  checked={this.state.trebleStaffOn}
+                  onChange={this.toggleStaff}
+                />
                 <label />
               </div>
             </div>
-            <div class="toggle-switch">
-              <div class="checkbox" onClick={this.toggleShowOffNotes}>
-                <input type="checkbox" checked={this.state.showOffNotes} />
+            <div className="toggle-switch">
+              <div className="checkbox">
+                <input
+                  type="checkbox"
+                  checked={this.state.showOffNotes}
+                  onChange={this.toggleShowOffNotes}
+                />
                 <label />
               </div>
             </div>
