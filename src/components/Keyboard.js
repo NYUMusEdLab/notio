@@ -10,7 +10,7 @@ import { makeScaleMajorMinor, makeScalePentatonicBlues } from "./theory";
 //keys 1 to 0
 const keycodes = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48];
 
-let targetArr, activeElementsforKeyboard;
+let targetArr, activeElementsforKeyboard, scaleSteps;
 let onlyScaleIndex = 0;
 
 const pressedKeys = new Set();
@@ -22,7 +22,7 @@ class Keyboard extends Component {
 
     this.state = {
       activeNotes: [],
-      scale: "",
+      currentScale: "",
       scaleSteps: {},
       mouse_is_down: false
     };
@@ -40,6 +40,9 @@ class Keyboard extends Component {
      *
      */
     //e.preventDefault();
+
+    const { scaleSteps, currentScale } = this.state;
+    const { octave, baseNote } = this.props;
 
     if (Tone.context.state !== "running") {
       Tone.context.resume();
@@ -62,7 +65,7 @@ class Keyboard extends Component {
 
     if (
       keycodes.includes(e.keyCode) &&
-      mapKeyDown + 1 <= this.state.scaleSteps.steps.length
+      mapKeyDown + 1 <= scaleSteps.steps.length
     ) {
       buttonPressed = activeElementsforKeyboard[mapKeyDown];
 
@@ -73,15 +76,44 @@ class Keyboard extends Component {
         this.playNote(buttonPressed.dataset.note); //this.synth.triggerAttack(buttonPressed.dataset.note);
       }
       console.log("currentActiveNotes", currentActiveNotes);
+    } else {
+      // TODO:lowernotes are played when clicked QAZ
+      ///let currentRoot = rootNote.find(obj => {
+      //   return obj.note === baseNote;
+      // });
+      // let lowerNotes = notes.slice(
+      //   currentRoot.index + 9,
+      //   currentRoot.index + 12
+      // );
+      // console.log(lowerNotes);
+      // TODO: it's not correct
+      let lowerNote = octave;
+      if (currentScale[0] === "C") {
+        lowerNote--;
+      }
+
+      if (e.code === "KeyQ") {
+        this.playNote(currentScale[currentScale.length - 2] + lowerNote);
+      }
+      if (e.code === "KeyA") {
+        this.playNote(currentScale[currentScale.length - 3] + lowerNote);
+      }
+      if (e.code === "KeyZ") {
+        this.playNote(currentScale[currentScale.length - 4] + lowerNote);
+      }
     }
   };
 
   handleKeyUp = e => {
     //e.preventDefault();
+
+    const { scaleSteps, currentScale } = this.state;
+    const { octave } = this.props;
+
     const mapKeyUp = keycodes.indexOf(e.keyCode);
     if (
       keycodes.includes(e.keyCode) &&
-      mapKeyUp + 1 <= this.state.scaleSteps.steps.length
+      mapKeyUp + 1 <= scaleSteps.steps.length
     ) {
       let buttonReleased;
       buttonReleased = activeElementsforKeyboard[mapKeyUp];
@@ -94,12 +126,29 @@ class Keyboard extends Component {
       if (currentActiveNotes.has(buttonReleased.dataset.note)) {
         this.releaseNote(buttonReleased.dataset.note); //this.synth.triggerRelease(buttonReleased.dataset.note);
         currentActiveNotes.delete(buttonReleased.dataset.note);
-        console.log(currentActiveNotes);
+        //console.log(currentActiveNotes);
+      }
+    } else {
+      //TODO: it's not correct
+      let lowerNote = octave;
+      if (currentScale[0] === "C") {
+        lowerNote--;
+      }
+
+      if (e.code === "KeyQ") {
+        this.releaseNote(currentScale[currentScale.length - 2] + lowerNote);
+      }
+      if (e.code === "KeyA") {
+        this.releaseNote(currentScale[currentScale.length - 3] + lowerNote);
+      }
+      if (e.code === "KeyZ") {
+        this.releaseNote(currentScale[currentScale.length - 4] + lowerNote);
       }
     }
   };
 
   playNote = note => {
+    console.log("playing " + note);
     this.synth.triggerAttack(note);
   };
 
@@ -135,7 +184,7 @@ class Keyboard extends Component {
   };
 
   //this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
-  generateStartingScale = scaleFormula => {
+  generateCurrentScale = scaleFormula => {
     if (
       !this.props.scale.includes("Pentatonic") &&
       !this.props.scale.includes("Blues")
@@ -190,6 +239,7 @@ class Keyboard extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    //refresh the keys every time we update the props
     if (
       this.props.notation !== prevProps.notation ||
       this.props.scale !== prevProps.scale ||
@@ -200,21 +250,21 @@ class Keyboard extends Component {
           if (key.children[i].classList.contains("on")) return key;
         }
       });
+      scaleSteps = scales.find(obj => obj.name === this.props.scale);
+      this.setState({
+        currentScale: this.generateCurrentScale(scaleSteps.steps)
+      });
     }
     onlyScaleIndex = 0;
   }
 
   componentDidMount() {
-    const keyboard = document.querySelector(".Keyboard");
-
-    targetArr = Array.from(document.querySelectorAll(".Key"));
-
-    //only count the elements that are in the scale (className= .note .on)
-    activeElementsforKeyboard = targetArr.filter(key => {
-      for (let i = 0; i < key.children.length; i++) {
-        if (key.children[i].classList.contains("on")) return key;
-      }
+    scaleSteps = scales.find(obj => obj.name === this.props.scale);
+    this.setState({
+      currentScale: this.generateCurrentScale(scaleSteps.steps)
     });
+
+    const keyboard = document.querySelector(".Keyboard");
 
     document.addEventListener("keydown", this.handleKeyDown, false);
     document.addEventListener("keyup", this.handleKeyUp, false);
@@ -224,6 +274,15 @@ class Keyboard extends Component {
 
     let scaleSteps = scales.find(obj => obj.name === this.props.scale);
     this.setState({ scaleSteps: scaleSteps });
+
+    targetArr = Array.from(document.querySelectorAll(".Key"));
+
+    //only count the elements that are in the scale (className= .note .on)
+    activeElementsforKeyboard = targetArr.filter(key => {
+      for (let i = 0; i < key.children.length; i++) {
+        if (key.children[i].classList.contains("on")) return key;
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -237,11 +296,11 @@ class Keyboard extends Component {
 
     let isMajorSeventh = false;
 
-    const scaleSteps = scales.find(obj => obj.name === this.props.scale);
+    scaleSteps = scales.find(obj => obj.name === this.props.scale);
 
     const theScale = this.generateScales(scaleSteps.steps);
 
-    let baseScale = this.generateStartingScale(scaleSteps.steps);
+    let baseScale = this.generateCurrentScale(scaleSteps.steps);
 
     let currentRoot = rootNote.find(obj => {
       return obj.note === this.props.baseNote;
