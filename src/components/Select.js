@@ -22,6 +22,7 @@ const Select = props => {
       <div>
         {props.multiple ? (
           <select
+            value={props.value ? props.value : null}
             multiple={true}
             id={props.selectName}
             onChange={e => {

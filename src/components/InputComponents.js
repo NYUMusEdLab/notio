@@ -53,6 +53,7 @@ export const Notation = props => {
   ];
   return (
     <Select
+      value={props.notation}
       multiple="true"
       selectName="Notation"
       selectEls={notation}
