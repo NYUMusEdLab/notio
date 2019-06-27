@@ -140,6 +140,20 @@ class Keyboard extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.notation !== prevProps.notation ||
+      this.props.scale !== prevProps.scale ||
+      this.props.baseNote !== prevProps.baseNote
+    ) {
+      activeElementsforKeyboard = targetArr.filter(key => {
+        for (let i = 0; i < key.children.length; i++) {
+          if (key.children[i].classList.contains("on")) return key;
+        }
+      });
+    }
+  }
+
   componentDidMount() {
     const keyboard = document.querySelector(".Keyboard");
 

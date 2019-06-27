@@ -232,7 +232,7 @@ class WholeApp extends Component {
             <div class="Menu-label" />
             <div class="Menu-label">
               Musical Staff (Treble){" "}
-              <img height="30" src="/img/treble-clef.png" />
+              <img height="30" src="/img/treble-clef.png" alt="treble cleff" />
             </div>
             <div className="Menu-label">Show notes that are not in scale</div>
             <div className="Menu-label">Share this setup</div>
@@ -261,7 +261,7 @@ class WholeApp extends Component {
               </div>
             </div>
             <div className="share" onClick={this.saveSessionToDB}>
-              <img width="50" src="/img/share.png" />
+              <img width="50" src="/img/share.png" alt="Share" />
             </div>
           </div>
           {this.state.sessionID ? (
@@ -269,6 +269,7 @@ class WholeApp extends Component {
               Your configuration has been saved here:{" "}
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://notio.pestanias.now.sh/shared/{this.state.sessionID}"
               >
                 https://notio.pestanias.now.sh/shared/{this.state.sessionID}
