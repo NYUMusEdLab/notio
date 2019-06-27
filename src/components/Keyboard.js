@@ -133,6 +133,21 @@ class Keyboard extends Component {
     buttonTarget.classList.remove("active");
   };
 
+  //this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
+  generateStartingScale = scaleFormula => {
+    if (
+      !this.props.scale.includes("Pentatonic") &&
+      !this.props.scale.includes("Blues")
+    )
+      return makeScaleMajorMinor(scaleFormula, this.props.baseNote, "English");
+    else
+      return makeScalePentatonicBlues(
+        scaleFormula,
+        this.props.baseNote,
+        "English"
+      );
+  };
+
   static getDerivedStateFromProps(nextProps, prevState) {
     let scaleSteps = scales.find(obj => obj.name === nextProps.scale);
     return {
@@ -190,6 +205,8 @@ class Keyboard extends Component {
     const scaleSteps = scales.find(obj => obj.name === this.props.scale);
 
     const theScale = {};
+
+    //console.log(this.generateStartingScale(scaleSteps.steps));
 
     //this is my scale after applying the formulas for minor and major with the correct name
     //works only for major scales and for harmonic minor, melodic minor and natural minor

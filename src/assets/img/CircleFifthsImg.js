@@ -1,7 +1,13 @@
 import React from "react";
 
 const CircleFifthsImg = props => (
-  <svg className="circleFifths" width={395.51} height={395.51} {...props}>
+  <svg
+    id="circleFifths"
+    className="circleFifths"
+    width={395.51}
+    height={395.51}
+    {...props}
+  >
     <path fill="none" d="M-1-1h582v402H-1z" />
     <g className="note note_D">
       <path

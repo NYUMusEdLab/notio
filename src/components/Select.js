@@ -40,7 +40,7 @@ const Select = props => {
           </select>
         ) : (
           <select
-            value={props.value ? props.value : null}
+            value={props.value ? props.value : ""}
             id={props.selectName}
             onChange={e => props.handleSelect(e.target.value)}
           >

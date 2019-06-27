@@ -61,6 +61,11 @@ class WholeApp extends Component {
     this.setState({ theme: selectedTheme });
   };
 
+  handleChangeRoot = selectedRoot => {
+    console.log(selectedRoot + " Root selected");
+    this.setState({ baseNote: selectedRoot });
+  };
+
   // TODO: make generic handleSelect
   // handleSelect = (selectedElement, selectedValue) => {
   //   console.log(selectedValue + ' '+ selectedElement+ ' selected');
@@ -140,16 +145,6 @@ class WholeApp extends Component {
   // }
 
   componentDidMount() {
-    const { match } = this.props;
-    const { params } = match;
-    const { sessionId } = params;
-
-    if (sessionId) {
-      this.openSavedSession(sessionId);
-    } else {
-      this.setState({ loading: false });
-    }
-
     /**
      * disable right click
      */
@@ -157,36 +152,17 @@ class WholeApp extends Component {
       return false;
     };
 
-    /**manage selection of Root from CircleFifthsSVG */
-    const selectRoot = Array.from(
-      document.querySelectorAll(".circleFifths .note")
-    );
+    const { match } = this.props;
+    const { params } = match;
+    const { sessionId } = params;
 
-    const that = this;
-
-    selectRoot.map(function(rootNode, index) {
-      let noteName = rootNode.textContent;
-      if (noteName.includes("♭")) {
-        noteName = noteName.substr(0, 1) + "b";
-      }
-
-      //TODO: remove active Root
-      //remove current active root note class
-      //console.log('rootNode', rootNode.classList);
-      //rootNode.classList.remove('active');
-      //console.log('rootNode', rootNode.classList);
-      //console.log(rootNode.classList.remove('active'));
-
-      rootNode.addEventListener("click", e => {
-        //console.log(e);
-        //console.log("rootNode", rootNode.classList);
-        //rootNode.classList.remove("active");
-        //console.log("noteName", noteName);
-
-        e.path[1].classList.add("active");
-        that.setState({ baseNote: noteName });
+    if (sessionId) {
+      this.openSavedSession(sessionId);
+    } else {
+      this.setState({
+        loading: false
       });
-    });
+    }
   }
 
   toggleMenu = () => {
@@ -235,7 +211,10 @@ class WholeApp extends Component {
               notation={this.state.notation}
               handleSelect={this.handleSelectNotation}
             />
-            <CircleFifthsSVG />
+            <CircleFifthsSVG
+              rootNote={this.state.baseNote}
+              handleChange={this.handleChangeRoot}
+            />
           </div>
           <div className="Menu-Row">
             <div className="Menu-label">Piano</div>
