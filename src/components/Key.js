@@ -130,7 +130,11 @@ class Key extends Component {
     const noteNames = noteName
       ? noteName.map(function(item, i) {
           item = item.toString();
-          if (item.indexOf("b") > -1) {
+          if (item.indexOf("b") === 2) {
+            //doubleflat
+            item = item.replace("bb", "\u1D12B");
+          } else if (item.indexOf("b") === 1) {
+            //flat
             item = item.replace("b", "\u266D");
           }
           return (
@@ -149,7 +153,12 @@ class Key extends Component {
         className={`Key ${keyColor} ${
           this.state.clicked && isOn ? "active" : ""
         } ${isOn ? "on" : "off"} ${
-          this.props.note.includes("C") ? "c-mark" : ""
+          (this.props.note.includes("C") &&
+            !this.props.note.includes("#") &&
+            !this.props.note.includes("b")) ||
+          this.props.note.includes("B#")
+            ? "c-mark"
+            : ""
         }`}
         style={{
           backgroundColor: isOn ? color : offKeyColorWithTheme,

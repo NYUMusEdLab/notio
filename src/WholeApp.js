@@ -228,7 +228,7 @@ class WholeApp extends Component {
           </div>
           <div className="Menu-Row">
             <div className="toggle-switch">
-              <div className="checkbox" /*onClick={this.togglePiano}*/>
+              <div className="checkbox">
                 <input
                   type="checkbox"
                   checked={this.state.pianoOn}

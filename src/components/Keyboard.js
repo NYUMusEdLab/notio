@@ -11,6 +11,7 @@ import { makeScaleMajorMinor, makeScalePentatonicBlues } from "./theory";
 const keycodes = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48];
 
 let targetArr, activeElementsforKeyboard;
+let onlyScaleIndex = 0;
 
 const pressedKeys = new Set();
 const currentActiveNotes = new Set();
@@ -144,8 +145,41 @@ class Keyboard extends Component {
       return makeScalePentatonicBlues(
         scaleFormula,
         this.props.baseNote,
+        this.props.scale,
         "English"
       );
+  };
+
+  generateScales = scaleSteps => {
+    let theScale = {};
+    //this is my scale after applying the formulas for minor and major with the correct name
+    //works only for major scales and for harmonic minor, melodic minor and natural minor
+    for (let i = 0; i < this.props.notation.length; i++) {
+      if (
+        this.props.notation[i] === "English" ||
+        this.props.notation[i] === "German" ||
+        this.props.notation[i] === "Romance"
+      ) {
+        if (
+          !this.props.scale.includes("Pentatonic") &&
+          !this.props.scale.includes("Blues")
+        ) {
+          theScale[this.props.notation[i]] = makeScaleMajorMinor(
+            scaleSteps,
+            this.props.baseNote,
+            this.props.notation[i]
+          );
+        } else {
+          theScale[this.props.notation[i]] = makeScalePentatonicBlues(
+            scaleSteps,
+            this.props.baseNote,
+            this.props.scale,
+            this.props.notation[i]
+          );
+        }
+      }
+    }
+    return theScale;
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -167,6 +201,7 @@ class Keyboard extends Component {
         }
       });
     }
+    onlyScaleIndex = 0;
   }
 
   componentDidMount() {
@@ -204,37 +239,9 @@ class Keyboard extends Component {
 
     const scaleSteps = scales.find(obj => obj.name === this.props.scale);
 
-    const theScale = {};
+    const theScale = this.generateScales(scaleSteps.steps);
 
-    //console.log(this.generateStartingScale(scaleSteps.steps));
-
-    //this is my scale after applying the formulas for minor and major with the correct name
-    //works only for major scales and for harmonic minor, melodic minor and natural minor
-    for (let i = 0; i < that.props.notation.length; i++) {
-      if (
-        that.props.notation[i] === "English" ||
-        that.props.notation[i] === "German" ||
-        that.props.notation[i] === "Romance"
-      ) {
-        if (
-          !this.props.scale.includes("Pentatonic") &&
-          !this.props.scale.includes("Blues")
-        ) {
-          theScale[that.props.notation[i]] = makeScaleMajorMinor(
-            scaleSteps.steps,
-            that.props.baseNote,
-            that.props.notation[i]
-          );
-        } else {
-          theScale[that.props.notation[i]] = makeScalePentatonicBlues(
-            scaleSteps.steps,
-            that.props.baseNote,
-            this.props.scale,
-            that.props.notation[i]
-          );
-        }
-      }
-    }
+    let baseScale = this.generateStartingScale(scaleSteps.steps);
 
     let currentRoot = rootNote.find(obj => {
       return obj.note === this.props.baseNote;
@@ -344,12 +351,31 @@ class Keyboard extends Component {
           //note.note_english;
         }
       }
+
+      let noteThatWillSound;
+      let noteOffset = note.octaveOffset;
+      if (isKeyInScale) {
+        noteThatWillSound = baseScale[onlyScaleIndex];
+        //special cases = C enharmonics
+        if (noteThatWillSound === "Cb") noteOffset++;
+        if (noteThatWillSound === "B#") noteOffset--;
+        onlyScaleIndex++;
+      } else {
+        noteThatWillSound = null;
+      }
+      // console.log(
+      //   "noteThatWillSound",
+      //   noteThatWillSound,
+      //   "onlyScaleIndex",
+      //   onlyScaleIndex
+      // );
+
       return (
         <Key
           key={index}
           index={index}
-          note={`${note.note_english}${
-            that.props.octave + note.octaveOffset /*+ Math.floor(index/12)*/
+          note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${
+            that.props.octave + noteOffset /*+ Math.floor(index/12)*/
           }`}
           notation={that.props.notation}
           noteName={noteName}

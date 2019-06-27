@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import CircleFifthsImg from "../assets/img/CircleFifthsImg";
-import rootNote from "../data/rootNote";
 
 class CircleFifthsSVG extends Component {
   removeActiveClasses = e => {
@@ -19,7 +18,7 @@ class CircleFifthsSVG extends Component {
     );
 
     const that = this;
-    selectRoot.map(function(rootNode, index) {
+    selectRoot.map(function(rootNode) {
       let noteName = rootNode.textContent;
       if (noteName.includes("♭")) {
         noteName = noteName.substr(0, 1) + "b";

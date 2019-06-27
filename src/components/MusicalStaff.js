@@ -42,7 +42,9 @@ class MusicalStaff extends Component {
     let singleNote = [{ keys: [daNote], duration: "w" }];
 
     let oneNote = singleNote.map(function(note) {
-      if (note.keys[0].includes("b")) {
+      if (note.keys[0].includes("bb")) {
+        return new StaveNote(note).addAccidental(0, new Accidental("bb"));
+      } else if (note.keys[0].includes("b")) {
         return new StaveNote(note).addAccidental(0, new Accidental("b"));
       } else if (note.keys[0].includes("#")) {
         return new StaveNote(note).addAccidental(0, new Accidental("#"));
