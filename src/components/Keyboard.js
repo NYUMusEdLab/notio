@@ -13,6 +13,8 @@ const keycodes = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48];
 let targetArr, activeElementsforKeyboard, scaleSteps;
 let onlyScaleIndex = 0;
 
+let threeLowerOctave = new Set();
+
 const pressedKeys = new Set();
 const currentActiveNotes = new Set();
 
@@ -77,6 +79,7 @@ class Keyboard extends Component {
       }
       console.log("currentActiveNotes", currentActiveNotes);
     } else {
+      let threeLowerOctaveArr = Array.from(threeLowerOctave);
       // TODO:lowernotes are played when clicked QAZ
       ///let currentRoot = rootNote.find(obj => {
       //   return obj.note === baseNote;
@@ -87,19 +90,20 @@ class Keyboard extends Component {
       // );
       // console.log(lowerNotes);
       // TODO: it's not correct
-      let lowerNote = octave;
-      if (currentScale[0] === "C") {
-        lowerNote--;
-      }
+
+      let previousOctave = threeLowerOctaveArr.map(function(note) {
+        let currentOctave = note.match(/(\d+)/)[0];
+        return note.replace(/(\d+)/, currentOctave - 1);
+      });
 
       if (e.code === "KeyQ") {
-        this.playNote(currentScale[currentScale.length - 2] + lowerNote);
+        this.playNote(previousOctave[previousOctave.length - 2]);
       }
       if (e.code === "KeyA") {
-        this.playNote(currentScale[currentScale.length - 3] + lowerNote);
+        this.playNote(previousOctave[previousOctave.length - 3]);
       }
       if (e.code === "KeyZ") {
-        this.playNote(currentScale[currentScale.length - 4] + lowerNote);
+        this.playNote(previousOctave[previousOctave.length - 4]);
       }
     }
   };
@@ -130,19 +134,20 @@ class Keyboard extends Component {
       }
     } else {
       //TODO: it's not correct
-      let lowerNote = octave;
-      if (currentScale[0] === "C") {
-        lowerNote--;
-      }
+      let threeLowerOctaveArr = Array.from(threeLowerOctave);
+      let previousOctave = threeLowerOctaveArr.map(function(note) {
+        let currentOctave = note.match(/(\d+)/)[0];
+        return note.replace(/(\d+)/, currentOctave - 1);
+      });
 
       if (e.code === "KeyQ") {
-        this.releaseNote(currentScale[currentScale.length - 2] + lowerNote);
+        this.releaseNote(previousOctave[previousOctave.length - 2]);
       }
       if (e.code === "KeyA") {
-        this.releaseNote(currentScale[currentScale.length - 3] + lowerNote);
+        this.releaseNote(previousOctave[previousOctave.length - 3]);
       }
       if (e.code === "KeyZ") {
-        this.releaseNote(currentScale[currentScale.length - 4] + lowerNote);
+        this.releaseNote(previousOctave[previousOctave.length - 4]);
       }
     }
   };
@@ -254,6 +259,7 @@ class Keyboard extends Component {
       this.setState({
         currentScale: this.generateCurrentScale(scaleSteps.steps)
       });
+      threeLowerOctave.clear();
     }
     onlyScaleIndex = 0;
   }
@@ -428,6 +434,11 @@ class Keyboard extends Component {
       //   "onlyScaleIndex",
       //   onlyScaleIndex
       // );
+      const wholeNote = noteThatWillSound + (that.props.octave + noteOffset);
+      if (typeof wholeNote === "string")
+        threeLowerOctave.add(
+          noteThatWillSound + (that.props.octave + noteOffset)
+        );
 
       return (
         <Key
