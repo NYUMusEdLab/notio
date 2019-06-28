@@ -190,7 +190,11 @@ class WholeApp extends Component {
         <div className="MainMenuDot" onClick={this.toggleMenu}>
           <span>&#9835;</span>
         </div>
-        <div className={`MainMenu ${this.state.menuOpen ? "open" : ""}`}>
+        <div
+          className={`MainMenu slide-in-top ${
+            this.state.menuOpen ? "open" : ""
+          }`}
+        >
           <div
             className="closeMenu"
             onClick={this.toggleMenu}
@@ -271,7 +275,9 @@ class WholeApp extends Component {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://notio.pestanias.now.sh/shared/{this.state.sessionID}"
+                href={`https://notio.pestanias.now.sh/shared/${
+                  this.state.sessionID
+                }`}
               >
                 https://notio.pestanias.now.sh/shared/{this.state.sessionID}
               </a>
