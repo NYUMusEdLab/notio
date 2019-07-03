@@ -1,3 +1,5 @@
+/* eslint-disable no-fallthrough */
+
 import React, { Component } from "react";
 import Key from "./Key";
 import Tone from "tone";
@@ -43,8 +45,7 @@ class Keyboard extends Component {
      */
     //e.preventDefault();
 
-    const { scaleSteps, currentScale } = this.state;
-    const { octave, baseNote } = this.props;
+    const { scaleSteps } = this.state;
 
     if (Tone.context.state !== "running") {
       Tone.context.resume();
@@ -111,8 +112,7 @@ class Keyboard extends Component {
   handleKeyUp = e => {
     //e.preventDefault();
 
-    const { scaleSteps, currentScale } = this.state;
-    const { octave } = this.props;
+    const { scaleSteps } = this.state;
 
     const mapKeyUp = keycodes.indexOf(e.keyCode);
     if (
@@ -254,6 +254,7 @@ class Keyboard extends Component {
         for (let i = 0; i < key.children.length; i++) {
           if (key.children[i].classList.contains("on")) return key;
         }
+        return;
       });
       scaleSteps = scales.find(obj => obj.name === this.props.scale);
       this.setState({
@@ -323,16 +324,16 @@ class Keyboard extends Component {
     let currentRoot = rootNote.find(obj => {
       return obj.note === this.props.baseNote;
     });
-    let displayNotes = notes.slice(currentRoot.index, currentRoot.index + 13);
+    const displayNotes = notes.slice(currentRoot.index, currentRoot.index + 13);
 
     //we use relativeCount for Scale Steps
     let relativeCount = 1;
     let relativeCountScale = -1; //should start at 0, but since i am adding +1 at the beginning of the switch...
     let relativeCountChord = relativeCount;
 
-    let noteList = displayNotes.map(function(note, index) {
+    const noteList = displayNotes.map(function(note, index) {
       let noteName = [];
-      let isKeyInScale = scaleSteps.steps.includes(index);
+      const isKeyInScale = scaleSteps.steps.includes(index);
 
       if (index === scaleSteps.major_seventh) {
         isMajorSeventh = true;
