@@ -17,7 +17,8 @@ class CircleFifthsSVG extends Component {
       document.querySelectorAll(".circleFifths .note")
     );
 
-    const that = this;
+    const { rootNote, handleChange } = this.props;
+    const { removeActiveClasses } = this;
     selectRoot.map(function(rootNode) {
       let noteName = rootNode.textContent;
       if (noteName.includes("♭")) {
@@ -25,13 +26,13 @@ class CircleFifthsSVG extends Component {
       }
       //either 1. handleClick
       rootNode.addEventListener("click", e => {
-        that.removeActiveClasses(e);
+        removeActiveClasses(e);
 
         e.path[1].classList.add("active");
-        that.props.handleChange(noteName);
+        handleChange(noteName);
       });
       //or 2. add current selected one on first load
-      if (noteName === that.props.rootNote) {
+      if (noteName === rootNote) {
         rootNode.classList.add("active");
       }
     });

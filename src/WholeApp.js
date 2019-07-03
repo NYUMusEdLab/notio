@@ -83,7 +83,6 @@ class WholeApp extends Component {
       theme,
       showOffNotes
     } = this.state;
-    const that = this;
     db.collection("sessions")
       .add({
         octave: octave,
@@ -95,13 +94,13 @@ class WholeApp extends Component {
         theme: theme,
         showOffNotes: showOffNotes
       })
-      .then(function(docRef) {
+      .then(docRef => {
         console.log("Session written with ID: ", docRef.id);
-        that.setState({ sessionID: docRef.id });
+        this.setState({ sessionID: docRef.id });
       })
-      .catch(function(error) {
+      .catch(error => {
         console.error("Error adding document: ", error);
-        that.setState({ sessionError: error });
+        this.setState({ sessionError: error });
       });
   };
 

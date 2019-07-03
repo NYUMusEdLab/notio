@@ -298,7 +298,19 @@ class Keyboard extends Component {
   }
 
   render() {
-    const that = this;
+    const {
+      notation,
+      scale,
+      octave,
+      baseNote,
+      pianoOn,
+      theme,
+      trebleStaffOn,
+      showOffNotes
+    } = this.props;
+
+    const { synth } = this;
+    const { mouse_is_down } = this.state;
 
     let isMajorSeventh = false;
 
@@ -329,8 +341,8 @@ class Keyboard extends Component {
       }
       let alreadyAdded = false; //this variable is to make sure we don't increment our relativeCountScale index double if we have to notations selected
 
-      for (let i = 0; i < that.props.notation.length; i++) {
-        switch (that.props.notation[i]) {
+      for (let i = 0; i < notation.length; i++) {
+        switch (notation[i]) {
           case "Romance":
           case "English":
           case "German":
@@ -340,23 +352,17 @@ class Keyboard extends Component {
             alreadyAdded = true;
           case "Romance":
             if (isKeyInScale) {
-              noteName.push(
-                theScale[that.props.notation[i]][relativeCountScale]
-              );
+              noteName.push(theScale[notation[i]][relativeCountScale]);
             }
             break;
           case "English":
             if (isKeyInScale) {
-              noteName.push(
-                theScale[that.props.notation[i]][relativeCountScale]
-              );
+              noteName.push(theScale[notation[i]][relativeCountScale]);
             }
             break;
           case "German":
             if (isKeyInScale) {
-              noteName.push(
-                theScale[that.props.notation[i]][relativeCountScale]
-              );
+              noteName.push(theScale[notation[i]][relativeCountScale]);
             }
             break;
           case "Relative":
@@ -367,21 +373,17 @@ class Keyboard extends Component {
           case "Scale Steps":
             if (isKeyInScale) {
               if (
-                (that.props.scale !== "Major Pentatonic" &&
-                  relativeCount !== 8) ||
-                (that.props.scale === "Major Pentatonic" && relativeCount !== 7)
+                (scale !== "Major Pentatonic" && relativeCount !== 8) ||
+                (scale === "Major Pentatonic" && relativeCount !== 7)
               ) {
                 noteName.push(relativeCount);
               }
               relativeCount++;
-              if (
-                that.props.scale === "Major Pentatonic" &&
-                relativeCount === 4
-              ) {
+              if (scale === "Major Pentatonic" && relativeCount === 4) {
                 relativeCount++; // add one more, this scale doesn't have the number 4
               }
               if (
-                that.props.scale === "Minor Pentatonic" &&
+                scale === "Minor Pentatonic" &&
                 (relativeCount === 2 || relativeCount === 6)
               ) {
                 relativeCount++; // add one more, this scale doesn't have 2 or 6
@@ -390,14 +392,11 @@ class Keyboard extends Component {
             break;
           case "Chord extensions":
             if (isKeyInScale) {
-              if (
-                that.props.scale === "Major Pentatonic" &&
-                relativeCountChord === 4
-              ) {
+              if (scale === "Major Pentatonic" && relativeCountChord === 4) {
                 relativeCountChord++; // add one more, this scale doesn't have the number 4
               }
               if (
-                that.props.scale === "Minor Pentatonic" &&
+                scale === "Minor Pentatonic" &&
                 (relativeCountChord === 2 || relativeCountChord === 6)
               ) {
                 relativeCountChord++; // add one more, this scale doesn't have 2 or 6
@@ -434,33 +433,31 @@ class Keyboard extends Component {
       //   "onlyScaleIndex",
       //   onlyScaleIndex
       // );
-      const wholeNote = noteThatWillSound + (that.props.octave + noteOffset);
+      const wholeNote = noteThatWillSound + (octave + noteOffset);
       if (typeof wholeNote === "string")
-        threeLowerOctave.add(
-          noteThatWillSound + (that.props.octave + noteOffset)
-        );
+        threeLowerOctave.add(noteThatWillSound + (octave + noteOffset));
 
       return (
         <Key
           key={index}
           index={index}
           note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${
-            that.props.octave + noteOffset /*+ Math.floor(index/12)*/
+            octave + noteOffset /*+ Math.floor(index/12)*/
           }`}
-          notation={that.props.notation}
+          notation={notation}
           noteName={noteName}
           color={colors[index]}
           offColor={note.colorRGBA}
           keyColor={note.pianoColor}
           isOn={isKeyInScale}
-          root={that.props.baseNote}
+          root={baseNote}
           isMajorSeventh={isMajorSeventh}
-          synth={that.synth}
-          isMouseDown={that.state.mouse_is_down}
-          pianoOn={that.props.pianoOn}
-          theme={that.props.theme}
-          trebleStaffOn={that.props.trebleStaffOn}
-          showOffNotes={that.props.showOffNotes}
+          synth={synth}
+          isMouseDown={mouse_is_down}
+          pianoOn={pianoOn}
+          theme={theme}
+          trebleStaffOn={trebleStaffOn}
+          showOffNotes={showOffNotes}
         />
       );
     });
