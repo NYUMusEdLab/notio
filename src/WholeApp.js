@@ -13,6 +13,7 @@ class WholeApp extends Component {
     baseNote: "C",
     notation: ["Colors"],
     pianoOn: false,
+    extendedKeyboard: false,
     trebleStaffOn: true,
     menuOpen: false,
     theme: "light",
@@ -79,6 +80,7 @@ class WholeApp extends Component {
       baseNote,
       notation,
       pianoOn,
+      extendedKeyboard,
       trebleStaffOn,
       theme,
       showOffNotes
@@ -90,6 +92,7 @@ class WholeApp extends Component {
         baseNote: baseNote,
         notation: notation,
         pianoOn: pianoOn,
+        extendedKeyboard: extendedKeyboard,
         trebleStaffOn: trebleStaffOn,
         theme: theme,
         showOffNotes: showOffNotes
@@ -116,6 +119,7 @@ class WholeApp extends Component {
           baseNote: result.baseNote,
           notation: result.notation,
           pianoOn: result.pianoOn,
+          extendedKeyboard: result.extendedKeyboard,
           trebleStaffOn: result.trebleStaffOn,
           menuOpen: result.menuOpen,
           theme: result.theme,
@@ -170,6 +174,9 @@ class WholeApp extends Component {
   togglePiano = () => {
     this.setState({ pianoOn: !this.state.pianoOn });
   };
+  toggleExtendedKeyboard = () => {
+    this.setState({ extendedKeyboard: !this.state.extendedKeyboard });
+  };
   toggleStaff = () => {
     this.setState({ trebleStaffOn: !this.state.trebleStaffOn });
   };
@@ -222,6 +229,7 @@ class WholeApp extends Component {
           <div className="Menu-Row">
             <div className="Menu-label">Piano</div>
             <div className="Menu-label" />
+            <div className="Menu-label">Extended</div>
             <div className="Menu-label">
               Musical Staff (Treble){" "}
               <img height="30" src="/img/treble-clef.png" alt="treble cleff" />
@@ -236,6 +244,16 @@ class WholeApp extends Component {
                   type="checkbox"
                   checked={this.state.pianoOn}
                   onChange={this.togglePiano}
+                />
+                <label />
+              </div>
+            </div>
+            <div className="toggle-switch">
+              <div className="checkbox">
+                <input
+                  type="checkbox"
+                  checked={this.state.extendedKeyboard}
+                  onChange={this.toggleExtendedKeyboard}
                 />
                 <label />
               </div>
@@ -290,6 +308,7 @@ class WholeApp extends Component {
           baseNote={this.state.baseNote}
           notation={this.state.notation}
           pianoOn={this.state.pianoOn}
+          extendedKeyboard={this.state.extendedKeyboard}
           trebleStaffOn={this.state.trebleStaffOn}
           showOffNotes={this.state.showOffNotes}
           theme={this.state.theme}
