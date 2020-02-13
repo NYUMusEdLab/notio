@@ -75,7 +75,7 @@ class Keyboard extends Component {
       buttonPressed = activeElementsforKeyboard[mapKeyDown];
 
       pressedKeys.add(buttonPressed);
-      this.highlight(buttonPressed);
+      this.highlight(buttonPressed.querySelector('.on'));
       if (!currentActiveNotes.has(buttonPressed.dataset.Note)) {
         currentActiveNotes.add(buttonPressed.dataset.note);
         this.playNote(buttonPressed.dataset.note); //this.synth.triggerAttack(buttonPressed.dataset.note);
@@ -127,7 +127,7 @@ class Keyboard extends Component {
 
       // here the logic of the ui is separated from the one of the synth for clarity
       if (pressedKeys.has(buttonReleased)) {
-        this.removeHighlight(buttonReleased);
+        this.removeHighlight(buttonReleased.querySelector('.on'));
         pressedKeys.delete(buttonReleased);
       }
       if (currentActiveNotes.has(buttonReleased.dataset.note)) {
@@ -459,7 +459,7 @@ class Keyboard extends Component {
       const wholeNote = noteThatWillSound + (octave + noteOffset);
       if (typeof wholeNote === "string")
         threeLowerOctave.add(noteThatWillSound + (octave + noteOffset));
-        
+
       return (
         <Key
           key={arrayIndex}

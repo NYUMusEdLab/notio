@@ -193,10 +193,9 @@ body {
   flex-direction: column;
 }
 
-.Key.active .note {
+.Key.on .active {
   opacity: 1;
   border: 2px solid #000;
-  flex: 1;
 }
 
 .c-mark {
@@ -208,12 +207,6 @@ body {
   top: 15%;
   font-size: 24px;
   text-align: center;
-}
-
-.Key .note:first-child {
-  height: 120px;
-  background-color: white;
-  opacity: 1;
 }
 
 .note .off {
@@ -232,32 +225,51 @@ body {
 .Key .piano-key {
   border-top: 0px;
   z-index: 2;
-}
-
-.Key.black .piano-key {
-  height: 15%;
-}
-
-.Key.white .piano-key {
-  height: 10%;
-}
-
-.Key.white .piano-key {
   border-bottom: 1px solid #3f3f3f;
 }
 
-/* .Key.white + .Key.white .piano-key {
-  height: 10%;
-  border-left: 1px solid #3f3f3f;
-} */
-
-.Key.white .piano-key {
-  height: 10%;
-  border-left: 1px solid #3f3f3f;
+.Key.black {
+  z-index: 3
 }
 
+.Key.black .piano-key {
+  height: 30%;
+  background-color: black;
+}
+
+.Key.black .piano-key div {
+  height: 100%;
+  display: flex;
+}
+.Key.black .piano-key .whiteContainer div:first-child {
+  border-right: 1px solid #3f3f3f;
+}
+.Key.black .piano-key .whiteContainer div {
+  background-color: white;
+  height: 33%;
+  position: relative;
+  top: 67%;
+}
+
+.Key.white .piano-key {
+  height: 30%;
+  background-color: white;
+}
+.piano-key.e, .piano-key.b { border-right: 1px solid #3f3f3f; }
+/* TODO these should always have the same name (only flats) */
+.piano-key.cs .whiteBottomA, .piano-key.db .whiteBottomA { width: 67% }
+.piano-key.cs .whiteBottomB, .piano-key.db .whiteBottomB { width: 33% }
+.piano-key.ds .whiteBottomA, .piano-key.eb .whiteBottomA { width: 33% }
+.piano-key.ds .whiteBottomB, .piano-key.eb .whiteBottomB { width: 67% }
+.piano-key.fs .whiteBottomA, .piano-key.gb .whiteBottomA { width: 80% }
+.piano-key.fs .whiteBottomB, .piano-key.gb .whiteBottomB { width: 20% }
+.piano-key.gs .whiteBottomA, .piano-key.ab .whiteBottomA { width: 50% }
+.piano-key.gs .whiteBottomB, .piano-key.ab .whiteBottomB { width: 50% }
+.piano-key.bb .whiteBottomA, .piano-key.bb .whiteBottomA { width: 20% }
+.piano-key.bb .whiteBottomB, .piano-key.bb .whiteBottomB { width: 80% }
+
+
 .Key:first-child .piano-key {
-  height: 10%;
   background-color: white;
   text-align: center;
   font-size: 2em;
@@ -265,17 +277,16 @@ body {
 }
 
 .black {
-  background-color: black;
   border-top: 0px;
   z-index: 2;
 }
 
 .white {
-  background-color: white;
+  /*background-color: white;*/
 }
 
 .off {
-  opacity: 0.4;
+  /*opacity: 0.4;*/
 }
 
 .text {
@@ -295,7 +306,7 @@ body {
 
 .musical-staff {
   position: absolute;
-  top: 20%;
+  top: 30%;
   z-index: 10;
   align-self: center;
   pointer-events: none; /* makes it click thru */
