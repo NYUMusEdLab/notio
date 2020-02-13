@@ -319,15 +319,22 @@ class Keyboard extends Component {
 
     const theScale = this.generateScales(scaleSteps.steps);
 
+    let scaleObj; // get object from scalesObj.js
+    scales.forEach(obj => {
+      if (obj.name === scale) {
+        scaleObj = obj;
+      }
+    });
+    
     let baseScale = this.generateCurrentScale(scaleSteps.steps);
 
     let currentRoot = rootNote.find(obj => {
       return obj.note === this.props.baseNote;
     });
     const displayNotes = notes.slice(currentRoot.index, currentRoot.index + 13);
-
+    
     //we use relativeCount for Scale Steps
-    let relativeCount = 1;
+    let relativeCount = 0;
     let relativeCountScale = -1; //should start at 0, but since i am adding +1 at the beginning of the switch...
     let relativeCountChord = relativeCount;
 
@@ -373,43 +380,25 @@ class Keyboard extends Component {
             break;
           case "Scale Steps":
             if (isKeyInScale) {
-              if (
-                (scale !== "Major Pentatonic" && relativeCount !== 8) ||
-                (scale === "Major Pentatonic" && relativeCount !== 7)
-              ) {
-                noteName.push(relativeCount);
-              }
-              relativeCount++;
-              if (scale === "Major Pentatonic" && relativeCount === 4) {
-                relativeCount++; // add one more, this scale doesn't have the number 4
-              }
-              if (
-                scale === "Minor Pentatonic" &&
-                (relativeCount === 2 || relativeCount === 6)
-              ) {
-                relativeCount++; // add one more, this scale doesn't have 2 or 6
-              }
+              noteName.push(scaleObj.numbers[(relativeCount++) % scaleObj.numbers.length]);
             }
             break;
           case "Chord extensions":
             if (isKeyInScale) {
-              if (scale === "Major Pentatonic" && relativeCountChord === 4) {
-                relativeCountChord++; // add one more, this scale doesn't have the number 4
+              // get number (1, b3, #4...)
+              let numberString = scaleObj.numbers[(relativeCountChord++) % scaleObj.numbers.length];
+              let number, accidential = '';
+              if (!isNaN(numberString.substr(0,1))) {
+                // only number (no accidential), add one octave to number
+                number = parseInt(numberString) + 7
+              } else {
+                // we got # or b in front of number, preserve that
+                number = parseInt(numberString.substr(1)) + 7;
+                accidential = numberString.substr(0,1)
               }
-              if (
-                scale === "Minor Pentatonic" &&
-                (relativeCountChord === 2 || relativeCountChord === 6)
-              ) {
-                relativeCountChord++; // add one more, this scale doesn't have 2 or 6
+              if (number % 2 === 1) { // only show odd numbers (9, 11, 13)
+                noteName.push(accidential+number);
               }
-              if (
-                relativeCountChord === 2 ||
-                relativeCountChord === 4 ||
-                relativeCountChord === 6
-              ) {
-                noteName.push(relativeCountChord + 7);
-              }
-              relativeCountChord++;
             }
             break;
           default:
