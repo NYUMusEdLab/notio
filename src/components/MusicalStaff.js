@@ -25,7 +25,7 @@ class MusicalStaff extends Component {
     ctx = renderer.getContext();
     ctx.setViewBox(0, 0, 65, 65); //size
     //this works for scaling too: ctx.scale(2, 2); // scale X and Y
-    stave = new Stave(0, 0, this.props.width);
+    stave = new Stave(0, 0, this.props.width, {fill_style: 'black'});
     stave.setContext(ctx).draw();
   }
 
