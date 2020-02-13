@@ -185,7 +185,7 @@ class Key extends Component {
             height: this.props.pianoOn ? null : 0
           }}
         >
-          {this.props.index === 0 ? null : noteNames}
+          {noteNames}
 
           {this.props.isMajorSeventh ? (
             <div className="seventh">
