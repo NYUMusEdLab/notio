@@ -5,16 +5,11 @@ class PianoKey extends Component {
     constructor(props) {
         super(props);
         this.keyRef = React.createRef();
-
-        this.state = {
-            clicked: false
-        };
     }
     touchDown = e => {
         if (e.cancelable) {
             e.preventDefault();
         }
-        this.setState({ clicked: true });
         if (this.props.isOn) {
             this.playNote(this.props.note);
         }
@@ -23,21 +18,17 @@ class PianoKey extends Component {
         if (e.cancelable) {
             e.preventDefault(); // prevent default calling of mouse event after touch event
         }
-        this.setState({ clicked: false });
         if (this.props.isOn) {
             this.releaseNote(this.props.note);
         }
     };
 
     clickedMouse = e => {
-        //console.log('mouse clicked', e);
-        this.setState({ clicked: true });
         if (this.props.isOn) {
             this.playNote(this.props.note);
         }
     };
     unClickedMouse = e => {
-        this.setState({ clicked: false });
         if (this.props.isOn) {
             this.releaseNote(this.props.note);
         }
@@ -45,24 +36,22 @@ class PianoKey extends Component {
 
     mouseEnter = e => {
         if (this.props.isOn && this.props.isMouseDown === true) {
-            this.setState({ clicked: true });
             this.playNote(this.props.note);
         }
     };
 
     mouseLeave = e => {
         if (this.props.isOn && this.props.isMouseDown === true) {
-            this.setState({ clicked: false });
             this.releaseNote(this.props.note);
         }
     };
 
     playNote = note => {
-        this.props.synth.triggerAttack(note);
+        this.props.noteOn(note);
     };
 
     releaseNote = note => {
-        this.props.synth.triggerRelease(note);
+        this.props.noteOff(note);
     };
 
     updateDimensions = () => {
@@ -106,9 +95,10 @@ class PianoKey extends Component {
             keyColor,
             index,
             root,
-            isOn
+            color,
+            isActive,
+            noteNameEnglish
         } = this.props;
-        
         let daNote;
         let match = /[0-9]/.exec(this.props.note);
         if (match) {
@@ -118,7 +108,8 @@ class PianoKey extends Component {
         return (
             <div
                 ref={this.keyRef}
-                className={`piano-key ${keyColor} ${daNote}`}
+                className={`piano-key ${keyColor} ${noteNameEnglish.toLowerCase()}`}
+                style={{backgroundColor: isActive && keyColor === 'white' ? color : ''}}
                 onMouseUp={this.unClickedMouse}
                 onMouseDown={this.clickedMouse}
                 onTouchStart={this.touchDown}
@@ -127,8 +118,13 @@ class PianoKey extends Component {
                 onMouseLeave={this.mouseLeave}
             >
                 {keyColor === 'black' ? (
-                    <div className="blackPianoKeyContainer"><div className="blackPianoKey"></div>
-                    <div className="blackPianoKeyFiller"></div></div>
+                    <div className="blackPianoKeyContainer">
+                        <div className="blackPianoKey"
+                            style={{backgroundColor: isActive ? color : ''}}
+                        >
+                        </div>
+                        <div className="blackPianoKeyFiller"></div>
+                    </div>
                     ) : null
                 }
                {index === 0 ? root : null}
@@ -141,9 +137,11 @@ class PianoKey extends Component {
 PianoKey.propTypes = {
     note: PropTypes.string,
     isOn: PropTypes.bool,
+    color: PropTypes.string,
     keyColor: PropTypes.string,
     index: PropTypes.number,
-    root: PropTypes.string
+    root: PropTypes.string,
+    isActive: PropTypes.bool
 };
 
 export default PianoKey;

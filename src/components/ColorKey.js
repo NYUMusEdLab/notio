@@ -7,16 +7,11 @@ class ColorKey extends Component {
     constructor(props) {
         super(props);
         this.keyRef = React.createRef();
-
-        this.state = {
-            clicked: false
-        };
     }
     touchDown = e => {
         if (e.cancelable) {
             e.preventDefault();
         }
-        this.setState({ clicked: true });
         if (this.props.isOn) {
             this.playNote(this.props.note);
         }
@@ -25,21 +20,17 @@ class ColorKey extends Component {
         if (e.cancelable) {
             e.preventDefault(); // prevent default calling of mouse event after touch event
         }
-        this.setState({ clicked: false });
         if (this.props.isOn) {
             this.releaseNote(this.props.note);
         }
     };
 
     clickedMouse = e => {
-        //console.log('mouse clicked', e);
-        this.setState({ clicked: true });
         if (this.props.isOn) {
             this.playNote(this.props.note);
         }
     };
     unClickedMouse = e => {
-        this.setState({ clicked: false });
         if (this.props.isOn) {
             this.releaseNote(this.props.note);
         }
@@ -47,24 +38,22 @@ class ColorKey extends Component {
 
     mouseEnter = e => {
         if (this.props.isOn && this.props.isMouseDown === true) {
-            this.setState({ clicked: true });
             this.playNote(this.props.note);
         }
     };
 
     mouseLeave = e => {
         if (this.props.isOn && this.props.isMouseDown === true) {
-            this.setState({ clicked: false });
             this.releaseNote(this.props.note);
         }
     };
 
     playNote = note => {
-        this.props.synth.triggerAttack(note);
+        this.props.noteOn(note);
     };
 
     releaseNote = note => {
-        this.props.synth.triggerRelease(note);
+        this.props.noteOff(note);
     };
 
     updateDimensions = () => {
@@ -150,14 +139,14 @@ class ColorKey extends Component {
         return (
             <div
                 ref={this.keyRef}
-                className={`${
+                className={`color-key ${
                     this.state.clicked && isOn ? "active" : ""
                     } ${isOn ? "on" : "off"} ${
                     (this.props.note.includes("C") &&
                         !this.props.note.includes("#") &&
                         !this.props.note.includes("b")) ||
                         this.props.note.includes("B#")
-                        ? "c-mark"
+                        ? ''/*"c-mark"*/
                         : ""
                     }
                     `}

@@ -194,10 +194,17 @@ body {
   flex-direction: column;
 }
 
-.Key.on .active {
-  opacity: 1;
-  border: 2px solid #000;
+.Key.on.active .color-key {
+  box-shadow: inset 0px 0px 3px black;
 }
+/*
+.Key.on.active .piano-key.white {
+  box-shadow: inset 0px 0px 5px black;
+}
+
+.Key.on.active .piano-key.black .blackPianoKey {
+  box-shadow: inset 0px 0px 8px white;
+}*/
 
 .c-mark {
   border-left: 3px solid #000000;

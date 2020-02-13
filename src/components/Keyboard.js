@@ -19,14 +19,14 @@ let onlyScaleIndex = 0;
 let threeLowerOctave = new Set();
 
 const pressedKeys = new Set();
-const currentActiveNotes = new Set();
+//const currentActiveNotes = new Set();
 
 class Keyboard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeNotes: [],
+      activeNotes: new Set(),
       currentScale: "",
       scaleSteps: {},
       mouse_is_down: false
@@ -75,12 +75,12 @@ class Keyboard extends Component {
       buttonPressed = activeElementsforKeyboard[mapKeyDown];
 
       pressedKeys.add(buttonPressed);
-      this.highlight(buttonPressed.querySelector('.on'));
-      if (!currentActiveNotes.has(buttonPressed.dataset.Note)) {
+      /*this.highlightNote(buttonPressed.dataset.note) //.querySelector('.on'));
+      if (!currentActiveNotes.has(buttonPressed.dataset.note)) {
         currentActiveNotes.add(buttonPressed.dataset.note);
         this.playNote(buttonPressed.dataset.note); //this.synth.triggerAttack(buttonPressed.dataset.note);
-      }
-      console.log("currentActiveNotes", currentActiveNotes);
+      }*/
+      this.noteOn(buttonPressed.dataset.note);
     } else if (!this.props.extendedKeyboard) {
       let threeLowerOctaveArr = Array.from(threeLowerOctave);
       // TODO:lowernotes are played when clicked QAZ
@@ -125,16 +125,10 @@ class Keyboard extends Component {
       let buttonReleased;
       buttonReleased = activeElementsforKeyboard[mapKeyUp];
 
-      // here the logic of the ui is separated from the one of the synth for clarity
       if (pressedKeys.has(buttonReleased)) {
-        this.removeHighlight(buttonReleased.querySelector('.on'));
         pressedKeys.delete(buttonReleased);
       }
-      if (currentActiveNotes.has(buttonReleased.dataset.note)) {
-        this.releaseNote(buttonReleased.dataset.note); //this.synth.triggerRelease(buttonReleased.dataset.note);
-        currentActiveNotes.delete(buttonReleased.dataset.note);
-        //console.log(currentActiveNotes);
-      }
+      this.noteOff(buttonReleased.dataset.note);
     } else if (!this.props.extendedKeyboard) {
       //TODO: it's not correct
       let threeLowerOctaveArr = Array.from(threeLowerOctave);
@@ -164,6 +158,24 @@ class Keyboard extends Component {
     this.synth.triggerRelease(note);
   };
 
+  noteOn = note => {
+    this.playNote(note);
+    this.highlightNote(note);
+
+    let newActiveNotes = new Set(this.state.activeNotes);
+    newActiveNotes.add(note);
+    this.setState( { activeNotes: newActiveNotes});
+  }
+
+  noteOff = note => {
+    this.releaseNote(note);
+    this.removeHighlightNote(note);
+
+    let newActiveNotes = new Set(this.state.activeNotes);
+    newActiveNotes.delete(note);
+    this.setState( { activeNotes: newActiveNotes});
+  }
+
   mouseDown = note => {
     /* this helps us deal with this problem in Chrome:
      *
@@ -181,13 +193,14 @@ class Keyboard extends Component {
     this.setState({ mouse_is_down: false });
   };
 
-  highlight = buttonTarget => {
+  highlightNote = note => {
     // Add press effect animation
-    //console.log(buttonTarget);
+    const buttonTarget = document.querySelector(`[data-note="${note}"]`);
     buttonTarget.classList.add("active");
   };
 
-  removeHighlight = buttonTarget => {
+  removeHighlightNote = note => {
+    const buttonTarget = document.querySelector(`[data-note="${note}"]`);
     buttonTarget.classList.remove("active");
   };
 
@@ -370,7 +383,7 @@ class Keyboard extends Component {
     let relativeCountScale = this.props.extendedKeyboard ? (this.props.scale.includes('Pentatonic') ? 2 : 3) : -1; //-1; //should start at 0, but since i am adding +1 at the beginning of the switch...
     let relativeCountChord = relativeCount;
 
-    const noteList = displayNotes.map(function(note, arrayIndex) {
+    const noteList = displayNotes.map((note, arrayIndex) => {
       const index = (arrayIndex + scaleStart) % 12;
       let noteName = [];
       const isKeyInScale = scaleSteps.steps.includes(index);
@@ -468,6 +481,7 @@ class Keyboard extends Component {
           note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${
             octave + noteOffset /*+ Math.floor(index/12)*/
           }`}
+          noteNameEnglish={note.note_english}
           notation={notation}
           noteName={noteName}
           color={colors[index]}
@@ -482,6 +496,11 @@ class Keyboard extends Component {
           theme={theme}
           trebleStaffOn={trebleStaffOn}
           showOffNotes={showOffNotes}
+          isActive={this.state.activeNotes.has(`${noteThatWillSound ? noteThatWillSound : note.note_english}${
+            octave + noteOffset /*+ Math.floor(index/12)*/
+          }`)}
+          noteOn={this.noteOn}
+          noteOff={this.noteOff}
         />
       );
     });

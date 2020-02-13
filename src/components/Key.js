@@ -38,17 +38,24 @@ class Key extends Component {
         pianoOn={this.props.pianoOn}
         isMouseDown={this.props.isMouseDown}
         keyIndex={this.props.keyIndex}
+        noteOn={this.props.noteOn}
+        noteOff={this.props.noteOff}
       />
         {/*toggle Piano */
         this.props.pianoOn ? (
           <PianoKey 
             note={this.props.note}
+            noteNameEnglish={this.props.noteNameEnglish}
             isOn={this.props.isOn}
+            color={this.props.color}
             keyColor={this.props.keyColor}
             index={this.props.index}
             root={this.props.root}
             synth={this.props.synth}
             isMouseDown={this.props.isMouseDown}
+            isActive={this.props.isActive}
+            noteOn={this.props.noteOn}
+            noteOff={this.props.noteOff}
           />
         ) : null}
       </div>
@@ -65,7 +72,9 @@ Key.propTypes = {
   keyColor: PropTypes.string,
   isOn: PropTypes.bool,
   root: PropTypes.string,
-  isMajorSeventh: PropTypes.bool
+  isMajorSeventh: PropTypes.bool,
+  isActive: PropTypes.bool,
+  noteNameEnglish: PropTypes.string
   //add the rest
 };
 
