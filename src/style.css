@@ -182,6 +182,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  pointer-events: none; /* makes it click thru */
 }
 
 .Key .note {
@@ -234,60 +235,61 @@ body {
 
 .Key.black .piano-key {
   height: 30%;
-  background-color: black;
+  background-color: transparent;
 }
 
-.Key.black .piano-key div {
+.Key.black .blackPianoKeyContainer {
   height: 100%;
-  display: flex;
 }
-.Key.black .piano-key .whiteContainer div:first-child {
-  border-right: 1px solid #3f3f3f;
+.Key.black .piano-key .blackPianoKeyFiller {
+  height: 35%;
 }
-.Key.black .piano-key .whiteContainer div {
-  background-color: white;
-  height: 33%;
-  position: relative;
-  top: 67%;
+.Key.black .piano-key .blackPianoKey {
+  pointer-events: all;
+  height: 65%;
+  background-color: black;
 }
 
 .Key.white .piano-key {
   height: 30%;
   background-color: white;
+  border-left: 1px solid #3f3f3f;
+  width: 171%;
+  position: relative;
+  pointer-events: all;
 }
+
+.Key.on .piano-key.white:hover, .Key.on .piano-key.black .blackPianoKey:hover {
+  background-color: #aaa;
+}
+
+.Key.off .piano-key.white {
+  background-color: #ddd;
+}
+.Key.off .piano-key.black .blackPianoKey {
+  background-color: #666;
+}
+
+.Key.on .color-key {
+  pointer-events: all;
+}
+
+.piano-key.c { left: 0%; }
+.piano-key.d { left: -34%; }
+.piano-key.e { left: -65%; }
+.piano-key.f { left: 6%; }
+.piano-key.g { left: -22%; }
+.piano-key.a { left: -50%; }
+.piano-key.b { left: -76%; }
+
 .piano-key.e, .piano-key.b { border-right: 1px solid #3f3f3f; }
-/* TODO these should always have the same name (only flats) */
-.piano-key.cs .whiteBottomA, .piano-key.db .whiteBottomA { width: 67% }
-.piano-key.cs .whiteBottomB, .piano-key.db .whiteBottomB { width: 33% }
-.piano-key.ds .whiteBottomA, .piano-key.eb .whiteBottomA { width: 33% }
-.piano-key.ds .whiteBottomB, .piano-key.eb .whiteBottomB { width: 67% }
-.piano-key.fs .whiteBottomA, .piano-key.gb .whiteBottomA { width: 80% }
-.piano-key.fs .whiteBottomB, .piano-key.gb .whiteBottomB { width: 20% }
-.piano-key.gs .whiteBottomA, .piano-key.ab .whiteBottomA { width: 50% }
-.piano-key.gs .whiteBottomB, .piano-key.ab .whiteBottomB { width: 50% }
-.piano-key.bb .whiteBottomA, .piano-key.bb .whiteBottomA { width: 20% }
-.piano-key.bb .whiteBottomB, .piano-key.bb .whiteBottomB { width: 80% }
 
-
-.Key:first-child .piano-key {
-  background-color: white;
-  text-align: center;
-  font-size: 2em;
-  font-weight: 700;
-}
 
 .black {
   border-top: 0px;
   z-index: 2;
 }
 
-.white {
-  /*background-color: white;*/
-}
-
-.off {
-  /*opacity: 0.4;*/
-}
 
 .text {
   text-align: center;

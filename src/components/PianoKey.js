@@ -105,7 +105,8 @@ class PianoKey extends Component {
         const {
             keyColor,
             index,
-            root
+            root,
+            isOn
         } = this.props;
         
         let daNote;
@@ -126,8 +127,8 @@ class PianoKey extends Component {
                 onMouseLeave={this.mouseLeave}
             >
                 {keyColor === 'black' ? (
-                    <div className="whiteContainer"><div className="whiteBottomA"></div>
-                    <div className="whiteBottomB"></div></div>
+                    <div className="blackPianoKeyContainer"><div className="blackPianoKey"></div>
+                    <div className="blackPianoKeyFiller"></div></div>
                     ) : null
                 }
                {index === 0 ? root : null}
