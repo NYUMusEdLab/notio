@@ -159,21 +159,25 @@ class Keyboard extends Component {
   };
 
   noteOn = note => {
-    this.playNote(note);
-    this.highlightNote(note);
+    if (!this.state.activeNotes.has(note)) {
+      this.playNote(note);
+      this.highlightNote(note);
 
-    let newActiveNotes = new Set(this.state.activeNotes);
-    newActiveNotes.add(note);
-    this.setState( { activeNotes: newActiveNotes});
+      let newActiveNotes = new Set(this.state.activeNotes);
+      newActiveNotes.add(note);
+      this.setState( { activeNotes: newActiveNotes});
+    }
   }
 
   noteOff = note => {
-    this.releaseNote(note);
-    this.removeHighlightNote(note);
+    if (this.state.activeNotes.has(note)) {
+      this.releaseNote(note);
+      this.removeHighlightNote(note);
 
-    let newActiveNotes = new Set(this.state.activeNotes);
-    newActiveNotes.delete(note);
-    this.setState( { activeNotes: newActiveNotes});
+      let newActiveNotes = new Set(this.state.activeNotes);
+      newActiveNotes.delete(note);
+      this.setState( { activeNotes: newActiveNotes});
+    }
   }
 
   mouseDown = note => {
