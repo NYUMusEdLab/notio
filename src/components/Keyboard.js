@@ -463,6 +463,7 @@ class Keyboard extends Component {
       return (
         <Key
           key={arrayIndex}
+          keyIndex={arrayIndex}
           index={index}
           note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${
             octave + noteOffset /*+ Math.floor(index/12)*/

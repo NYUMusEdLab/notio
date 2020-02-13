@@ -112,6 +112,7 @@ class ColorKey extends Component {
             noteName,
             theme,
             trebleStaffOn,
+            keyIndex
         } = this.props;
 
         
@@ -188,11 +189,13 @@ class ColorKey extends Component {
                     ) : null}
                 </div>
                 {
-                    isOn && trebleStaffOn && this.state.myWidth ? (
+                    trebleStaffOn && this.state.myWidth ? (
                         <MusicalStaff
                             width={this.state.myWidth}
                             note={this.props.note}
                             showOffNotes={this.props.showOffNotes}
+                            keyIndex={keyIndex}
+                            isOn={isOn}
                         />
                     ) : null
                 }
@@ -211,7 +214,8 @@ ColorKey.propTypes = {
     keyColor: PropTypes.string,
     isOn: PropTypes.bool,
     root: PropTypes.string,
-    isMajorSeventh: PropTypes.bool
+    isMajorSeventh: PropTypes.bool,
+    keyIndex: PropTypes.number
 };
 
 export default ColorKey;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Vex from "vexflow";
+import PropTypes from "prop-types";
 const { Renderer, Stave, Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
 
 let stave, ctx, renderer;
@@ -21,11 +22,12 @@ class MusicalStaff extends Component {
   setupStaff() {
     let containerSVG = this.musicalStaff.current;
     renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
-    renderer.resize(this.props.width, 400);
+    renderer.resize(60, 140);
     ctx = renderer.getContext();
-    ctx.setViewBox(0, 0, 65, 65); //size
-    //this works for scaling too: ctx.scale(2, 2); // scale X and Y
-    stave = new Stave(0, 0, this.props.width, {fill_style: 'black'});
+    ctx.setViewBox(0, 0, 60, 140); //size
+    stave = new Stave(0, 0, 60, {fill_style: 'black'});
+    // add clef to first column
+    if (this.props.keyIndex === 0) stave.addClef('treble');
     stave.setContext(ctx).draw();
   }
 
@@ -69,23 +71,33 @@ class MusicalStaff extends Component {
 
   componentDidMount() {
     this.setupStaff();
-    this.drawNotes();
+    if (this.props.isOn) this.drawNotes();
   }
 
   componentDidUpdate(prevProps) {
     if (
       prevProps.note !== this.props.note ||
-      prevProps.showOffNote !== this.props.showOffNotes
+      prevProps.showOffNote !== this.props.showOffNotes ||
+      prevProps.width !== this.props.width ||
+      prevProps.isOn !== this.props.isOn
     ) {
       this.removePrevious();
       this.setupStaff();
-      this.drawNotes();
+      if (this.props.isOn) this.drawNotes();
     }
   }
 
   render() {
-    return <div ref={this.musicalStaff} className="musical-staff" />;
+    return <div ref={this.musicalStaff} className="musical-staff" style={{width: this.props.width}} />;
   }
+}
+
+MusicalStaff.propTypes = {
+  note: PropTypes.string,
+  showOffNote: PropTypes.bool,
+  width: PropTypes.number,
+  keyIndex: PropTypes.number,
+  isOn: PropTypes.bool
 }
 
 export default MusicalStaff;

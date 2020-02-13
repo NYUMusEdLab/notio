@@ -310,8 +310,12 @@ body {
   position: absolute;
   top: 30%;
   z-index: 10;
-  align-self: center;
   pointer-events: none; /* makes it click thru */
+}
+
+.musical-staff svg {
+  width: 100%;
+  height: auto;
 }
 
 .musical-staff svg > rect {

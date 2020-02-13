@@ -37,6 +37,7 @@ class Key extends Component {
         synth={this.props.synth}
         pianoOn={this.props.pianoOn}
         isMouseDown={this.props.isMouseDown}
+        keyIndex={this.props.keyIndex}
       />
         {/*toggle Piano */
         this.props.pianoOn ? (
