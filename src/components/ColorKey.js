@@ -109,13 +109,13 @@ class ColorKey extends Component {
 
         switch (theme) {
             case "light":
-                offKeyColorWithTheme = '#ccc'; //offColor;
+                offKeyColorWithTheme = ['#eee', '#ddd']; //offColor;
                 break;
             case "dark":
-                offKeyColorWithTheme = "#000";
+                offKeyColorWithTheme = ['#000', '#333'];
                 break;
             default:
-                offKeyColorWithTheme = '#ccc'; //offColor;
+                offKeyColorWithTheme = ['#ddd', '#ccc']; //offColor;
         }
 
         const noteNames = noteName
@@ -152,7 +152,13 @@ class ColorKey extends Component {
                     `}
                     style={{
                         height: this.props.pianoOn ? '70%' : '100%',
-                        backgroundColor: isOn ? color : offKeyColorWithTheme,
+                        background: isOn ? color : `repeating-linear-gradient(
+                            0deg,
+                            ${offKeyColorWithTheme[0]},
+                            ${offKeyColorWithTheme[0]} 15px,
+                            ${offKeyColorWithTheme[1]} 15px,
+                            ${offKeyColorWithTheme[1]} 30px
+                          )`,
                         opacity: theme === "dark" ? "0.7" : null
                     }}
                 onMouseUp={this.unClickedMouse}
