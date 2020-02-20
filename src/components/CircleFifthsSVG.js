@@ -27,8 +27,7 @@ class CircleFifthsSVG extends Component {
       //either 1. handleClick
       rootNode.addEventListener("click", e => {
         removeActiveClasses(e);
-
-        e.path[1].classList.add("active");
+        e.target.parentNode.classList.add("active");
         handleChange(noteName);
       });
       //or 2. add current selected one on first load
