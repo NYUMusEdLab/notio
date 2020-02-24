@@ -88,6 +88,10 @@ body {
   justify-content: space-between;
 }
 
+.Menu-label {
+  flex: 1;
+}
+
 .MainMenu .closeMenu {
   width: 40px;
   align-self: flex-end;
@@ -237,7 +241,7 @@ body {
 }
 
 .Key.black {
-  z-index: 3
+  z-index: 3;
 }
 
 .Key.black .piano-key {
@@ -266,7 +270,8 @@ body {
   pointer-events: all;
 }
 
-.Key.on .piano-key.white:hover, .Key.on .piano-key.black .blackPianoKey:hover {
+.Key.on .piano-key.white:hover,
+.Key.on .piano-key.black .blackPianoKey:hover {
   background-color: #aaa;
 }
 
@@ -281,22 +286,37 @@ body {
   pointer-events: all;
 }
 
-.piano-key.c { left: 0%; }
-.piano-key.d { left: -34%; }
-.piano-key.e { left: -65%; }
-.piano-key.f { left: 6%; }
-.piano-key.g { left: -22%; }
-.piano-key.a { left: -50%; }
-.piano-key.b { left: -76%; }
+.piano-key.c {
+  left: 0%;
+}
+.piano-key.d {
+  left: -34%;
+}
+.piano-key.e {
+  left: -65%;
+}
+.piano-key.f {
+  left: 6%;
+}
+.piano-key.g {
+  left: -22%;
+}
+.piano-key.a {
+  left: -50%;
+}
+.piano-key.b {
+  left: -76%;
+}
 
-.piano-key.e, .piano-key.b { border-right: 1px solid #3f3f3f; }
-
+.piano-key.e,
+.piano-key.b {
+  border-right: 1px solid #3f3f3f;
+}
 
 .black {
   border-top: 0px;
   z-index: 2;
 }
-
 
 .text {
   text-align: center;

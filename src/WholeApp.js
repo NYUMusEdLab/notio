@@ -185,22 +185,28 @@ class WholeApp extends Component {
   };
 
   render() {
-    return this.state.loading ? (
+    const {
+      loading,
+      showOffNotes,
+      menuOpen,
+      octave,
+      scale,
+      notation,
+      baseNote,
+      pianoOn,
+      extendedKeyboard,
+      theme,
+      trebleStaffOn
+    } = this.state;
+
+    return loading ? (
       <LoadingScreen />
     ) : (
-      <div
-        className={`Piano${
-          this.state.showOffNotes === true ? " showOffNotes" : ""
-        }`}
-      >
+      <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
         <div className="MainMenuDot" onClick={this.toggleMenu}>
           <span>&#9835;</span>
         </div>
-        <div
-          className={`MainMenu slide-in-top ${
-            this.state.menuOpen ? "open" : ""
-          }`}
-        >
+        <div className={`MainMenu slide-in-top ${menuOpen ? "open" : ""}`}>
           <div
             className="closeMenu"
             onClick={this.toggleMenu}
@@ -209,27 +215,21 @@ class WholeApp extends Component {
             (x)
           </div>
           <div className="Menu-Row">
-            <Octaves
-              octave={this.state.octave}
-              handleClick={this.handleClickOctave}
-            />
-            <Scale
-              scale={this.state.scale}
-              handleSelect={this.handleSelectScale}
-            />
+            <Octaves octave={octave} handleClick={this.handleClickOctave} />
+            <Scale scale={scale} handleSelect={this.handleSelectScale} />
             <Notation
-              notation={this.state.notation}
+              notation={notation}
               handleSelect={this.handleSelectNotation}
             />
             <CircleFifthsSVG
-              rootNote={this.state.baseNote}
+              rootNote={baseNote}
               handleChange={this.handleChangeRoot}
             />
           </div>
           <div className="Menu-Row">
             <div className="Menu-label">Piano</div>
-            <div className="Menu-label" />
             <div className="Menu-label">Extended</div>
+            <div className="Menu-label"></div>
             <div className="Menu-label">
               Musical Staff (Treble){" "}
               <img height="30" src="/img/treble-clef.png" alt="treble cleff" />
@@ -242,7 +242,7 @@ class WholeApp extends Component {
               <div className="checkbox">
                 <input
                   type="checkbox"
-                  checked={this.state.pianoOn}
+                  checked={pianoOn}
                   onChange={this.togglePiano}
                 />
                 <label />
@@ -252,21 +252,18 @@ class WholeApp extends Component {
               <div className="checkbox">
                 <input
                   type="checkbox"
-                  checked={this.state.extendedKeyboard}
+                  checked={extendedKeyboard}
                   onChange={this.toggleExtendedKeyboard}
                 />
                 <label />
               </div>
             </div>
-            <Theme
-              theme={this.state.theme}
-              handleSelect={this.handleSelectTheme}
-            />
+            <Theme theme={theme} handleSelect={this.handleSelectTheme} />
             <div className="toggle-switch">
               <div className="checkbox">
                 <input
                   type="checkbox"
-                  checked={this.state.trebleStaffOn}
+                  checked={trebleStaffOn}
                   onChange={this.toggleStaff}
                 />
                 <label />
@@ -276,7 +273,7 @@ class WholeApp extends Component {
               <div className="checkbox">
                 <input
                   type="checkbox"
-                  checked={this.state.showOffNotes}
+                  checked={showOffNotes}
                   onChange={this.toggleShowOffNotes}
                 />
                 <label />
@@ -292,9 +289,7 @@ class WholeApp extends Component {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href={`https://notio.pestanias.now.sh/shared/${
-                  this.state.sessionID
-                }`}
+                href={`https://notio.pestanias.now.sh/shared/${this.state.sessionID}`}
               >
                 https://notio.pestanias.now.sh/shared/{this.state.sessionID}
               </a>
