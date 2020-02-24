@@ -1,0 +1,11 @@
+/* MainMenu - circle of fifths */
+
+.circleFifths .note:hover path {
+  fill-opacity: 100;
+  stroke-width: 0;
+}
+
+.circleFifths .note.active path {
+  fill-opacity: 100;
+  stroke-width: 0;
+}

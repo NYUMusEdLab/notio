@@ -1,0 +1,13 @@
+.musical-staff {
+  position: absolute;
+  top: 30%;
+  z-index: 10;
+  pointer-events: none; /* makes it click thru */
+  & svg {
+    width: 100%;
+    height: auto;
+    & > rect {
+      width: 0 !important;
+    }
+  }
+}
