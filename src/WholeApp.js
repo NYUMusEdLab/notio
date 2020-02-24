@@ -3,7 +3,7 @@ import Keyboard from "./components/Keyboard";
 import { Octaves, Scale, Notation, Theme } from "./components/InputComponents";
 import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import LoadingScreen from "./components/LoadingScreen";
-import "./style.css";
+import "./style.scss";
 import db from "./Firebase";
 
 class WholeApp extends Component {
