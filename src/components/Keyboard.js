@@ -46,7 +46,7 @@ class Keyboard extends Component {
      */
     //e.preventDefault();
 
-    const { scaleSteps } = this.state;
+    const { extendedKeyboard } = this.props;
 
     if (Tone.context.state !== "running") {
       Tone.context.resume();
@@ -65,7 +65,7 @@ class Keyboard extends Component {
     }
 
     let buttonPressed;
-    const activeKeyCodes = this.props.extendedKeyboard ? keycodesExtended : keycodes;
+    const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
     const mapKeyDown = activeKeyCodes.indexOf(e.keyCode);
 
     if (
@@ -81,7 +81,7 @@ class Keyboard extends Component {
         this.playNote(buttonPressed.dataset.note); //this.synth.triggerAttack(buttonPressed.dataset.note);
       }*/
       this.noteOn(buttonPressed.dataset.note);
-    } else if (!this.props.extendedKeyboard) {
+    } else if (!extendedKeyboard) {
       let threeLowerOctaveArr = Array.from(threeLowerOctave);
       // TODO:lowernotes are played when clicked QAZ
       ///let currentRoot = rootNote.find(obj => {
@@ -114,9 +114,9 @@ class Keyboard extends Component {
   handleKeyUp = e => {
     //e.preventDefault();
 
-    const { scaleSteps } = this.state;
+    const { extendedKeyboard } = this.props;
 
-    const activeKeyCodes = this.props.extendedKeyboard ? keycodesExtended : keycodes;
+    const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
     const mapKeyUp = activeKeyCodes.indexOf(e.keyCode);
     if (
       activeKeyCodes.includes(e.keyCode) &&
@@ -129,7 +129,7 @@ class Keyboard extends Component {
         pressedKeys.delete(buttonReleased);
       }
       this.noteOff(buttonReleased.dataset.note);
-    } else if (!this.props.extendedKeyboard) {
+    } else if (!extendedKeyboard) {
       //TODO: it's not correct
       let threeLowerOctaveArr = Array.from(threeLowerOctave);
       let previousOctave = threeLowerOctaveArr.map(function(note) {
@@ -159,28 +159,32 @@ class Keyboard extends Component {
   };
 
   noteOn = note => {
-    if (!this.state.activeNotes.has(note)) {
+    const { activeNotes } = this.state;
+
+    if (!activeNotes.has(note)) {
       this.playNote(note);
       this.highlightNote(note);
 
-      let newActiveNotes = new Set(this.state.activeNotes);
+      let newActiveNotes = new Set(activeNotes);
       newActiveNotes.add(note);
-      this.setState( { activeNotes: newActiveNotes});
+      this.setState({ activeNotes: newActiveNotes });
     }
-  }
+  };
 
   noteOff = note => {
-    if (this.state.activeNotes.has(note)) {
+    const { activeNotes } = this.state;
+
+    if (activeNotes.has(note)) {
       this.releaseNote(note);
       this.removeHighlightNote(note);
 
-      let newActiveNotes = new Set(this.state.activeNotes);
+      let newActiveNotes = new Set(activeNotes);
       newActiveNotes.delete(note);
-      this.setState( { activeNotes: newActiveNotes});
+      this.setState({ activeNotes: newActiveNotes });
     }
-  }
+  };
 
-  mouseDown = note => {
+  mouseDown = () => {
     /* this helps us deal with this problem in Chrome:
      *
      * The AudioContext was not allowed to start. It must be resumed (or created)
@@ -193,7 +197,7 @@ class Keyboard extends Component {
     this.setState({ mouse_is_down: true });
   };
 
-  mouseUp = note => {
+  mouseUp = () => {
     this.setState({ mouse_is_down: false });
   };
 
@@ -210,45 +214,38 @@ class Keyboard extends Component {
 
   //this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
   generateCurrentScale = scaleFormula => {
-    if (
-      !this.props.scale.includes("Pentatonic") &&
-      !this.props.scale.includes("Blues")
-    )
-      return makeScaleMajorMinor(scaleFormula, this.props.baseNote, "English");
+    const { scale, baseNote } = this.props;
+
+    if (!scale.includes("Pentatonic") && !scale.includes("Blues"))
+      return makeScaleMajorMinor(scaleFormula, baseNote, "English");
     else
-      return makeScalePentatonicBlues(
-        scaleFormula,
-        this.props.baseNote,
-        this.props.scale,
-        "English"
-      );
+      return makeScalePentatonicBlues(scaleFormula, baseNote, scale, "English");
   };
 
   generateScales = scaleSteps => {
     let theScale = {};
+
+    const { notation, scale, baseNote } = this.props;
     //this is my scale after applying the formulas for minor and major with the correct name
     //works only for major scales and for harmonic minor, melodic minor and natural minor
-    for (let i = 0; i < this.props.notation.length; i++) {
+    for (let i = 0; i < notation.length; i++) {
       if (
-        this.props.notation[i] === "English" ||
-        this.props.notation[i] === "German" ||
-        this.props.notation[i] === "Romance"
+        notation[i] === "English" ||
+        notation[i] === "German" ||
+        notation[i] === "Romance"
       ) {
-        if (
-          !this.props.scale.includes("Pentatonic") &&
-          !this.props.scale.includes("Blues")
-        ) {
-          theScale[this.props.notation[i]] = makeScaleMajorMinor(
+        if (!scale.includes("Pentatonic") && !scale.includes("Blues")) {
+          theScale[notation[i]] = makeScaleMajorMinor(
             scaleSteps,
-            this.props.baseNote,
-            this.props.notation[i]
+            baseNote,
+            notation[i]
           );
         } else {
-          theScale[this.props.notation[i]] = makeScalePentatonicBlues(
+          theScale[notation[i]] = makeScalePentatonicBlues(
             scaleSteps,
-            this.props.baseNote,
-            this.props.scale,
-            this.props.notation[i]
+            baseNote,
+            scale,
+            notation[i]
           );
         }
       }
@@ -256,7 +253,7 @@ class Keyboard extends Component {
     return theScale;
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps) {
     let scaleSteps = scales.find(obj => obj.name === nextProps.scale);
     return {
       scaleSteps: scaleSteps
@@ -265,56 +262,88 @@ class Keyboard extends Component {
 
   componentDidUpdate(prevProps) {
     //refresh the keys every time we update the props
+    const { notation, scale, baseNote, extendedKeyboard } = this.props;
     if (
-      this.props.notation !== prevProps.notation ||
-      this.props.scale !== prevProps.scale ||
-      this.props.baseNote !== prevProps.baseNote ||
-      this.props.extendedKeyboard !== prevProps.extendedKeyboard
+      notation !== prevProps.notation ||
+      scale !== prevProps.scale ||
+      baseNote !== prevProps.baseNote ||
+      extendedKeyboard !== prevProps.extendedKeyboard
     ) {
       targetArr = Array.from(document.querySelectorAll(".Key"));
       activeElementsforKeyboard = targetArr.filter(key => {
         for (let i = 0; i < key.children.length; i++) {
           if (key.children[i].classList.contains("on")) return key;
         }
-        return;
+        return null;
       });
-      scaleSteps = scales.find(obj => obj.name === this.props.scale);
+      scaleSteps = scales.find(obj => obj.name === scale);
       this.setState({
         currentScale: this.generateCurrentScale(scaleSteps.steps)
       });
       threeLowerOctave.clear();
     }
-    onlyScaleIndex = this.props.extendedKeyboard ? (this.props.scale.includes('Pentatonic') ? 3 : 4) : 0;
+    onlyScaleIndex = extendedKeyboard
+      ? scale.includes("Pentatonic")
+        ? 3
+        : 4
+      : 0;
   }
 
   componentDidMount() {
-    scaleSteps = scales.find(obj => obj.name === this.props.scale);
-    this.setState({
-      currentScale: this.generateCurrentScale(scaleSteps.steps)
-    });
+                        scaleSteps = scales.find(
+                          obj => obj.name === this.props.scale
+                        );
+                        this.setState({
+                          scaleSteps,
+                          currentScale: this.generateCurrentScale(
+                            scaleSteps.steps
+                          )
+                        });
 
-    const keyboard = document.querySelector(".Keyboard");
+                        const keyboard = document.querySelector(".Keyboard");
 
-    document.addEventListener("keydown", this.handleKeyDown, false);
-    document.addEventListener("keyup", this.handleKeyUp, false);
+                        document.addEventListener(
+                          "keydown",
+                          this.handleKeyDown,
+                          false
+                        );
+                        document.addEventListener(
+                          "keyup",
+                          this.handleKeyUp,
+                          false
+                        );
 
-    keyboard.addEventListener("mousedown", this.mouseDown, false);
-    keyboard.addEventListener("mouseup", this.mouseUp, false);
+                        keyboard.addEventListener(
+                          "mousedown",
+                          this.mouseDown,
+                          false
+                        );
+                        keyboard.addEventListener(
+                          "mouseup",
+                          this.mouseUp,
+                          false
+                        );
 
-    onlyScaleIndex = this.props.extendedKeyboard ? (this.props.scale.includes('Pentatonic') ? 3 : 4) : 0;
+                        onlyScaleIndex = this.props.extendedKeyboard
+                          ? this.props.scale.includes("Pentatonic")
+                            ? 3
+                            : 4
+                          : 0;
 
-    let scaleSteps = scales.find(obj => obj.name === this.props.scale);
-    this.setState({ scaleSteps: scaleSteps });
+                        targetArr = Array.from(
+                          document.querySelectorAll(".Key")
+                        );
 
-    targetArr = Array.from(document.querySelectorAll(".Key"));
-
-    //only count the elements that are in the scale (className= .note .on)
-    activeElementsforKeyboard = targetArr.filter(key => {
-      for (let i = 0; i < key.children.length; i++) {
-        if (key.children[i].classList.contains("on")) return key;
-      }
-    });
-  }
+                        //only count the elements that are in the scale (className= .note .on)
+      
+                        activeElementsforKeyboard = targetArr.filter(key => {
+                          for (let i = 0; i < key.children.length; i++) {
+                            if (key.children[i].classList.contains("on"))
+                              return key;
+                          }
+                          return null;
+                        });
+                      }
 
   componentWillUnmount() {
     Tone.context.close();
@@ -331,7 +360,8 @@ class Keyboard extends Component {
       pianoOn,
       theme,
       trebleStaffOn,
-      showOffNotes
+      showOffNotes,
+      extendedKeyboard
     } = this.props;
 
     const { synth } = this;
@@ -339,7 +369,7 @@ class Keyboard extends Component {
 
     let isMajorSeventh = false;
 
-    scaleSteps = scales.find(obj => obj.name === this.props.scale);
+    scaleSteps = scales.find(obj => obj.name === scale);
 
     const theScale = this.generateScales(scaleSteps.steps);
 
@@ -349,42 +379,60 @@ class Keyboard extends Component {
         scaleObj = obj;
       }
     });
-    
+
     let baseScale = this.generateCurrentScale(scaleSteps.steps);
 
     let currentRoot = rootNote.find(obj => {
-      return obj.note === this.props.baseNote;
+      return obj.note === baseNote;
     });
 
     let displayNotesBuilder;
     let scaleStart = 0;
-    if (this.props.extendedKeyboard) {
+    if (extendedKeyboard) {
       // show notes 5-3 (octave+sixth)
       scaleStart = 7;
-      const displayNotesBase = notes.slice(currentRoot.index, currentRoot.index + 13);
-      displayNotesBuilder = displayNotesBase.slice(7, 12)
+      const displayNotesBase = notes.slice(
+        currentRoot.index,
+        currentRoot.index + 13
+      );
+      displayNotesBuilder = displayNotesBase.slice(7, 12);
       displayNotesBuilder = displayNotesBuilder.map(obj => {
-        let newObj = {...obj};
+        let newObj = { ...obj };
         newObj.octaveOffset--;
         return newObj;
       });
-      displayNotesBuilder = displayNotesBuilder.concat(displayNotesBase.map(obj => {return {...obj}}));
-      
-      let displayNotesBuilder2 = displayNotesBase.slice(1, 5)
+      displayNotesBuilder = displayNotesBuilder.concat(
+        displayNotesBase.map(obj => {
+          return { ...obj };
+        })
+      );
+
+      let displayNotesBuilder2 = displayNotesBase.slice(1, 5);
       displayNotesBuilder2 = displayNotesBuilder2.map(obj => {
-        let newObj = {...obj};
+        let newObj = { ...obj };
         newObj.octaveOffset++;
         return newObj;
-      })
+      });
       displayNotesBuilder = displayNotesBuilder.concat(displayNotesBuilder2);
     } else {
-      displayNotesBuilder = notes.slice(currentRoot.index, currentRoot.index + 13);
+      displayNotesBuilder = notes.slice(
+        currentRoot.index,
+        currentRoot.index + 13
+      );
     }
     const displayNotes = displayNotesBuilder;
 
     //we use relativeCount for Scale Steps
-    let relativeCount = this.props.extendedKeyboard ? (this.props.scale.includes('Pentatonic') ? 3 : 4) : 0; //0;
-    let relativeCountScale = this.props.extendedKeyboard ? (this.props.scale.includes('Pentatonic') ? 2 : 3) : -1; //-1; //should start at 0, but since i am adding +1 at the beginning of the switch...
+    let relativeCount = extendedKeyboard
+      ? scale.includes("Pentatonic")
+        ? 3
+        : 4
+      : 0; //0;
+    let relativeCountScale = extendedKeyboard
+      ? scale.includes("Pentatonic")
+        ? 2
+        : 3
+      : -1; //-1; //should start at 0, but since i am adding +1 at the beginning of the switch...
     let relativeCountChord = relativeCount;
 
     const noteList = displayNotes.map((note, arrayIndex) => {
@@ -400,61 +448,125 @@ class Keyboard extends Component {
       let alreadyAdded = false; //this variable is to make sure we don't increment our relativeCountScale index double if we have to notations selected
 
       for (let i = 0; i < notation.length; i++) {
-        switch (notation[i]) {
-          case "Romance":
-          case "English":
-          case "German":
-            if (!alreadyAdded && isKeyInScale) {
-              relativeCountScale++;
-            }
-            alreadyAdded = true;
-          case "Romance":
-            if (isKeyInScale) {
-              noteName.push(theScale[notation[i]][relativeCountScale % (theScale[notation[i]].length - 1)]);
-            }
-            break;
-          case "English":
-            if (isKeyInScale) {
-              noteName.push(theScale[notation[i]][relativeCountScale % (theScale[notation[i]].length - 1)]);
-            }
-            break;
-          case "German":
-            if (isKeyInScale) {
-              noteName.push(theScale[notation[i]][relativeCountScale % (theScale[notation[i]].length - 1)]);
-            }
-            break;
-          case "Relative":
-            if (isKeyInScale) {
-              noteName.push(notes[index].note_relative);
-            }
-            break;
-          case "Scale Steps":
-            if (isKeyInScale) {
-              noteName.push(scaleObj.numbers[(relativeCount++) % scaleObj.numbers.length]);
-            }
-            break;
-          case "Chord extensions":
-            if (isKeyInScale) {
-              // get number (1, b3, #4...)
-              let numberString = scaleObj.numbers[(relativeCountChord++) % scaleObj.numbers.length];
-              let number, accidential = '';
-              if (!isNaN(numberString.substr(0,1))) {
-                // only number (no accidential), add one octave to number
-                number = parseInt(numberString) + 7
-              } else {
-                // we got # or b in front of number, preserve that
-                number = parseInt(numberString.substr(1)) + 7;
-                accidential = numberString.substr(0,1)
-              }
-              if (number % 2 === 1) { // only show odd numbers (9, 11, 13)
-                noteName.push(accidential+number);
-              }
-            }
-            break;
-          default:
-          //note.note_english;
-        }
-      }
+                                                  /* eslint-disable no-duplicate-case */
+                                                  switch (notation[i]) {
+                                                    case "Romance":
+                                                    case "English":
+                                                    case "German":
+                                                      if (
+                                                        !alreadyAdded &&
+                                                        isKeyInScale
+                                                      ) {
+                                                        relativeCountScale++;
+                                                      }
+                                                      alreadyAdded = true;
+                                                    case "Romance":
+                                                      if (isKeyInScale) {
+                                                        noteName.push(
+                                                          theScale[notation[i]][
+                                                            relativeCountScale %
+                                                              (theScale[
+                                                                notation[i]
+                                                              ].length -
+                                                                1)
+                                                          ]
+                                                        );
+                                                      }
+                                                      break;
+                                                    case "English":
+                                                      if (isKeyInScale) {
+                                                        noteName.push(
+                                                          theScale[notation[i]][
+                                                            relativeCountScale %
+                                                              (theScale[
+                                                                notation[i]
+                                                              ].length -
+                                                                1)
+                                                          ]
+                                                        );
+                                                      }
+                                                      break;
+                                                    case "German":
+                                                      if (isKeyInScale) {
+                                                        noteName.push(
+                                                          theScale[notation[i]][
+                                                            relativeCountScale %
+                                                              (theScale[
+                                                                notation[i]
+                                                              ].length -
+                                                                1)
+                                                          ]
+                                                        );
+                                                      }
+                                                      break;
+                                                    case "Relative":
+                                                      if (isKeyInScale) {
+                                                        noteName.push(
+                                                          notes[index]
+                                                            .note_relative
+                                                        );
+                                                      }
+                                                      break;
+                                                    case "Scale Steps":
+                                                      if (isKeyInScale) {
+                                                        noteName.push(
+                                                          scaleObj.numbers[
+                                                            relativeCount++ %
+                                                              scaleObj.numbers
+                                                                .length
+                                                          ]
+                                                        );
+                                                      }
+                                                      break;
+                                                    case "Chord extensions":
+                                                      if (isKeyInScale) {
+                                                        // get number (1, b3, #4...)
+                                                        let numberString =
+                                                          scaleObj.numbers[
+                                                            relativeCountChord++ %
+                                                              scaleObj.numbers
+                                                                .length
+                                                          ];
+                                                        let number,
+                                                          accidential = "";
+                                                        if (
+                                                          !isNaN(
+                                                            numberString.substr(
+                                                              0,
+                                                              1
+                                                            )
+                                                          )
+                                                        ) {
+                                                          // only number (no accidential), add one octave to number
+                                                          number =
+                                                            parseInt(
+                                                              numberString
+                                                            ) + 7;
+                                                        } else {
+                                                          // we got # or b in front of number, preserve that
+                                                          number =
+                                                            parseInt(
+                                                              numberString.substr(
+                                                                1
+                                                              )
+                                                            ) + 7;
+                                                          accidential = numberString.substr(
+                                                            0,
+                                                            1
+                                                          );
+                                                        }
+                                                        if (number % 2 === 1) {
+                                                          // only show odd numbers (9, 11, 13)
+                                                          noteName.push(
+                                                            accidential + number
+                                                          );
+                                                        }
+                                                      }
+                                                      break;
+                                                    default:
+                                                    //note.note_english;
+                                                  }
+                                                }
 
       let noteThatWillSound;
       let noteOffset = note.octaveOffset;
@@ -500,9 +612,11 @@ class Keyboard extends Component {
           theme={theme}
           trebleStaffOn={trebleStaffOn}
           showOffNotes={showOffNotes}
-          isActive={this.state.activeNotes.has(`${noteThatWillSound ? noteThatWillSound : note.note_english}${
-            octave + noteOffset /*+ Math.floor(index/12)*/
-          }`)}
+          isActive={this.state.activeNotes.has(
+            `${noteThatWillSound ? noteThatWillSound : note.note_english}${
+              octave + noteOffset /*+ Math.floor(index/12)*/
+            }`
+          )}
           noteOn={this.noteOn}
           noteOff={this.noteOff}
         />

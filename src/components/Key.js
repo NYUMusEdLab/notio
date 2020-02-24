@@ -4,58 +4,63 @@ import ColorKey from "./ColorKey";
 import PianoKey from "./PianoKey";
 
 class Key extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-
   render() {
     const {
       keyColor,
-      isOn,
       color,
-      theme
+      theme,
+      noteName,
+      note,
+      synth,
+      trebleStaffOn,
+      pianoOn,
+      isOn,
+      isMouseDown,
+      isActive,
+      keyIndex,
+      noteOn,
+      noteOff,
+      index,
+      noteNameEnglish,
+      root
     } = this.props;
 
-    //console.log('mouseDown?', this.props.isMouseDown);
-    
     return (
-      <div 
+      <div
         className={`Key ${keyColor}
           ${isOn ? "on" : "off"}`}
-
-          data-note={this.props.note}
+        data-note={note}
       >
-      <ColorKey
-        color={this.props.color}
-        keyColor={this.props.keyColor}
-        isOn={this.props.isOn}
-        noteName={this.props.noteName}
-        theme={this.props.theme}
-        trebleStaffOn={this.props.trebleStaffOn}
-        note={this.props.note}
-        synth={this.props.synth}
-        pianoOn={this.props.pianoOn}
-        isMouseDown={this.props.isMouseDown}
-        keyIndex={this.props.keyIndex}
-        noteOn={this.props.noteOn}
-        noteOff={this.props.noteOff}
-      />
+        <ColorKey
+          color={color}
+          keyColor={keyColor}
+          isOn={isOn}
+          noteName={noteName}
+          theme={theme}
+          trebleStaffOn={trebleStaffOn}
+          note={note}
+          synth={synth}
+          pianoOn={pianoOn}
+          isMouseDown={isMouseDown}
+          keyIndex={keyIndex}
+          noteOn={noteOn}
+          noteOff={noteOff}
+        />
         {/*toggle Piano */
-        this.props.pianoOn ? (
-          <PianoKey 
-            note={this.props.note}
-            noteNameEnglish={this.props.noteNameEnglish}
-            isOn={this.props.isOn}
-            color={this.props.color}
-            keyColor={this.props.keyColor}
-            index={this.props.index}
-            root={this.props.root}
-            synth={this.props.synth}
-            isMouseDown={this.props.isMouseDown}
-            isActive={this.props.isActive}
-            noteOn={this.props.noteOn}
-            noteOff={this.props.noteOff}
+        pianoOn ? (
+          <PianoKey
+            note={note}
+            noteNameEnglish={noteNameEnglish}
+            isOn={isOn}
+            color={color}
+            keyColor={keyColor}
+            index={index}
+            root={root}
+            synth={synth}
+            isMouseDown={isMouseDown}
+            isActive={isActive}
+            noteOn={noteOn}
+            noteOff={noteOff}
           />
         ) : null}
       </div>
@@ -74,7 +79,11 @@ Key.propTypes = {
   root: PropTypes.string,
   isMajorSeventh: PropTypes.bool,
   isActive: PropTypes.bool,
-  noteNameEnglish: PropTypes.string
+  isMouseDown: PropTypes.bool,
+  noteNameEnglish: PropTypes.string,
+  noteOn: PropTypes.func,
+  noteOff: PropTypes.func,
+  synth: PropTypes.object
   //add the rest
 };
 

@@ -19,6 +19,7 @@ class CircleFifthsSVG extends Component {
 
     const { rootNote, handleChange } = this.props;
     const { removeActiveClasses } = this;
+    // eslint-disable-next-line
     selectRoot.map(function(rootNode) {
       let noteName = rootNode.textContent;
       if (noteName.includes("♭")) {
