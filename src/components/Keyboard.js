@@ -290,60 +290,61 @@ class Keyboard extends Component {
   }
 
   componentDidMount() {
-                        scaleSteps = scales.find(
-                          obj => obj.name === this.props.scale
-                        );
-                        this.setState({
-                          scaleSteps,
-                          currentScale: this.generateCurrentScale(
-                            scaleSteps.steps
-                          )
-                        });
 
-                        const keyboard = document.querySelector(".Keyboard");
+    scaleSteps = scales.find(
+      obj => obj.name === this.props.scale
+    );
+    this.setState({
+      scaleSteps,
+      currentScale: this.generateCurrentScale(
+        scaleSteps.steps
+      )
+    });
 
-                        document.addEventListener(
-                          "keydown",
-                          this.handleKeyDown,
-                          false
-                        );
-                        document.addEventListener(
-                          "keyup",
-                          this.handleKeyUp,
-                          false
-                        );
+    const keyboard = document.querySelector(".Keyboard");
 
-                        keyboard.addEventListener(
-                          "mousedown",
-                          this.mouseDown,
-                          false
-                        );
-                        keyboard.addEventListener(
-                          "mouseup",
-                          this.mouseUp,
-                          false
-                        );
+    document.addEventListener(
+      "keydown",
+      this.handleKeyDown,
+      false
+    );
+    document.addEventListener(
+      "keyup",
+      this.handleKeyUp,
+      false
+    );
 
-                        onlyScaleIndex = this.props.extendedKeyboard
-                          ? this.props.scale.includes("Pentatonic")
-                            ? 3
-                            : 4
-                          : 0;
+    keyboard.addEventListener(
+      "mousedown",
+      this.mouseDown,
+      false
+    );
+    keyboard.addEventListener(
+      "mouseup",
+      this.mouseUp,
+      false
+    );
 
-                        targetArr = Array.from(
-                          document.querySelectorAll(".Key")
-                        );
+    onlyScaleIndex = this.props.extendedKeyboard
+      ? this.props.scale.includes("Pentatonic")
+        ? 3
+        : 4
+      : 0;
 
-                        //only count the elements that are in the scale (className= .note .on)
-      
-                        activeElementsforKeyboard = targetArr.filter(key => {
-                          for (let i = 0; i < key.children.length; i++) {
-                            if (key.children[i].classList.contains("on"))
-                              return key;
-                          }
-                          return null;
-                        });
-                      }
+    targetArr = Array.from(
+      document.querySelectorAll(".Key")
+    );
+
+    //only count the elements that are in the scale (className= .note .on)
+
+    activeElementsforKeyboard = targetArr.filter(key => {
+      for (let i = 0; i < key.children.length; i++) {
+        if (key.children[i].classList.contains("on"))
+          return key;
+      }
+      return null;
+    });
+  }
 
   componentWillUnmount() {
     Tone.context.close();
