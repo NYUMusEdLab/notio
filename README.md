@@ -11,3 +11,12 @@ Detailed info about Notio [here](http://musedlab.org/notio)
 You can see the project [here. NEW ADDRESS OF PROJECT](https://notio.pestanias.now.sh/)
 
 [Old address of project](https://notio.stackblitz.io)
+
+## Run dev version
+
+`npm start` or `yarn start`
+
+## Build
+
+- `yarn build`
+- `npx serve -s build`
