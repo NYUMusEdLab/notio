@@ -2,6 +2,7 @@
 @import "./styles/circleOfFifths.scss";
 @import "./styles/loadingScreen.scss";
 @import "./styles/toggleSwitch.scss";
+@import "./styles/notes.scss";
 @import "./styles/musicalStaff.scss";
 @import "./styles/share.scss";
 
@@ -52,13 +53,14 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   pointer-events: none; /* makes it click thru */
+  position: relative;
 }
 
 .Key .note {
   opacity: 0.4;
   text-align: center;
   font-weight: 700;
-  font-size: 40px;
+  font-size: 2rem;
   display: flex;
   flex-direction: column;
 }
@@ -78,18 +80,18 @@ body {
   text-align: center;
 }
 
-.note .off {
+//.note .off {
   /*do not display the note names */
-  display: none;
-}
-
+  //display: none;
+//}
+/*
 .Piano .Key.off {
   display: none;
 }
 
 .Piano.showOffNotes .Key.off {
   display: flex;
-}
+}*/
 
 .Key .piano-key {
   border-top: 0px;

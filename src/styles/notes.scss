@@ -1,0 +1,11 @@
+.noteWrapper {
+    position: absolute;
+    top: 48%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    pointer-events: none;
+    .noteName {
+        position: relative;
+    }
+}

@@ -173,7 +173,7 @@ class ColorKey extends Component {
         onMouseLeave={this.mouseLeave}
       >
         <div
-          className={`note ${isOn ? "on" : "off"}`}
+          className = {'noteWrapper ' + `note ${isOn ? "on" : "off"}`} 
           style={{
             backgroundColor: this.state.clicked ? color : null
           }}
