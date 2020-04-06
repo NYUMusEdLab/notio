@@ -2,6 +2,7 @@
   "name": "notio",
   "version": "0.0.0",
   "private": true,
+  "homepage": "./notio"
   "dependencies": {
     "firebase": "^6.2.1",
     "node-sass": "^4.13.1",
