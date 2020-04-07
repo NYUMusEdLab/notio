@@ -11,7 +11,7 @@ import { makeScaleMajorMinor, makeScalePentatonicBlues } from "./theory";
 
 //keys 1 to 0
 const keycodes = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48];
-const keycodesExtended = [65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222];
+const keycodesExtended = [65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222, 219, 61];
 
 let targetArr, activeElementsforKeyboard, scaleSteps;
 let onlyScaleIndex = 0;
@@ -620,6 +620,7 @@ class Keyboard extends Component {
           )}
           noteOn={this.noteOn}
           noteOff={this.noteOff}
+          extendedKeyboard={extendedKeyboard}
         />
       );
     });
