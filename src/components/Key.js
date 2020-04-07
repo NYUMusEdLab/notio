@@ -22,7 +22,8 @@ class Key extends Component {
       noteOff,
       index,
       noteNameEnglish,
-      root
+      root,
+      extendedKeyboard
     } = this.props;
 
     return (
@@ -45,6 +46,7 @@ class Key extends Component {
           keyIndex={keyIndex}
           noteOn={noteOn}
           noteOff={noteOff}
+          extendedKeyboard={extendedKeyboard}
         />
         {/*toggle Piano */
         pianoOn ? (
@@ -83,7 +85,8 @@ Key.propTypes = {
   noteNameEnglish: PropTypes.string,
   noteOn: PropTypes.func,
   noteOff: PropTypes.func,
-  synth: PropTypes.object
+  synth: PropTypes.object,
+  extendedKeyboard: PropTypes.bool
   //add the rest
 };
 

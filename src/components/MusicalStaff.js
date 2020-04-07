@@ -88,7 +88,19 @@ class MusicalStaff extends Component {
   }
 
   render() {
-    return <div ref={this.musicalStaff} className="musical-staff" style={{width: this.props.width}} />;
+    const {
+      width,
+      extendedKeyboard
+    } = this.props;
+
+    return <div 
+            ref={this.musicalStaff}
+            className="musical-staff"
+            style={{
+              width: width,
+              top: extendedKeyboard ? "50%" : "40%"
+            }}
+            />;
   }
 }
 

@@ -106,7 +106,8 @@ class ColorKey extends Component {
       keyIndex,
       note,
       showOffNotes,
-      isMajorSeventh
+      isMajorSeventh,
+      extendedKeyboard
     } = this.props;
 
     let offKeyColorWithTheme;
@@ -163,7 +164,7 @@ class ColorKey extends Component {
                             ${offKeyColorWithTheme[1]} 15px,
                             ${offKeyColorWithTheme[1]} 30px
                           )`,
-          opacity: theme === "dark" ? "0.7" : null
+          opacity: theme === "dark" ? "0.7" : null,
         }}
         onMouseUp={this.unClickedMouse}
         onMouseDown={this.clickedMouse}
@@ -175,7 +176,8 @@ class ColorKey extends Component {
         <div
           className = {'noteWrapper ' + `note ${isOn ? "on" : "off"}`} 
           style={{
-            backgroundColor: this.state.clicked ? color : null
+            backgroundColor: this.state.clicked ? color : null,
+            top: extendedKeyboard ? "45%" : "40%" 
           }}
         >
           {noteNames}
@@ -193,6 +195,7 @@ class ColorKey extends Component {
             showOffNotes={showOffNotes}
             keyIndex={keyIndex}
             isOn={isOn}
+            extendedKeyboard={extendedKeyboard}
           />
         ) : null}
       </div>
@@ -210,7 +213,8 @@ ColorKey.propTypes = {
   isOn: PropTypes.bool,
   root: PropTypes.string,
   isMajorSeventh: PropTypes.bool,
-  keyIndex: PropTypes.number
+  keyIndex: PropTypes.number,
+  extendedKeyboard: PropTypes.bool
 };
 
 export default ColorKey;
