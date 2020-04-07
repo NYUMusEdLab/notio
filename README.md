@@ -8,9 +8,9 @@ The Notio Project focuses on developing new pedagogies and technologies for impr
 
 Detailed info about Notio [here](http://musedlab.org/notio)
 
-You can see the project [here. NEW ADDRESS OF PROJECT](https://notio.pestanias.now.sh/)
+[Notio hosted at Github Pages. 2020](https://nyumusedlab.github.io/notio/)
 
-[Old address of project](https://notio.stackblitz.io)
+You can see the project [here. 2019 dev of project](https://notio.pestanias.now.sh/)
 
 ## Run dev version
 
