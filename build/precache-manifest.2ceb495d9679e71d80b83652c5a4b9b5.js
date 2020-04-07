@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "2dd2fd77dde7898faca0",
+    "revision": "8d595c51a04bdb7a8ea5",
     "url": "/notio/static/css/main.3e9a97bc.chunk.css"
   },
   {
-    "revision": "2dd2fd77dde7898faca0",
-    "url": "/notio/static/js/main.7af3a1db.chunk.js"
+    "revision": "8d595c51a04bdb7a8ea5",
+    "url": "/notio/static/js/main.da17d3b1.chunk.js"
   },
   {
     "revision": "d88ee3a38dd744eb64cb",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/notio/static/js/2.37a2541e.chunk.js"
   },
   {
-    "revision": "d2cfccd7b484400fb5c6a8b816eec4a8",
+    "revision": "00e28ff648741295ca7aca965dd90232",
     "url": "/notio/index.html"
   }
 ];

@@ -2,9 +2,10 @@
   "name": "notio",
   "version": "0.0.0",
   "private": true,
-  "homepage": "/notio",
+  "homepage": "https://nyumusedlab.github.io/notio/",
   "dependencies": {
     "firebase": "^6.2.1",
+    "gh-pages": "^2.2.0",
     "node-sass": "^4.13.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
@@ -17,7 +18,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "now-build": "react-scripts build"
+    "now-build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "react-scripts": "^2.1.8"

@@ -20,3 +20,7 @@ You can see the project [here. NEW ADDRESS OF PROJECT](https://notio.pestanias.n
 
 - `yarn build`
 - `npx serve -s build`
+
+## To deplot to Github Pages
+
+- `yarn deploy`. This will also make a build for you.
