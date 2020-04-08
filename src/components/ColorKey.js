@@ -177,7 +177,7 @@ class ColorKey extends Component {
           className = {'noteWrapper ' + `note ${isOn ? "on" : "off"}`} 
           style={{
             backgroundColor: this.state.clicked ? color : null,
-            top: extendedKeyboard ? "45%" : "40%" 
+            top: extendedKeyboard ? "17%" : "10%" 
           }}
         >
           {noteNames}
