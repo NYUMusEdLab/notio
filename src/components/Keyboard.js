@@ -10,8 +10,12 @@ import colors from "../data/colors";
 import { makeScaleMajorMinor, makeScalePentatonicBlues } from "./theory";
 
 //keys 1 to 0
-const keycodes = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48];
-const keycodesExtended = [65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222, 219, 61];
+//const keycodes = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48];
+const keycodes = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5',
+                'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0'];
+
+const keycodesExtended = ['KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK',
+                      'KeyL', 'Semicolon', 'Quote', 'BracketLeft', 'Equal'];
 
 let targetArr, activeElementsforKeyboard, scaleSteps;
 let onlyScaleIndex = 0;
@@ -66,12 +70,14 @@ class Keyboard extends Component {
 
     let buttonPressed;
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
-    const mapKeyDown = activeKeyCodes.indexOf(e.keyCode);
-
+    const mapKeyDown = activeKeyCodes.indexOf(e.code);
+    console.log(activeKeyCodes, e.code)
+    console.log(activeKeyCodes.includes(e.code), mapKeyDown + 1 <= activeElementsforKeyboard.length)
     if (
-      activeKeyCodes.includes(e.keyCode) &&
+      activeKeyCodes.includes(e.code) &&
       mapKeyDown + 1 <= activeElementsforKeyboard.length
     ) {
+      console.log("note on");
       buttonPressed = activeElementsforKeyboard[mapKeyDown];
 
       pressedKeys.add(buttonPressed);
@@ -117,11 +123,12 @@ class Keyboard extends Component {
     const { extendedKeyboard } = this.props;
 
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
-    const mapKeyUp = activeKeyCodes.indexOf(e.keyCode);
+    const mapKeyUp = activeKeyCodes.indexOf(e.code);
     if (
-      activeKeyCodes.includes(e.keyCode) &&
+      activeKeyCodes.includes(e.code) &&
       mapKeyUp + 1 <= activeElementsforKeyboard.length
     ) {
+      console.log('note off')
       let buttonReleased;
       buttonReleased = activeElementsforKeyboard[mapKeyUp];
 
