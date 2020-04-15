@@ -9,10 +9,9 @@ import notes from "../data/notes";
 import colors from "../data/colors";
 import { makeScaleMajorMinor, makeScalePentatonicBlues } from "./theory";
 
-//keys 1 to 0
-//const keycodes = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48];
-const keycodes = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5',
-                'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0'];
+// Using 'code' property for compatibility with AZERTY, QWERTY... keyboards 
+const keycodes = ['KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK',
+                  'KeyL', 'Semicolon', 'Quote'];
 
 const keycodesExtended = ['KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK',
                       'KeyL', 'Semicolon', 'Quote', 'BracketLeft', 'Equal'];
