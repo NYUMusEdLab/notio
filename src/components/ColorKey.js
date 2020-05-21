@@ -2,13 +2,18 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Star from "../assets/img/Star";
 import MusicalStaff from "./MusicalStaff";
+import Color from "color";
+
 
 class ColorKey extends Component {
+
   constructor(props) {
     super(props);
     this.keyRef = React.createRef();
+    this.initColor(props.color)
     this.state = {
-      isMouseDown: false
+      isMouseDown: false,
+      _color: this._colorInit
     };
   }
   touchDown = e => {
@@ -28,13 +33,36 @@ class ColorKey extends Component {
     }
   };
 
+  onMouseOver = e => {
+    if (this.props.isOn) {
+      this.setState((state) => {
+        return {_color: this._colorActive,}
+      })
+    }
+  };
+
+  onMouseOut = e => {
+    if (this.props.isOn) {
+      this.setState((state) => {
+        return {_color: this._colorInit,}
+      })
+    }
+  };
+
   clickedMouse = e => {
     if (this.props.isOn) {
+      this.setState((state) => { 
+        return {_color: 'linear-gradient(180deg, rgba(255,255,255,0) 20%, '
+              + this._colorActive+ ' 100%, ' + this._colorActive + ' 100%)'}
+      })
       this.playNote(this.props.note);
     }
   };
   unClickedMouse = e => {
     if (this.props.isOn) {
+      this.setState((state) => {
+        return {_color: this._colorInit}
+      })
       this.releaseNote(this.props.note);
     }
   };
@@ -64,12 +92,23 @@ class ColorKey extends Component {
     this.setState({ myWidth: myWidth });
   };
 
+  initColor = (color) => {
+    this._color = Color(color)
+    this._colorActive = this._color
+    this._colorInit = this._color.darken(0.2)
+  }
+
   componentDidUpdate(prevProps) {
     if (
       this.props.showOffNotes !== prevProps.showOffNotes ||
       this.props.noteName !== prevProps.noteName
     ) {
       this.updateDimensions();
+    }
+
+    if (this.props.color !== prevProps.color) {
+      this.initColor(this.props.color);
+      this.setState({ _color: this._colorInit });
     }
   }
 
@@ -91,7 +130,7 @@ class ColorKey extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     return {
-      isMouseDown: nextProps.isMouseDown
+      isMouseDown: nextProps.isMouseDown,
     };
   }
 
@@ -140,7 +179,7 @@ class ColorKey extends Component {
           );
         })
       : null;
-
+    
     return (
       <div
         ref={this.keyRef}
@@ -156,7 +195,7 @@ class ColorKey extends Component {
         style={{
           height: pianoOn ? "70%" : "100%",
           background: isOn
-            ? color
+            ? this.state._color
             : `repeating-linear-gradient(
                             0deg,
                             ${offKeyColorWithTheme[0]},
@@ -168,6 +207,8 @@ class ColorKey extends Component {
         }}
         onMouseUp={this.unClickedMouse}
         onMouseDown={this.clickedMouse}
+        onMouseOver={this.onMouseOver}
+        onMouseOut={this.onMouseOut}
         onTouchStart={this.touchDown}
         onTouchEnd={this.touchUp}
         onMouseEnter={this.mouseEnter}

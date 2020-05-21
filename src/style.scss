@@ -130,6 +130,7 @@ body {
 .Key.on .piano-key.white:hover,
 .Key.on .piano-key.black .blackPianoKey:hover {
   background-color: #aaa;
+  box-shadow: inset 0px 0px 3px black;
 }
 
 .Key.off .piano-key.white {
