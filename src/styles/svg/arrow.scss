@@ -1,0 +1,34 @@
+.arrow-down {
+  border-radius: 50%;
+  border: 2px solid black;
+  width: 1.8em;
+  height: 1.8em;
+  display: block;
+  text-align: center;
+  padding-top: 0.2em;
+  position: absolute;
+  background-color: white;
+  transform: translate(156%, -36%);
+  transition: transform 0.2s ease-in-out;
+
+
+  .arrow-down-SVG {
+    width: 0.7em;
+    height: 0.7em;
+  }
+
+  &:hover {
+    transform: translate(156%, -36%) scaleX(1.1) scaleY(1.1);//scale3d(1, 1, 1);
+    -webkit-backface-visibility: hidden;
+
+  }
+
+}
+
+
+
+.selected {
+  .arrow-down { 
+    display: none;
+  }
+}

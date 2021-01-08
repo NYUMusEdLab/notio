@@ -1,14 +1,20 @@
 @import "./styles/menu.scss";
 @import "./styles/circleOfFifths.scss";
 @import "./styles/loadingScreen.scss";
-@import "./styles/toggleSwitch.scss";
+@import "./styles/toggle.scss";
 @import "./styles/notes.scss";
 @import "./styles/musicalStaff.scss";
 @import "./styles/share.scss";
+@import "./styles/topMenu.scss";
+@import "./styles/multiSelect.scss";
+@import "./styles/svg/notation.scss";
+@import "./styles/svg/arrow.scss";
 
-h1,
-p {
-  font-family: Lato;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* ? */
 }
 
 body {
@@ -18,8 +24,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0;
   font-family: "Quicksand", sans-serif;
+  overflow: hidden;
+}
+
+h1,
+p {
+  font-family: Lato;
 }
 
 #root,
@@ -31,6 +42,7 @@ body {
 .Piano {
   display: flex;
   flex: 1;
+  height: 87vh;
   /*flex-direction: column;*/
 }
 

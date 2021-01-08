@@ -41,6 +41,27 @@ export const BaseNote = props => {
   );
 };
 
+// export const Notation = props => {
+//   const notation = [
+//     "Colors",
+//     "English",
+//     "German",
+//     "Romance",
+//     "Relative",
+//     "Scale Steps",
+//     "Chord extensions"
+//   ];
+//   return (
+//     <Select
+//       value={props.notation}
+//       multiple="true"
+//       selectName="Notation"
+//       selectEls={notation}
+//       handleSelect={props.handleSelect}
+//     />
+//   );
+// };
+
 export const Notation = props => {
   const notation = [
     "Colors",
@@ -51,16 +72,9 @@ export const Notation = props => {
     "Scale Steps",
     "Chord extensions"
   ];
-  return (
-    <Select
-      value={props.notation}
-      multiple="true"
-      selectName="Notation"
-      selectEls={notation}
-      handleSelect={props.handleSelect}
-    />
-  );
+
 };
+
 
 export const Theme = props => {
   return (

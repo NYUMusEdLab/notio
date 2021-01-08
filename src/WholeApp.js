@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Keyboard from "./components/Keyboard";
-import { Octaves, Scale, Notation, Theme } from "./components/InputComponents";
+import TopMenu from "./components/menu/TopMenu";
+import { Octaves, Scale, Theme } from "./components/InputComponents";
 import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import LoadingScreen from "./components/LoadingScreen";
 import "./style.scss";
@@ -22,6 +23,14 @@ class WholeApp extends Component {
     sessionError: null,
     loading: true
   };
+
+  constructor(props) {
+    super(props);
+    this.togglePiano = this.togglePiano.bind(this);
+    this.toggleExtendedKeyboard = this.toggleExtendedKeyboard.bind(this);
+    this.handleChangeNotation = this.handleChangeNotation.bind(this);
+  }
+
   handleClickOctave = action => {
     switch (action) {
       case "minus":
@@ -48,11 +57,11 @@ class WholeApp extends Component {
   handleSelectBaseNote = (selectedNote) => {
     console.log(selectedNote + ' Note selected');
     this.setState({baseNote: selectedNote});
-	}
+  }
 
   */
 
-  handleSelectNotation = selectedNotation => {
+  handleChangeNotation = selectedNotation => {
     console.log(selectedNotation + " Notation selected");
     this.setState({ notation: selectedNotation });
   };
@@ -151,7 +160,7 @@ class WholeApp extends Component {
     /**
      * disable right click
      */
-    document.oncontextmenu = function() {
+    document.oncontextmenu = function () {
       return false;
     };
 
@@ -198,118 +207,103 @@ class WholeApp extends Component {
       theme,
       trebleStaffOn
     } = this.state;
-
+    console.log("whole app", this.state.notation)
     return loading ? (
       <LoadingScreen />
     ) : (
-      <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
-        <div className="MainMenuDot" onClick={this.toggleMenu}>
-          <span>&#9835;</span>
-        </div>
-        <div className={`MainMenu slide-in-top ${menuOpen ? "open" : ""}`}>
-          <div
-            className="closeMenu"
-            onClick={this.toggleMenu}
-            style={{ backgroundColor: "#FFFFFF", cursor: "pointer" }}
-          >
-            (x)
-          </div>
-          <div className="Menu-Row">
-            <Octaves octave={octave} handleClick={this.handleClickOctave} />
-            <Scale scale={scale} handleSelect={this.handleSelectScale} />
-            <Notation
-              notation={notation}
-              handleSelect={this.handleSelectNotation}
-            />
-            <CircleFifthsSVG
-              rootNote={baseNote}
-              handleChange={this.handleChangeRoot}
-            />
-          </div>
-          <div className="Menu-Row">
-            <div className="Menu-label">Piano</div>
-            <div className="Menu-label">Extended</div>
-            <div className="Menu-label"></div>
-            <div className="Menu-label">
-              Musical Staff (Treble){" "}
-              <img height="30" src="/img/treble-clef.png" alt="treble cleff" />
+        <div>
+          <TopMenu
+            togglePiano={this.togglePiano}
+            toggleExtendedKeyboard={this.toggleExtendedKeyboard}
+            notationState={this.state.notation}
+            handleChangeNotation={this.handleChangeNotation}
+          />
+
+          <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
+            <div className="MainMenuDot" onClick={this.toggleMenu}>
+              <span>&#9835;</span>
             </div>
-            <div className="Menu-label">Show notes that are not in scale</div>
-            <div className="Menu-label">Share this setup</div>
-          </div>
-          <div className="Menu-Row">
-            <div className="toggle-switch">
-              <div className="checkbox">
-                <input
-                  type="checkbox"
-                  checked={pianoOn}
-                  onChange={this.togglePiano}
-                />
-                <label />
-              </div>
-            </div>
-            <div className="toggle-switch">
-              <div className="checkbox">
-                <input
-                  type="checkbox"
-                  checked={extendedKeyboard}
-                  onChange={this.toggleExtendedKeyboard}
-                />
-                <label />
-              </div>
-            </div>
-            <Theme theme={theme} handleSelect={this.handleSelectTheme} />
-            <div className="toggle-switch">
-              <div className="checkbox">
-                <input
-                  type="checkbox"
-                  checked={trebleStaffOn}
-                  onChange={this.toggleStaff}
-                />
-                <label />
-              </div>
-            </div>
-            <div className="toggle-switch">
-              <div className="checkbox">
-                <input
-                  type="checkbox"
-                  checked={showOffNotes}
-                  onChange={this.toggleShowOffNotes}
-                />
-                <label />
-              </div>
-            </div>
-            <div className="share" onClick={this.saveSessionToDB}>
-              <img width="50" src="/img/share.png" alt="Share" />
-            </div>
-          </div>
-          {this.state.sessionID ? (
-            <div className="Bottom-Info-Row">
-              Your configuration has been saved here:{" "}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`https://notio.pestanias.now.sh/shared/${this.state.sessionID}`}
+            <div className={`MainMenu slide-in-top ${menuOpen ? "open" : ""}`}>
+              <div
+                className="closeMenu"
+                onClick={this.toggleMenu}
+                style={{ backgroundColor: "#FFFFFF", cursor: "pointer" }}
               >
-                https://notio.pestanias.now.sh/shared/{this.state.sessionID}
-              </a>
+                (x)
             </div>
-          ) : null}
+              <div className="Menu-Row">
+                <Octaves octave={octave} handleClick={this.handleClickOctave} />
+                <Scale scale={scale} handleSelect={this.handleSelectScale} />
+                <CircleFifthsSVG
+                  rootNote={baseNote}
+                  handleChange={this.handleChangeRoot}
+                />
+              </div>
+              <div className="Menu-Row">
+                <div className="Menu-label"></div>
+                <div className="Menu-label">
+                  Musical Staff (Treble){" "}
+                  <img height="30" src="/img/treble-clef.png" alt="treble cleff" />
+                </div>
+                <div className="Menu-label">Show notes that are not in scale</div>
+                <div className="Menu-label">Share this setup</div>
+              </div>
+              <div className="Menu-Row">
+
+
+                <Theme theme={theme} handleSelect={this.handleSelectTheme} />
+                <div className="toggle-switch">
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      checked={trebleStaffOn}
+                      onChange={this.toggleStaff}
+                    />
+                    <label />
+                  </div>
+                </div>
+                <div className="toggle-switch">
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      checked={showOffNotes}
+                      onChange={this.toggleShowOffNotes}
+                    />
+                    <label />
+                  </div>
+                </div>
+                <div className="share" onClick={this.saveSessionToDB}>
+                  <img width="50" src="/img/share.png" alt="Share" />
+                </div>
+              </div>
+              {this.state.sessionID ? (
+                <div className="Bottom-Info-Row">
+                  Your configuration has been saved here:{" "}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://notio.pestanias.now.sh/shared/${this.state.sessionID}`}
+                  >
+                    https://notio.pestanias.now.sh/shared/{this.state.sessionID}
+                  </a>
+                </div>
+              ) : null}
+            </div>
+            <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} />
+            <Keyboard
+              octave={this.state.octave}
+              scale={this.state.scale}
+              baseNote={this.state.baseNote}
+              notation={this.state.notation}
+              pianoOn={this.state.pianoOn}
+              extendedKeyboard={this.state.extendedKeyboard}
+              trebleStaffOn={this.state.trebleStaffOn}
+              showOffNotes={this.state.showOffNotes}
+              theme={this.state.theme}
+            />
+          </div>
         </div>
-        <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} />
-        <Keyboard
-          octave={this.state.octave}
-          scale={this.state.scale}
-          baseNote={this.state.baseNote}
-          notation={this.state.notation}
-          pianoOn={this.state.pianoOn}
-          extendedKeyboard={this.state.extendedKeyboard}
-          trebleStaffOn={this.state.trebleStaffOn}
-          showOffNotes={this.state.showOffNotes}
-          theme={this.state.theme}
-        />
-      </div>
-    );
+      );
   }
 }
 
