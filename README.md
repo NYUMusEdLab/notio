@@ -11,6 +11,9 @@ Detailed info about Notio [here](http://musedlab.org/notio)
 [Notio hosted at Github Pages. 2020](https://nyumusedlab.github.io/notio/)
 
 You can see the project [here. 2019 dev of project](https://notio.pestanias.now.sh/)
+## Install packages
+
+`yarn install`
 
 ## Run dev version
 
