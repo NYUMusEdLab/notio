@@ -30,12 +30,14 @@ class TopMenu extends Component {
 
       {/* Notation */}
       <div className="navbar-item">
-        <SubMenu content={
-          <Notation
-            notationState={this.props.notationState}
-            handleChange={this.props.handleChangeNotation}
-          />
-        } />
+        <SubMenu
+          title='Notation'
+          content={
+            <Notation
+              notationState={this.props.notationState}
+              handleChange={this.props.handleChangeNotation}
+            />
+          } />
       </div>
 
 

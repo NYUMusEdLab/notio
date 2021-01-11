@@ -1,26 +1,44 @@
-.multi-select {
+.sub-menu {
   position: relative;
+  min-width: 9.7vw;
 
   .button {
-    width: 10.7em;
+    width: 8.7vw;
     background-color: white;
     border-radius: 3em;
-    padding: 0.2em 1.7em 0.2em 1.7em;
-    margin: 0 1em 0 1em;
+    padding: 0.4em 0 0.4em 0;
+    margin: 0 auto;
     position: relative;
-    z-index: 10;
+    z-index: 11;
 
     &.selected {
       background: black;
       z-index: 20;
-      
     }
+  }
+
+  .title {
+    display: block;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    padding: 1em 0 1em 0;
+    &.selected {
+      z-index: 20;
+      color: black;
+    }
+  }
+
+  hr {
+    border: 1px solid black;
+    padding: 0 1em;
+    margin: 0 1em 1em 1em;
   }
 
   .content {
     opacity: 0;
     transition: opacity 0.3s ease-out;
-    width: 12.7em;
+    width: 9.7vw;
     background-color: white;
     border-bottom-left-radius: 10% 5%;
     border-bottom-right-radius: 10% 5%;
@@ -29,14 +47,12 @@
     z-index: 9;
     color: black;
     overflow: hidden;
-    padding: 6em 1em;
+    padding: 6.8em 1em 1em 1.8em;
+    box-shadow: 5px 3px 15px #666;
 
     &.selected {
       opacity: 1;
       z-index: 15;
-
     }
   }
-
-  
 }

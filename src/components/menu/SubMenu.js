@@ -1,7 +1,7 @@
 /* eslint-disable no-fallthrough */
 
 import React, { Component } from "react";
-import Notation from "../../assets/img/Notation";
+import NotationImg from "../../assets/img/Notation";
 import ArrowDown from "../arrows/Down";
 
 class SubMenu extends Component {
@@ -23,14 +23,19 @@ class SubMenu extends Component {
   render() {
 
     var btnClass = this.state.active ? 'selected' : null;
-    return <div className="multi-select">
+    return <div className="sub-menu">
       <div
         className={`button ${btnClass}`}
         onClick={this.toggleClass}
       >
-        <Notation />
+        <NotationImg />
         <ArrowDown />
       </div>
+      <div>
+        <span className={`title ${btnClass}`}>{this.props.title}</span>
+      </div>
+      <hr />
+
       <div className={`content ${btnClass}`}>
         {this.props.content}
       </div>

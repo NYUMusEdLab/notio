@@ -9,9 +9,9 @@ class Down extends Component {
     super(props)
   }
   render() {
-    return <span className="arrow-down">
+    return <div className="arrow-down">
       <ArrowDown />
-    </span>
+    </div>
   };
 }
 
