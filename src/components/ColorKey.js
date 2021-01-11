@@ -36,7 +36,7 @@ class ColorKey extends Component {
   onMouseOver = e => {
     if (this.props.isOn) {
       this.setState((state) => {
-        return {_color: this._colorActive,}
+        return { _color: this._colorActive, }
       })
     }
   };
@@ -44,16 +44,18 @@ class ColorKey extends Component {
   onMouseOut = e => {
     if (this.props.isOn) {
       this.setState((state) => {
-        return {_color: this._colorInit,}
+        return { _color: this._colorInit, }
       })
     }
   };
 
   clickedMouse = e => {
     if (this.props.isOn) {
-      this.setState((state) => { 
-        return {_color: 'linear-gradient(180deg, rgba(255,255,255,0) 20%, '
-              + this._colorActive+ ' 100%, ' + this._colorActive + ' 100%)'}
+      this.setState((state) => {
+        return {
+          _color: 'linear-gradient(180deg, rgba(255,255,255,0) 20%, '
+            + this._colorActive + ' 100%, ' + this._colorActive + ' 100%)'
+        }
       })
       this.playNote(this.props.note);
     }
@@ -61,7 +63,7 @@ class ColorKey extends Component {
   unClickedMouse = e => {
     if (this.props.isOn) {
       this.setState((state) => {
-        return {_color: this._colorInit}
+        return { _color: this._colorInit }
       })
       this.releaseNote(this.props.note);
     }
@@ -163,34 +165,32 @@ class ColorKey extends Component {
     }
 
     const noteNames = noteName
-      ? noteName.map(function(item, i) {
-          item = item.toString();
-          if (item.indexOf("b") === 2) {
-            //doubleflat
-            item = item.replace("bb", "\u1D12B");
-          } else if (item.indexOf("b") === 1) {
-            //flat
-            item = item.replace("b", "\u266D");
-          }
-          return (
-            <div className="noteName" key={i}>
-              {item}
-            </div>
-          );
-        })
+      ? noteName.map(function (item, i) {
+        item = item.toString();
+        if (item.indexOf("b") === 2) {
+          //doubleflat
+          item = item.replace("bb", "\u1D12B");
+        } else if (item.indexOf("b") === 1) {
+          //flat
+          item = item.replace("b", "\u266D");
+        }
+        return (
+          <div className="noteName" key={i}>
+            {item}
+          </div>
+        );
+      })
       : null;
-    
+
     return (
       <div
         ref={this.keyRef}
-        className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${
-          isOn ? "on" : "off"
-        } ${
-          (note.includes("C") && !note.includes("#") && !note.includes("b")) ||
-          note.includes("B#")
+        className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${isOn ? "on" : "off"
+          } ${(note.includes("C") && !note.includes("#") && !note.includes("b")) ||
+            note.includes("B#")
             ? "" /*"c-mark"*/
             : ""
-        }
+          }
                     `}
         style={{
           height: pianoOn ? "70%" : "100%",
@@ -215,10 +215,10 @@ class ColorKey extends Component {
         onMouseLeave={this.mouseLeave}
       >
         <div
-          className = {'noteWrapper '} 
+          className={`noteWrapper note ${isOn ? "on" : "off"}`}
           style={{
             backgroundColor: this.state.clicked ? color : null,
-            top: extendedKeyboard ? "17%" : "10%" 
+            top: extendedKeyboard ? "17%" : "10%"
           }}
         >
           {noteNames}
