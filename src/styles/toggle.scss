@@ -1,8 +1,9 @@
 .switch {
   position: relative;
-  display: inline-block;
-  min-width: 3.45vw;
-  min-height: 2.25vh;
+  display: block;
+  width: 3.4vw;
+  height: 2.5vh;
+  margin: 0 auto;
 
   input {
     opacity: 0;

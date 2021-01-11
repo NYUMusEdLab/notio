@@ -17,14 +17,10 @@ class Notation extends Component {
 
   constructor(props) {
     super(props);
-    //notationState = props.notationState;
-    console.log("notation", this.props.notationState);
   }
 
 
   render() {
-
-    console.log("this.props.notationState", this.props.notationState)
     return (
       <ListCheckbox
         options={notations}

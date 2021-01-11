@@ -20,12 +20,17 @@ class TopMenu extends Component {
 
       {/* Toggle Piano */}
       <div className="navbar-item">
-        <Toggle onChange={this.props.togglePiano} />
+        <Toggle
+          title="Show keyboard"
+          onChange={this.props.togglePiano} />
       </div>
 
       {/* Toggle Extended */}
       <div className="navbar-item">
-        <Toggle onChange={this.props.toggleExtendedKeyboard} />
+        <Toggle
+          title="Extended Instrument"
+          onChange={this.props.toggleExtendedKeyboard}
+        />
       </div>
 
       {/* Notation */}

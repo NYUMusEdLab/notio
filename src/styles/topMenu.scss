@@ -9,7 +9,20 @@
 
   &-item {
     margin: 0 1.5em;
-  } 
+    //flex: 1 1;
+  }
+
+  .widget-wrapper {
+  }
+
+  .label-wrapper {
+    text-align: center;
+    max-width: 6vw;
+
+    .label {
+      font-size: 0.8em;
+    }
+  }
 }
 
 .navbar a {
