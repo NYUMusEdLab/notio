@@ -1,3 +1,21 @@
+.menu-scale {
+  .sub-menu {
+    .button {
+      padding: 1.2vh 0;
+    }
+
+    .content {
+      padding: 9.8vh 0.4vw 1vh 0.4vw;
+    }
+
+    .label-wrapper {
+      max-width: 100%;
+    }
+  }
+}
+
+//padding: 1em 0;
+
 .sub-menu {
   position: relative;
   min-width: 9.7vw;
@@ -14,7 +32,6 @@
     font-weight: bold;
     text-align: center;
     font-size: 0.8em;
-    //padding: 1em 0;
 
     &.selected {
       background: black;

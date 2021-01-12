@@ -62,19 +62,19 @@ class TopMenu extends Component {
       </div>
 
       {/* Scale */}
-      <div className="navbar-item">
+      <div className="navbar-item menu-scale">
         <SubMenu
           title='Scale'
           selected={this.state.title}
           content={
-          <ListRadio
-            nameField='scale'
-            options={scales}
-            radioState={this.props.radioState}
-            handleChange={this.props.handleChangeScale}
-            setTitle={this.setScaleTitle}
-          />
-        } />
+            <ListRadio
+              nameField='scale'
+              options={scales}
+              radioState={this.props.radioState}
+              handleChange={this.props.handleChangeScale}
+              setTitle={this.setScaleTitle}
+            />
+          } />
       </div>
 
 
