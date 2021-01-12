@@ -25,9 +25,9 @@ class MusicalStaff extends Component {
     renderer.resize(60, 140);
     ctx = renderer.getContext();
     ctx.setViewBox(0, 0, 60, 140); //size
-    stave = new Stave(0, 0, 60, {fill_style: 'black'});
+    stave = new Stave(0, 0, 60, { fill_style: 'black' });
     // add clef to first column
-    if (this.props.keyIndex === 0) stave.addClef('treble');
+    //if (this.props.keyIndex === 0) stave.addClef('treble');
     stave.setContext(ctx).draw();
   }
 
@@ -43,7 +43,7 @@ class MusicalStaff extends Component {
 
     let singleNote = [{ keys: [daNote], duration: "w" }];
 
-    let oneNote = singleNote.map(function(note) {
+    let oneNote = singleNote.map(function (note) {
       if (note.keys[0].includes("bb")) {
         return new StaveNote(note).addAccidental(0, new Accidental("bb"));
       } else if (note.keys[0].includes("b")) {
@@ -93,14 +93,14 @@ class MusicalStaff extends Component {
       extendedKeyboard
     } = this.props;
 
-    return <div 
-            ref={this.musicalStaff}
-            className="musical-staff"
-            style={{
-              width: width,
-              top: extendedKeyboard ? "50%" : "40%"
-            }}
-            />;
+    return <div
+      ref={this.musicalStaff}
+      className="musical-staff"
+      style={{
+        width: width,
+        top: extendedKeyboard ? "50%" : "40%"
+      }}
+    />;
   }
 }
 
