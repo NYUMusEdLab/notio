@@ -1,13 +1,10 @@
 .arrow-down {
-  border-radius: 100%;
-  border: 2px solid black;
-  min-width: 1.4vw; /* [1] */
-  min-height: 1.4vw; /* [1] */
+  width: 1.4vw; /* [1] */
+  height: 1.4vw; /* [1] */
   display: block;
   text-align: center;
   padding-top: 0.1em;
   position: absolute;
-  background-color: white;
   transform: translate(-50%, -50%);
   left: 50%;
   top: 110%;
@@ -39,4 +36,11 @@
   .arrow-down {
     display: none;
   }
+}
+
+.arrow-circle {
+  fill: #fff;
+  stroke: #000;
+  stroke-miterlimit: 10;
+  stroke-width: 2.39px;
 }

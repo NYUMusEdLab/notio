@@ -10,17 +10,14 @@ import NotationImg from "../../assets/img/Notation";
 
 class TopMenu extends Component {
 
-  title = 'coucou'
-
   constructor(props) {
     super(props);
     //notationState = props.notationState;
     console.log("notation", this.props.notationState);
     this.state = {
-      title: "coucouc encore",
+      title: "",
     };
   }
-
 
   setScaleTitle = title => {
     this.setState({

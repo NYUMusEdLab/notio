@@ -1,12 +1,11 @@
 import React from 'react'
 
 const ArrowDown = props => (
+
   <svg
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.33 10.9"
-    className="arrow-down-SVG">
-    <g>
-        <path d="M6.87,10.49a.82.82,0,0,1-1.41,0L2.79,5.86.11,1.22A.82.82,0,0,1,.82,0h10.7a.81.81,0,0,1,.7,1.22L9.55,5.86Z"/>
-    </g>
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.53 33.53">
+    <circle class="arrow-circle" cx="16.76" cy="16.76" r="15.57" />
+    <path d="M17.06,24a.82.82,0,0,1-1.41,0L13,19.38,10.3,14.75A.81.81,0,0,1,11,13.53H21.7a.82.82,0,0,1,.71,1.22l-2.67,4.63Z" />
   </svg>
 );
 

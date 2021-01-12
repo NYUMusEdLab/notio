@@ -21,21 +21,21 @@ class SubMenu extends Component {
 
   render() {
 
-    var btnClass = this.state.active ? 'selected' : null;
+    let isActive = this.state.active ? 'selected' : null;
     return <div className="sub-menu">
       <div
-        className={`button ${btnClass}`}
+        className={`button ${isActive}`}
         onClick={this.toggleClass}
       >
         {this.props.selected}
         <ArrowDown />
       </div>
       <div>
-        <span className={`title ${btnClass}`}>{this.props.title}</span>
+        <span className={`title ${isActive}`}>{this.props.title}</span>
       </div>
-      <hr />
+      <hr className={isActive} />
 
-      <div className={`content ${btnClass}`}>
+      <div className={`content ${isActive}`}>
         {this.props.content}
       </div>
     </div>;
