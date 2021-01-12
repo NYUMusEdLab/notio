@@ -25,7 +25,7 @@ class Notation extends Component {
       <ListCheckbox
         options={notations}
         handleCheckboxChange={this.props.handleChange}
-        optionState={this.props.notationState}
+      //optionState={this.props.notationState}
       />
     );
   };

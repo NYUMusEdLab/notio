@@ -10,10 +10,16 @@
     margin: 0 auto;
     position: relative;
     z-index: 11;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    font-size: 0.8em;
+    //padding: 1em 0;
 
     &.selected {
       background: black;
       z-index: 20;
+      color: white;
     }
   }
 

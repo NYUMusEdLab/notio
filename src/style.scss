@@ -9,7 +9,8 @@
 @import "./styles/SubMenu.scss";
 @import "./styles/svg/notation.scss";
 @import "./styles/svg/arrow.scss";
-@import "./styles/form/form-check.scss";
+@import "./styles/form/formCheck.scss";
+@import "./styles/form/listRadio.scss";
 
 * {
   margin: 0;
@@ -91,8 +92,8 @@ p {
 }
 
 //.note .off {
-  /*do not display the note names */
-  //display: none;
+/*do not display the note names */
+//display: none;
 //}
 /*
 .Piano .Key.off {
@@ -107,6 +108,18 @@ p {
   border-top: 0px;
   z-index: 2;
   border-bottom: 1px solid #3f3f3f;
+  // animation: slide-up 0.2s ease;
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    //transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    //transform: translateY(0);
+  }
 }
 
 .Key.black {

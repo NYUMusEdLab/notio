@@ -21,7 +21,6 @@ class ListCheckbox extends Component {
 
   onChange = changeEvent => {
     const { name } = changeEvent.target;
-    console.log('name', name);
     this.setState(prevState => ({
       checkboxes: {
         ...prevState.checkboxes,

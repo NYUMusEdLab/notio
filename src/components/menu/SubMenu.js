@@ -1,7 +1,6 @@
 /* eslint-disable no-fallthrough */
 
 import React, { Component } from "react";
-import NotationImg from "../../assets/img/Notation";
 import ArrowDown from "../arrows/Down";
 
 class SubMenu extends Component {
@@ -28,7 +27,7 @@ class SubMenu extends Component {
         className={`button ${btnClass}`}
         onClick={this.toggleClass}
       >
-        <NotationImg />
+        {this.props.selected}
         <ArrowDown />
       </div>
       <div>

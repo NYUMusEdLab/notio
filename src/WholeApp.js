@@ -29,6 +29,8 @@ class WholeApp extends Component {
     this.togglePiano = this.togglePiano.bind(this);
     this.toggleExtendedKeyboard = this.toggleExtendedKeyboard.bind(this);
     this.handleChangeNotation = this.handleChangeNotation.bind(this);
+    this.handleSelectScale = this.handleSelectScale.bind(this);
+
   }
 
   handleClickOctave = action => {
@@ -217,6 +219,7 @@ class WholeApp extends Component {
             toggleExtendedKeyboard={this.toggleExtendedKeyboard}
             notationState={this.state.notation}
             handleChangeNotation={this.handleChangeNotation}
+            handleChangeScale={this.handleSelectScale}
           />
 
           <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>

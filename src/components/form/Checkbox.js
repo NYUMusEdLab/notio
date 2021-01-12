@@ -9,7 +9,7 @@ const Checkbox = ({ label, isSelected, onCheckboxChange }) => (
         checked={isSelected}
         onChange={onCheckboxChange}
       />
-      <span class="checkmark"></span>
+      <span className="checkmark"></span>
       {label}
     </label>
   </div>
