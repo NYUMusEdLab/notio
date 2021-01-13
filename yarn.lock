@@ -10890,10 +10890,10 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vexflow@^1.2.89:
-  version "1.2.93"
-  resolved "https://registry.yarnpkg.com/vexflow/-/vexflow-1.2.93.tgz#d6796d7a3fdae1bb06efb32a1390899931dd636f"
-  integrity sha512-LwHQDCc257Lwju35BhyZuPYcVWu0hIUqEdM7j9+B+bq91bSelssnAG5JR8odTUtgGuwwvGwLhXw37wtmHNCS6Q==
+vexflow@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/vexflow/-/vexflow-3.0.9.tgz#85bc89ae5224670d3837d0b34c521b9e69abc89c"
+  integrity sha512-JzDUC3SZvyRxvALv0UrlgCJSH7WzNSShNjXK0rTWqDJscCcytrTWLT3LYtsDvby8qbszdaD708xOe9D79FLTFA==
 
 vm-browserify@^1.0.1:
   version "1.1.2"

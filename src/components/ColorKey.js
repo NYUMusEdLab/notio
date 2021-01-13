@@ -148,7 +148,8 @@ class ColorKey extends Component {
       note,
       showOffNotes,
       isMajorSeventh,
-      extendedKeyboard
+      extendedKeyboard,
+      clef
     } = this.props;
 
     let offKeyColorWithTheme;
@@ -181,7 +182,7 @@ class ColorKey extends Component {
         );
       })
       : null;
-
+    console.log("this.state.myWidth", this.state.myWidth);
     return (
       <div
         ref={this.keyRef}
@@ -237,6 +238,7 @@ class ColorKey extends Component {
             keyIndex={keyIndex}
             isOn={isOn}
             extendedKeyboard={extendedKeyboard}
+            clef={clef}
           />
         ) : null}
       </div>

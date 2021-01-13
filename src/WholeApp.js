@@ -11,6 +11,7 @@ class WholeApp extends Component {
   state = {
     octave: 4,
     scale: "Major (Ionian)",
+    clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
     pianoOn: false,
@@ -30,6 +31,7 @@ class WholeApp extends Component {
     this.toggleExtendedKeyboard = this.toggleExtendedKeyboard.bind(this);
     this.handleChangeNotation = this.handleChangeNotation.bind(this);
     this.handleSelectScale = this.handleSelectScale.bind(this);
+    this.handleSelectClef = this.handleSelectClef.bind(this);
 
   }
 
@@ -49,6 +51,11 @@ class WholeApp extends Component {
   handleSelectScale = selectedScale => {
     console.log(selectedScale + " SCALE selected");
     this.setState({ scale: selectedScale });
+  };
+
+  handleSelectClef = selectedClef => {
+    console.log(selectedClef + " clef selected");
+    this.setState({ clef: selectedClef });
   };
 
   /** 
@@ -207,7 +214,8 @@ class WholeApp extends Component {
       pianoOn,
       extendedKeyboard,
       theme,
-      trebleStaffOn
+      trebleStaffOn,
+      clef
     } = this.state;
     console.log("whole app", this.state.notation)
     return loading ? (
@@ -220,6 +228,7 @@ class WholeApp extends Component {
             notationState={this.state.notation}
             handleChangeNotation={this.handleChangeNotation}
             handleChangeScale={this.handleSelectScale}
+            handleSelectClef={this.handleSelectClef}
           />
 
           <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
@@ -303,6 +312,7 @@ class WholeApp extends Component {
               trebleStaffOn={this.state.trebleStaffOn}
               showOffNotes={this.state.showOffNotes}
               theme={this.state.theme}
+              clef={this.state.clef}
             />
           </div>
         </div>

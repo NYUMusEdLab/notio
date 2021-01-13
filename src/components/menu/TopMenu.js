@@ -7,6 +7,7 @@ import Notation from "./Notation";
 import ListRadio from "../form/ListRadio";
 import scales from "../../data/scalesObj";
 import NotationImg from "../../assets/img/Notation";
+import clefs from "../../data/clefs";
 
 class TopMenu extends Component {
 
@@ -15,13 +16,21 @@ class TopMenu extends Component {
     //notationState = props.notationState;
     console.log("notation", this.props.notationState);
     this.state = {
-      title: "",
+      titleNotation: "",
+      titleClef: "",
     };
   }
 
   setScaleTitle = title => {
     this.setState({
-      title: title,
+      titleNotation: title,
+    })
+  };
+
+
+  setClefTitle = title => {
+    this.setState({
+      titleClef: title,
     })
   };
 
@@ -62,14 +71,29 @@ class TopMenu extends Component {
       <div className="navbar-item menu-scale">
         <SubMenu
           title='Scale'
-          selected={this.state.title}
+          selected={this.state.titleNotation}
           content={
             <ListRadio
               nameField='scale'
               options={scales}
-              radioState={this.props.radioState}
               handleChange={this.props.handleChangeScale}
               setTitle={this.setScaleTitle}
+            />
+          } />
+      </div>
+
+
+      {/* Clef */}
+      <div className="navbar-item menu-scale">
+        <SubMenu
+          title='Staff Notation'
+          selected={this.state.titleClef}
+          content={
+            <ListRadio
+              nameField='clef'
+              options={clefs}
+              handleChange={this.props.handleSelectClef}
+              setTitle={this.setClefTitle}
             />
           } />
       </div>

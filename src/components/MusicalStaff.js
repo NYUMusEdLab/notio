@@ -22,12 +22,13 @@ class MusicalStaff extends Component {
   setupStaff() {
     let containerSVG = this.musicalStaff.current;
     renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
-    renderer.resize(60, 140);
+    //renderer.resize(60, 140);
     ctx = renderer.getContext();
     ctx.setViewBox(0, 0, 60, 140); //size
     stave = new Stave(0, 0, 60, { fill_style: 'black' });
+
     // add clef to first column
-    //if (this.props.keyIndex === 0) stave.addClef('treble');
+    // if (this.props.keyIndex === 0) stave.addClef('bass');
     stave.setContext(ctx).draw();
   }
 
@@ -35,14 +36,22 @@ class MusicalStaff extends Component {
     let daNote;
     let match = /[0-9]/.exec(this.props.note);
     if (match) {
+      // daNote = B/4 G/5 notation...
       daNote =
         this.props.note.substr(0, match.index) +
         "/" +
         this.props.note.substr(match.index, this.props.note.length - 1);
+
     }
+    // Example of singleNote
+    // { 0:  {
+    //  durations: "w",
+    //  keys: ["Cb/5"]
+    //}
 
-    let singleNote = [{ keys: [daNote], duration: "w" }];
+    let singleNote = [{ keys: [daNote], duration: "w", clef: this.props.clef }];
 
+    // adding accidentals : #, b etc...
     let oneNote = singleNote.map(function (note) {
       if (note.keys[0].includes("bb")) {
         return new StaveNote(note).addAccidental(0, new Accidental("bb"));
@@ -55,13 +64,15 @@ class MusicalStaff extends Component {
       }
     });
 
+    console.log("oneNote", oneNote);
+
     let voice = new Voice({
       num_beats: oneNote.length,
-      beat_value: 1
+      beat_value: 1,
     });
 
     voice.addTickables(oneNote);
-
+    console.log("voice", voice);
     // Format and justify the notes to window.innerwidth pixels
     new Formatter().joinVoices([voice]).format([voice], window.innerWidth);
 
@@ -79,7 +90,8 @@ class MusicalStaff extends Component {
       prevProps.note !== this.props.note ||
       prevProps.showOffNote !== this.props.showOffNotes ||
       prevProps.width !== this.props.width ||
-      prevProps.isOn !== this.props.isOn
+      prevProps.isOn !== this.props.isOn ||
+      prevProps.clef !== this.props.clef
     ) {
       this.removePrevious();
       this.setupStaff();
@@ -109,7 +121,8 @@ MusicalStaff.propTypes = {
   showOffNote: PropTypes.bool,
   width: PropTypes.number,
   keyIndex: PropTypes.number,
-  isOn: PropTypes.bool
+  isOn: PropTypes.bool,
+  clef: PropTypes.string,
 }
 
 export default MusicalStaff;

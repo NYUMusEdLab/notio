@@ -23,7 +23,8 @@ class Key extends Component {
       index,
       noteNameEnglish,
       root,
-      extendedKeyboard
+      extendedKeyboard,
+      clef
     } = this.props;
 
     return (
@@ -47,24 +48,25 @@ class Key extends Component {
           noteOn={noteOn}
           noteOff={noteOff}
           extendedKeyboard={extendedKeyboard}
+          clef={clef}
         />
         {/*toggle Piano */
-        pianoOn ? (
-          <PianoKey
-            note={note}
-            noteNameEnglish={noteNameEnglish}
-            isOn={isOn}
-            color={color}
-            keyColor={keyColor}
-            index={index}
-            root={root}
-            synth={synth}
-            isMouseDown={isMouseDown}
-            isActive={isActive}
-            noteOn={noteOn}
-            noteOff={noteOff}
-          />
-        ) : null}
+          pianoOn ? (
+            <PianoKey
+              note={note}
+              noteNameEnglish={noteNameEnglish}
+              isOn={isOn}
+              color={color}
+              keyColor={keyColor}
+              index={index}
+              root={root}
+              synth={synth}
+              isMouseDown={isMouseDown}
+              isActive={isActive}
+              noteOn={noteOn}
+              noteOff={noteOff}
+            />
+          ) : null}
       </div>
     );
   }
@@ -86,7 +88,8 @@ Key.propTypes = {
   noteOn: PropTypes.func,
   noteOff: PropTypes.func,
   synth: PropTypes.object,
-  extendedKeyboard: PropTypes.bool
+  extendedKeyboard: PropTypes.bool,
+  clef: PropTypes.string,
   //add the rest
 };
 
