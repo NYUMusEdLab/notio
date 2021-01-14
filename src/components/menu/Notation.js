@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import ListCheckbox from "../form/ListCheckbox";
 
 const notations = [
-  "Colors",
   "English",
   "German",
   "Romance",
