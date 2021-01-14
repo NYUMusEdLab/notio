@@ -11,27 +11,6 @@ const clefs = [
   },
   {
     name: 'tenor',
-  },
-  {
-    name: 'percussion',
-  },
-  {
-    name: 'soprano',
-  },
-  {
-    name: 'mezzo-soprano',
-  },
-  {
-    name: 'baritone-c',
-  },
-  {
-    name: 'baritone-f',
-  },
-  {
-    name: 'subbass',
-  },
-  {
-    name: 'french',
   }
 ];
 

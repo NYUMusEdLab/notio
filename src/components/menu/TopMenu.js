@@ -86,7 +86,7 @@ class TopMenu extends Component {
       {/* Clef */}
       <div className="navbar-item menu-scale">
         <SubMenu
-          title='Staff Notation'
+          title='Clefs'
           selected={this.state.titleClef}
           content={
             <ListRadio
