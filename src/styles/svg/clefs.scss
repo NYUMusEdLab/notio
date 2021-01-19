@@ -1,0 +1,68 @@
+.clef {
+  width: 3vw;
+  height: 3vw;
+  fill-rule: evenodd;
+  image-rendering: optimizeQuality;
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+
+  &.treble {
+    .fil0 {
+      display: inline;
+      fill: none;
+      fill-rule: evenodd;
+      stroke: #131516;
+      stroke-width: 42.84;
+      image-rendering: optimizeQuality;
+      shape-rendering: geometricPrecision;
+      text-rendering: geometricPrecision;
+    }
+
+    .fil1 {
+      fill: #131516;
+      stroke: #131516;
+      stroke-width: 3;
+    }
+  }
+
+  &.bass {
+    .fil0 {
+      fill: none;
+      stroke: #131516;
+      stroke-width: 42;
+    }
+    .fil1 {
+      fill: #131516;
+      stroke: #131516;
+      stroke-width: 3;
+    }
+  }
+
+  &.tenor {
+    .fil0 {
+      fill: none;
+      stroke: #131516;
+      stroke-width: 84;
+    }
+    .fil1 {
+      fill: #131516;
+      fill-rule: evenodd;
+      stroke: #131516;
+      stroke-width: 1.06991;
+    }
+  }
+
+  &.alto {
+    .fil0 {
+      fill: none;
+      stroke: #131516;
+      stroke-width: 42;
+    }
+
+    .fil1 {
+      fill: #131516;
+      stroke: #131516;
+      stroke-width: 3;
+    }
+  }
+}

@@ -15,10 +15,6 @@ class ListCheckbox extends Component {
     )
   };
 
-  constructor(props) {
-    super(props)
-  }
-
   onChange = changeEvent => {
     const { name } = changeEvent.target;
     this.setState(prevState => ({

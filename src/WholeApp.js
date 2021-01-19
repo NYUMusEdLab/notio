@@ -209,13 +209,9 @@ class WholeApp extends Component {
       menuOpen,
       octave,
       scale,
-      notation,
       baseNote,
-      pianoOn,
-      extendedKeyboard,
       theme,
       trebleStaffOn,
-      clef
     } = this.state;
     console.log("whole app", this.state.notation)
     return loading ? (

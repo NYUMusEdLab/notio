@@ -1,6 +1,7 @@
 /* eslint-disable no-fallthrough */
 
 import React, { Component } from "react";
+import _ from "lodash";
 import Toggle from "./Toggle";
 import SubMenu from "./SubMenu";
 import Notation from "./Notation";
@@ -13,11 +14,10 @@ class TopMenu extends Component {
 
   constructor(props) {
     super(props);
-    //notationState = props.notationState;
-    console.log("notation", this.props.notationState);
     this.state = {
       titleNotation: "",
-      titleClef: "",
+      clefTitle: "",
+      clefImage: "",
     };
   }
 
@@ -30,13 +30,16 @@ class TopMenu extends Component {
 
   setClefTitle = title => {
     this.setState({
-      titleClef: title,
+      clefTitle: title,
     })
   };
 
-
+  setClefImage = img => {
+    this.setState({
+      clefImage: _.startCase(img) + 'Clef',
+    })
+  };
   render() {
-    console.log("scales", scales)
     return <div className="navbar">
 
       {/* Toggle Piano */}
@@ -75,7 +78,7 @@ class TopMenu extends Component {
           content={
             <ListRadio
               nameField='scale'
-              options={scales}
+              data={scales}
               handleChange={this.props.handleChangeScale}
               setTitle={this.setScaleTitle}
             />
@@ -84,22 +87,22 @@ class TopMenu extends Component {
 
 
       {/* Clef */}
-      <div className="navbar-item menu-scale">
+      <div className="navbar-item menu-clef">
         <SubMenu
           title='Clefs'
-          selected={this.state.titleClef}
+          selected={this.state.clefTitle}
+          selectedImg={this.state.clefImage}
+          displayPicto={true}
           content={
             <ListRadio
               nameField='clef'
-              options={clefs}
+              data={clefs}
               handleChange={this.props.handleSelectClef}
               setTitle={this.setClefTitle}
+              setImage={this.setClefImage}
             />
           } />
       </div>
-
-
-
     </div>;
   };
 }

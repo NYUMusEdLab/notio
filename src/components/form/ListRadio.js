@@ -2,11 +2,14 @@
 
 import React, { Component } from "react";
 import Radio from "./Radio";
-import _ from "lodash";
 class ListRadio extends Component {
+  defaultProps = {
+    setImage: 'coucou',
+  }
+
 
   state = {
-    radios: this.props.options.reduce(
+    radios: this.props.data.reduce(
       (options, option) => ({
         ...options,
         [option.name]: option.default ? true : false
@@ -17,14 +20,19 @@ class ListRadio extends Component {
 
   constructor(props) {
     super(props)
+    props = { ...this.defaultProps, ...props }
+
   }
 
   componentDidMount() {
-    console.log("componentDidMount", this.state);
-    for (const [key, value] of Object.entries(this.state.radios)) {
-      if (value === true)
-        this.props.setTitle(key);
-
+    for (const [key, value] of Object.entries(this.props.data)) {
+      if (value['default'] === true) {
+        console.log(key);
+        this.props.setTitle(value['name']);
+        // for clef men
+        if (value['svg'])
+          this.props.setImage(value['svg']);
+      }
     }
   }
 
@@ -42,7 +50,8 @@ class ListRadio extends Component {
       }
       this.props.handleChange(option);
       this.props.setTitle(option);
-
+      if (this.props.displayPicto)
+        this.props.setImage(option);
     });
   };
 
@@ -56,7 +65,7 @@ class ListRadio extends Component {
     />
   );
 
-  createRadios = () => this.props.options.map(this.createRadio);
+  createRadios = () => this.props.data.map(this.createRadio);
 
   render() {
     return (

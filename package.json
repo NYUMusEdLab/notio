@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://nyumusedlab.github.io/notio/",
   "dependencies": {
+    "@loadable/component": "^5.14.1",
     "color": "^3.1.2",
     "firebase": "^6.2.1",
     "gh-pages": "^2.2.0",

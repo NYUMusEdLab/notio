@@ -1,7 +1,16 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
+    "paths": {
+      "assets/*": [
+        "src/assets/*"
+      ],
+    }
     "checkJs": true,
     "jsx": "react"
-  }
+  },
+  "include": [
+    "src",
+    "../../assets/img/"
+  ]
 }

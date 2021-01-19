@@ -62,19 +62,6 @@ export const BaseNote = props => {
 //   );
 // };
 
-export const Notation = props => {
-  const notation = [
-    "Colors",
-    "English",
-    "German",
-    "Romance",
-    "Relative",
-    "Scale Steps",
-    "Chord extensions"
-  ];
-
-};
-
 
 export const Theme = props => {
   return (

@@ -14,11 +14,6 @@ const notations = [
 
 class Notation extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-
   render() {
     return (
       <ListCheckbox
