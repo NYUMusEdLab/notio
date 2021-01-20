@@ -35,17 +35,17 @@ class ColorKey extends Component {
 
   onMouseOver = e => {
     if (this.props.isOn) {
-      this.setState((state) => {
-        return { _color: this._colorActive, }
-      })
+      // this.setState((state) => {
+      //   return { _color: this._colorActive, }
+      // })
     }
   };
 
   onMouseOut = e => {
     if (this.props.isOn) {
-      this.setState((state) => {
-        return { _color: this._colorInit, }
-      })
+      // this.setState((state) => {
+      //   return { _color: this._colorInit, }
+      // })
     }
   };
 
@@ -95,9 +95,9 @@ class ColorKey extends Component {
   };
 
   initColor = (color) => {
-    this._color = Color(color)
-    this._colorActive = this._color
-    this._colorInit = this._color.darken(0.2)
+    this._colorInit = Color(color)
+    // this._colorActive = this._color
+    // this._colorInit = this._color.darken(0.2)
   }
 
   componentDidUpdate(prevProps) {
