@@ -197,13 +197,7 @@ class ColorKey extends Component {
           height: pianoOn ? "70%" : "100%",
           background: isOn
             ? this.state._color
-            : `repeating-linear-gradient(
-                            0deg,
-                            ${offKeyColorWithTheme[0]},
-                            ${offKeyColorWithTheme[0]} 15px,
-                            ${offKeyColorWithTheme[1]} 15px,
-                            ${offKeyColorWithTheme[1]} 30px
-                          )`,
+            : "linear-gradient(356deg, rgba(249,247,223,1) 0%, rgba(235,227,245,1) 100%)",
           opacity: theme === "dark" ? "0.7" : null,
         }}
         onMouseUp={this.unClickedMouse}
