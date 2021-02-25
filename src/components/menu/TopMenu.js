@@ -5,6 +5,7 @@ import _ from "lodash";
 import Toggle from "./Toggle";
 import SubMenu from "./SubMenu";
 import Notation from "./Notation";
+import CircledButton from "./CircledButton";
 import ListRadio from "../form/ListRadio";
 import scales from "../../data/scalesObj";
 import NotationImg from "../../assets/img/Notation";
@@ -103,6 +104,15 @@ class TopMenu extends Component {
             />
           } />
       </div>
+
+      {/* Video */}
+      <div className="navbar-item menu-clef">
+        <CircledButton
+          label="video"
+        />
+      </div>
+
+
     </div>;
   };
 }

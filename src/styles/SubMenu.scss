@@ -128,3 +128,18 @@
     }
   }
 }
+
+.circledButton {
+
+  height: 5vw;
+    width: 5vw;
+  background-color: #fff;
+  border-radius: 50%;
+  display: inline-block;
+position: relative;
+}
+
+.VideoSVG {
+  width: 2.3vw;
+  transform: translate(58%, 80%);
+}
