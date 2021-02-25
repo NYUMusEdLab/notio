@@ -2,12 +2,14 @@
 
 import React, { Component } from "react";
 import Key from "./Key";
-import Tone from "tone";
+import * as Tone from 'tone';
 import scales from "../data/scalesObj";
 import rootNote from "../data/rootNote";
 import notes from "../data/notes";
 import colors from "../data/colors";
 import { makeScaleMajorMinor, makeScalePentatonicBlues } from "./theory";
+import { Piano } from '@tonejs/piano'
+
 
 // Using 'code' property for compatibility with AZERTY, QWERTY... keyboards 
 const keycodes = ['KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK',
@@ -35,8 +37,14 @@ class Keyboard extends Component {
       mouse_is_down: false
     };
 
-    this.synth = new Tone.PolySynth(6).toMaster(); // PolyPhonic Synth with 6 voices
-    this.vol = new Tone.Volume(0);
+    this.synth = new Piano({
+      velocities: 5
+    }).toDestination()
+    this.vol = new Tone.Volume(4);
+
+    this.synth.load().then(() => {
+      console.log('--------------- Piano loaded!');
+    });
     //this.synth.chain(this.vol, Tone.Master);
   }
 
@@ -157,11 +165,12 @@ class Keyboard extends Component {
 
   playNote = note => {
     console.log("playing " + note);
-    this.synth.triggerAttack(note);
+    // this.synth.keyDown(note);
+    this.synth.keyDown({ note: note })
   };
 
   releaseNote = note => {
-    this.synth.triggerRelease(note);
+    this.synth.keyUp({ note: note });
   };
 
   noteOn = note => {
@@ -297,7 +306,7 @@ class Keyboard extends Component {
         return null;
       });
       scaleSteps = scales.find(obj => obj.name === scale);
-      console.log("scaleSteps", scaleSteps);
+      console.log("Keyboard componentDidUpdate scaleSteps", scaleSteps);
       this.setState({
         currentScale: this.generateCurrentScale(scaleSteps.steps)
       });
@@ -444,7 +453,7 @@ class Keyboard extends Component {
       );
     }
     const displayNotes = displayNotesBuilder;
-
+    console.log("displayNotes", displayNotes);
     //we use relativeCount for Scale Steps
     let relativeCount = extendedKeyboard
       ? scale.includes("Pentatonic")
@@ -457,7 +466,7 @@ class Keyboard extends Component {
         : 3
       : -1; //-1; //should start at 0, but since i am adding +1 at the beginning of the switch...
     let relativeCountChord = relativeCount;
-
+    console.log("relativeCountChord", relativeCountChord);
     const noteList = displayNotes.map((note, arrayIndex) => {
       const index = (arrayIndex + scaleStart) % 12;
       let noteName = [];

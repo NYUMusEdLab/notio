@@ -5,6 +5,7 @@
   "homepage": "https://nyumusedlab.github.io/notio/",
   "dependencies": {
     "@loadable/component": "^5.14.1",
+    "@tonejs/piano": "^0.2.1",
     "color": "^3.1.2",
     "firebase": "^6.2.1",
     "gh-pages": "^2.2.0",
@@ -13,8 +14,9 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
-    "tone": "^13.7.5",
-    "vexflow": "^3.0.9"
+    "tone": "^14.7.77",
+    "vexflow": "^3.0.9",
+    "webmidi": "^2.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
