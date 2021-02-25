@@ -33,7 +33,9 @@ class MusicalStaff extends Component {
   }
 
   drawNotes() {
+    // debugger;
     let daNote;
+    // console.log("this.props.note", this.props.note)
     let match = /[0-9]/.exec(this.props.note);
     if (match) {
       // daNote = B/4 G/5 notation...
@@ -43,6 +45,7 @@ class MusicalStaff extends Component {
         this.props.note.substr(match.index, this.props.note.length - 1);
 
     }
+    // console.log("daNote", daNote);
     // Example of singleNote
     // { 0:  {
     //  durations: "w",
@@ -50,9 +53,9 @@ class MusicalStaff extends Component {
     //}
 
     let singleNote = [{ keys: [daNote], duration: "w", clef: this.props.clef }];
-
     // adding accidentals : #, b etc...
     let oneNote = singleNote.map(function (note) {
+      // console.log("note.keys[0]", note.keys[0])
       if (note.keys[0].includes("bb")) {
         return new StaveNote(note).addAccidental(0, new Accidental("bb"));
       } else if (note.keys[0].includes("b")) {
@@ -64,15 +67,15 @@ class MusicalStaff extends Component {
       }
     });
 
-    console.log("oneNote", oneNote);
+    // console.log("oneNote", oneNote);
 
     let voice = new Voice({
       num_beats: oneNote.length,
       beat_value: 1,
     });
-
+    // console.log("D");
     voice.addTickables(oneNote);
-    console.log("voice", voice);
+    // console.log("voice", voice);
     // Format and justify the notes to window.innerwidth pixels
     new Formatter().joinVoices([voice]).format([voice], window.innerWidth);
 

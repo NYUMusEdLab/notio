@@ -1,14 +1,16 @@
 const scales = [
-  /*{ 
-    name: "CHROMATIC", 
-    steps: [0,1,2,3,4,5,6,7,8,9,10,11,12]
-  },*/
+
   {
     name: "Major (Ionian)",
     steps: [0, 2, 4, 5, 7, 9, 11, 12],
     numbers: ['1', '2', '3', '4', '5', '6', '△7'],
     major_seventh: 11,
     default: true
+  },
+  {
+    name: "Chromatic",
+    steps: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    numbers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
   },
   {
     name: "Mixolydian",

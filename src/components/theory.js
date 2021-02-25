@@ -15,10 +15,22 @@ export function makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
   }
   let startingNote = noteNameToIndex(keyName);
   //console.log(startingName, startingNote);
+  // console.log("scaleFormula", scaleFormula)
+  // console.log("keyName", keyName)
+  // console.log("whichNotation", whichNotation)
   let myScaleFormula = scaleFormula;
   let myScale = [];
   for (let i = 0; i < myScaleFormula.length; i++) {
     //console.log( noteMapping[whichNotation].Sharp_Names[myScaleFormula[i] + startingNote],  );
+    // console.log("myScaleFormula[i]", myScaleFormula[i]);
+    // console.log('noteMapping["English"].Flat_Names[myScaleFormula[i] + startingNote]', noteMapping["English"].Flat_Names[myScaleFormula[i] + startingNote]);
+    // console.log('ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]', ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]);
+    // console.log('noteMapping["English"].Flat_Names[myScaleFormula[i] + startingNote].includes(ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length])', noteMapping["English"].Flat_Names[
+    //   myScaleFormula[i] + startingNote
+    // ].includes(
+    //   ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]
+    // ));
+
     if (
       noteMapping["English"].Sharp_Names[
         myScaleFormula[i] + startingNote
@@ -26,6 +38,7 @@ export function makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
         ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]
       )
     ) {
+      // console.log("push A");
       myScale.push(
         noteMapping[whichNotation].Sharp_Names[myScaleFormula[i] + startingNote]
       );
@@ -36,6 +49,7 @@ export function makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
         ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]
       )
     ) {
+      // console.log("push B");
       myScale.push(
         noteMapping[whichNotation].Flat_Names[myScaleFormula[i] + startingNote]
       );
@@ -46,13 +60,17 @@ export function makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
         ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]
       )
     ) {
+      // console.log("push C");
+      // console.log('noteMapping["English"].Double_Flat_Names[myScaleFormula[i] + startingNote]', noteMapping["English"].Double_Flat_Names[myScaleFormula[i] + startingNote]);
       myScale.push(
         noteMapping[whichNotation].Double_Flat_Names[
-          myScaleFormula[i] + startingNote
+        myScaleFormula[i] + startingNote
         ]
       );
       //console.log('includes MIDI_DOUBLE_FLAT_NAMES', ENGLISH_MIDI_DOUBLE_FLAT_NAMES[myScaleFormula[i] + startingNote] );
     } else {
+      console.log("push D");
+
       myScale.push("err!"); // high note used to indicate error
     }
   }
@@ -145,7 +163,7 @@ export function makeScalePentatonicBlues(
     ) {
       myScale.push(
         noteMapping[whichNotation].Double_Flat_Names[
-          myScaleFormula[i] + startingNote
+        myScaleFormula[i] + startingNote
         ]
       );
     } else {

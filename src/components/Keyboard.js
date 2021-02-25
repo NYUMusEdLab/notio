@@ -221,17 +221,26 @@ class Keyboard extends Component {
   //this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
   generateCurrentScale = scaleFormula => {
     const { scale, baseNote } = this.props;
-
-    if (!scale.includes("Pentatonic") && !scale.includes("Blues"))
+    if (scale.includes("Chromatic")) {
+      return ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    }
+    else if (!scale.includes("Pentatonic") && !scale.includes("Blues")) {
       return makeScaleMajorMinor(scaleFormula, baseNote, "English");
-    else
+    }
+    else {
       return makeScalePentatonicBlues(scaleFormula, baseNote, scale, "English");
+    }
+
   };
 
   generateScales = scaleSteps => {
     let theScale = {};
 
     const { notation, scale, baseNote } = this.props;
+
+    console.log("generateScales notation", notation);
+    console.log("generateScales scale", scale);
+    console.log("generateScales baseNote", baseNote);
     //this is my scale after applying the formulas for minor and major with the correct name
     //works only for major scales and for harmonic minor, melodic minor and natural minor
     for (let i = 0; i < notation.length; i++) {
@@ -240,7 +249,10 @@ class Keyboard extends Component {
         notation[i] === "German" ||
         notation[i] === "Romance"
       ) {
-        if (!scale.includes("Pentatonic") && !scale.includes("Blues")) {
+        if (scale.includes("Chromatic")) {
+          return { Romance: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] };
+        }
+        else if (!scale.includes("Pentatonic") && !scale.includes("Blues")) {
           theScale[notation[i]] = makeScaleMajorMinor(
             scaleSteps,
             baseNote,
@@ -256,6 +268,8 @@ class Keyboard extends Component {
         }
       }
     }
+
+    console.log("theScale", theScale);
     return theScale;
   };
 
@@ -283,6 +297,7 @@ class Keyboard extends Component {
         return null;
       });
       scaleSteps = scales.find(obj => obj.name === scale);
+      console.log("scaleSteps", scaleSteps);
       this.setState({
         currentScale: this.generateCurrentScale(scaleSteps.steps)
       });
@@ -389,7 +404,7 @@ class Keyboard extends Component {
     });
 
     let baseScale = this.generateCurrentScale(scaleSteps.steps);
-
+    console.log("Keyboard baseScale", baseScale)
     let currentRoot = rootNote.find(obj => {
       return obj.note === baseNote;
     });
@@ -470,6 +485,13 @@ class Keyboard extends Component {
             alreadyAdded = true;
           case "Romance":
             if (isKeyInScale) {
+              console.log("Romance isKeyInScale", isKeyInScale, theScale[notation[i]][
+                relativeCountScale %
+                (theScale[
+                  notation[i]
+                ].length -
+                  1)
+              ]);
               noteName.push(
                 theScale[notation[i]][
                 relativeCountScale %
@@ -579,7 +601,20 @@ class Keyboard extends Component {
       let noteThatWillSound;
       let noteOffset = note.octaveOffset;
       if (isKeyInScale) {
-        noteThatWillSound = baseScale[onlyScaleIndex % (baseScale.length - 1)];
+        console.log("note", note);
+
+        // console.log("onlyScaleIndex", onlyScaleIndex);
+        // console.log("baseScale.length", baseScale.length);
+        // console.log("baseScale", baseScale);
+        // console.log("onlyScaleIndex % (baseScale.length - 1)", onlyScaleIndex % (baseScale.length - 1))
+
+        if (scale.includes("Chromatic")) {
+          noteThatWillSound = baseScale[onlyScaleIndex % (baseScale.length)];
+
+        } else {
+          noteThatWillSound = baseScale[onlyScaleIndex % (baseScale.length - 1)];
+
+        }
         //special cases = C enharmonics
         if (noteThatWillSound === "Cb") noteOffset++;
         if (noteThatWillSound === "B#") noteOffset--;
@@ -597,6 +632,9 @@ class Keyboard extends Component {
       if (typeof wholeNote === "string")
         threeLowerOctave.add(noteThatWillSound + (octave + noteOffset));
 
+
+      console.log("notation", notation);
+      console.log("--------------------------------------");
       return (
         <Key
           key={arrayIndex}

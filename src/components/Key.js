@@ -26,7 +26,7 @@ class Key extends Component {
       extendedKeyboard,
       clef
     } = this.props;
-
+    console.log("Key note", note, noteName);
     return (
       <div
         className={`Key ${keyColor}
