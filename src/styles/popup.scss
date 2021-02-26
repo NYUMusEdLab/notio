@@ -1,0 +1,10 @@
+.notio-popup {
+  display: none;
+  position: absolute;
+  z-index: 30;
+  padding-top: 2vw;
+  background-color: #333;
+  &.show {
+    display: block;
+  }
+}
