@@ -1,10 +1,21 @@
 .notio-popup {
-  display: none;
+  visibility: hidden;
   position: absolute;
   z-index: 30;
   padding-top: 2vw;
   background-color: #333;
+  width: 18vw;
+  height: 11vw;
+  top: 15vh;
+  right: 29.5vw;
+  box-shadow: 0.5vw 1.3vw 2vw #555;
+
   &.show {
-    display: block;
+    visibility: visible;
+  }
+
+  iframe {
+    width: 18vw;
+    height: auto;
   }
 }

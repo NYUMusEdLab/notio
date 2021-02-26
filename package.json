@@ -16,6 +16,7 @@
     "node-sass": "4.12",
     "react": "^16.13.1",
     "react-dom": "^16.9.0",
+    "react-player": "^2.9.0",
     "react-router-dom": "^5.0.1",
     "reactjs-popup": "^2.0.4",
     "tone": "^14.7.77",
