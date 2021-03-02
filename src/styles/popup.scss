@@ -2,16 +2,44 @@
   visibility: hidden;
   position: absolute;
   z-index: 30;
-  padding-top: 2vw;
-  background-color: #333;
-  width: 18vw;
-  height: 11vw;
+  padding: 0.3vw 1vw 1vw 1vw;
+  background-color: #fff;
+  width: 20vw;
+  height: 13.4vw;
   top: 15vh;
   right: 29.5vw;
   box-shadow: 0.5vw 1.3vw 2vw #555;
+  transition: all 0.3s ease-out;
+  overflow:hidden;
+  opacity: 0;
+  .minimize,
+  .close {
+    float: right;
+  }
+
+  &--header {
+    margin-bottom:0.3vw;
+
+  }
+
+  &--button {
+    padding: 0.3vw 0.3vw 0.1vw 0.3vw;
+    transition: all 0.1s ease-in;
+    &:hover {
+      background: #444;
+      svg {
+        fill: white;
+      }
+    }
+  }
+
+  &.minimized {
+    height: 2.4vw;
+  }
 
   &.show {
     visibility: visible;
+    opacity: 1;
   }
 
   iframe {

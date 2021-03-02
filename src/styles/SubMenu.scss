@@ -130,16 +130,19 @@
 }
 
 .circledButton {
-
-  height: 5vw;
-    width: 5vw;
+  height: 4.5vw;
+  width: 4.5vw;
   background-color: #fff;
   border-radius: 50%;
   display: inline-block;
-position: relative;
+  position: relative;
 }
 
 .VideoSVG {
   width: 2.3vw;
-  transform: translate(58%, 80%);
+  transform: translate(48%, 72%);
+}
+
+.react-player {
+  overflow: hidden;
 }
