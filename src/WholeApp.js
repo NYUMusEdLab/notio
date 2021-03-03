@@ -22,7 +22,7 @@ class WholeApp extends Component {
     showOffNotes: true,
     sessionID: null,
     sessionError: null,
-    loading: true
+    loading: true,
   };
 
   constructor(props) {
@@ -32,10 +32,9 @@ class WholeApp extends Component {
     this.handleChangeNotation = this.handleChangeNotation.bind(this);
     this.handleSelectScale = this.handleSelectScale.bind(this);
     this.handleSelectClef = this.handleSelectClef.bind(this);
-
   }
 
-  handleClickOctave = action => {
+  handleClickOctave = (action) => {
     switch (action) {
       case "minus":
         this.setState({ octave: this.state.octave - 1 });
@@ -48,12 +47,12 @@ class WholeApp extends Component {
         break;
     }
   };
-  handleSelectScale = selectedScale => {
+  handleSelectScale = (selectedScale) => {
     console.log(selectedScale + " SCALE selected");
     this.setState({ scale: selectedScale });
   };
 
-  handleSelectClef = selectedClef => {
+  handleSelectClef = (selectedClef) => {
     console.log(selectedClef + " clef selected");
     this.setState({ clef: selectedClef });
   };
@@ -70,17 +69,17 @@ class WholeApp extends Component {
 
   */
 
-  handleChangeNotation = selectedNotation => {
+  handleChangeNotation = (selectedNotation) => {
     console.log(selectedNotation + " Notation selected");
     this.setState({ notation: selectedNotation });
   };
 
-  handleSelectTheme = selectedTheme => {
+  handleSelectTheme = (selectedTheme) => {
     console.log(selectedTheme + " Theme selected");
     this.setState({ theme: selectedTheme });
   };
 
-  handleChangeRoot = selectedRoot => {
+  handleChangeRoot = (selectedRoot) => {
     console.log(selectedRoot + " Root selected");
     this.setState({ baseNote: selectedRoot });
   };
@@ -101,7 +100,7 @@ class WholeApp extends Component {
       extendedKeyboard,
       trebleStaffOn,
       theme,
-      showOffNotes
+      showOffNotes,
     } = this.state;
     db.collection("sessions")
       .add({
@@ -113,22 +112,22 @@ class WholeApp extends Component {
         extendedKeyboard: extendedKeyboard,
         trebleStaffOn: trebleStaffOn,
         theme: theme,
-        showOffNotes: showOffNotes
+        showOffNotes: showOffNotes,
       })
-      .then(docRef => {
+      .then((docRef) => {
         console.log("Session written with ID: ", docRef.id);
         this.setState({ sessionID: docRef.id });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error adding document: ", error);
         this.setState({ sessionError: error });
       });
   };
 
-  openSavedSession = sessionId => {
+  openSavedSession = (sessionId) => {
     console.log("openSaved session:", sessionId);
     const ref = db.collection("sessions").doc(sessionId);
-    ref.get().then(doc => {
+    ref.get().then((doc) => {
       if (doc.exists) {
         const result = doc.data();
         this.setState({
@@ -142,7 +141,7 @@ class WholeApp extends Component {
           menuOpen: result.menuOpen,
           theme: result.theme,
           showOffNotes: result.showOffNotes,
-          loading: false
+          loading: false,
         });
       } else {
         this.setState({ loading: false });
@@ -181,7 +180,7 @@ class WholeApp extends Component {
       this.openSavedSession(sessionId);
     } else {
       this.setState({
-        loading: false
+        loading: false,
       });
     }
   }
@@ -213,106 +212,108 @@ class WholeApp extends Component {
       theme,
       trebleStaffOn,
     } = this.state;
-    console.log("whole app", this.state.notation)
+    console.log("whole app", this.state.notation);
     return loading ? (
       <LoadingScreen />
     ) : (
-        <div>
-          <TopMenu
-            togglePiano={this.togglePiano}
-            toggleExtendedKeyboard={this.toggleExtendedKeyboard}
-            notationState={this.state.notation}
-            handleChangeNotation={this.handleChangeNotation}
-            handleChangeScale={this.handleSelectScale}
-            handleSelectClef={this.handleSelectClef}
-          />
+      <div>
+        <TopMenu
+          togglePiano={this.togglePiano}
+          toggleExtendedKeyboard={this.toggleExtendedKeyboard}
+          notationState={this.state.notation}
+          handleChangeNotation={this.handleChangeNotation}
+          handleChangeScale={this.handleSelectScale}
+          handleSelectClef={this.handleSelectClef}
+        />
 
-          <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
-            <div className="MainMenuDot" onClick={this.toggleMenu}>
-              <span>&#9835;</span>
+        <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
+          <div className="MainMenuDot" onClick={this.toggleMenu}>
+            <span>&#9835;</span>
+          </div>
+          <div className={`MainMenu slide-in-top ${menuOpen ? "open" : ""}`}>
+            <div
+              className="closeMenu"
+              onClick={this.toggleMenu}
+              style={{ backgroundColor: "#FFFFFF", cursor: "pointer" }}
+            >
+              (x)
             </div>
-            <div className={`MainMenu slide-in-top ${menuOpen ? "open" : ""}`}>
-              <div
-                className="closeMenu"
-                onClick={this.toggleMenu}
-                style={{ backgroundColor: "#FFFFFF", cursor: "pointer" }}
-              >
-                (x)
+            <div className="Menu-Row">
+              <Octaves octave={octave} handleClick={this.handleClickOctave} />
+              <Scale scale={scale} handleSelect={this.handleSelectScale} />
+              <CircleFifthsSVG
+                rootNote={baseNote}
+                handleChange={this.handleChangeRoot}
+              />
             </div>
-              <div className="Menu-Row">
-                <Octaves octave={octave} handleClick={this.handleClickOctave} />
-                <Scale scale={scale} handleSelect={this.handleSelectScale} />
-                <CircleFifthsSVG
-                  rootNote={baseNote}
-                  handleChange={this.handleChangeRoot}
+            <div className="Menu-Row">
+              <div className="Menu-label"></div>
+              <div className="Menu-label">
+                Musical Staff (Treble){" "}
+                <img
+                  height="30"
+                  src="/img/treble-clef.png"
+                  alt="treble cleff"
                 />
               </div>
-              <div className="Menu-Row">
-                <div className="Menu-label"></div>
-                <div className="Menu-label">
-                  Musical Staff (Treble){" "}
-                  <img height="30" src="/img/treble-clef.png" alt="treble cleff" />
-                </div>
-                <div className="Menu-label">Show notes that are not in scale</div>
-                <div className="Menu-label">Share this setup</div>
-              </div>
-              <div className="Menu-Row">
-
-
-                <Theme theme={theme} handleSelect={this.handleSelectTheme} />
-                <div className="toggle-switch">
-                  <div className="checkbox">
-                    <input
-                      type="checkbox"
-                      checked={trebleStaffOn}
-                      onChange={this.toggleStaff}
-                    />
-                    <label />
-                  </div>
-                </div>
-                <div className="toggle-switch">
-                  <div className="checkbox">
-                    <input
-                      type="checkbox"
-                      checked={showOffNotes}
-                      onChange={this.toggleShowOffNotes}
-                    />
-                    <label />
-                  </div>
-                </div>
-                <div className="share" onClick={this.saveSessionToDB}>
-                  <img width="50" src="/img/share.png" alt="Share" />
-                </div>
-              </div>
-              {this.state.sessionID ? (
-                <div className="Bottom-Info-Row">
-                  Your configuration has been saved here:{" "}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={`https://notio.pestanias.now.sh/shared/${this.state.sessionID}`}
-                  >
-                    https://notio.pestanias.now.sh/shared/{this.state.sessionID}
-                  </a>
-                </div>
-              ) : null}
+              <div className="Menu-label">Show notes that are not in scale</div>
+              <div className="Menu-label">Share this setup</div>
             </div>
-            <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} />
-            <Keyboard
-              octave={this.state.octave}
-              scale={this.state.scale}
-              baseNote={this.state.baseNote}
-              notation={this.state.notation}
-              pianoOn={this.state.pianoOn}
-              extendedKeyboard={this.state.extendedKeyboard}
-              trebleStaffOn={this.state.trebleStaffOn}
-              showOffNotes={this.state.showOffNotes}
-              theme={this.state.theme}
-              clef={this.state.clef}
-            />
+            <div className="Menu-Row">
+              <Theme theme={theme} handleSelect={this.handleSelectTheme} />
+              <div className="toggle-switch">
+                <div className="checkbox">
+                  <input
+                    type="checkbox"
+                    checked={trebleStaffOn}
+                    onChange={this.toggleStaff}
+                  />
+                  <label />
+                </div>
+              </div>
+              <div className="toggle-switch">
+                <div className="checkbox">
+                  <input
+                    type="checkbox"
+                    checked={showOffNotes}
+                    onChange={this.toggleShowOffNotes}
+                  />
+                  <label />
+                </div>
+              </div>
+              <div className="share" onClick={this.saveSessionToDB}>
+                <img width="50" src="/img/share.png" alt="Share" />
+              </div>
+            </div>
+            {this.state.sessionID ? (
+              <div className="Bottom-Info-Row">
+                Your configuration has been saved here:{" "}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`/shared/${this.state.sessionID}`}
+                >
+                  {window.location.hostname}/shared/{this.state.sessionID}
+                </a>
+              </div>
+            ) : null}
           </div>
+          <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} />
+          <Keyboard
+            octave={this.state.octave}
+            scale={this.state.scale}
+            baseNote={this.state.baseNote}
+            notation={this.state.notation}
+            pianoOn={this.state.pianoOn}
+            extendedKeyboard={this.state.extendedKeyboard}
+            trebleStaffOn={this.state.trebleStaffOn}
+            showOffNotes={this.state.showOffNotes}
+            theme={this.state.theme}
+            clef={this.state.clef}
+          />
         </div>
-      );
+      </div>
+    );
   }
 }
 

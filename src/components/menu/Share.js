@@ -1,19 +1,10 @@
 import React, { Component, createRef } from "react";
-import $ from "jquery";
-import gsap from "gsap";
-import Draggable from "gsap/Draggable";
-
 import ReactPlayer from "react-player/lazy";
+import ShareSVG from "../../assets/img/Share";
 
-import VideoSVG from "../../assets/img/Video";
-import UnderscoreSVG from "../../assets/img/Underscore";
-import CrossSVG from "../../assets/img/Cross";
 import Popup from "./Popup";
 
-const components = {
-  video: <VideoSVG />,
-};
-class CircledButton extends Component {
+class Share extends Component {
   state = {
     url: null,
     playing: false,
@@ -32,7 +23,7 @@ class CircledButton extends Component {
     return (
       <div>
         <Popup
-          picto={components[this.props.label]}
+          picto=<ShareSVG />
           content={
             <ReactPlayer
               ref={this.ref}
@@ -50,4 +41,4 @@ class CircledButton extends Component {
   }
 }
 
-export default CircledButton;
+export default Share;
