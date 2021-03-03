@@ -27,12 +27,19 @@ class VideoTutorial extends Component {
     super(props);
   }
 
+  handlePlayPause = () => {
+    this.setState({ playing: !this.state.playing });
+  };
+
   render() {
     const { url, playing } = this.state;
     return (
       <div>
         <Popup
+          class="popup-video"
+          draggable={true}
           picto={components[this.props.label]}
+          handlePlayPause={this.handlePlayPause}
           content={
             <ReactPlayer
               ref={this.ref}

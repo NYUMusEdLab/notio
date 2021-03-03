@@ -22,19 +22,21 @@ class Popup extends Component {
   }
 
   componentDidMount() {
-    gsap.registerPlugin(Draggable);
+    if (this.props.draggable) {
+      gsap.registerPlugin(Draggable);
+
+      Draggable.create(".notio-popup", {
+        type: "x,y",
+        edgeResistance: 0.65,
+        bounds: ".Piano",
+        inertia: true,
+      });
+    }
 
     // $('.notio-popup').each(function() {
     //   gsap.set('.resize-handle', { top: drag.width(), left: drag.height() });
     // }
     // gsap.set(".resize-handle", { top: $('.notio-popup').width(), left: $('.notio-popup').height() });
-
-    Draggable.create(".notio-popup", {
-      type: "x,y",
-      edgeResistance: 0.65,
-      bounds: ".Piano",
-      inertia: true,
-    });
 
     // Draggable.create(".resize-handle", {
     //   type:"bottom,right",
@@ -51,10 +53,6 @@ class Popup extends Component {
     this.setState({ show: !this.state.show });
   };
 
-  handlePlayPause = () => {
-    this.setState({ playing: !this.state.playing });
-  };
-
   handleMinimize = () => {
     this.setState({ minimized: !this.state.minimized });
   };
@@ -66,16 +64,17 @@ class Popup extends Component {
         <div
           class="circledButton"
           onClick={(e) => {
-            this.handlePlayPause();
+            this.props.handlePlayPause();
             this.handleShow();
           }}
         >
           {this.props.picto}
         </div>
         <div
-          class={`notio-popup ${minimized ? "minimized" : ""} ${
-            show ? "show" : ""
-          }`}
+          class={
+            this.props.class +
+            ` notio-popup ${minimized ? "minimized" : ""} ${show ? "show" : ""}`
+          }
         >
           <div class="notio-popup--header clearfix">
             <div
