@@ -6,6 +6,7 @@ import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import LoadingScreen from "./components/LoadingScreen";
 import "./style.scss";
 import db from "./Firebase";
+import queryString from "query-string";
 
 class WholeApp extends Component {
   state = {
@@ -127,11 +128,12 @@ class WholeApp extends Component {
   };
 
   openSavedSession = (sessionId) => {
-    console.log("openSaved session:", sessionId);
+    console.log("*********** openSaved session:", sessionId);
     const ref = db.collection("sessions").doc(sessionId);
     ref.get().then((doc) => {
       if (doc.exists) {
         const result = doc.data();
+        console.log("********* result", result);
         this.setState({
           octave: result.octave,
           scale: result.scale,
@@ -174,9 +176,9 @@ class WholeApp extends Component {
       return false;
     };
 
-    const { match } = this.props;
-    const { params } = match;
-    const { sessionId } = params;
+    // const { match } = this.props;
+    // const { params } = match;
+    const sessionId = this.props.match.params.sessionId;
 
     if (sessionId) {
       this.openSavedSession(sessionId);
@@ -215,6 +217,7 @@ class WholeApp extends Component {
       trebleStaffOn,
     } = this.state;
     console.log("whole app", this.state.notation);
+
     return loading ? (
       <LoadingScreen />
     ) : (
