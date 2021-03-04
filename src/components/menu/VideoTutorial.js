@@ -1,13 +1,7 @@
-import React, { Component, createRef } from "react";
-import $ from "jquery";
-import gsap from "gsap";
-import Draggable from "gsap/Draggable";
-
+import React, { Component } from "react";
 import ReactPlayer from "react-player/lazy";
 
 import VideoSVG from "../../assets/img/Video";
-import UnderscoreSVG from "../../assets/img/Underscore";
-import CrossSVG from "../../assets/img/Cross";
 import Popup from "./Popup";
 
 const components = {
@@ -23,16 +17,13 @@ class VideoTutorial extends Component {
     minimized: false,
     show: false,
   };
-  constructor(props) {
-    super(props);
-  }
 
   handlePlayPause = () => {
     this.setState({ playing: !this.state.playing });
   };
 
   render() {
-    const { url, playing } = this.state;
+    const { playing } = this.state;
     return (
       <div>
         <Popup
@@ -45,7 +36,6 @@ class VideoTutorial extends Component {
             <ReactPlayer
               ref={this.ref}
               className="react-player"
-              url={url}
               playing={playing}
               width="100%"
               height="100%"

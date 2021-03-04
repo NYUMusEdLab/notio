@@ -1,17 +1,9 @@
-import React, { Component, createRef } from "react";
-import $ from "jquery";
+import React, { Component } from "react";
 import gsap from "gsap";
 import Draggable from "gsap/Draggable";
-
-import ReactPlayer from "react-player/lazy";
-
-import VideoSVG from "../../assets/img/Video";
 import UnderscoreSVG from "../../assets/img/Underscore";
 import CrossSVG from "../../assets/img/Cross";
 
-const components = {
-  video: <VideoSVG />,
-};
 class Popup extends Component {
   static defaultProps = {
     onClickMenuHandler: () => {},
@@ -22,9 +14,6 @@ class Popup extends Component {
     minimized: false,
     show: false,
   };
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     if (this.props.draggable) {
@@ -63,7 +52,7 @@ class Popup extends Component {
   };
 
   render() {
-    const { minimized, show, hasBG } = this.state;
+    const { minimized, show } = this.state;
     return (
       <div>
         <div

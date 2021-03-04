@@ -4,19 +4,17 @@ import Star from "../assets/img/Star";
 import MusicalStaff from "./MusicalStaff";
 import Color from "color";
 
-
 class ColorKey extends Component {
-
   constructor(props) {
     super(props);
     this.keyRef = React.createRef();
-    this.initColor(props.color)
+    this.initColor(props.color);
     this.state = {
       isMouseDown: false,
-      _color: this._colorInit
+      _color: this._colorInit,
     };
   }
-  touchDown = e => {
+  touchDown = (e) => {
     if (e.cancelable) {
       e.preventDefault();
     }
@@ -24,7 +22,7 @@ class ColorKey extends Component {
       this.playNote(this.props.note);
     }
   };
-  touchUp = e => {
+  touchUp = (e) => {
     if (e.cancelable) {
       e.preventDefault(); // prevent default calling of mouse event after touch event
     }
@@ -33,7 +31,7 @@ class ColorKey extends Component {
     }
   };
 
-  onMouseOver = e => {
+  onMouseOver = (e) => {
     if (this.props.isOn) {
       // this.setState((state) => {
       //   return { _color: this._colorActive, }
@@ -41,7 +39,7 @@ class ColorKey extends Component {
     }
   };
 
-  onMouseOut = e => {
+  onMouseOut = (e) => {
     if (this.props.isOn) {
       // this.setState((state) => {
       //   return { _color: this._colorInit, }
@@ -49,43 +47,47 @@ class ColorKey extends Component {
     }
   };
 
-  clickedMouse = e => {
+  clickedMouse = (e) => {
     if (this.props.isOn) {
       this.setState((state) => {
         return {
-          _color: 'linear-gradient(180deg, rgba(255,255,255,0) 20%, '
-            + this._colorActive + ' 100%, ' + this._colorActive + ' 100%)'
-        }
-      })
+          _color:
+            "linear-gradient(180deg, rgba(255,255,255,0) 20%, " +
+            this._colorActive +
+            " 100%, " +
+            this._colorActive +
+            " 100%)",
+        };
+      });
       this.playNote(this.props.note);
     }
   };
-  unClickedMouse = e => {
+  unClickedMouse = (e) => {
     if (this.props.isOn) {
       this.setState((state) => {
-        return { _color: this._colorInit }
-      })
+        return { _color: this._colorInit };
+      });
       this.releaseNote(this.props.note);
     }
   };
 
-  mouseEnter = e => {
+  mouseEnter = (e) => {
     if (this.props.isOn && this.props.isMouseDown === true) {
       this.playNote(this.props.note);
     }
   };
 
-  mouseLeave = e => {
+  mouseLeave = (e) => {
     if (this.props.isOn && this.props.isMouseDown === true) {
       this.releaseNote(this.props.note);
     }
   };
 
-  playNote = note => {
+  playNote = (note) => {
     this.props.noteOn(note);
   };
 
-  releaseNote = note => {
+  releaseNote = (note) => {
     this.props.noteOff(note);
   };
 
@@ -95,10 +97,10 @@ class ColorKey extends Component {
   };
 
   initColor = (color) => {
-    this._colorInit = Color(color)
+    this._colorInit = Color(color);
     // this._colorActive = this._color
     // this._colorInit = this._color.darken(0.2)
-  }
+  };
 
   componentDidUpdate(prevProps) {
     if (
@@ -149,49 +151,51 @@ class ColorKey extends Component {
       showOffNotes,
       isMajorSeventh,
       extendedKeyboard,
-      clef
+      clef,
     } = this.props;
 
-    let offKeyColorWithTheme;
+    // let offKeyColorWithTheme;
 
-    switch (theme) {
-      case "light":
-        offKeyColorWithTheme = ["#eee", "#ddd"]; //offColor;
-        break;
-      case "dark":
-        offKeyColorWithTheme = ["#000", "#333"];
-        break;
-      default:
-        offKeyColorWithTheme = ["#ddd", "#ccc"]; //offColor;
-    }
+    // switch (theme) {
+    //   case "light":
+    //     offKeyColorWithTheme = ["#eee", "#ddd"]; //offColor;
+    //     break;
+    //   case "dark":
+    //     offKeyColorWithTheme = ["#000", "#333"];
+    //     break;
+    //   default:
+    //     offKeyColorWithTheme = ["#ddd", "#ccc"]; //offColor;
+    // }
 
     const noteNames = noteName
       ? noteName.map(function (item, i) {
-        item = item.toString();
-        if (item.indexOf("b") === 2) {
-          //doubleflat
-          item = item.replace("bb", "\u1D12B");
-        } else if (item.indexOf("b") === 1) {
-          //flat
-          item = item.replace("b", "\u266D");
-        }
-        return (
-          <div className="noteName" key={i}>
-            {item}
-          </div>
-        );
-      })
+          item = item.toString();
+          if (item.indexOf("b") === 2) {
+            //doubleflat
+            item = item.replace("bb", "\u1D12B");
+          } else if (item.indexOf("b") === 1) {
+            //flat
+            item = item.replace("b", "\u266D");
+          }
+          return (
+            <div className="noteName" key={i}>
+              {item}
+            </div>
+          );
+        })
       : null;
     console.log("this.state.myWidth", this.state.myWidth);
     return (
       <div
         ref={this.keyRef}
-        className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${isOn ? "on" : "off"
-          } ${(note.includes("C") && !note.includes("#") && !note.includes("b")) ||
-            note.includes("B#")
+        className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${
+          isOn ? "on" : "off"
+        } ${
+          (note.includes("C") && !note.includes("#") && !note.includes("b")) ||
+          note.includes("B#")
             ? "" /*"c-mark"*/
             : ""
-          }
+        }
                     `}
         style={{
           height: pianoOn ? "70%" : "100%",
@@ -213,7 +217,7 @@ class ColorKey extends Component {
           className={`noteWrapper note ${isOn ? "on" : "off"}`}
           style={{
             backgroundColor: this.state.clicked ? color : null,
-            top: extendedKeyboard ? "17%" : "10%"
+            top: extendedKeyboard ? "17%" : "10%",
           }}
         >
           {noteNames}
@@ -251,7 +255,7 @@ ColorKey.propTypes = {
   root: PropTypes.string,
   isMajorSeventh: PropTypes.bool,
   keyIndex: PropTypes.number,
-  extendedKeyboard: PropTypes.bool
+  extendedKeyboard: PropTypes.bool,
 };
 
 export default ColorKey;

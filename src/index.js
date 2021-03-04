@@ -6,11 +6,10 @@ import WholeApp from "./WholeApp";
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
+      <BrowserRouter basename='{window.location.pathname || ""}'>
         <Switch>
-          <Route exact path="/shared/:sessionId" component={WholeApp} />
-
           <Route exact path="/" component={WholeApp} />
+          <Route path="/shared/:sessionId" component={WholeApp} />
         </Switch>
       </BrowserRouter>
     );

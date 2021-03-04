@@ -6,7 +6,6 @@ import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import LoadingScreen from "./components/LoadingScreen";
 import "./style.scss";
 import db from "./Firebase";
-import queryString from "query-string";
 
 class WholeApp extends Component {
   state = {
@@ -93,7 +92,6 @@ class WholeApp extends Component {
 
   saveSessionToDB = () => {
     console.log("saveSessionToDB");
-    let messageRed = db;
     const {
       octave,
       scale,
@@ -179,7 +177,7 @@ class WholeApp extends Component {
     // const { match } = this.props;
     // const { params } = match;
     const sessionId = this.props.match.params.sessionId;
-
+    console.log("********************** componentDidMount sessionId", sessionId);
     if (sessionId) {
       this.openSavedSession(sessionId);
     } else {
