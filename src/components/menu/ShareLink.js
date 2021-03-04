@@ -5,7 +5,7 @@ const ShareLink = (props) => {
     const url = "/shared/" + props.sessionID;
 
     return (
-      <a href={url} title="" target="_blank">
+      <a href={url} title="" target="_blank" rel="noopener noreferrer">
         {window.location.host + url}
       </a>
     );
