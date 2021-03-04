@@ -39,7 +39,8 @@ class VideoTutorial extends Component {
           class="popup-video"
           draggable={true}
           picto={components[this.props.label]}
-          handlePlayPause={this.handlePlayPause}
+          onClickMenuHandler={this.handlePlayPause}
+          onClickCloseHandler={this.props.handlePlayPause}
           content={
             <ReactPlayer
               ref={this.ref}

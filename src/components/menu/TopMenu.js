@@ -111,9 +111,13 @@ class TopMenu extends Component {
         </div>
 
         {/* Share */}
-        {/* <div className="navbar-item menu-clef">
-          <Share label="Share" />
-        </div> */}
+        <div className="navbar-item menu-clef">
+          <Share
+            label="Share"
+            saveSessionToDB={this.props.saveSessionToDB}
+            sessionID={this.props.sessionID}
+          />
+        </div>
       </div>
     );
   }

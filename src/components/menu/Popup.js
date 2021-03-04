@@ -13,6 +13,11 @@ const components = {
   video: <VideoSVG />,
 };
 class Popup extends Component {
+  static defaultProps = {
+    onClickMenuHandler: () => {},
+    onClickCloseHandler: () => {},
+    hasBG: false,
+  };
   state = {
     minimized: false,
     show: false,
@@ -58,18 +63,23 @@ class Popup extends Component {
   };
 
   render() {
-    const { minimized, show } = this.state;
+    const { minimized, show, hasBG } = this.state;
     return (
       <div>
         <div
           class="circledButton"
           onClick={(e) => {
-            this.props.handlePlayPause();
+            this.props.onClickMenuHandler();
             this.handleShow();
           }}
         >
           {this.props.picto}
         </div>
+        {this.props.hasBG ? (
+          <div class={`notio-popup--bg ${show ? "show" : ""}`}></div>
+        ) : (
+          ""
+        )}
         <div
           class={
             this.props.class +
@@ -80,7 +90,7 @@ class Popup extends Component {
             <div
               class="close notio-popup--button"
               onClick={(e) => {
-                this.handlePlayPause();
+                this.props.onClickCloseHandler();
                 this.handleShow();
               }}
             >

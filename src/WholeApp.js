@@ -91,6 +91,8 @@ class WholeApp extends Component {
   // }
 
   saveSessionToDB = () => {
+    console.log("saveSessionToDB");
+    let messageRed = db;
     const {
       octave,
       scale,
@@ -224,6 +226,8 @@ class WholeApp extends Component {
           handleChangeNotation={this.handleChangeNotation}
           handleChangeScale={this.handleSelectScale}
           handleSelectClef={this.handleSelectClef}
+          saveSessionToDB={this.saveSessionToDB}
+          sessionID={this.state.sessionID}
         />
 
         <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>

@@ -1,7 +1,7 @@
 import React, { Component, createRef } from "react";
 import ReactPlayer from "react-player/lazy";
 import ShareSVG from "../../assets/img/Share";
-
+import ShareLink from "./ShareLink";
 import Popup from "./Popup";
 
 class Share extends Component {
@@ -18,23 +18,30 @@ class Share extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    // const { match } = this.props;
+    // const { params } = match;
+    // const { sessionId } = params;
+    // if (sessionId) {
+    //   this.openSavedSession(sessionId);
+    // } else {
+    //   this.setState({
+    //     loading: false,
+    //   });
+    // }
+  }
+
   render() {
     const { url, playing } = this.state;
     return (
       <div>
         <Popup
+          class="popup-menu"
+          draggable={false}
           picto=<ShareSVG />
-          content={
-            <ReactPlayer
-              ref={this.ref}
-              className="react-player"
-              url={url}
-              playing={playing}
-              width="100%"
-              height="100%"
-              url="https://youtube.com/playlist?list=PL7imp2jxKd0Bcx4cjR3gEMirkAzd84G_C"
-            />
-          }
+          onClickMenuHandler={this.props.saveSessionToDB}
+          hasBG={true}
+          content=<ShareLink sessionID={this.props.sessionID} />
         />
       </div>
     );
