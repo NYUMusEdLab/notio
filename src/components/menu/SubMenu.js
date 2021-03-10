@@ -24,7 +24,6 @@ class SubMenu extends Component {
   constructor(props) {
     super(props);
     this.toggleClass = this.toggleClass.bind(this);
-
     this.state = {
       active: false,
     };
@@ -35,18 +34,26 @@ class SubMenu extends Component {
     this.setState({ active: !currentState });
   };
 
+  componentDidMount() {
+    if (this.props.displayPicto) {
+      this.selectPicto();
+    }
+  }
 
   componentDidUpdate(prevProps) {
-    console.log("componentDidUpdate");
-
     if (this.props.selected !== prevProps.selected) {
       if (this.props.displayPicto) {
+        this.selectPicto();
+      }
+    }
+  }
 
+  selectPicto() {
         // Better solution to load dyncamically components
         // but not working on github pages
         //ClefComponent = loadable(props => import(`../../assets/img/${imgClass}Clef`));
         // in render : <ClefComponent clef={this.props.selected} />
-
+        console.log("selectPicto this.props.selected", this.props.selected);
         // dirty solution :
         switch (this.props.selected) {
           case 'treble':
@@ -63,10 +70,6 @@ class SubMenu extends Component {
           default:
             ClefComponent = TrebleClef;
         }
-
-      }
-    }
-
   }
 
   render() {

@@ -19,7 +19,6 @@ class ListRadio extends Component {
   }
 
   componentDidMount() {
-    console.log("initOption", this.props.initOption);
     for (const [key, value] of Object.entries(this.props.data)) {
       if (value["default"] === true) {
         console.log(key);
@@ -31,6 +30,8 @@ class ListRadio extends Component {
   }
 
   onChange = (changeEvent) => {
+    console.log("initOption", this.props.initOption);
+
     const { value } = changeEvent.target;
     this.setState(
       (prevState) => ({

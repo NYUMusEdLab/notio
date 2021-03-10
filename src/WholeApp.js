@@ -102,6 +102,7 @@ class WholeApp extends Component {
       trebleStaffOn,
       theme,
       showOffNotes,
+      clef,
     } = this.state;
     db.collection("sessions")
       .add({
@@ -114,6 +115,7 @@ class WholeApp extends Component {
         trebleStaffOn: trebleStaffOn,
         theme: theme,
         showOffNotes: showOffNotes,
+        clef: clef,
       })
       .then((docRef) => {
         console.log("Session written with ID: ", docRef.id);
@@ -143,6 +145,7 @@ class WholeApp extends Component {
           menuOpen: result.menuOpen,
           theme: result.theme,
           showOffNotes: result.showOffNotes,
+          clef: result.clef,
           loading: false,
         });
       } else {
