@@ -16,7 +16,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.9.0",
     "react-player": "^2.9.0",
-    "react-router-dom": "^5.0.1",
+    "react-router-dom": "^5.2.0",
     "reactjs-popup": "^2.0.4",
     "tone": "^14.7.77",
     "vexflow": "^3.0.9",
@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cp netlify.toml build/netlify.toml",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "now-build": "react-scripts build",
