@@ -5,7 +5,7 @@ import Checkbox from "./Checkbox";
 import _ from "lodash";
 class ListCheckbox extends Component {
   state = {
-    checkboxes: this.props.checked.reduce(
+    checkboxes: this.props.initOptions.reduce(
       (options, option) => ({
         ...options,
         [option]: true,

@@ -68,7 +68,7 @@ class TopMenu extends Component {
             selected=<NotationImg />
             content={
               <Notation
-                notationState={this.props.state.notation}
+                initOptions={this.props.state.notation}
                 handleChange={this.props.handleChangeNotation}
               />
             }
@@ -86,6 +86,7 @@ class TopMenu extends Component {
                 data={scales}
                 handleChange={this.props.handleChangeScale}
                 setTitle={this.setScaleTitle}
+                initOption={this.props.state.scale}
               />
             }
           />
@@ -105,6 +106,7 @@ class TopMenu extends Component {
                 handleChange={this.props.handleSelectClef}
                 setTitle={this.setClefTitle}
                 setImage={this.setClefImage}
+                initOption={this.props.state.clef}
               />
             }
           />

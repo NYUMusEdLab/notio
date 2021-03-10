@@ -4,58 +4,53 @@ import React, { Component } from "react";
 import Radio from "./Radio";
 class ListRadio extends Component {
   defaultProps = {
-    setImage: 'coucou',
-  }
-
+    setImage: "",
+  };
 
   state = {
-    radios: this.props.data.reduce(
-      (options, option) => ({
-        ...options,
-        [option.name]: option.default ? true : false
-      }),
-      {}
-    )
+    radios: {
+      [this.props.initOption]: true,
+    },
   };
 
   constructor(props) {
-    super(props)
-    props = { ...this.defaultProps, ...props }
-
+    super(props);
+    props = { ...this.defaultProps, ...props };
   }
 
   componentDidMount() {
+    console.log("initOption", this.props.initOption);
     for (const [key, value] of Object.entries(this.props.data)) {
-      if (value['default'] === true) {
+      if (value["default"] === true) {
         console.log(key);
-        this.props.setTitle(value['name']);
+        this.props.setTitle(value["name"]);
         // for clef men
-        if (value['svg'])
-          this.props.setImage(value['svg']);
+        if (value["svg"]) this.props.setImage(value["svg"]);
       }
     }
   }
 
-  onChange = changeEvent => {
+  onChange = (changeEvent) => {
     const { value } = changeEvent.target;
-    this.setState(prevState => ({
-      radios: {
-        [value]: !prevState.radios[value]
+    this.setState(
+      (prevState) => ({
+        radios: {
+          [value]: !prevState.radios[value],
+        },
+      }),
+      () => {
+        let option = null;
+        for (const [key, value] of Object.entries(this.state.radios)) {
+          if (value === true) option = key;
+        }
+        this.props.handleChange(option);
+        this.props.setTitle(option);
+        if (this.props.displayPicto) this.props.setImage(option);
       }
-    }), () => {
-      let option = null;
-      for (const [key, value] of Object.entries(this.state.radios)) {
-        if (value === true)
-          option = key;
-      }
-      this.props.handleChange(option);
-      this.props.setTitle(option);
-      if (this.props.displayPicto)
-        this.props.setImage(option);
-    });
+    );
   };
 
-  createRadio = option => (
+  createRadio = (option) => (
     <Radio
       nameField={this.props.nameField}
       label={option.name}
@@ -68,10 +63,8 @@ class ListRadio extends Component {
   createRadios = () => this.props.data.map(this.createRadio);
 
   render() {
-    return (
-      this.createRadios()
-    );
-  };
+    return this.createRadios();
+  }
 }
 
 export default ListRadio;
