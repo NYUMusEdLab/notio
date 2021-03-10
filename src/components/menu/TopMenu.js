@@ -45,7 +45,11 @@ class TopMenu extends Component {
       <div className="navbar">
         {/* Toggle Piano */}
         <div className="navbar-item">
-          <Toggle title="Show keyboard" onChange={this.props.togglePiano} />
+          <Toggle
+            title="Show keyboard"
+            onChange={this.props.togglePiano}
+            checked={this.props.state.pianoOn}
+          />
         </div>
 
         {/* Toggle Extended */}
@@ -53,6 +57,7 @@ class TopMenu extends Component {
           <Toggle
             title="Extended Instrument"
             onChange={this.props.toggleExtendedKeyboard}
+            checked={this.props.state.extendedKeyboard}
           />
         </div>
 
@@ -63,7 +68,7 @@ class TopMenu extends Component {
             selected=<NotationImg />
             content={
               <Notation
-                notationState={this.props.notationState}
+                notationState={this.props.state.notation}
                 handleChange={this.props.handleChangeNotation}
               />
             }

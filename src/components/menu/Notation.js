@@ -9,20 +9,19 @@ const notations = [
   "Romance",
   "Relative",
   "Scale Steps",
-  "Chord extensions"
+  "Chord extensions",
 ];
 
 class Notation extends Component {
-
   render() {
     return (
       <ListCheckbox
         options={notations}
         handleCheckboxChange={this.props.handleChange}
-      //optionState={this.props.notationState}
+        checked={this.props.notationState}
       />
     );
-  };
+  }
 }
 
 export default Notation;

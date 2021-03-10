@@ -4,31 +4,35 @@ import React, { Component } from "react";
 import Checkbox from "./Checkbox";
 import _ from "lodash";
 class ListCheckbox extends Component {
-
   state = {
-    checkboxes: this.props.options.reduce(
+    checkboxes: this.props.checked.reduce(
       (options, option) => ({
         ...options,
-        [option]: false
+        [option]: true,
       }),
       {}
-    )
+    ),
   };
 
-  onChange = changeEvent => {
+  onChange = (changeEvent) => {
     const { name } = changeEvent.target;
-    this.setState(prevState => ({
-      checkboxes: {
-        ...prevState.checkboxes,
-        [name]: !prevState.checkboxes[name]
+    this.setState(
+      (prevState) => ({
+        checkboxes: {
+          ...prevState.checkboxes,
+          [name]: !prevState.checkboxes[name],
+        },
+      }),
+      () => {
+        let arrOptions = _.pickBy(this.state.checkboxes, function (value, key) {
+          return value;
+        });
+        this.props.handleCheckboxChange(Object.keys(arrOptions));
       }
-    }), () => {
-      let arrOptions = _.pickBy(this.state.checkboxes, function (value, key) { return value });
-      this.props.handleCheckboxChange(Object.keys(arrOptions));
-    });
+    );
   };
 
-  createCheckbox = option => (
+  createCheckbox = (option) => (
     <Checkbox
       label={option}
       isSelected={this.state.checkboxes[option]}
@@ -40,10 +44,9 @@ class ListCheckbox extends Component {
   createCheckboxes = () => this.props.options.map(this.createCheckbox);
 
   render() {
-    return (
-      this.createCheckboxes()
-    );
-  };
+    console.log("********** this.props.checked", this.props.checked);
+    return this.createCheckboxes();
+  }
 }
 
 export default ListCheckbox;

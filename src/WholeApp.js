@@ -177,7 +177,10 @@ class WholeApp extends Component {
     // const { match } = this.props;
     // const { params } = match;
     const sessionId = this.props.match.params.sessionId;
-    console.log("********************** componentDidMount sessionId", sessionId);
+    console.log(
+      "********************** componentDidMount sessionId",
+      sessionId
+    );
     if (sessionId) {
       this.openSavedSession(sessionId);
     } else {
@@ -223,12 +226,12 @@ class WholeApp extends Component {
         <TopMenu
           togglePiano={this.togglePiano}
           toggleExtendedKeyboard={this.toggleExtendedKeyboard}
-          notationState={this.state.notation}
           handleChangeNotation={this.handleChangeNotation}
           handleChangeScale={this.handleSelectScale}
           handleSelectClef={this.handleSelectClef}
           saveSessionToDB={this.saveSessionToDB}
           sessionID={this.state.sessionID}
+          state={this.state}
         />
 
         <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
