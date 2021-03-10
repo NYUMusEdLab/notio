@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import ArrowDown from "../arrows/Down";
-// import loadable from '@loadable/component'
+import _ from "lodash";
 
 import TrebleClef from '../../assets/img/TrebleClef';
 import BassClef from '../../assets/img/BassClef';

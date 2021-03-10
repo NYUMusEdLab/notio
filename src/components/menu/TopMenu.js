@@ -96,7 +96,8 @@ class TopMenu extends Component {
         <div className="navbar-item menu-clef">
           <SubMenu
             title="Clefs"
-            selected={this.props.state.clef}
+            selected={this.state.clefTitle}
+            selectedImg={this.state.clefImage}
             displayPicto={true}
             content={
               <ListRadio
