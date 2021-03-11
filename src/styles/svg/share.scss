@@ -2,3 +2,27 @@
   width: 1.3vw;
   transform: translate(120%, 72%);
 }
+
+.share-link {
+  color: black;
+  padding: 1vw 3vw 4vw 3vw;
+
+  h2 {
+    margin-bottom: 0.4vw;
+  }
+  p {
+    font-family: "Quicksand", sans-serif;
+    margin-bottom: 1vw;
+  }
+  button {
+    font-family: "Quicksand", sans-serif;
+    margin-left: 1vw;
+    padding: 0.8vw;
+    font-size: 1vw;
+    font-weight: bold;
+  }
+}
+
+.notio-popup.popup-share {
+  height: auto;
+}

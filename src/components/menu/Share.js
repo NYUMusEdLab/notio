@@ -19,7 +19,7 @@ class Share extends Component {
     return (
       <div>
         <Popup
-          class="popup-menu"
+          class="popup-menu popup-share"
           draggable={false}
           picto=<ShareSVG />
           onClickMenuHandler={this.props.saveSessionToDB}
