@@ -9,6 +9,7 @@ class Popup extends Component {
     onClickMenuHandler: () => {},
     onClickCloseHandler: () => {},
     hasBG: false,
+    hasMinize: false,
   };
   state = {
     minimized: false,
@@ -52,6 +53,7 @@ class Popup extends Component {
   };
 
   render() {
+    console.log("this.props.hasMinize", this.props.hasMinize);
     const { minimized, show } = this.state;
     return (
       <div>
@@ -85,12 +87,16 @@ class Popup extends Component {
             >
               <CrossSVG />
             </div>
-            <div
-              class="minimize notio-popup--button"
-              onClick={this.handleMinimize}
-            >
-              <UnderscoreSVG />
-            </div>
+            {this.props.hasMinize ? (
+              <div
+                class="minimize notio-popup--button"
+                onClick={this.handleMinimize}
+              >
+                <UnderscoreSVG />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           {this.props.content}
           {/* <div class='resize-handle'></div> */}
