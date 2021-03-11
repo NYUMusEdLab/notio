@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ShareLink = (props) => {
+  const [hasCopied, setHasCopied] = useState(false);
+
   if (props.sessionID) {
     const url = "/shared/" + props.sessionID;
     const fullUrl = window.location.host + url;
@@ -8,6 +10,7 @@ const ShareLink = (props) => {
     function copyToClipBoard() {
       navigator.clipboard.writeText(fullUrl);
     }
+    console.log("hasCopied", hasCopied);
 
     return (
       <div class="share-link">
@@ -16,7 +19,17 @@ const ShareLink = (props) => {
         <a href={url} title="" target="_blank" rel="noopener noreferrer">
           {fullUrl}
         </a>
-        <button onClick={copyToClipBoard}>copy</button>
+        <button
+          onClick={() => {
+            copyToClipBoard();
+            setHasCopied(!hasCopied);
+          }}
+        >
+          copy
+        </button>
+        <span class={`message ${hasCopied ? "show" : ""}`}>
+          The link has been copied
+        </span>
       </div>
     );
   } else {
