@@ -7,6 +7,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import "./style.scss";
 import db from "./Firebase";
 
+
 class WholeApp extends Component {
   state = {
     octave: 4,

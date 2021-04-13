@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player/lazy";
+import { Row, Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import rootMenu from "../../data/rootMenu";
 
@@ -19,10 +20,11 @@ class Root extends Component {
   }
   initState = () => {
     this.state = {
-      root:"",
-      accidental:"",
+      root: "",
+      accidental: "",
       accidentalChecked: false,
-      accidentalDisabled: true
+      accidentalDisabled: true,
+      bgColor: "transparent"
     }
   }
 
@@ -30,34 +32,6 @@ class Root extends Component {
     console.log(`SET m[${key}] = ${value}`);
 
   }
-
-  // disableAllAccidentals() {
-  //   // this.inputRefs.map(item => {
-
-  //   //   console.log("item", item);
-  //   // })
-  //   // quand je clique sur la note en question
-  //   // les accidentals courant s'activent uniquement
-  //   for (const [note, accidentals] of Object.entries(this.inputRefs)) {
-  //     // console.log(`${key}: ${value}`);
-      
-  //     // this.inputRefs[note].forEach((v1, v2, set) => {
-  //     // });
-  //     console.log("accidentals", accidentals);
-  //     accidentals.forEach(key => console.log("YO", key))
-  //     // for (const [index, accidental] of accidentals) {
-  //     //   console.log("coucou", index);
- 
-  //     //   // accidentals.forEach(this.logSetElements);
-  //     // }
-
-  //   }
-
-  //   // for (const [note, accidentals] of this.inputRefs) {
-  //   //   accidentals.forEach(this.logSetElements);
-  //   // }
-  //   // console.log("this.inputRefs typeof", this.inputRefs);
-  // } 
 
   disableAllAccidentals() {
     for (const [note, accidentals] of Object.entries(this.inputRefs)) {
@@ -70,33 +44,13 @@ class Root extends Component {
 
 
   enableCurrentAccidentals(currNote) {
-      this.inputRefs[currNote].forEach((v1, v2, set) => {
-        v1.disabled = false;
+    this.inputRefs[currNote].style = "background-color: red;";
+    this.inputRefs[currNote].forEach((v1, v2, set) => {
+      v1.disabled = false;
 
-      });
+    });
   }
 
-
-    // for (const [note, accidentals] of Object.entries(this.inputRefs)) {
-    //   console.log(`note + acc ${note}: ${accidentals}`);
-      
-    //   // this.inputRefs[note].forEach((v1, v2, set) => {
-    //   // });
-    //   console.log("accidentals", accidentals);
-    //   accidentals.forEach(key => console.log("YO", key))
-    //   // for (const [index, accidental] of accidentals) {
-    //   //   console.log("coucou", index);
- 
-    //   //   // accidentals.forEach(this.logSetElements);
-    //   // }
-
-    // }
-    
-  // }
-  
-  // for (const [index, accidental] of accidentals)
-  // this.inputRefs[note][index]['disabled'] = "disabled";
-  
   setRef = (index, ref) => {
     if (!this.inputRefs[index]) {
       this.inputRefs[index] = new Set([]);
@@ -115,6 +69,7 @@ class Root extends Component {
       this.setState({
         root: e.target.value,
         accidental: "",
+        bgColor: "red"
         // accidentalChecked: "",
         // accidentalDisabled: true
       });
@@ -123,92 +78,111 @@ class Root extends Component {
     }
 
     if (e.target.name == accidentalLabel) {
-      
+
       this.setState({
         accidental: e.target.value,
         // accidentalChecked: true
-       })
+      })
     }
 
 
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log("root shouldComponentUpdate");
-    if (this.state !== nextState) {
-      // this.props.handleChangeRoot(this.state.root+this.state.accidental);
-      return true;
-    }
-    return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log("root shouldComponentUpdate");
+  //   if (this.state !== nextState) {
+  //     // this.props.handleChangeRoot(this.state.root+this.state.accidental);
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log("root componentDidUpdate");
 
     if (this.state !== prevState) {
-      console.log("this.state.root",this.state.root+this.state.accidental);
+      console.log("this.state.root", this.state.root + this.state.accidental);
 
-      this.props.handleChangeRoot(this.state.root+this.state.accidental);
+      this.props.handleChangeRoot(this.state.root + this.state.accidental);
       console.log("root update");
     }
 
   }
 
   render() {
-    console.log("root render");
+    console.log("root render", this.state.bgColor);
     return (
       <div>
         <Form>
-            {rootMenu.map((root, index) => (
-              <div>
-              <Form.Group
-                controlId="{`rootMenu` + root.note}"
-
-              >
-
-                <Form.Check 
-                type="radio"
-                id={`default-radio`}
-                label={root.note}
-                name={rootLabel}
-                onChange={this.handleChange}
-                value={root.note}
-                />
-                {root.accidentals[0] ?
-                <Form.Check
-                  type="radio"
-                  // checked={this.state.accidentalChecked}
-                  disabled={this.state.accidentalDisabled}
-                  label={root.accidentals[0]}
-                  id={`radio-` + root.note + `-` + root.accidentals[0]}
-                  name={accidentalLabel}
-                  onChange={this.handleChange}
-                  value={root.accidentals[0]}
-                  ref={(ref) => this.setRef(root.note, ref)} 
-
-                />
-              :''}
-                {root.accidentals[1] ?
-                <Form.Check
-                  type="radio"
-                  // checked={this.state.accidentalChecked}
-                  disabled={this.state.accidentalDisabled}
-                  label={root.accidentals[1]}
-                  id={`radio-` + root.note + `-` + root.accidentals[1]}
-                  name={accidentalLabel}
-                  onChange={this.handleChange}
-                  value={root.accidentals[1]}
-                  ref={(ref) => this.setRef(root.note, ref)} 
-
-                />
-                :''}
-              </Form.Group>
-
-              </div>
-            ))}
+          {rootMenu.map((root, index) => (
+            <div>
+              <Form.Row>
+                <Col lg={4}>
+                  <Form.Check
+                  >
+                    <Form.Check.Label
+                      style={{ 'background-color': root.note == this.state.root ? 'red' : 'transparent' }}
+                    >
+                      <Form.Check.Input
+                        type="radio"
+                        class={rootLabel}
+                        label={root.note}
+                        name={rootLabel}
+                        onChange={this.handleChange}
+                        value={root.note}
+                      />
+                      {root.note}
+                    </Form.Check.Label>
+                  </Form.Check>
+                </Col>
+                <Col lg={4}>
+                  {root.accidentals[0] ?
+                    <Form.Check>
+                      <Form.Check.Label>
+                        <Form.Check.Input
+                          type="radio"
+                          class={accidentalLabel}
+                          // checked={this.state.accidentalChecked}
+                          disabled={this.state.accidentalDisabled}
+                          label={root.accidentals[0]}
+                          id={`radio-` + root.note + `-` + root.accidentals[0]}
+                          name={accidentalLabel}
+                          onChange={this.handleChange}
+                          value={root.accidentals[0]}
+                          ref={(ref) => this.setRef(root.note, ref)}
+                        />
+                        {root.accidentals[0]}
+                      </Form.Check.Label>
+                    </Form.Check>
+                    : ''}
+                </Col>
+                <Col lg={4}>
+                  {root.accidentals[1] ?
+                    <Form.Check>
+                      <Form.Check.Label>
+                        <Form.Check.Input
+                          type="radio"
+                          class={accidentalLabel}
+                          // checked={this.state.accidentalChecked}
+                          disabled={this.state.accidentalDisabled}
+                          label={root.accidentals[1]}
+                          id={`radio-` + root.note + `-` + root.accidentals[1]}
+                          name={accidentalLabel}
+                          onChange={this.handleChange}
+                          value={root.accidentals[1]}
+                          ref={(ref) => this.setRef(root.note, ref)}
+                        />
+                        {root.accidentals[1]}
+                      </Form.Check.Label>
+                    </Form.Check>
+                    : ''}
+                </Col>
+              </Form.Row>
+            </div>
+          ))}
         </Form>
-      </div>
+      </div >
     );
   }
 }
