@@ -415,8 +415,10 @@ class Keyboard extends Component {
     let baseScale = this.generateCurrentScale(scaleSteps.steps);
     console.log("Keyboard baseScale", baseScale)
     let currentRoot = rootNote.find(obj => {
+      console.log('obj.note - baseNote', obj.note, baseNote, obj.index);
       return obj.note === baseNote;
     });
+    console.log("currentRoot", currentRoot);
 
     let displayNotesBuilder;
     let scaleStart = 0;
@@ -447,6 +449,7 @@ class Keyboard extends Component {
       });
       displayNotesBuilder = displayNotesBuilder.concat(displayNotesBuilder2);
     } else {
+      console.log("currentRoot.index", currentRoot.index);
       displayNotesBuilder = notes.slice(
         currentRoot.index,
         currentRoot.index + 13

@@ -7,6 +7,8 @@ import SubMenu from "./SubMenu";
 import Notation from "./Notation";
 import VideoTutorial from "./VideoTutorial";
 import Share from "./Share";
+import Root from "./Root";
+
 
 import ListRadio from "../form/ListRadio";
 import scales from "../../data/scalesObj";
@@ -91,6 +93,19 @@ class TopMenu extends Component {
             }
           />
         </div>
+        
+        {/* Root */}
+        <div className="navbar-item menu-root">
+          <SubMenu
+            title="Root"
+            content={
+              <Root 
+                label="Root"
+                handleChangeRoot={this.props.handleChangeRoot}
+              />
+            }
+          />
+        </div>
 
         {/* Clef */}
         <div className="navbar-item menu-clef">
@@ -111,6 +126,8 @@ class TopMenu extends Component {
             }
           />
         </div>
+
+
 
         {/* Video */}
         <div className="navbar-item menu-clef">

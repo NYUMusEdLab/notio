@@ -185,6 +185,8 @@ class ColorKey extends Component {
         })
       : null;
     console.log("this.state.myWidth", this.state.myWidth);
+    console.log("-- note", note);
+
     return (
       <div
         ref={this.keyRef}

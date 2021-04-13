@@ -73,6 +73,14 @@ const rootNote = [
   },
   {
     note: { 
+      English:'C#',
+      German: 'C#',
+      Romance: 'Do#'
+      },
+    index: 1
+  },
+  {
+    note: { 
       English: 'Ab',
       German: 'Ab',
       Romance: 'Lab'
@@ -84,6 +92,14 @@ const rootNote = [
       English:'Eb',
       German: 'Eb',
       Romance: 'Mib'
+    },
+    index: 3
+  },
+  {
+    note: {
+      English:'D#',
+      German: 'D#',
+      Romance: 'Mi#'
     },
     index: 3
   },

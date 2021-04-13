@@ -232,6 +232,7 @@ class WholeApp extends Component {
           handleChangeNotation={this.handleChangeNotation}
           handleChangeScale={this.handleSelectScale}
           handleSelectClef={this.handleSelectClef}
+          handleChangeRoot={this.handleChangeRoot}
           saveSessionToDB={this.saveSessionToDB}
           sessionID={this.state.sessionID}
           state={this.state}
