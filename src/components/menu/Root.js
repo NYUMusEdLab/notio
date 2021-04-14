@@ -34,6 +34,7 @@ class Root extends Component {
       root[accidentalLabel].forEach((v1, v2, set) => {
         v1.disabled = true; // disable radio
         v1.checked = false; // uncheck radio
+        v1.nextElementSibling.style = "";
       });
     }
   }
@@ -84,6 +85,9 @@ class Root extends Component {
     }
 
     if (e.target.name == accidentalLabel) {
+
+
+      e.target.nextElementSibling.style.backgroundColor = e.target.nextElementSibling.dataset.color;
 
       this.setState({
         accidental: e.target.value,
@@ -181,6 +185,7 @@ class Root extends Component {
                         ref={(ref) => this.setRef(root.note, ref)}
                       />
                       <Form.Check.Label
+                        data-color={root.color}
                         for={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}
                       >
                         {root.accidentals[0]}
@@ -207,6 +212,7 @@ class Root extends Component {
                         ref={(ref) => this.setRef(root.note, ref)}
                       />
                       <Form.Check.Label
+                        data-color={root.color}
                         for={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}
                       >
                         {root.accidentals[1]}
