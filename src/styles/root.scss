@@ -5,23 +5,13 @@
 
   }
   .form-check {
-    // padding-left: 0;
     input[type="radio"] {
-      // border: 0; 
-      // clip: rect(0 0 0 0); 
-      // height: 1px; margin: -1px; 
-      // overflow: hidden; 
-      // padding: 0; 
-      // position: absolute; 
-      // width: 1px;
-      // display: block;
-      z-index: 1;
       opacity: 0;
       cursor: pointer;
 
     }
     &-label {
-      border: 2px solid black;
+      border: 1px solid black;
       border-radius: 25%;
       width: 2vw;
       text-align: center;
@@ -29,34 +19,21 @@
       cursor: pointer;
       position: relative;
       left: -2vw;
-
-      &:hover {
-
-      }
-
-      // span {
-      //   display: block;
-
-      // }
-
-      // input[type="radio"] + span:before {
-      //   content: '';
-      //   display: inline-block;
-      //   width: 1em;
-      //   height: 1em;
-      //   margin-right: 0.75em;
-      //   transition: 0.5s ease all;
-      // }
-
-      
-      // /* never forget focus styling */
-      // input[type="radio"]:focus + span:after {
-      //   content: '\0020\2190';
-      //   font-size: 1.5em;
-      //   line-height: 1;
-      //   vertical-align: -0.125em;
-      // }
-
     }
+
+    &-input.accidental + &-label {
+      border: 1px solid black;
+      color: black;
+    }
+
+    .form-check-input:disabled~.form-check-label,
+    .form-check-input[disabled]~.form-check-label {
+      border: none;
+      color: #777;
+      cursor: default;
+    }
+
+
+
   }
 }

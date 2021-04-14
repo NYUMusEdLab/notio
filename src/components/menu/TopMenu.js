@@ -69,9 +69,22 @@ class TopMenu extends Component {
             title="Notation"
             selected=<NotationImg />
             content={
-              <Notation
-                initOptions={this.props.state.notation}
-                handleChange={this.props.handleChangeNotation}
+            <Notation
+              initOptions={this.props.state.notation}
+              handleChange={this.props.handleChangeNotation}
+            />
+          }
+          />
+        </div>
+
+        {/* Root */}
+        <div className="navbar-item menu-root">
+          <SubMenu
+            title="Root"
+            content={
+              <Root
+                label="Root"
+                handleChangeRoot={this.props.handleChangeRoot}
               />
             }
           />
@@ -89,19 +102,6 @@ class TopMenu extends Component {
                 handleChange={this.props.handleChangeScale}
                 setTitle={this.setScaleTitle}
                 initOption={this.props.state.scale}
-              />
-            }
-          />
-        </div>
-        
-        {/* Root */}
-        <div className="navbar-item menu-root">
-          <SubMenu
-            title="Root"
-            content={
-              <Root 
-                label="Root"
-                handleChangeRoot={this.props.handleChangeRoot}
               />
             }
           />
@@ -126,8 +126,6 @@ class TopMenu extends Component {
             }
           />
         </div>
-
-
 
         {/* Video */}
         <div className="navbar-item menu-clef">

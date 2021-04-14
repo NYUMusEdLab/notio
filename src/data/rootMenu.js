@@ -1,35 +1,43 @@
 const rootMenu = [
   {
     note: "C",
-    accidentals: ['#']
+    accidentals: ['#'],
+    color: "#ff0000"
   },
   {
     note: "D",
-    accidentals: ['#', 'b']
+    accidentals: ['#', 'b'],
+    color: "#ffff00"
   },
   {
     note: "E",
-    accidentals: [ 'b']
+    accidentals: ['b'],
+    color: "#ffffff"
   },
   {
     note: "F",
-    accidentals: ['#', ]
+    accidentals: ['#',],
+    color: "#228b22"
   },
   {
     note: "G",
-    accidentals: ['#', 'b']
+    accidentals: ['#', 'b'],
+    color: "#00ffff"
   },
   {
     note: "A",
-    accidentals: ['#', 'b']
+    accidentals: ['#', 'b'],
+    color: "#87cefa"
   },
   {
     note: "B",
-    accidentals: ['b']
+    accidentals: ['b'],
+    color: "#8a2be2"
   },
   {
     note: "H",
-    accidentals: ['#', 'B']
+    accidentals: ['#', 'B'],
+    color: "#ee82ee"
   },
 ];
 
