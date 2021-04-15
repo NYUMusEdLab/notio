@@ -8,6 +8,8 @@ import Notation from "./Notation";
 import VideoTutorial from "./VideoTutorial";
 import Share from "./Share";
 import Root from "./Root";
+import RootMenu from "../../assets/img/RootMenu";
+import { findColor } from '../utils.js';
 
 
 import ListRadio from "../form/ListRadio";
@@ -22,6 +24,7 @@ class TopMenu extends Component {
       titleNotation: "",
       clefTitle: "",
       clefImage: "",
+      titleRoot: this.props.state.baseNote,
     };
   }
 
@@ -43,6 +46,7 @@ class TopMenu extends Component {
     });
   };
   render() {
+    console.log("findColor(this.props.state.baseNote.charAt(0))", findColor(this.props.state.baseNote.charAt(0)));
     return (
       <div className="navbar">
         {/* Toggle Piano */}
@@ -81,12 +85,14 @@ class TopMenu extends Component {
         <div className="navbar-item menu-root">
           <SubMenu
             title="Root"
+            selected={this.props.state.baseNote}
+            selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
             content={
-              <Root
-                label="Root"
-                handleChangeRoot={this.props.handleChangeRoot}
-              />
-            }
+            <Root
+              label="Root"
+              handleChangeRoot={this.props.handleChangeRoot}
+            />
+          }
           />
         </div>
 
@@ -112,8 +118,7 @@ class TopMenu extends Component {
           <SubMenu
             title="Clefs"
             selected={this.state.clefTitle}
-            selectedImg={this.state.clefImage}
-            displayPicto={true}
+            displayClef={true}
             content={
               <ListRadio
                 nameField="clef"

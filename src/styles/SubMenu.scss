@@ -49,10 +49,19 @@
     text-align: center;
     font-size: 0.8em;
 
+    .menu-root & {
+      background-color: transparent;
+
+    }
+
     &.selected {
       background: black;
       z-index: 20;
       color: white;
+
+      .menu-root & {
+        background-color: transparent;
+      }
 
       & .clef {
         fill: white;
@@ -121,12 +130,18 @@
     padding: 14.5vh 1vh 1vh 2.7vh;
     box-shadow: 5px 3px 15px #666;
 
+    .menu-root & {
+      padding-top: 14.5vw;
+    }
+
     &.selected {
       opacity: 1;
       z-index: 15;
       visibility: visible;
     }
   }
+
+
 }
 
 .circledButton {
@@ -145,4 +160,37 @@
 
 .react-player {
   overflow: hidden;
+}
+
+.menu-root {
+  .arrow-down {
+    left: 50%;
+    top: 97%;
+    &:hover {
+      left: 50%;
+      top: 97%;
+    }
+  }
+
+  .sub-menu {
+    &--title {
+
+      &--selected {
+        display: block;
+        // position: absolute;
+        transform: translate(0%, 127%);
+
+        font-size: 1.4vw;
+        // color: white;
+      }
+    }
+
+    .button {
+      padding: 2vw 1.9vw 0 1.8vw;
+
+      &.selected {
+        color: black;
+      }
+    } 
+  }
 }

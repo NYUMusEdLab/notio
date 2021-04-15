@@ -52,10 +52,13 @@ class Root extends Component {
           this.inputRefs[index][accidentalLabel] = new Set([]);
         }
       }
+
+      // add note
       if (ref.name === rootLabel) {
         this.inputRefs[index][rootLabel] = ref;
       }
 
+      // add accidentals
       if (ref.name === accidentalLabel) {
         this.inputRefs[index][accidentalLabel].add(ref);
       }

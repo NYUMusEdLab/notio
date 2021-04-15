@@ -19,6 +19,8 @@
       cursor: pointer;
       position: relative;
       left: -2vw;
+      transition: all 0.2s ease-out;
+
     }
 
     &-input[class^="accidental"] + &-label {

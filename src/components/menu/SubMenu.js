@@ -7,6 +7,8 @@ import TrebleClef from "../../assets/img/TrebleClef";
 import BassClef from "../../assets/img/BassClef";
 import TenorClef from "../../assets/img/TenorClef";
 import AltoClef from "../../assets/img/AltoClef";
+import RootMenu from "../../assets/img/RootMenu";
+
 
 // import _ from "lodash";
 
@@ -31,25 +33,25 @@ class SubMenu extends Component {
   }
 
   componentDidMount() {
-    if (this.props.displayPicto) {
-      this.selectPicto();
+    if (this.props.displayClef) {
+      this.selectPictoClef();
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.selected !== prevProps.selected) {
-      if (this.props.displayPicto) {
-        this.selectPicto();
+      if (this.props.displayClef) {
+        this.selectPictoClef();
       }
     }
   }
 
-  selectPicto() {
+  selectPictoClef() {
     // Better solution to load dyncamically components
     // but not working on github pages
     //ClefComponent = loadable(props => import(`../../assets/img/${imgClass}Clef`));
     // in render : <ClefComponent clef={this.props.selected} />
-    console.log("selectPicto this.props.selected", this.props.selected);
+    console.log("selectPictoClef this.props.selected", this.props.selected);
     // dirty solution :
     switch (this.props.selected) {
       case "treble":
@@ -74,14 +76,15 @@ class SubMenu extends Component {
     return (
       <div className="sub-menu">
         <div className={`button ${isActive}`} onClick={this.toggleClass}>
-          {this.props.displayPicto ? <ClefComponent /> : ""}
-          {this.props.displayPicto ? (
+          {this.props.displayClef ? <ClefComponent /> : ""}
+          {this.props.displayClef ? (
             <span className="sub-menu__item__selected">
               {this.props.selected}
             </span>
           ) : (
-            this.props.selected
+            <span class="sub-menu--title--selected">{this.props.selected}</span>
           )}
+          {this.props.selectedImg}
           <ArrowDown />
         </div>
         <div>
