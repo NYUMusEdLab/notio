@@ -131,7 +131,7 @@
     box-shadow: 5px 3px 15px #666;
 
     .menu-root & {
-      padding-top: 14.5vw;
+      padding-top: 9.5vw;
     }
 
     &.selected {
@@ -177,16 +177,17 @@
 
       &--selected {
         display: block;
-        // position: absolute;
-        transform: translate(0%, 127%);
-
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         font-size: 1.4vw;
         // color: white;
       }
     }
 
     .button {
-      padding: 2vw 1.9vw 0 1.8vw;
+      padding: 0 1.9vw 0 1.8vw;
 
       &.selected {
         color: black;

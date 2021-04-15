@@ -76,6 +76,8 @@ class SubMenu extends Component {
     return (
       <div className="sub-menu">
         <div className={`button ${isActive}`} onClick={this.toggleClass}>
+          {this.props.selectedImg}
+
           {this.props.displayClef ? <ClefComponent /> : ""}
           {this.props.displayClef ? (
             <span className="sub-menu__item__selected">
@@ -84,7 +86,6 @@ class SubMenu extends Component {
           ) : (
             <span class="sub-menu--title--selected">{this.props.selected}</span>
           )}
-          {this.props.selectedImg}
           <ArrowDown />
         </div>
         <div>
