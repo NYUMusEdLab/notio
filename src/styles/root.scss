@@ -21,7 +21,7 @@
       left: -2vw;
     }
 
-    &-input.accidental + &-label {
+    &-input[class^="accidental"] + &-label {
       border: 1px solid black;
       color: black;
     }
@@ -32,8 +32,5 @@
       color: #777;
       cursor: default;
     }
-
-
-
   }
 }
