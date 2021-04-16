@@ -6,8 +6,8 @@ import CrossSVG from "../../assets/img/Cross";
 
 class Popup extends Component {
   static defaultProps = {
-    onClickMenuHandler: () => {},
-    onClickCloseHandler: () => {},
+    onClickMenuHandler: () => { },
+    onClickCloseHandler: () => { },
     hasBG: false,
     hasMinize: false,
   };
@@ -57,15 +57,22 @@ class Popup extends Component {
     const { minimized, show } = this.state;
     return (
       <div>
-        <div
-          class="circledButton"
-          onClick={(e) => {
-            this.props.onClickMenuHandler();
-            this.handleShow();
-          }}
-        >
-          {this.props.picto}
+        <div class="button">
+          <div
+            class="circledButton"
+            onClick={(e) => {
+              this.props.onClickMenuHandler();
+              this.handleShow();
+            }}
+          >
+            {this.props.picto}
+          </div>
+          <div className="title--wrapper">
+            <span className="title">{this.props.title}</span>
+          </div>
+
         </div>
+
         {this.props.hasBG ? (
           <div class={`notio-popup--bg ${show ? "show" : ""}`}></div>
         ) : (

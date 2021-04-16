@@ -28,6 +28,7 @@ class VideoTutorial extends Component {
       <div>
         <Popup
           class="popup-video"
+          title={this.props.title}
           draggable={true}
           picto={components[this.props.label]}
           onClickMenuHandler={this.handlePlayPause}

@@ -19,6 +19,7 @@ class Share extends Component {
     return (
       <div>
         <Popup
+          title={this.props.title}
           class="popup-menu popup-share"
           draggable={false}
           picto=<ShareSVG />

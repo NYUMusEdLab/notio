@@ -15,8 +15,8 @@ class Toggle extends Component {
             <span className="slider round"></span>
           </label>
         </div>
-        <div className="label-wrapper">
-          <span className="label">{this.props.title}</span>
+        <div className="title--wrapper">
+          <span className="title">{this.props.title}</span>
         </div>
       </div>
     );

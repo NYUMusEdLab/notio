@@ -46,7 +46,6 @@ class TopMenu extends Component {
     });
   };
   render() {
-    console.log("findColor(this.props.state.baseNote.charAt(0))", findColor(this.props.state.baseNote.charAt(0)));
     return (
       <div className="navbar">
         {/* Toggle Piano */}
@@ -61,14 +60,14 @@ class TopMenu extends Component {
         {/* Toggle Extended */}
         <div className="navbar-item">
           <Toggle
-            title="Extended Instrument"
+            title="Extended Keyboard"
             onChange={this.props.toggleExtendedKeyboard}
             checked={this.props.state.extendedKeyboard}
           />
         </div>
 
         {/* Notation */}
-        <div className="navbar-item">
+        <div className="navbar-item menu-notation">
           <SubMenu
             title="Notation"
             selected=<NotationImg />
@@ -134,13 +133,16 @@ class TopMenu extends Component {
         </div>
 
         {/* Video */}
-        <div className="navbar-item menu-clef">
-          <VideoTutorial label="video" />
+        <div className="navbar-item menu-video">
+          <VideoTutorial
+            title="Video Player"
+            label="video" />
         </div>
 
         {/* Share */}
-        <div className="navbar-item menu-clef">
+        <div className="navbar-item menu-share">
           <Share
+            title="Share this setup"
             label="Share"
             saveSessionToDB={this.props.saveSessionToDB}
             sessionID={this.props.sessionID}
