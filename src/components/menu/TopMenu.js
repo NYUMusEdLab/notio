@@ -90,6 +90,7 @@ class TopMenu extends Component {
             content={
             <Root
               label="Root"
+              baseNote={this.props.state.baseNote}
               handleChangeRoot={this.props.handleChangeRoot}
             />
           }

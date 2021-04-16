@@ -13,14 +13,13 @@ class Root extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      root: "",
+      root: this.props.baseNote,
       accidental: "",
       accidentalChecked: false,
       accidentalDisabled: true,
       bgColor: "transparent"
     }
     this.inputRefs = {};
-
   }
 
   disableAllAccidentals() {
@@ -137,6 +136,7 @@ class Root extends Component {
                       onChange={this.handleChange}
                       value={root.note}
                       ref={(ref) => this.setRef(root.note, ref)}
+                      checked={this.state.root.charAt(0) === root.note ? true : false}
                     />
                     <Form.Check.Label
                       data-color={root.color}
@@ -154,7 +154,7 @@ class Root extends Component {
                         type="radio"
                         className={`${accidentalLabel}-input-${root.note}`}
                         // checked={this.state.accidentalChecked}
-                        disabled={this.state.accidentalDisabled}
+                        disabled={this.state.root.charAt(0) === root.note ? false : this.state.accidentalDisabled}
                         label={root.accidentals[0]}
                         id={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}
                         name={accidentalLabel}
@@ -184,7 +184,7 @@ class Root extends Component {
                         type="radio"
                         className={`${accidentalLabel}-input-${root.note}`}
                         // checked={this.state.accidentalChecked}
-                        disabled={this.state.accidentalDisabled}
+                        disabled={this.state.root.charAt(0) === root.note ? false : this.state.accidentalDisabled}
                         label={root.accidentals[1]}
                         id={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}
                         name={accidentalLabel}
