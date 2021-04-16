@@ -1,12 +1,12 @@
 import rootMenu from "../data/rootMenu";
 
 export function findColor(note) {
-  let col = "";
-  rootMenu.find((root) => {
+  const root = rootMenu.find((root) => {
     if (root.note === note) {
-      col = root.color;
+      return root;
+    } else {
+      return "";
     }
   });
-  return col;
-
+  return root.color;
 }

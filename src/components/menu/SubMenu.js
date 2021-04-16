@@ -7,7 +7,6 @@ import TrebleClef from "../../assets/img/TrebleClef";
 import BassClef from "../../assets/img/BassClef";
 import TenorClef from "../../assets/img/TenorClef";
 import AltoClef from "../../assets/img/AltoClef";
-import RootMenu from "../../assets/img/RootMenu";
 
 
 // import _ from "lodash";

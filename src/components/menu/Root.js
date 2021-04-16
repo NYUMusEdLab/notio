@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import ReactPlayer from "react-player/lazy";
-import { Row, Col } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import rootMenu from "../../data/rootMenu";
-import VideoSVG from "../../assets/img/Video";
 
 
 const rootLabel = "root";
@@ -14,11 +12,6 @@ class Root extends Component {
 
   constructor(props) {
     super(props);
-    this.initState();
-    this.inputRefs = {};
-
-  }
-  initState = () => {
     this.state = {
       root: "",
       accidental: "",
@@ -26,10 +19,13 @@ class Root extends Component {
       accidentalDisabled: true,
       bgColor: "transparent"
     }
+    this.inputRefs = {};
+
   }
 
   disableAllAccidentals() {
     for (const [index, root] of Object.entries(this.inputRefs)) {
+      console.log(index);
       root[accidentalLabel].forEach((v1, v2, set) => {
         v1.disabled = true; // disable radio
         v1.checked = false; // uncheck radio
@@ -68,7 +64,7 @@ class Root extends Component {
   handleChange = (e) => {
     // initState();
 
-    if (e.target.name == rootLabel) {
+    if (e.target.name === rootLabel) {
       console.table("inputRefs", this.inputRefs);
       this.setState({
         root: e.target.value,
@@ -80,7 +76,7 @@ class Root extends Component {
       this.enableCurrentAccidentals(e.target.value);
     }
 
-    if (e.target.name == accidentalLabel) {
+    if (e.target.name === accidentalLabel) {
       this.setState({
         accidental: e.target.value,
         // accidentalChecked: true
