@@ -47,9 +47,9 @@ class TopMenu extends Component {
   };
   render() {
     return (
-      <div className="navbar">
+      <div className="navbar ">
         {/* Toggle Piano */}
-        <div className="navbar-item">
+        <div className="navbar-item toggle">
           <Toggle
             title="Show keyboard"
             onChange={this.props.togglePiano}
@@ -58,7 +58,7 @@ class TopMenu extends Component {
         </div>
 
         {/* Toggle Extended */}
-        <div className="navbar-item">
+        <div className="navbar-item toggle">
           <Toggle
             title="Extended Keyboard"
             onChange={this.props.toggleExtendedKeyboard}
@@ -94,6 +94,7 @@ class TopMenu extends Component {
             />
           }
           />
+          {/* <div class="half-circle"></div> */}
         </div>
 
         {/* Scale */}
