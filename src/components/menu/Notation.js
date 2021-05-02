@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import ListCheckbox from "../form/ListCheckbox";
 
-const notations = [
+export const notations = [
   "English",
   "German",
   "Romance",

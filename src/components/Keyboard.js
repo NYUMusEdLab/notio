@@ -9,6 +9,8 @@ import notes from "../data/notes";
 import colors from "../data/colors";
 import { makeScaleMajorMinor, makeScalePentatonicBlues } from "./theory";
 import { Piano } from '@tonejs/piano'
+import MusicScale from "../Model/MusicScale";
+
 
 
 // Using 'code' property for compatibility with AZERTY, QWERTY... keyboards 
