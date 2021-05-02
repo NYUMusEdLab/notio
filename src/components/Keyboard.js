@@ -245,6 +245,19 @@ class Keyboard extends Component {
   };
 
   generateScales = scaleSteps => {
+
+//TODO: NOTE that this creates a full scale with all naming and numbering and tones embedded.
+// I believe this can replace a lot of the code in keyboard
+    let fromstep = this.props.extendedKeyboard === true ? 7 : 0;
+    let ambitus = this.props.extendedKeyboard === true ? 21 : 13;
+    let recipe = scales.find(obj => obj.name === this.props.scale);
+    let myScale = new MusicScale(recipe,this.props.baseNote,fromstep,ambitus).ExtendedScaleToneNames
+
+    
+    console.log("I can generate this",myScale)
+
+
+
     let theScale = {};
 
     const { notation, scale, baseNote } = this.props;
