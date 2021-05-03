@@ -251,10 +251,13 @@ class Keyboard extends Component {
     let fromstep = this.props.extendedKeyboard === true ? 7 : 0;
     let ambitus = this.props.extendedKeyboard === true ? 21 : 13;
     let recipe = scales.find(obj => obj.name === this.props.scale);
-    let myScale = new MusicScale(recipe,this.props.baseNote,fromstep,ambitus).ExtendedScaleToneNames
+    let root = this.props.baseNote;
+    let myScale = new MusicScale(recipe,root,fromstep,ambitus).ExtendedScaleToneNames
 
     
-    console.log("I can generate this",myScale)
+    console.log("The MusicScale class can generate this called from generateScales",myScale)
+    
+    
 
 
 
@@ -413,6 +416,45 @@ class Keyboard extends Component {
 
     const { synth } = this;
     const { mouse_is_down } = this.state;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //TODO NOTE!!!!!!!!!!!!!!!!!    MusicScale should be used for ALL naming in keyboard.js
+
+    let fromstep = this.props.extendedKeyboard === true ? 7 : 0;
+    let ambitus = this.props.extendedKeyboard === true ? 21 : 13;
+    let recipe = scales.find(obj => obj.name === this.props.scale);
+    let root = this.props.baseNote;
+    let myScale = new MusicScale(recipe,root,fromstep,ambitus).ExtendedScaleToneNames
+
+    
+    console.log("The MusicScale class can generate this called from --render()",myScale)
+
+
+    let recipeKeyboard = scales.find(obj => obj.name === "Chromatic");
+    let myScaleKeyboard = new MusicScale(recipe,root,fromstep,ambitus).ExtendedScaleTones
+
+    console.log("The MusicScale class can generate this for the keys on the keyboard called from --render()",myScaleKeyboard)
+
+
+
+
+
+
+
+
+
 
     let isMajorSeventh = false;
 
