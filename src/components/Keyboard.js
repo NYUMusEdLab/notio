@@ -29,6 +29,8 @@ const pressedKeys = new Set();
 //const currentActiveNotes = new Set();
 
 class Keyboard extends Component {
+
+  //#region Constructor
   constructor(props) {
     super(props);
 
@@ -50,6 +52,9 @@ class Keyboard extends Component {
     //this.synth.chain(this.vol, Tone.Master);
   }
 
+  //#endregion
+
+  //#region Keypress Handlers
   handleKeyDown = e => {
     /* this helps us deal with this problem in Chrome:
      *
@@ -165,6 +170,31 @@ class Keyboard extends Component {
     }
   };
 
+  //#endregion
+
+  
+  //#region Mouse Click Handlers
+  mouseDown = () => {
+    /* this helps us deal with this problem in Chrome:
+     *
+     * The AudioContext was not allowed to start. It must be resumed (or created)
+     * after a user gesture on the page. <URL>
+     *
+     */
+    if (Tone.context.state !== "running") {
+      Tone.context.resume();
+    }
+    this.setState({ mouse_is_down: true });
+  };
+
+  mouseUp = () => {
+    this.setState({ mouse_is_down: false });
+  };
+
+//#endregion
+
+
+//#region Sound Handlers
   playNote = note => {
     console.log("playing " + note);
     // this.synth.keyDown(note);
@@ -201,23 +231,9 @@ class Keyboard extends Component {
     }
   };
 
-  mouseDown = () => {
-    /* this helps us deal with this problem in Chrome:
-     *
-     * The AudioContext was not allowed to start. It must be resumed (or created)
-     * after a user gesture on the page. <URL>
-     *
-     */
-    if (Tone.context.state !== "running") {
-      Tone.context.resume();
-    }
-    this.setState({ mouse_is_down: true });
-  };
+//#endregion
 
-  mouseUp = () => {
-    this.setState({ mouse_is_down: false });
-  };
-
+//#region  Highlighting Handlers
   highlightNote = note => {
     // Add press effect animation
     const buttonTarget = document.querySelector(`[data-note="${note}"]`);
@@ -229,7 +245,11 @@ class Keyboard extends Component {
     buttonTarget.classList.remove("active");
   };
 
-  //this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
+//#endregion
+
+  
+//#region Scale Generation
+//this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
   generateCurrentScale = scaleFormula => {
     const { scale, baseNote } = this.props;
     if (scale.includes("Chromatic")) {
@@ -300,6 +320,9 @@ class Keyboard extends Component {
     return theScale;
   };
 
+//#endregion
+
+
   static getDerivedStateFromProps(nextProps) {
     let scaleSteps = scales.find(obj => obj.name === nextProps.scale);
     return {
@@ -307,6 +330,7 @@ class Keyboard extends Component {
     };
   }
 
+  //#region Component Lifecycle functions
   componentDidUpdate(prevProps) {
     //refresh the keys every time we update the props
     const { notation, scale, baseNote, extendedKeyboard } = this.props;
@@ -400,6 +424,11 @@ class Keyboard extends Component {
     document.removeEventListener("keyup", this.handleKeyUp, false);
   }
 
+  //#endregion
+
+
+
+//#region render function
   render() {
     const {
       notation,
@@ -416,17 +445,6 @@ class Keyboard extends Component {
 
     const { synth } = this;
     const { mouse_is_down } = this.state;
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -740,6 +758,7 @@ class Keyboard extends Component {
 
     return <div className="Keyboard">{noteList}</div>;
   }
+  //#endregion
 }
 
 export default Keyboard;
