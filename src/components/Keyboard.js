@@ -172,7 +172,7 @@ class Keyboard extends Component {
 
   //#endregion
 
-  
+
   //#region Mouse Click Handlers
   mouseDown = () => {
     /* this helps us deal with this problem in Chrome:
@@ -191,10 +191,10 @@ class Keyboard extends Component {
     this.setState({ mouse_is_down: false });
   };
 
-//#endregion
+  //#endregion
 
 
-//#region Sound Handlers
+  //#region Sound Handlers
   playNote = note => {
     console.log("playing " + note);
     // this.synth.keyDown(note);
@@ -231,9 +231,9 @@ class Keyboard extends Component {
     }
   };
 
-//#endregion
+  //#endregion
 
-//#region  Highlighting Handlers
+  //#region  Highlighting Handlers
   highlightNote = note => {
     // Add press effect animation
     const buttonTarget = document.querySelector(`[data-note="${note}"]`);
@@ -245,11 +245,11 @@ class Keyboard extends Component {
     buttonTarget.classList.remove("active");
   };
 
-//#endregion
+  //#endregion
 
-  
-//#region Scale Generation
-//this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
+
+  //#region Scale Generation
+  //this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
   generateCurrentScale = scaleFormula => {
     const { scale, baseNote } = this.props;
     if (scale.includes("Chromatic")) {
@@ -266,18 +266,18 @@ class Keyboard extends Component {
 
   generateScales = scaleSteps => {
 
-//TODO: NOTE that this creates a full scale with all naming and numbering and tones embedded.
-// I believe this can replace a lot of the code in keyboard
+    //TODO: NOTE that this creates a full scale with all naming and numbering and tones embedded.
+    // I believe this can replace a lot of the code in keyboard
     let fromstep = this.props.extendedKeyboard === true ? 7 : 0;
     let ambitus = this.props.extendedKeyboard === true ? 21 : 13;
     let recipe = scales.find(obj => obj.name === this.props.scale);
     let root = this.props.baseNote;
-    let myScale = new MusicScale(recipe,root,fromstep,ambitus).ExtendedScaleToneNames
+    let myScale = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleToneNames
 
-    
-    console.log("The MusicScale class can generate this called from generateScales",myScale)
-    
-    
+
+    console.log("The MusicScale class can generate this called from generateScales", myScale)
+
+
 
 
 
@@ -320,7 +320,7 @@ class Keyboard extends Component {
     return theScale;
   };
 
-//#endregion
+  //#endregion
 
 
   static getDerivedStateFromProps(nextProps) {
@@ -428,7 +428,7 @@ class Keyboard extends Component {
 
 
 
-//#region render function
+  //#region render function
   render() {
     const {
       notation,
@@ -454,16 +454,16 @@ class Keyboard extends Component {
     let ambitus = this.props.extendedKeyboard === true ? 21 : 13;
     let recipe = scales.find(obj => obj.name === this.props.scale);
     let root = this.props.baseNote;
-    let myScale = new MusicScale(recipe,root,fromstep,ambitus).ExtendedScaleToneNames
+    let myScale = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleToneNames
 
-    
-    console.log("The MusicScale class can generate this called from --render()",myScale)
+
+    console.log("The MusicScale class can generate this called from --render()", myScale)
 
 
     let recipeKeyboard = scales.find(obj => obj.name === "Chromatic");
-    let myScaleKeyboard = new MusicScale(recipe,root,fromstep,ambitus).ExtendedScaleTones
+    let myScaleKeyboard = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleTones
 
-    console.log("The MusicScale class can generate this for the keys on the keyboard called from --render()",myScaleKeyboard)
+    console.log("The MusicScale class can generate this for the keys on the keyboard called from --render()", myScaleKeyboard)
 
 
 
