@@ -32,7 +32,7 @@ class VideoTutorial extends Component {
           draggable={true}
           picto={components[this.props.label]}
           onClickMenuHandler={this.handlePlayPause}
-          onClickCloseHandler={this.props.handlePlayPause}
+          onClickCloseHandler={this.handlePlayPause}
           hasMinize={true}
           content={
             <ReactPlayer
