@@ -137,7 +137,11 @@ class TopMenu extends Component {
         <div className="navbar-item menu-video">
           <VideoTutorial
             title="Video Player"
-            label="video" />
+            label="video"
+            handleChangeVideoUrl={this.props.handleChangeVideoUrl}
+            videoUrl={this.props.state.videoUrl}
+            resetVideoUrl={this.props.resetVideoUrl}
+          />
         </div>
 
         {/* Share */}

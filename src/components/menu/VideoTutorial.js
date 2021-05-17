@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Form, FormGroup, Button } from 'react-bootstrap';
-
 import VideoSVG from "../../assets/img/Video";
 import Popup from "./Popup";
+
 
 const components = {
   video: <VideoSVG />,
 };
+
+
 class VideoTutorial extends Component {
   state = {
-    // url: 'https://youtube.com/playlist?list=PL7imp2jxKd0Bcx4cjR3gEMirkAzd84G_C',
-    url: 'https://www.youtube.com/watch?v=g4mHPeMGTJM',
     playing: false,
     played: 0,
     loaded: 0,
@@ -37,11 +37,15 @@ class VideoTutorial extends Component {
     console.log("form", event.target.elements[0].value);
 
     // }
+
+    // set video url
+    this.props.handleChangeVideoUrl(event.target.elements[0].value);
+
     this.setState({
       setValidated: true,
-      url: event.target.elements[0].value,
       activeTab: "playlist"
     });
+
   };
 
   handleSelect = (key) => {
@@ -57,8 +61,19 @@ class VideoTutorial extends Component {
     this.setState({ playerIsReady: true })
   }
 
+
+  resetVideoUrl = (event) => {
+    this.props.resetVideoUrl();
+
+    this.setState({
+      activeTab: "playlist"
+    })
+  }
+
+
   render() {
-    const { playing, validated, url, activeTab, playerIsReady } = this.state;
+    const { playing, validated, activeTab, playerIsReady } = this.state;
+
     return (
       <div>
         <Popup
@@ -79,7 +94,7 @@ class VideoTutorial extends Component {
                     playing={playing}
                     width="100%"
                     height="100%"
-                    url={url}
+                    url={this.props.videoUrl}
                     onReady={this.playerOnReady}
                   />}
                   />
@@ -94,9 +109,11 @@ class VideoTutorial extends Component {
                         <Form.Control type="text" placeholder="Enter url" />
                         <Form.Text className="text-muted">
                           Change the Notio tutorials by any other url</Form.Text>
+
                         <Button variant="primary" type="submit">
                           Submit
                       </Button>
+                        <Button variant="outline-danger" onClick={this.resetVideoUrl}>Reset to Notio Tutorial</Button>
                       </Form.Group>
                     </Form>
                   </div>
