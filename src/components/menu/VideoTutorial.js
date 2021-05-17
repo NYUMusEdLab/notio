@@ -19,7 +19,9 @@ class VideoTutorial extends Component {
     minimized: false,
     show: false,
     validated: false,
-    setValidated: false
+    setValidated: false,
+    activeTab: "playlist",
+    playerIsReady: false
   };
 
   handlePlayPause = () => {
@@ -38,12 +40,25 @@ class VideoTutorial extends Component {
     this.setState({
       setValidated: true,
       url: event.target.elements[0].value,
+      activeTab: "playlist"
     });
   };
 
+  handleSelect = (key) => {
+    // A bit dummy but need to control tabs after submit (cf handleSumbit())
+    if (key === 'playlist')
+      this.setState({ activeTab: "playlist" })
+    if (key === 'change_video')
+      this.setState({ activeTab: "change_video" })
+  }
+
+  playerOnReady = (event) => {
+    // A bit dummy but need to control tabs after submit (cf handleSumbit())
+    this.setState({ playerIsReady: true })
+  }
+
   render() {
-    const { playing, validated, url } = this.state;
-    console.log("this.state.url", this.state.url);
+    const { playing, validated, url, activeTab, playerIsReady } = this.state;
     return (
       <div>
         <Popup
@@ -56,7 +71,7 @@ class VideoTutorial extends Component {
           hasMinize={true}
           content={
             <div class="tabs-wrapper">
-              <Tabs defaultActiveKey="playlist" id="uncontrolled-tab-example">
+              <Tabs defaultActiveKey="playlist" activeKey={activeTab} onSelect={this.handleSelect} id="uncontrolled-tab-example">
                 <Tab eventKey="playlist" title="Playlist">
                   <ReactPlayer
                     ref={this.ref}
@@ -65,7 +80,11 @@ class VideoTutorial extends Component {
                     width="100%"
                     height="100%"
                     url={url}
+                    onReady={this.playerOnReady}
+                  />}
                   />
+
+
                 </Tab>
                 <Tab eventKey="change_video" title="Customize">
                   <div>

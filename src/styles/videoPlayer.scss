@@ -27,4 +27,11 @@
       margin-top: 1vw;
     }
   }
+
+  .react-player {
+    background-image   : url(./img/loader.gif);
+    background-repeat  : no-repeat;
+    background-position: center center;
+    background-size    : 4vw;
+  }
 }
