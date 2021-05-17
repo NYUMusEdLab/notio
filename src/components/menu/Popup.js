@@ -25,6 +25,7 @@ class Popup extends Component {
         edgeResistance: 0.65,
         bounds: ".Piano",
         inertia: true,
+        trigger: ".nav-tabs"
       });
     }
 
