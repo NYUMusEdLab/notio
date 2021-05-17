@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player/lazy";
-import { Tabs, Tab, Form, FormGroup, Button } from 'react-bootstrap';
+import { Tabs, Tab, Form, Button } from 'react-bootstrap';
 import VideoSVG from "../../assets/img/Video";
 import Popup from "./Popup";
 
@@ -18,8 +18,6 @@ class VideoTutorial extends Component {
     duration: 0,
     minimized: false,
     show: false,
-    validated: false,
-    setValidated: false,
     activeTab: "playlist",
     playerIsReady: false
   };
@@ -29,23 +27,13 @@ class VideoTutorial extends Component {
   };
 
   handleSubmit = (event) => {
-    const form = event.currentTarget;
-    console.log("form.checkValidity()", form.checkValidity());
-    // if (form.checkValidity() === false) {
     event.preventDefault();
-    // event.stopPropagation();
-    console.log("form", event.target.elements[0].value);
-
-    // }
-
     // set video url
     this.props.handleChangeVideoUrl(event.target.elements[0].value);
 
     this.setState({
-      setValidated: true,
       activeTab: "playlist"
     });
-
   };
 
   handleSelect = (key) => {
@@ -64,7 +52,6 @@ class VideoTutorial extends Component {
 
   resetVideoUrl = (event) => {
     this.props.resetVideoUrl();
-
     this.setState({
       activeTab: "playlist"
     })
@@ -72,7 +59,7 @@ class VideoTutorial extends Component {
 
 
   render() {
-    const { playing, validated, activeTab, playerIsReady } = this.state;
+    const { playing, activeTab } = this.state;
 
     return (
       <div>
@@ -105,13 +92,13 @@ class VideoTutorial extends Component {
                   <div>
                     <Form onSubmit={this.handleSubmit}>
                       <Form.Group controlId="formYoutubeUrl">
-                        <Form.Label>Youtube playlist url</Form.Label>
+                        <Form.Label>Video url</Form.Label>
                         <Form.Control type="text" placeholder="Enter url" />
                         <Form.Text className="text-muted">
-                          Change the Notio tutorials by any other url</Form.Text>
+                          Change the Notio tutorials by any other video url</Form.Text>
 
                         <Button variant="primary" type="submit">
-                          Submit
+                          Change video
                       </Button>
                         <Button variant="outline-danger" onClick={this.resetVideoUrl}>Reset to Notio Tutorial</Button>
                       </Form.Group>

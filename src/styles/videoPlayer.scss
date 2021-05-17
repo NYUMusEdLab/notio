@@ -2,6 +2,7 @@
   .tabs-wrapper {
     position: absolute;
     top     : 0.5vw;
+    width   : 90%;
 
     .nav-tabs {
       a {
@@ -33,5 +34,9 @@
     background-repeat  : no-repeat;
     background-position: center center;
     background-size    : 4vw;
+  }
+
+  .btn-outline-danger {
+    margin-right: 1vw;
   }
 }
