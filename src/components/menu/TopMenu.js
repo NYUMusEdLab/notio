@@ -9,7 +9,7 @@ import VideoTutorial from "./VideoTutorial";
 import Share from "./Share";
 import Root from "./Root";
 import RootMenu from "../../assets/img/RootMenu";
-import { findColor } from '../utils.js';
+// import { findColor } from '../utils.js';
 
 
 import ListRadio from "../form/ListRadio";
@@ -86,7 +86,7 @@ class TopMenu extends Component {
             title="Root"
             selected={this.props.state.baseNote}
             selectedImg=<RootMenu color={'#ff0000'} />
-            // selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
+            {/* selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} /> */}
             content={
             <Root
               label="Root"
