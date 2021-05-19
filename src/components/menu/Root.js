@@ -107,20 +107,21 @@ class Root extends Component {
               {/* dynamic styles with dynamic colors */}
               <style>{`
           .${rootLabel}-label-${root.note}:hover {
-            background-color: ${root.color};
+            background-color: ${rootMenu[0].color};
+            // we should use "root.color" to get color by root
+            // but it isn't asked for the Notio tool
           }
 
           .${rootLabel}-input-${root.note}:checked ~ .form-check-label {
-            background-color: ${root.color};
+            background-color: ${rootMenu[0].color};
           }
 
           .${accidentalLabel}-input-${root.note}:not([disabled]) ~ .form-check-label:hover {
-            background-color: ${root.color};
-
+            background-color: ${rootMenu[0].color};
           }
 
           .${accidentalLabel}-input-${root.note}:checked ~ .form-check-label {
-            background-color: ${root.color};
+            background-color: ${rootMenu[0].color};
           }
           `}</style>
               <Form.Row>
