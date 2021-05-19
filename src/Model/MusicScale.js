@@ -591,48 +591,5 @@ class MusicScale {
   }
 
 
-  ConvertNotationTypeToPropertyname(typeName) {
-    let proppertyname;
-    switch (typeName) {
-      case "Colors":
-        proppertyname = "octaveOffset"//"colorRGBA";
-        break
-      //proppertyname = "color"
-      case "English":
-        proppertyname = "note_english";
-        break
-      case "German":
-        proppertyname = "note_german";
-        break
-      case "Relative":
-        proppertyname = "note_relative";
-        break
-      case "Romance":
-        proppertyname = "note_romance";
-        break
-      case "OctaveOffset":
-        proppertyname = "octaveOffset";
-        break
-      case "PianoColor":
-        proppertyname = "pianoColor";
-        break
-      case "Chord_extensions":
-        proppertyname = "chord_extension";
-        break
-      case "Scale_Steps":
-        proppertyname = "scale_step";
-        break
-      default:
-        proppertyname = "";
-
-    }
-
-    return proppertyname;
-
-  }
-
-  //#endregion
-
-
 }
 export default MusicScale;
