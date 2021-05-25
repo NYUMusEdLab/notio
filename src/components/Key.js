@@ -77,7 +77,7 @@ Key.propTypes = {
   notation: PropTypes.array,
   noteName: PropTypes.array,
   color: PropTypes.string,
-  offcolor: PropTypes.string,
+  // offcolor: PropTypes.string,
   keyColor: PropTypes.string,
   isOn: PropTypes.bool,
   root: PropTypes.string,

@@ -463,7 +463,7 @@ class Keyboard extends Component {
     let recipeKeyboard = scales.find(obj => obj.name === "Chromatic");
     let myScaleKeyboard = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleTones
 
-    console.log("The MusicScale class can generate this for the keys on the keyboard called from --render()", myScaleKeyboard)
+    console.log("Jakob render", myScaleKeyboard)
 
 
 
@@ -545,6 +545,7 @@ class Keyboard extends Component {
       : -1; //-1; //should start at 0, but since i am adding +1 at the beginning of the switch...
     let relativeCountChord = relativeCount;
     console.log("relativeCountChord", relativeCountChord);
+    console.log("displayNotes", displayNotes);
     const noteList = displayNotes.map((note, arrayIndex) => {
       const index = (arrayIndex + scaleStart) % 12;
       let noteName = [];
@@ -724,17 +725,17 @@ class Keyboard extends Component {
       console.log("--------------------------------------");
       return (
         <Key
-          key={arrayIndex}
-          keyIndex={arrayIndex}
-          index={index}
-          note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
-            }`}
-          noteNameEnglish={note.note_english}
-          notation={notation}
-          noteName={noteName}
-          color={colors[index]}
+          // key={arrayIndex}
+          keyIndex={arrayIndex} // Index in loop of notes
+          index={index} // index on Keyboard
+          note={`${note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
+            }`} //ok
+          noteNameEnglish={note.note_english} //ok
+          notation={notation}  //ok
+          noteName={noteName}  //ok
+          color={colors[index]}  //ok
           offColor={note.colorRGBA}
-          keyColor={note.pianoColor}
+          keyColor={note.pianoColor}    //ok
           isOn={isKeyInScale}
           root={baseNote}
           isMajorSeventh={isMajorSeventh}
@@ -754,7 +755,46 @@ class Keyboard extends Component {
           extendedKeyboard={extendedKeyboard}
         />
       );
+
+      //   const _color = colors[index];
+      //   const _keyColor = note.pianoColor;
+      //   console.log("noteThatWillSound", noteThatWillSound, note.note_english);
+      //   const _note = `${note.note_english}${octave + noteOffset}`
+      //   const _isActive = this.state.activeNotes.has(
+      //     `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
+      //     }`
+      //   )
+
+
+
+      //   return (
+      //     <div>
+      //       keyIndex = { arrayIndex}<br /><hr />
+      //       index = { index}<br /><hr />
+      //       note = {_note}<br /><hr />
+      //       noteNameEnglish = { note.note_english}<br /><hr />
+      //       notation = { notation}<br /><hr />
+      //       noteName = { noteName}<br /><hr />
+      //       color = {_color}<br /><hr />
+      //       keyColor = {_keyColor}<br /><hr />
+      //       isOn = { isKeyInScale.toString()}<br /><hr />
+      //       root = { baseNote}<br /><hr />
+      //       isMajorSeventh = { isMajorSeventh.toString()}<br /><hr />
+      //       {/* synth = { synth} */}
+      //       isMouseDown = { mouse_is_down}<br /><hr />
+      //       pianoOn = { pianoOn.toString()}<br /><hr />
+      //       theme = { theme}<br /><hr />
+      //       clef = { clef}<br /><hr />
+      //       trebleStaffOn = { trebleStaffOn.toString()}<br /><hr />
+      //       showOffNotes = { showOffNotes.toString()}<br /><hr />
+      //       isActive = {_isActive.toString()}<br /><hr />
+      //       noteOn = { this.noteOn}<br /><hr />
+      //       noteOff = { this.noteOff}<br /><hr />
+      //       extendedKeyboard = { extendedKeyboard.toString()}<br /><hr />
+      //     </div>
+      //   );
     });
+
 
     return <div className="Keyboard">{noteList}</div>;
   }

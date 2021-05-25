@@ -21,20 +21,21 @@
 
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; /* ? */
+  margin    : 0;
+  padding   : 0;
+  box-sizing: border-box;
+  /* ? */
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
+  width           : 100vw;
+  height          : 100vh;
   background-color: #f1f1da;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Quicksand", sans-serif;
-  overflow: hidden;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  font-family     : "Quicksand", sans-serif;
+  // overflow: hidden;
 }
 
 h1,
@@ -44,44 +45,46 @@ p {
 
 #root,
 .Piano {
-  height: 100%;
+  height   : 100%;
   min-width: 100%;
 }
 
 .Piano {
-  display: flex;
-  flex: 1;
-  height: 87vh;
+  display         : flex;
+  flex            : 1;
+  height          : 87vh;
   /*flex-direction: column;*/
 }
 
 /* keyboard */
 
 .Keyboard {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: center; /* align items in Main Axis */
-  align-items: stretch;
+  flex           : 1;
+  display        : flex;
+  flex-direction : row;
+  justify-content: center;
+  /* align items in Main Axis */
+  align-items    : stretch;
 }
 
 /** Key **/
 
 .Key {
-  flex: 1;
-  height: auto;
-  display: flex;
-  flex-direction: column;
+  flex           : 1;
+  height         : auto;
+  display        : flex;
+  flex-direction : column;
   justify-content: flex-start;
-  pointer-events: none; /* makes it click thru */
-  position: relative;
+  pointer-events : none;
+  /* makes it click thru */
+  position       : relative;
 }
 
 .Key .note {
-  opacity: 0.4;
-  text-align: center;
+  opacity    : 0.4;
+  text-align : center;
   font-weight: 700;
-  font-size: 2vw;
+  font-size  : 2vw;
 }
 
 .Key.on.active .color-key {
@@ -93,9 +96,9 @@ p {
 }
 
 .Key .seventh {
-  position: absolute;
-  top: 15%;
-  font-size: 24px;
+  position  : absolute;
+  top       : 15%;
+  font-size : 24px;
   text-align: center;
 }
 
@@ -113,19 +116,20 @@ p {
 }*/
 
 .Key .piano-key {
-  border-top: 0px;
-  z-index: 2;
+  border-top   : 0px;
+  z-index      : 2;
   border-bottom: 1px solid #3f3f3f;
   // animation: slide-up 0.2s ease;
 }
 
 @keyframes slide-up {
   0% {
-    opacity: 0;
+    opacity    : 0;
     //transform: translateY(20px);
   }
+
   100% {
-    opacity: 1;
+    opacity    : 1;
     //transform: translateY(0);
   }
 }
@@ -135,40 +139,43 @@ p {
 }
 
 .Key.black .piano-key {
-  height: 30%;
+  height          : 30%;
   background-color: transparent;
 }
 
 .Key.black .blackPianoKeyContainer {
   height: 100%;
 }
+
 .Key.black .piano-key .blackPianoKeyFiller {
   height: 35%;
 }
+
 .Key.black .piano-key .blackPianoKey {
-  pointer-events: all;
-  height: 65%;
+  pointer-events  : all;
+  height          : 65%;
   background-color: black;
 }
 
 .Key.white .piano-key {
-  height: 30%;
+  height          : 30%;
   background-color: white;
-  border-left: 1px solid #3f3f3f;
-  width: 171%;
-  position: relative;
-  pointer-events: all;
+  border-left     : 1px solid #3f3f3f;
+  width           : 171%;
+  position        : relative;
+  pointer-events  : all;
 }
 
 .Key.on .piano-key.white:hover,
 .Key.on .piano-key.black .blackPianoKey:hover {
   background-color: #aaa;
-  box-shadow: inset 0px 0px 3px black;
+  box-shadow      : inset 0px 0px 3px black;
 }
 
 .Key.off .piano-key.white {
   background-color: #ddd;
 }
+
 .Key.off .piano-key.black .blackPianoKey {
   background-color: #666;
 }
@@ -180,21 +187,27 @@ p {
 .piano-key.c {
   left: 0%;
 }
+
 .piano-key.d {
   left: -34%;
 }
+
 .piano-key.e {
   left: -65%;
 }
+
 .piano-key.f {
   left: 6%;
 }
+
 .piano-key.g {
   left: -22%;
 }
+
 .piano-key.a {
   left: -50%;
 }
+
 .piano-key.b {
   left: -76%;
 }
@@ -206,9 +219,14 @@ p {
 
 .black {
   border-top: 0px;
-  z-index: 2;
+  z-index   : 2;
 }
 
 .text {
   text-align: center;
+}
+
+.Keyboard {
+  font-size: 0.6vw;
+
 }
