@@ -652,7 +652,7 @@ class Keyboard extends Component {
           key={arrayIndex}
           keyIndex={arrayIndex}
           index={index}
-          note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
+          note={`${note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
             }`}
           noteNameEnglish={note.note_english}
           notation={notation}
