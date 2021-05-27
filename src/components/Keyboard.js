@@ -644,9 +644,6 @@ class Keyboard extends Component {
       if (typeof wholeNote === "string")
         threeLowerOctave.add(noteThatWillSound + (octave + noteOffset));
 
-
-      console.log("notation", notation);
-      console.log("--------------------------------------");
       return (
         <Key
           key={arrayIndex}
