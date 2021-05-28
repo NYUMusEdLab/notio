@@ -268,18 +268,14 @@ class Keyboard extends Component {
 
     //TODO: NOTE that this creates a full scale with all naming and numbering and tones embedded.
     // I believe this can replace a lot of the code in keyboard
-    let fromstep = this.props.extendedKeyboard === true ? 7 : 0;
-    let ambitus = this.props.extendedKeyboard === true ? 21 : 13;
-    let recipe = scales.find(obj => obj.name === this.props.scale);
-    let root = this.props.baseNote;
-    let myScale = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleToneNames
+    // let fromstep = this.props.extendedKeyboard === true ? 7 : 0;
+    // let ambitus = this.props.extendedKeyboard === true ? 21 : 13;
+    // let recipe = scales.find(obj => obj.name === this.props.scale);
+    // let root = this.props.baseNote;
+    // let myScale = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleToneNames
 
-
-    console.log("The MusicScale class can generate this called from generateScales", myScale)
-
-
-
-
+    // return myScale;
+    // console.log("jakob scale", myScale);
 
     let theScale = {};
 
@@ -297,7 +293,12 @@ class Keyboard extends Component {
         notation[i] === "Romance"
       ) {
         if (scale.includes("Chromatic")) {
-          return { Romance: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] };
+          // Todo : has to be replaced by Jakob's function
+          return {
+            Romance: ['Do', 'Do#', 'Ré', 'Ré#', 'Mi', 'Fa', 'Fa#', 'Sol', 'Sol#', 'La', 'La#', 'Si'],
+            German: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'H'],
+            English: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+          };
         }
         else if (!scale.includes("Pentatonic") && !scale.includes("Blues")) {
           theScale[notation[i]] = makeScaleMajorMinor(
@@ -316,7 +317,6 @@ class Keyboard extends Component {
       }
     }
 
-    console.log("theScale", theScale);
     return theScale;
   };
 
@@ -357,7 +357,11 @@ class Keyboard extends Component {
     onlyScaleIndex = extendedKeyboard
       ? scale.includes("Pentatonic")
         ? 3
-        : 4
+        : scale.includes("Chromatic")
+          ? 7
+          : scale.includes("Locrian")
+            ? 5
+            : 4
       : 0;
   }
 
@@ -397,11 +401,18 @@ class Keyboard extends Component {
       false
     );
 
+    // determine the scale shifting
+
     onlyScaleIndex = this.props.extendedKeyboard
-      ? this.props.scale.includes("Pentatonic")
+      ? this.props.scale.includes("Pentatonic", "Locrian")
         ? 3
-        : 4
+        : this.props.scale.includes("Chromatic")
+          ? 7
+          : this.props.scale.includes("Locrian")
+            ? 5
+            : 4
       : 0;
+
 
     targetArr = Array.from(
       document.querySelectorAll(".Key")
@@ -457,19 +468,13 @@ class Keyboard extends Component {
     let myScale = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleToneNames
 
 
-    console.log("The MusicScale class can generate this called from --render()", myScale)
+    console.log("Jakob render", myScale)
 
 
-    let recipeKeyboard = scales.find(obj => obj.name === "Chromatic");
-    let myScaleKeyboard = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleTones
+    // let recipeKeyboard = scales.find(obj => obj.name === "Chromatic");
+    // let myScaleKeyboard = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleTones
 
-    console.log("Jakob render", myScaleKeyboard)
-
-
-
-
-
-
+    // console.log("Jakob render", myScaleKeyboard)
 
 
 
@@ -497,6 +502,8 @@ class Keyboard extends Component {
 
     let displayNotesBuilder;
     let scaleStart = 0;
+
+    // notes when extendedKeyboard is on  
     if (extendedKeyboard) {
       // show notes 5-3 (octave+sixth)
       scaleStart = 7;
@@ -557,9 +564,13 @@ class Keyboard extends Component {
         isMajorSeventh = false;
       }
       let alreadyAdded = false; //this variable is to make sure we don't increment our relativeCountScale index double if we have to notations selected
-
+      console.log("theScale", theScale);
       for (let i = 0; i < notation.length; i++) {
         /* eslint-disable no-duplicate-case */
+
+        console.log("emilie notation", theScale, theScale[
+          notation[i]
+        ], notation[i], i);
         switch (notation[i]) {
           case "Romance":
           case "English":
@@ -570,7 +581,7 @@ class Keyboard extends Component {
             ) {
               relativeCountScale++;
             }
-            alreadyAdded = true;
+          // alreadyAdded = true;
           case "Romance":
             if (isKeyInScale) {
               console.log("Romance isKeyInScale", isKeyInScale, theScale[notation[i]][
@@ -686,8 +697,11 @@ class Keyboard extends Component {
         }
       }
 
+
+
       let noteThatWillSound;
       let noteOffset = note.octaveOffset;
+      console.log("noteOffset", noteOffset);
       if (isKeyInScale) {
         console.log("note", note);
 
@@ -710,25 +724,36 @@ class Keyboard extends Component {
       } else {
         noteThatWillSound = null;
       }
-      // console.log(
-      //   "noteThatWillSound",
-      //   noteThatWillSound,
-      //   "onlyScaleIndex",
-      //   onlyScaleIndex
-      // );
+
+
+      // WholeNote represent the format Ab4 which is used to display
+      // notes on musical staff
       const wholeNote = noteThatWillSound + (octave + noteOffset);
       if (typeof wholeNote === "string")
         threeLowerOctave.add(noteThatWillSound + (octave + noteOffset));
 
+      console.log(
+        "ntws",
+        noteThatWillSound,
+        "onlyScaleIndex",
+        onlyScaleIndex,
+        "wholeNote",
+        wholeNote,
+        "octave",
+        octave,
+        "noteOffset",
+        noteOffset
+      );
 
       console.log("notation", notation);
+
       console.log("--------------------------------------");
       return (
         <Key
           // key={arrayIndex}
           keyIndex={arrayIndex} // Index in loop of notes
           index={index} // index on Keyboard
-          note={`${note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
+          note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
             }`} //ok
           noteNameEnglish={note.note_english} //ok
           notation={notation}  //ok
@@ -756,20 +781,20 @@ class Keyboard extends Component {
         />
       );
 
-      //   const _color = colors[index];
-      //   const _keyColor = note.pianoColor;
-      //   console.log("noteThatWillSound", noteThatWillSound, note.note_english);
-      //   const _note = `${note.note_english}${octave + noteOffset}`
-      //   const _isActive = this.state.activeNotes.has(
-      //     `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
-      //     }`
-      //   )
+      // const _color = colors[index];
+      // const _keyColor = note.pianoColor;
+      // console.log("noteThatWillSound", noteThatWillSound, note.note_english);
+      // const _note = `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset}`
+      // const _isActive = this.state.activeNotes.has(
+      //   `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
+      //   }`
+      // )
 
 
 
-      //   return (
-      //     <div>
-      //       keyIndex = { arrayIndex}<br /><hr />
+      // return (
+      //   <div>
+      //     keyIndex = { arrayIndex}<br /><hr />
       //       index = { index}<br /><hr />
       //       note = {_note}<br /><hr />
       //       noteNameEnglish = { note.note_english}<br /><hr />
@@ -780,7 +805,7 @@ class Keyboard extends Component {
       //       isOn = { isKeyInScale.toString()}<br /><hr />
       //       root = { baseNote}<br /><hr />
       //       isMajorSeventh = { isMajorSeventh.toString()}<br /><hr />
-      //       {/* synth = { synth} */}
+      //     {/* synth = { synth} */}
       //       isMouseDown = { mouse_is_down}<br /><hr />
       //       pianoOn = { pianoOn.toString()}<br /><hr />
       //       theme = { theme}<br /><hr />
@@ -791,8 +816,8 @@ class Keyboard extends Component {
       //       noteOn = { this.noteOn}<br /><hr />
       //       noteOff = { this.noteOff}<br /><hr />
       //       extendedKeyboard = { extendedKeyboard.toString()}<br /><hr />
-      //     </div>
-      //   );
+      //   </div>
+      // );
     });
 
 
