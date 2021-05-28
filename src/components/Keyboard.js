@@ -368,7 +368,8 @@ class Keyboard extends Component {
     );
 
     // determine the scale shifting
-    onlyScaleIndex = this.scaleShifting(this.props.extendedKeyboard, this.props.scale)
+    let currentRoot = this.getRootInfo(rootNote, this.props.baseNote);
+    onlyScaleIndex = this.scaleShifting(this.props.extendedKeyboard, this.props.scale, currentRoot.index)
 
 
     targetArr = Array.from(
@@ -413,7 +414,8 @@ class Keyboard extends Component {
     }
 
     // scale index on keyboard
-    onlyScaleIndex = this.scaleShifting(extendedKeyboard, scale)
+    let currentRoot = this.getRootInfo(rootNote, this.props.baseNote);
+    onlyScaleIndex = this.scaleShifting(extendedKeyboard, scale, currentRoot.index)
 
   }
 
@@ -424,6 +426,8 @@ class Keyboard extends Component {
   }
 
   //#endregion
+
+  // TODO : Maybe can be improved and determine dynamically by a formula
   scaleShifting(isExtendedKeyboard, scale, shifting = 0) {
     let r = isExtendedKeyboard
       ? scale.includes("Pentatonic")
@@ -434,7 +438,14 @@ class Keyboard extends Component {
             ? 5
             : 4
       : 0;
-    return r - shifting;
+    return r + shifting;
+  }
+
+  getRootInfo(rootNote, baseNote) {
+    return rootNote.find(obj => {
+      console.log('obj.note - baseNote', obj.note, baseNote, obj.index);
+      return obj.note === baseNote;
+    });
   }
 
   //#region render function
@@ -459,20 +470,14 @@ class Keyboard extends Component {
 
     //TODO NOTE!!!!!!!!!!!!!!!!!    MusicScale should be used for ALL naming in keyboard.js
 
-    let fromstep = this.props.extendedKeyboard === true ? 7 : 0;
-    let ambitus = this.props.extendedKeyboard === true ? 21 : 13;
-    let recipe = scales.find(obj => obj.name === this.props.scale);
-    let root = this.props.baseNote;
-    let myScale = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleToneNames
+    // let fromstep = this.props.extendedKeyboard === true ? 7 : 0;
+    // let ambitus = this.props.extendedKeyboard === true ? 21 : 13;
+    // let recipe = scales.find(obj => obj.name === this.props.scale);
+    // let root = this.props.baseNote;
+    // let myScale = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleToneNames
 
 
-    console.log("Jakob render", myScale)
-
-
-    // let recipeKeyboard = scales.find(obj => obj.name === "Chromatic");
-    // let myScaleKeyboard = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleTones
-
-    // console.log("Jakob render", myScaleKeyboard)
+    // console.log("Jakob render", myScale)
 
 
 
@@ -491,43 +496,63 @@ class Keyboard extends Component {
     });
 
     let baseScale = this.generateCurrentScale(scaleSteps.steps);
-    console.log("Keyboard baseScale", baseScale)
-    let currentRoot = rootNote.find(obj => {
-      console.log('obj.note - baseNote', obj.note, baseNote, obj.index);
-      return obj.note === baseNote;
-    });
-    console.log("currentRoot", currentRoot);
+
+    // ROOT : Get the root and its index
+    let currentRoot = this.getRootInfo(rootNote, baseNote);
 
     let displayNotesBuilder;
     let scaleStart = 0;
 
-    // notes when extendedKeyboard is on  
+    // EXTENDED KEYBOARD : notes when extendedKeyboard is on  
     if (extendedKeyboard) {
-      // show notes 5-3 (octave+sixth)
       scaleStart = 7;
+      // Extract from notes data the part of the scale
+      // function of root index
       const displayNotesBase = notes.slice(
         currentRoot.index,
         currentRoot.index + 13
       );
-      displayNotesBuilder = displayNotesBase.slice(7, 12);
-      displayNotesBuilder = displayNotesBuilder.map(obj => {
+      console.log(">> displayNotesBase", displayNotesBase);
+
+      // Get lower notes
+      let displayNoteLower = displayNotesBase.slice(7, 12);
+      console.log("displayNoteLower", displayNoteLower);
+
+      // Change offset to lower
+      displayNoteLower = displayNoteLower.map(obj => {
         let newObj = { ...obj };
         newObj.octaveOffset--;
         return newObj;
       });
-      displayNotesBuilder = displayNotesBuilder.concat(
+
+      console.log("displayNoteLower offset --", displayNoteLower);
+
+
+      // Concat NoteLower to original scale
+      displayNoteLower = displayNoteLower.concat(
         displayNotesBase.map(obj => {
           return { ...obj };
         })
       );
 
-      let displayNotesBuilder2 = displayNotesBase.slice(1, 5);
-      displayNotesBuilder2 = displayNotesBuilder2.map(obj => {
+      console.log("displayNoteLower concat", displayNoteLower);
+
+
+      // Get the higher notes
+      let displayNoteHigher = displayNotesBase.slice(1, 5);
+      console.log("displayNoteHigher", displayNoteHigher);
+
+      // Change the offset
+      displayNoteHigher = displayNoteHigher.map(obj => {
         let newObj = { ...obj };
         newObj.octaveOffset++;
         return newObj;
       });
-      displayNotesBuilder = displayNotesBuilder.concat(displayNotesBuilder2);
+      console.log("displayNoteHigher offset ++", displayNoteHigher);
+
+      // Concat higher notes to original scale + lower notes
+      displayNotesBuilder = displayNoteLower.concat(displayNoteHigher);
+
     } else {
       console.log("currentRoot.index", currentRoot.index);
       displayNotesBuilder = notes.slice(
@@ -539,24 +564,13 @@ class Keyboard extends Component {
     console.log("displayNotes", displayNotes);
     //we use relativeCount for Scale Steps
     let relativeCount = this.scaleShifting(extendedKeyboard, scale)
-
-    // let relativeCountScale = extendedKeyboard
-    //   ? scale.includes("Pentatonic")
-    //     ? 2
-    //     : scale.includes("Chromatic")
-    //       ? 6
-    //       : scale.includes("Locrian")
-    //         ? 4
-    //         : 3
-    //   : -1; //-1; //should start at 0, but since i am adding +1 at the beginning of the switch...
-
     let relativeCountScale = this.scaleShifting(extendedKeyboard, scale, -1)
-
-
     let relativeCountChord = relativeCount;
-    console.log("relativeCountChord", relativeCountChord);
-    console.log("displayNotes", displayNotes);
+
+    // Loop on note list
+    console.log("indexindex --------------------");
     const noteList = displayNotes.map((note, arrayIndex) => {
+      // index : influence on color position
       const index = (arrayIndex + scaleStart) % 12;
       let noteName = [];
       const isKeyInScale = scaleSteps.steps.includes(index);
