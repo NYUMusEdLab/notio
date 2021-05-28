@@ -330,40 +330,6 @@ class Keyboard extends Component {
     };
   }
 
-  //#region Component Lifecycle functions
-  componentDidUpdate(prevProps) {
-    //refresh the keys every time we update the props
-    const { notation, scale, baseNote, extendedKeyboard } = this.props;
-    if (
-      notation !== prevProps.notation ||
-      scale !== prevProps.scale ||
-      baseNote !== prevProps.baseNote ||
-      extendedKeyboard !== prevProps.extendedKeyboard
-    ) {
-      targetArr = Array.from(document.querySelectorAll(".Key"));
-      activeElementsforKeyboard = targetArr.filter(key => {
-        for (let i = 0; i < key.children.length; i++) {
-          if (key.children[i].classList.contains("on")) return key;
-        }
-        return null;
-      });
-      scaleSteps = scales.find(obj => obj.name === scale);
-      console.log("Keyboard componentDidUpdate scaleSteps", scaleSteps);
-      this.setState({
-        currentScale: this.generateCurrentScale(scaleSteps.steps)
-      });
-      threeLowerOctave.clear();
-    }
-    onlyScaleIndex = extendedKeyboard
-      ? scale.includes("Pentatonic")
-        ? 3
-        : scale.includes("Chromatic")
-          ? 7
-          : scale.includes("Locrian")
-            ? 5
-            : 4
-      : 0;
-  }
 
   componentDidMount() {
 
@@ -402,16 +368,7 @@ class Keyboard extends Component {
     );
 
     // determine the scale shifting
-
-    onlyScaleIndex = this.props.extendedKeyboard
-      ? this.props.scale.includes("Pentatonic", "Locrian")
-        ? 3
-        : this.props.scale.includes("Chromatic")
-          ? 7
-          : this.props.scale.includes("Locrian")
-            ? 5
-            : 4
-      : 0;
+    onlyScaleIndex = this.scaleShifting(this.props.extendedKeyboard, this.props.scale)
 
 
     targetArr = Array.from(
@@ -429,6 +386,37 @@ class Keyboard extends Component {
     });
   }
 
+
+  //#region Component Lifecycle functions
+  componentDidUpdate(prevProps) {
+    //refresh the keys every time we update the props
+    const { notation, scale, baseNote, extendedKeyboard } = this.props;
+    if (
+      notation !== prevProps.notation ||
+      scale !== prevProps.scale ||
+      baseNote !== prevProps.baseNote ||
+      extendedKeyboard !== prevProps.extendedKeyboard
+    ) {
+      targetArr = Array.from(document.querySelectorAll(".Key"));
+      activeElementsforKeyboard = targetArr.filter(key => {
+        for (let i = 0; i < key.children.length; i++) {
+          if (key.children[i].classList.contains("on")) return key;
+        }
+        return null;
+      });
+      scaleSteps = scales.find(obj => obj.name === scale);
+      console.log("Keyboard componentDidUpdate scaleSteps", scaleSteps);
+      this.setState({
+        currentScale: this.generateCurrentScale(scaleSteps.steps)
+      });
+      threeLowerOctave.clear();
+    }
+
+    // scale index on keyboard
+    onlyScaleIndex = this.scaleShifting(extendedKeyboard, scale)
+
+  }
+
   componentWillUnmount() {
     Tone.context.close();
     document.removeEventListener("keydown", this.handleKeyDown, false);
@@ -436,8 +424,18 @@ class Keyboard extends Component {
   }
 
   //#endregion
-
-
+  scaleShifting(isExtendedKeyboard, scale, shifting = 0) {
+    let r = isExtendedKeyboard
+      ? scale.includes("Pentatonic")
+        ? 3
+        : scale.includes("Chromatic")
+          ? 7
+          : scale.includes("Locrian")
+            ? 5
+            : 4
+      : 0;
+    return r - shifting;
+  }
 
   //#region render function
   render() {
@@ -540,16 +538,21 @@ class Keyboard extends Component {
     const displayNotes = displayNotesBuilder;
     console.log("displayNotes", displayNotes);
     //we use relativeCount for Scale Steps
-    let relativeCount = extendedKeyboard
-      ? scale.includes("Pentatonic")
-        ? 3
-        : 4
-      : 0; //0;
-    let relativeCountScale = extendedKeyboard
-      ? scale.includes("Pentatonic")
-        ? 2
-        : 3
-      : -1; //-1; //should start at 0, but since i am adding +1 at the beginning of the switch...
+    let relativeCount = this.scaleShifting(extendedKeyboard, scale)
+
+    // let relativeCountScale = extendedKeyboard
+    //   ? scale.includes("Pentatonic")
+    //     ? 2
+    //     : scale.includes("Chromatic")
+    //       ? 6
+    //       : scale.includes("Locrian")
+    //         ? 4
+    //         : 3
+    //   : -1; //-1; //should start at 0, but since i am adding +1 at the beginning of the switch...
+
+    let relativeCountScale = this.scaleShifting(extendedKeyboard, scale, -1)
+
+
     let relativeCountChord = relativeCount;
     console.log("relativeCountChord", relativeCountChord);
     console.log("displayNotes", displayNotes);
