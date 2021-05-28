@@ -188,3 +188,54 @@ function noteNameToIndex(noteName) {
   }
   return Number(IndexNumber); // it should be a number already, but...
 }
+
+
+export function generateExtendedScale(notes, currentRoot) {
+
+  // Extract from notes data the part of the scale
+  // function of root index
+  const displayNotesBase = notes.slice(
+    currentRoot.index,
+    currentRoot.index + 13
+  );
+  console.log(">> displayNotesBase", displayNotesBase);
+
+  // Get lower notes
+  let displayNoteLower = displayNotesBase.slice(7, 12);
+  console.log("displayNoteLower", displayNoteLower);
+
+  // Change offset to lower
+  displayNoteLower = displayNoteLower.map(obj => {
+    let newObj = { ...obj };
+    newObj.octaveOffset--;
+    return newObj;
+  });
+
+  console.log("displayNoteLower offset --", displayNoteLower);
+
+
+  // Concat NoteLower to original scale
+  displayNoteLower = displayNoteLower.concat(
+    displayNotesBase.map(obj => {
+      return { ...obj };
+    })
+  );
+
+  console.log("displayNoteLower concat", displayNoteLower);
+
+
+  // Get the higher notes
+  let displayNoteHigher = displayNotesBase.slice(1, 5);
+  console.log("displayNoteHigher", displayNoteHigher);
+
+  // Change the offset
+  displayNoteHigher = displayNoteHigher.map(obj => {
+    let newObj = { ...obj };
+    newObj.octaveOffset++;
+    return newObj;
+  });
+  console.log("displayNoteHigher offset ++", displayNoteHigher);
+
+  // Concat higher notes to original scale + lower notes
+  return displayNoteLower.concat(displayNoteHigher);
+}

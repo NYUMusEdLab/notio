@@ -7,7 +7,11 @@ import scales from "../data/scalesObj";
 import rootNote from "../data/rootNote";
 import notes from "../data/notes";
 import colors from "../data/colors";
-import { makeScaleMajorMinor, makeScalePentatonicBlues } from "./theory";
+import {
+  makeScaleMajorMinor,
+  makeScalePentatonicBlues,
+  generateExtendedScale
+} from "./theory";
 import { Piano } from '@tonejs/piano'
 import MusicScale from "../Model/MusicScale";
 
@@ -368,8 +372,7 @@ class Keyboard extends Component {
     );
 
     // determine the scale shifting
-    let currentRoot = this.getRootInfo(rootNote, this.props.baseNote);
-    onlyScaleIndex = this.scaleShifting(this.props.extendedKeyboard, this.props.scale, currentRoot.index)
+    onlyScaleIndex = this.scaleShifting(this.props.extendedKeyboard, this.props.scale);
 
 
     targetArr = Array.from(
@@ -414,8 +417,7 @@ class Keyboard extends Component {
     }
 
     // scale index on keyboard
-    let currentRoot = this.getRootInfo(rootNote, this.props.baseNote);
-    onlyScaleIndex = this.scaleShifting(extendedKeyboard, scale, currentRoot.index)
+    onlyScaleIndex = this.scaleShifting(extendedKeyboard, scale);
 
   }
 
@@ -429,11 +431,13 @@ class Keyboard extends Component {
 
   // TODO : Maybe can be improved and determine dynamically by a formula
   scaleShifting(isExtendedKeyboard, scale, shifting = 0) {
+    let currentRoot = this.getRootInfo(rootNote, this.props.baseNote);
+
     let r = isExtendedKeyboard
       ? scale.includes("Pentatonic")
         ? 3
         : scale.includes("Chromatic")
-          ? 7
+          ? 7 + currentRoot.index
           : scale.includes("Locrian")
             ? 5
             : 4
@@ -466,8 +470,6 @@ class Keyboard extends Component {
     const { synth } = this;
     const { mouse_is_down } = this.state;
 
-
-
     //TODO NOTE!!!!!!!!!!!!!!!!!    MusicScale should be used for ALL naming in keyboard.js
 
     // let fromstep = this.props.extendedKeyboard === true ? 7 : 0;
@@ -478,9 +480,6 @@ class Keyboard extends Component {
 
 
     // console.log("Jakob render", myScale)
-
-
-
 
     let isMajorSeventh = false;
 
@@ -506,52 +505,8 @@ class Keyboard extends Component {
     // EXTENDED KEYBOARD : notes when extendedKeyboard is on  
     if (extendedKeyboard) {
       scaleStart = 7;
-      // Extract from notes data the part of the scale
-      // function of root index
-      const displayNotesBase = notes.slice(
-        currentRoot.index,
-        currentRoot.index + 13
-      );
-      console.log(">> displayNotesBase", displayNotesBase);
-
-      // Get lower notes
-      let displayNoteLower = displayNotesBase.slice(7, 12);
-      console.log("displayNoteLower", displayNoteLower);
-
-      // Change offset to lower
-      displayNoteLower = displayNoteLower.map(obj => {
-        let newObj = { ...obj };
-        newObj.octaveOffset--;
-        return newObj;
-      });
-
-      console.log("displayNoteLower offset --", displayNoteLower);
-
-
-      // Concat NoteLower to original scale
-      displayNoteLower = displayNoteLower.concat(
-        displayNotesBase.map(obj => {
-          return { ...obj };
-        })
-      );
-
-      console.log("displayNoteLower concat", displayNoteLower);
-
-
-      // Get the higher notes
-      let displayNoteHigher = displayNotesBase.slice(1, 5);
-      console.log("displayNoteHigher", displayNoteHigher);
-
-      // Change the offset
-      displayNoteHigher = displayNoteHigher.map(obj => {
-        let newObj = { ...obj };
-        newObj.octaveOffset++;
-        return newObj;
-      });
-      console.log("displayNoteHigher offset ++", displayNoteHigher);
-
-      // Concat higher notes to original scale + lower notes
-      displayNotesBuilder = displayNoteLower.concat(displayNoteHigher);
+      // build extended scale
+      displayNotesBuilder = generateExtendedScale(notes, currentRoot);
 
     } else {
       console.log("currentRoot.index", currentRoot.index);
@@ -563,8 +518,8 @@ class Keyboard extends Component {
     const displayNotes = displayNotesBuilder;
     console.log("displayNotes", displayNotes);
     //we use relativeCount for Scale Steps
-    let relativeCount = this.scaleShifting(extendedKeyboard, scale)
-    let relativeCountScale = this.scaleShifting(extendedKeyboard, scale, -1)
+    let relativeCount = this.scaleShifting(extendedKeyboard, scale);
+    let relativeCountScale = this.scaleShifting(extendedKeyboard, scale, -1);
     let relativeCountChord = relativeCount;
 
     // Loop on note list
