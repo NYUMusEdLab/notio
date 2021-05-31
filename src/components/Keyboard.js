@@ -723,76 +723,76 @@ class Keyboard extends Component {
       console.log("Keyboardnote", note);
 
       console.log("--------------------------------------");
-      return (
-        <Key
-          // key={arrayIndex}
-          keyIndex={arrayIndex} // Index in loop of notes
-          index={index} // index on Keyboard
-          note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
-            }`} //ok
-          noteNameEnglish={note.note_english} //ok
-          notation={notation}  //ok
-          noteName={noteName}  //ok
-          color={colors[index]}  //ok
-          offColor={note.colorRGBA}
-          keyColor={note.pianoColor}    //ok
-          isOn={isKeyInScale}
-          root={baseNote}
-          isMajorSeventh={isMajorSeventh}
-          synth={synth}
-          isMouseDown={mouse_is_down}
-          pianoOn={pianoOn}
-          theme={theme}
-          clef={clef}
-          trebleStaffOn={trebleStaffOn}
-          showOffNotes={showOffNotes}
-          isActive={this.state.activeNotes.has(
-            `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
-            }`
-          )}
-          noteOn={this.noteOn}
-          noteOff={this.noteOff}
-          extendedKeyboard={extendedKeyboard}
-        />
-      );
-
-      // const _color = colors[index];
-      // const _keyColor = note.pianoColor;
-      // console.log("noteThatWillSound", noteThatWillSound, note.note_english);
-      // const _note = `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset}`
-      // const _isActive = this.state.activeNotes.has(
-      //   `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
-      //   }`
-      // )
-
-
-
       // return (
-      //   <div>
-      //     keyIndex = { arrayIndex}<br /><hr />
-      //       index = { index}<br /><hr />
-      //       note = {_note} - {noteThatWillSound}<br /><hr />
-      //       noteNameEnglish = { note.note_english}<br /><hr />
-      //       notation = { notation}<br /><hr />
-      //       noteName = { noteName}<br /><hr />
-      //       color = {_color}<br /><hr />
-      //       keyColor = {_keyColor}<br /><hr />
-      //       isOn = { isKeyInScale.toString()}<br /><hr />
-      //       root = { baseNote}<br /><hr />
-      //       isMajorSeventh = { isMajorSeventh.toString()}<br /><hr />
-      //     {/* synth = { synth} */}
-      //       isMouseDown = { mouse_is_down}<br /><hr />
-      //       pianoOn = { pianoOn.toString()}<br /><hr />
-      //       theme = { theme}<br /><hr />
-      //       clef = { clef}<br /><hr />
-      //       trebleStaffOn = { trebleStaffOn.toString()}<br /><hr />
-      //       showOffNotes = { showOffNotes.toString()}<br /><hr />
-      //       isActive = {_isActive.toString()}<br /><hr />
-      //       noteOn = { this.noteOn}<br /><hr />
-      //       noteOff = { this.noteOff}<br /><hr />
-      //       extendedKeyboard = { extendedKeyboard.toString()}<br /><hr />
-      //   </div>
+      //   <Key
+      //     // key={arrayIndex}
+      //     keyIndex={arrayIndex} // Index in loop of notes
+      //     index={index} // index on Keyboard
+      //     note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
+      //       }`} //ok
+      //     noteNameEnglish={note.note_english} //ok
+      //     notation={notation}  //ok
+      //     noteName={noteName}  //ok
+      //     color={colors[index]}  //ok
+      //     offColor={note.colorRGBA}
+      //     keyColor={note.pianoColor}    //ok
+      //     isOn={isKeyInScale}
+      //     root={baseNote}
+      //     isMajorSeventh={isMajorSeventh}
+      //     synth={synth}
+      //     isMouseDown={mouse_is_down}
+      //     pianoOn={pianoOn}
+      //     theme={theme}
+      //     clef={clef}
+      //     trebleStaffOn={trebleStaffOn}
+      //     showOffNotes={showOffNotes}
+      //     isActive={this.state.activeNotes.has(
+      //       `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
+      //       }`
+      //     )}
+      //     noteOn={this.noteOn}
+      //     noteOff={this.noteOff}
+      //     extendedKeyboard={extendedKeyboard}
+      //   />
       // );
+
+      const _color = colors[index];
+      const _keyColor = note.pianoColor;
+      console.log("noteThatWillSound", noteThatWillSound, note.note_english);
+      const _note = `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset}`
+      const _isActive = this.state.activeNotes.has(
+        `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
+        }`
+      )
+
+
+
+      return (
+        <div>
+          keyIndex = { arrayIndex}<br /><hr />
+            index = { index}<br /><hr />
+            note = {_note} - {noteThatWillSound}<br /><hr />
+            noteNameEnglish = { note.note_english}<br /><hr />
+            notation = { notation}<br /><hr />
+            noteName = { noteName}<br /><hr />
+            color = {_color}<br /><hr />
+            keyColor = {_keyColor}<br /><hr />
+            isOn = { isKeyInScale.toString()}<br /><hr />
+            root = { baseNote}<br /><hr />
+            isMajorSeventh = { isMajorSeventh.toString()}<br /><hr />
+          {/* synth = { synth} */}
+            isMouseDown = { mouse_is_down}<br /><hr />
+            pianoOn = { pianoOn.toString()}<br /><hr />
+            theme = { theme}<br /><hr />
+            clef = { clef}<br /><hr />
+            trebleStaffOn = { trebleStaffOn.toString()}<br /><hr />
+            showOffNotes = { showOffNotes.toString()}<br /><hr />
+            isActive = {_isActive.toString()}<br /><hr />
+            noteOn = { this.noteOn}<br /><hr />
+            noteOff = { this.noteOff}<br /><hr />
+            extendedKeyboard = { extendedKeyboard.toString()}<br /><hr />
+        </div>
+      );
     });
 
 

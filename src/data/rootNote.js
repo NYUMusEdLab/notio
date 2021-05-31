@@ -15,10 +15,10 @@ const rootNote = [
     note: "D",
     index: 2
   },
-  // {
-  //   note: "D#",
-  //   index: 3
-  // },
+  {
+    note: "D#",
+    index: 3
+  },
   {
     note: "Eb",
     index: 3
@@ -43,10 +43,10 @@ const rootNote = [
     note: "G",
     index: 7
   },
-  // {
-  //   note: "G#",
-  //   index: 8
-  // },
+  {
+    note: "G#",
+    index: 8
+  },
   {
     note: "Ab",
     index: 8
@@ -55,10 +55,10 @@ const rootNote = [
     note: "A",
     index: 9
   },
-  // {
-  //   note: "A#",
-  //   index: 10
-  // },
+  {
+    note: "A#",
+    index: 10
+  },
   {
     note: "Bb",
     index: 10

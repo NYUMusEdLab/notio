@@ -166,23 +166,24 @@ class ColorKey extends Component {
     //   default:
     //     offKeyColorWithTheme = ["#ddd", "#ccc"]; //offColor;
     // }
+    console.log("ColorKey note", note);
 
     const noteNames = noteName
       ? noteName.map(function (item, i) {
-          item = item.toString();
-          if (item.indexOf("b") === 2) {
-            //doubleflat
-            item = item.replace("bb", "\u1D12B");
-          } else if (item.indexOf("b") === 1) {
-            //flat
-            item = item.replace("b", "\u266D");
-          }
-          return (
-            <div className="noteName" key={i}>
-              {item}
-            </div>
-          );
-        })
+        item = item.toString();
+        if (item.indexOf("b") === 2) {
+          //doubleflat
+          item = item.replace("bb", "\u1D12B");
+        } else if (item.indexOf("b") === 1) {
+          //flat
+          item = item.replace("b", "\u266D");
+        }
+        return (
+          <div className="noteName" key={i}>
+            {item}
+          </div>
+        );
+      })
       : null;
     console.log("this.state.myWidth", this.state.myWidth);
     console.log("-- note", note);
@@ -190,14 +191,12 @@ class ColorKey extends Component {
     return (
       <div
         ref={this.keyRef}
-        className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${
-          isOn ? "on" : "off"
-        } ${
-          (note.includes("C") && !note.includes("#") && !note.includes("b")) ||
-          note.includes("B#")
+        className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${isOn ? "on" : "off"
+          } ${(note.includes("C") && !note.includes("#") && !note.includes("b")) ||
+            note.includes("B#")
             ? "" /*"c-mark"*/
             : ""
-        }
+          }
                     `}
         style={{
           height: pianoOn ? "70%" : "100%",

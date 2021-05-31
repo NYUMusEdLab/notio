@@ -253,7 +253,7 @@ class MusicScale {
   }
 
 
-  MakeChromatic(scaleFormula, keyName, scaleName, whichNotation) {
+  static MakeChromatic(scaleFormula, keyName, scaleName, whichNotation) {
     // const TONENAMES  =  {Romance: ['Do', 'D0#', 'Re','Re#', 'Mi', 'Fa', 'Fa#', 'Sol', 'Sol#', 'LA', 'LA#', 'Ti'],
     //                   English: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
     //                   German:  ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'H']};
@@ -339,8 +339,10 @@ class MusicScale {
     return myScale;
   }
 
-  makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
+  static makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
     const ALPHA_NAMES = {};
+
+    // @Todo : why beginning at A and not Do ?
     ALPHA_NAMES.English = ["A", "B", "C", "D", "E", "F", "G"];
     ALPHA_NAMES.German = ["A", "H", "C", "D", "E", "F", "G"];
     ALPHA_NAMES.Romance = ["La", "Si", "Do", "Re", "Mi", "Fa", "Sol"];
@@ -408,7 +410,7 @@ class MusicScale {
     return myScale;
   }
 
-  makeScalePentatonicBlues(scaleFormula, keyName, scaleName, whichNotation) {
+  static makeScalePentatonicBlues(scaleFormula, keyName, scaleName, whichNotation) {
 
     let ALPHA_NAMES = ["A", "B", "C", "D", "E", "F", "G"];
     //for the major pentatonic scale, we don't include the name of the 2nd and the 6th note
@@ -566,7 +568,7 @@ class MusicScale {
   //#endregion
 
   //#region Helpers
-  noteNameToIndex(noteName) {
+  static noteNameToIndex(noteName) {
     let i;
     let IndexNumber = -1; // default if not found
     // check all three arrays for the nameName
@@ -582,7 +584,7 @@ class MusicScale {
     return Number(IndexNumber); // it should be a number already, but...
   }
 
-  findScaleStartIndexRelativToRoot(recipe, scaleLength) {
+  static findScaleStartIndexRelativToRoot(recipe, scaleLength) {
     let i;
     let IndexNumber = -1;
     let firstInScale = recipe.find(e => e % 12 == 0);

@@ -34,7 +34,7 @@ class MusicalStaff extends Component {
 
   drawNotes() {
     console.log("A");
-    console.log("this.props.note", this.props.note);
+    console.log("drawNotes this.props.note", this.props.note);
     let daNote;
     // console.log("this.props.note", this.props.note)
     let match = /[0-9]/.exec(this.props.note);

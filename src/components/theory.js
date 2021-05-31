@@ -1,75 +1,80 @@
 import noteMapping from "../data/noteMappingObj";
 
-export function makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
+export function makeScaleMajorMinor(scaleFormula, root, notation) {
+
+  // scaleFormula : example: [0, 2, 4, 5, 7, 9, 11, 12]
+  // root : example : C, D# etc...
+  // notation: example :  'English'
+
   const ALPHA_NAMES = {};
-  ALPHA_NAMES.English = ["A", "B", "C", "D", "E", "F", "G"];
-  ALPHA_NAMES.German = ["A", "H", "C", "D", "E", "F", "G"];
-  ALPHA_NAMES.Romance = ["La", "Si", "Do", "Re", "Mi", "Fa", "Sol"];
-  let startingName = keyName;
+  console.log("msmm notation", notation);
+  console.log("msmm scaleFormula", scaleFormula);
+
+
+  // @Todo : why beginning at A and not Do ?
+  // ALPHA_NAMES.English = ["A", "B", "C", "D", "E", "F", "G"];
+  ALPHA_NAMES.English = ["C", "D", "E", "F", "G", "A", "B"];
+  ALPHA_NAMES.German = ["C", "D", "E", "F", "G", "A", "H"];
+  ALPHA_NAMES.Romance = ["Do", "Re", "Mi", "Fa", "Sol", "La", "Si",];
+
+  // Offset in ALPHA_NAMES.English (no accidental). STARTING at A
   let offset;
   for (let i = 0; i < ALPHA_NAMES["English"].length; i++) {
-    if (startingName.includes(ALPHA_NAMES["English"][i])) {
+    if (root.includes(ALPHA_NAMES["English"][i])) {
       offset = i;
       break;
     }
   }
-  let startingNote = noteNameToIndex(keyName);
-  //console.log(startingName, startingNote);
-  // console.log("scaleFormula", scaleFormula)
-  // console.log("keyName", keyName)
-  // console.log("whichNotation", whichNotation)
-  let myScaleFormula = scaleFormula;
-  let myScale = [];
-  for (let i = 0; i < myScaleFormula.length; i++) {
-    //console.log( noteMapping[whichNotation].Sharp_Names[myScaleFormula[i] + startingNote],  );
-    // console.log("myScaleFormula[i]", myScaleFormula[i]);
-    // console.log('noteMapping["English"].Flat_Names[myScaleFormula[i] + startingNote]', noteMapping["English"].Flat_Names[myScaleFormula[i] + startingNote]);
-    // console.log('ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]', ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]);
-    // console.log('noteMapping["English"].Flat_Names[myScaleFormula[i] + startingNote].includes(ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length])', noteMapping["English"].Flat_Names[
-    //   myScaleFormula[i] + startingNote
-    // ].includes(
-    //   ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]
-    // ));
+  // startingNote : index of note from 0 (= C). STARTING at B#
+  let startingNoteIndex = noteNameToIndex(root);
+  console.log("msmm offset", offset, 'startingNoteIndex', startingNoteIndex);
 
+  let myScale = [];
+  for (let i = 0; i < scaleFormula.length; i++) {
+    // SHARP
     if (
       noteMapping["English"].Sharp_Names[
-        myScaleFormula[i] + startingNote
+        scaleFormula[i] + startingNoteIndex
       ].includes(
         ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]
       )
     ) {
-      // console.log("push A");
+      console.log("msmm SHARP", noteMapping[notation].Sharp_Names[scaleFormula[i] + startingNoteIndex]);
       myScale.push(
-        noteMapping[whichNotation].Sharp_Names[myScaleFormula[i] + startingNote]
+        noteMapping[notation].Sharp_Names[scaleFormula[i] + startingNoteIndex]
       );
+
+      // FLAT
     } else if (
+
       noteMapping["English"].Flat_Names[
-        myScaleFormula[i] + startingNote
+        scaleFormula[i] + startingNoteIndex
       ].includes(
         ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]
       )
     ) {
-      // console.log("push B");
+      console.log("msmm FLAT", noteMapping[notation].Flat_Names[scaleFormula[i] + startingNoteIndex]);
       myScale.push(
-        noteMapping[whichNotation].Flat_Names[myScaleFormula[i] + startingNote]
+        noteMapping[notation].Flat_Names[scaleFormula[i] + startingNoteIndex]
       );
+      // DOUBLE FLAT
     } else if (
       noteMapping["English"].Double_Flat_Names[
-        myScaleFormula[i] + startingNote
+        scaleFormula[i] + startingNoteIndex
       ].includes(
         ALPHA_NAMES["English"][(offset + i) % ALPHA_NAMES["English"].length]
       )
     ) {
-      // console.log("push C");
-      // console.log('noteMapping["English"].Double_Flat_Names[myScaleFormula[i] + startingNote]', noteMapping["English"].Double_Flat_Names[myScaleFormula[i] + startingNote]);
+      console.log("msmm DOUBLE FLAT", noteMapping[notation].Double_Flat_Names[
+        scaleFormula[i] + startingNoteIndex
+      ]);
       myScale.push(
-        noteMapping[whichNotation].Double_Flat_Names[
-        myScaleFormula[i] + startingNote
+        noteMapping[notation].Double_Flat_Names[
+        scaleFormula[i] + startingNoteIndex
         ]
       );
-      //console.log('includes MIDI_DOUBLE_FLAT_NAMES', ENGLISH_MIDI_DOUBLE_FLAT_NAMES[myScaleFormula[i] + startingNote] );
+      // OTHER CASES
     } else {
-      console.log("push D");
 
       myScale.push("err!"); // high note used to indicate error
     }
@@ -194,6 +199,7 @@ export function generateExtendedScale(notes, currentRoot) {
 
   // Extract from notes data the part of the scale
   // function of root index
+
   const displayNotesBase = notes.slice(
     currentRoot.index,
     currentRoot.index + 13
