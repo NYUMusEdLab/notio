@@ -255,6 +255,7 @@ class Keyboard extends Component {
   //#region Scale Generation
   //this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
   generateCurrentScale = scaleFormula => {
+    console.log("scaleFormula", scaleFormula);
     const { scale, baseNote } = this.props;
     if (scale.includes("Chromatic")) {
       return ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
@@ -441,7 +442,9 @@ class Keyboard extends Component {
           : scale.includes("Locrian")
             ? 5
             : 4
-      : 0;
+      : scale.includes("Chromatic")
+        ? currentRoot.index
+        : 0;
     return r + shifting;
   }
 
@@ -494,11 +497,11 @@ class Keyboard extends Component {
       }
     });
 
-    let baseScale = this.generateCurrentScale(scaleSteps.steps);
-
+    let baseScale = this.state.currentScale;//this.generateCurrentScale(scaleSteps.steps);
+    console.log("baseScale", baseScale, scaleSteps.steps);
     // ROOT : Get the root and its index
     let currentRoot = this.getRootInfo(rootNote, baseNote);
-
+    console.log("currentRoot", currentRoot);
     let displayNotesBuilder;
     let scaleStart = 0;
 
@@ -687,8 +690,8 @@ class Keyboard extends Component {
 
         } else {
           noteThatWillSound = baseScale[onlyScaleIndex % (baseScale.length - 1)];
-
         }
+
         //special cases = C enharmonics
         if (noteThatWillSound === "Cb") noteOffset++;
         if (noteThatWillSound === "B#") noteOffset--;
@@ -717,7 +720,7 @@ class Keyboard extends Component {
         noteOffset
       );
 
-      console.log("notation", notation);
+      console.log("Keyboardnote", note);
 
       console.log("--------------------------------------");
       return (
@@ -768,7 +771,7 @@ class Keyboard extends Component {
       //   <div>
       //     keyIndex = { arrayIndex}<br /><hr />
       //       index = { index}<br /><hr />
-      //       note = {_note}<br /><hr />
+      //       note = {_note} - {noteThatWillSound}<br /><hr />
       //       noteNameEnglish = { note.note_english}<br /><hr />
       //       notation = { notation}<br /><hr />
       //       noteName = { noteName}<br /><hr />
