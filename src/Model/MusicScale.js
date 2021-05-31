@@ -1,6 +1,4 @@
 import rootNote from "../data/rootNote";
-import { makeScaleMajorMinor } from "../components/theory";
-import noteMappingObj from "../data/noteMappingObj";
 import noteMapping from "../data/noteMappingObj";
 import notes from "../data/notes";
 import { notations } from "../components/menu/Notation";
@@ -154,7 +152,7 @@ class MusicScale {
     tempAmbitusInHalfTones = tempAmbitusInHalfTones % 12
 
     const AmbitusPostfixHalfnotes = tempAmbitusInHalfTones
-    if ((tempAmbitusInHalfTones -= AmbitusPostfixHalfnotes) != 0) {
+    if ((tempAmbitusInHalfTones -= AmbitusPostfixHalfnotes) !== 0) {
       //console.log("!!!Something went wrong calculating ambitus for scale ")
       throw ("Something went wrong calculating ambitus for scale")
     }
