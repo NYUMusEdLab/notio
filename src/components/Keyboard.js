@@ -720,9 +720,7 @@ class Keyboard extends Component {
         noteOffset
       );
 
-      console.log("Keyboardnote", note);
 
-      console.log("--------------------------------------");
       return (
         <Key
           // key={arrayIndex}
