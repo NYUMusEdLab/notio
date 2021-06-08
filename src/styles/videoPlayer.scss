@@ -1,10 +1,23 @@
 .popup-video {
+
+  .notio-popup--header {
+    width   : 3.5vw;
+    float   : right;
+    position: relative;
+    z-index : 30;
+  }
+
+
+
   .tabs-wrapper {
     position: absolute;
     top     : 0.5vw;
-    width   : 90%;
+    width   : 95%;
 
     .nav-tabs {
+
+      width: 80%;
+
       a {
         font-size: 0.8vw;
         padding  : 0.5vw 0.3vw;

@@ -8,28 +8,29 @@
   }
 
   .title--wrapper {
-    display: flex;
+    display        : flex;
     justify-content: center;
-    align-items: center;
+    align-items    : center;
   }
 
   .title {
-    display: block;
-    text-align: center;
-    position: absolute;
-    bottom: 1vw;
-    z-index: 10;
+    display    : block;
+    text-align : center;
+    position   : absolute;
+    bottom     : 1vw;
+    z-index    : 10;
     // padding: 2vh 0 2vh 0;
-    display: block;
-    font-size: 1.45vh;
+    display    : block;
+    font-size  : 1.45vh;
     font-weight: bold;
+
     &.selected {
-      z-index: 20;
-      color: black;
-      border-bottom: 1px solid black;
+      z-index       : 20;
+      color         : black;
+      border-bottom : 1px solid black;
       padding-bottom: 1vw;
-      bottom: 0;
-      width: 7vw;
+      bottom        : 0;
+      width         : 7vw;
 
     }
   }
@@ -64,7 +65,8 @@
   .sub-menu {
     .label-wrapper {
       text-align: left;
-      max-width: 100%;
+      max-width : 100%;
+
       .clef {
         margin-left: 2.2vw;
       }
@@ -80,21 +82,21 @@
 
 .sub-menu {
   // position: relative;
-  min-width: 9.7vw;
+  min-width    : 9.7vw;
   // min-height: 5.7vw;
 
   .button {
-    width: 8.7vw;
+    width           : 8.7vw;
     background-color: white;
-    border-radius: 3em;
-    padding: 0.4em 0 0.4em 0;
-    margin: 0 auto;
-    position: relative;
-    z-index: 11;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-    font-size: 0.8em;
+    border-radius   : 3em;
+    padding         : 0.4em 0 0.4em 0;
+    margin          : 0 auto;
+    position        : relative;
+    z-index         : 11;
+    color           : black;
+    font-weight     : bold;
+    text-align      : center;
+    font-size       : 0.8em;
 
     .menu-root & {
       background-color: transparent;
@@ -103,8 +105,8 @@
 
     &.selected {
       background: black;
-      z-index: 20;
-      color: white;
+      z-index   : 20;
+      color     : white;
 
       .menu-root & {
         background-color: transparent;
@@ -116,15 +118,15 @@
         & .fil0,
         & .fil1 {
           stroke: white;
-          fill: white;
+          fill  : white;
         }
       }
     }
   }
 
   .clef {
-    width: 1vw;
-    height: 4vh;
+    width         : 1vw;
+    height        : 4vh;
     vertical-align: middle;
   }
 
@@ -137,12 +139,13 @@
 
 
   hr {
-    border: 1px solid black;
-    margin: 0 auto;
-    margin-bottom: 2vh;
-    position: relative;
+    border          : 1px solid black;
+    margin          : 0 auto;
+    margin-bottom   : 2vh;
+    position        : relative;
     background-color: black;
-    width: 70%;
+    width           : 70%;
+
     &.selected {
       z-index: 20;
       display: block;
@@ -150,28 +153,28 @@
   }
 
   .content {
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease-out;
-    width: 9.7vw;
-    background-color: white;
-    border-bottom-left-radius: 10% 5%;
+    opacity                   : 0;
+    visibility                : hidden;
+    transition                : all 0.3s ease-out;
+    width                     : 9.7vw;
+    background-color          : white;
+    border-bottom-left-radius : 10% 5%;
     border-bottom-right-radius: 10% 5%;
-    position: absolute;
-    top: -1em;
-    z-index: 9;
-    color: black;
-    overflow: hidden;
-    padding: 14.5vh 1vh 1vh 2.7vh;
-    box-shadow: 5px 3px 15px #666;
+    position                  : absolute;
+    top                       : -1em;
+    z-index                   : 9;
+    color                     : black;
+    overflow                  : hidden;
+    padding                   : 14.5vh 1vh 1vh 2.7vh;
+    box-shadow                : 5px 3px 15px #666;
 
     .menu-root & {
       padding-top: 9.5vw;
     }
 
     &.selected {
-      opacity: 1;
-      z-index: 15;
+      opacity   : 1;
+      z-index   : 15;
       visibility: visible;
     }
   }
@@ -180,17 +183,23 @@
 }
 
 .circledButton {
-  height: 3.5vw;
-  width: 3.5vw;
+  height          : 3.5vw;
+  width           : 3.5vw;
   background-color: #fff;
-  border-radius: 50%;
-  display: inline-block;
-  position: relative;
+  border-radius   : 50%;
+  display         : inline-block;
+  position        : relative;
 }
 
 .VideoSVG {
-  width: 1.8vw;
+  width    : 1.8vw;
   transform: translate(0, 62%);
+
+  @media (min-width: 1537px) {
+    transform: translate(0, 68%);
+
+  }
+
 }
 
 .react-player {
@@ -200,10 +209,11 @@
 .menu-root {
   .arrow-down {
     left: 50%;
-    top: 97%;
+    top : 97%;
+
     &:hover {
       left: 50%;
-      top: 97%;
+      top : 97%;
     }
   }
 
@@ -211,10 +221,10 @@
     &--title {
 
       &--selected {
-        display: block;
-        position: absolute;
-        top: 50%;
-        left: 50%;
+        display  : block;
+        position : absolute;
+        top      : 50%;
+        left     : 50%;
         transform: translate(-50%, -50%);
         font-size: 1.4vw;
         // color: white;
@@ -227,16 +237,16 @@
       &.selected {
         color: black;
       }
-    } 
+    }
   }
 }
 
 
-.half-circle{
-  width: 200px;
-height: 50px;
-border-radius: 0 0 50% 50% /  0 0 100% 100%;
-border: 10px solid #000;
-border-bottom: 0;
-background-color: red;
+.half-circle {
+  width           : 200px;
+  height          : 50px;
+  border-radius   : 0 0 50% 50% / 0 0 100% 100%;
+  border          : 10px solid #000;
+  border-bottom   : 0;
+  background-color: red;
 }
