@@ -10,9 +10,12 @@ const accidentalLabel = "accidental";
 class Root extends Component {
 
 
+  // root is managed by classical behavior of radio button
+  // accidentals can't be manage with classical of radio button
+  // because we need them to be unselect, so we use additionnal states
+
   constructor(props) {
     super(props);
-    console.log("this.props.baseNote", this.props.baseNote);
     this.state = {
       root: this.props.baseNote.charAt(0),
       accidental: this.props.baseNote.charAt(1) ? this.props.baseNote.charAt(1) : "",
@@ -20,24 +23,13 @@ class Root extends Component {
       accidentalDisabled: true,
       bgColor: "transparent",
       rootState: this.setRootState(this.props.baseNote)
-
     }
     this.inputRefs = {};
 
   }
 
-  static getDerivedStateFromProps(props, state) {
-    // À chaque fois que l’utilisateur actuel change, on réinitialise
-    // tous les aspects de l’état qui sont liés à cet utilisateur.
-    // Dans cet exemple simple, il ne s’agit que de l’e-mail.
-    console.log("getDerivedStateFromProps", state)
-
-  }
-
-
   setRootState(baseNote, value = true) {
     let rootState = {};
-    console.log("setRootState baseNote", baseNote);
     rootMenu.map((root, index) => {
 
       if (!rootState[root.note]) {
@@ -72,10 +64,6 @@ class Root extends Component {
             if (baseNote.charAt(1) == acc) {
               // Set current root - checked to true
               rootState[root.note][accidentalLabel][acc]['checked'] = value;
-
-              // if (typeof this.state !== 'undefined') {
-              //   console.log("this.state['rootState'][root.note][accidentalLabel][acc]['checked']", this.state['rootState'][root.note][accidentalLabel][acc]['checked']);
-              // }
             }
           }
         }
@@ -87,37 +75,16 @@ class Root extends Component {
 
   disableAllAccidentals() {
     for (const [rootIndex, rootObj] of Object.entries(this.inputRefs)) {
-
-
       for (const [accindentalIndex, accidentalObj] of Object.entries(rootObj[accidentalLabel])) {
-        // accidentalObj.disabled = true;
-        // accidentalObj.checked = false;
-        console.log("rootIndex", rootIndex, accidentalLabel, accindentalIndex);
         this.inputRefs[rootIndex][accidentalLabel][accindentalIndex].disabled = true;
-        // this.inputRefs[rootIndex][accidentalLabel][accindentalIndex].checked = false;
-        this.setState({
-          accidental: "",
-          rootState: this.setRootState(this.state.root, false)
-        });
-        // rootObj[accidentalLabel].forEach((v1, v2, set) => {
-        //   v1.disabled = true; // disable radio
-        //   v1.checked = false; // uncheck radio
-        // });
       }
     }
-  }
 
-  enableCurrentAccidentals(currNote) {
-    for (const [accindentalIndex, accidentalObj] of Object.entries(this.inputRefs[currNote][accidentalLabel])) {
-      // accidentalObj.disabled = false; // enable radio
-      this.inputRefs[currNote][accidentalLabel][accindentalIndex].disabled = false;
-      console.log("accidentalObj", this.inputRefs[currNote][accidentalLabel]);
-    }
-
-    // this.inputRefs[currNote][accidentalLabel].forEach((v1, v2, set) => {
-    //   v1.disabled = false; // enable radio
-
-    // });
+    // uncheck them
+    this.setState({
+      accidental: "",
+      rootState: this.setRootState(this.state.root, false)
+    });
   }
 
   setRef = (ref, root, accidental = null) => {
@@ -125,7 +92,6 @@ class Root extends Component {
       if (!this.inputRefs[root]) {
         this.inputRefs[root] = {};
         if (!this.inputRefs[root][accidentalLabel]) {
-          // this.inputRefs[root][accidentalLabel] = new Set([]);
           this.inputRefs[root][accidentalLabel] = {};
         }
       }
@@ -134,128 +100,61 @@ class Root extends Component {
       if (ref.name === rootLabel) {
         this.inputRefs[root][rootLabel] = ref;
       }
-      console.log("refvalue", ref.value, ref.name);
 
       // add accidentals
       if (ref.name === accidentalLabel) {
         this.inputRefs[root][accidentalLabel][ref.value] = ref;
       }
-      console.log("setRef", this.inputRefs);
     }
   };
 
+  // Set states of current root and accidental
   handleChange = (e) => {
-    console.log("handle handleChange");
 
-    // initState();
     if (e.target.name === rootLabel) {
       this.setState({
         root: e.target.value,
         accidental: "",
-        // accidentalChecked: "",
-        // accidentalDisabled: true
       });
       this.disableAllAccidentals();
-      this.enableCurrentAccidentals(e.target.value);
     }
 
     if (e.target.name === accidentalLabel) {
       let root = e.target.dataset.root;
       let accidentalValue = e.target.value;
-      console.table("emilie handleChange", this.inputRefs);
-      console.log("emilie handleChange checked", this.inputRefs[root][accidentalLabel][accidentalValue].checked);
-      // console.log("emilie handleChange checked", "root", root, "accidentalValue", accidentalValue, e.target.dataset.root);
-      // if (this.inputRefs[root][accidentalLabel][accidentalValue].checked) {
-      //   this.inputRefs[root][accidentalLabel][accidentalValue].checked = false;
-      // }
+
       this.setState({
         accidental: e.target.value,
-        // rootState: this.setRootState(root + accidentalValue)
-
-        // accidentalChecked: true // e.target.checked
       })
     }
   }
 
+  // Handle (un)select of accidentals radio buttons
   handleClick = (e) => {
-    // console.log("checked", this.state.accidentalChecked);
-    //   console.log("this.state.accidentalChecked", this.state.accidentalChecked);
-    //   // this.setState({
-    //   //   accidental: "",
-    //   //   // rootState: this.setRootState(e.target.root + accidentalValue)
-    //   // })
-    console.log("handle handleClick");
     let root = e.target.dataset.root;
     let accidentalValue = e.target.value;
 
-    console.log("handleClick accidentalValue", accidentalValue);
-    console.log("handleClick checked", this.inputRefs[root][accidentalLabel][accidentalValue].checked);
-    // this.inputRefs[root][accidentalLabel][accidentalValue].checked = !this.inputRefs[root][accidentalLabel][accidentalValue].checked;
-    console.log("handleClick state accidental", this.state.accidental);
-
-    console.log("handleClick state check", this.state.rootState[root][accidentalLabel][accidentalValue]);
-
     if (this.state.accidental !== accidentalValue) {
-
-      // this.inputRefs[root][accidentalLabel][accidentalValue].checked = false;
       this.setState({
-        // root: e.target.dataset.root,
         accidental: e.target.value,
         rootState: this.setRootState(root + accidentalValue, true) // + accidentalValue
       });
     } else {
-
-      // this.inputRefs[root][accidentalLabel][accidentalValue].checked = true;
       this.setState({
-        // root: e.target.dataset.root,
         accidental: "",
         rootState: this.setRootState(root, false)
       });
     }
-
-    // this.setState({
-    //   // accidental: "",
-    //   rootState: this.setRootState(root, !this.state.rootState[root][accidentalLabel][accidentalValue])
-    // });
-
-    // console.log("handleClick state", this.state.rootState[root][accidentalLabel][accidentalValue]);
-
-
   }
-
-
-  unselectRadio = (e) => {
-    let root = e.target.previousElementSibling.dataset.root;
-    let accidentalValue = e.target.previousElementSibling.value;
-    // console.table("emilie unselectRadio", root + accidentalValue);
-    console.log("unselectRadio root", this.state.root);
-    console.log("unselectRadio accidental", this.state.accidental);
-
-    // if (this.inputRefs[root][accidentalLabel][accidentalValue].checked) {
-
-    //   this.inputRefs[root][accidentalLabel][accidentalValue].checked = false;
-    //   console.log("emilie unselectRadio check", this.inputRefs[root][accidentalLabel][accidentalValue].checked);
-
-    // }
-
-    // this.setState({
-    //   // accidental: "",
-    //   rootState: this.setRootState(root + accidentalValue, false)
-    // })
-
-  }
-
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state !== prevState) {
-      this.props.handleChangeRoot(this.state.root + this.state.accidental); 
+      this.props.handleChangeRoot(this.state.root + this.state.accidental);
     }
   }
 
-
   render() {
     const { rootState } = this.state;
-    console.log("rootState", rootState);
     return (
       <div>
         <Form>
@@ -276,11 +175,11 @@ class Root extends Component {
           }
 
           .${accidentalLabel}-input-${root.note}:not([disabled]) ~ .form-check-label:hover {
-            // background-color: ${rootMenu[0].color};
+            background-color: ${rootMenu[0].color};
           }
 
           .${accidentalLabel}-input-${root.note}:checked ~ .form-check-label {
-            // background-color: ${rootMenu[0].color};
+            background-color: ${rootMenu[0].color};
           }
           `}</style>
               <Form.Row>
@@ -330,15 +229,10 @@ class Root extends Component {
                         data-root={root.note}
                         className={`${accidentalLabel}-label-${root.note}`}
                         data-color={root.color}
-                        // onClick={this.unselectRadio}
-
                         for={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}
                       >
                         {root.accidentals[0]}
-
                       </Form.Check.Label>
-
-
                     </Form.Check>
                     : ''}
                 </Col>
@@ -354,17 +248,14 @@ class Root extends Component {
                         name={accidentalLabel}
                         onChange={this.handleChange}
                         onClick={this.handleClick}
-
                         value={root.accidentals[1]}
                         ref={(ref) => this.setRef(ref, root.note, root.accidentals[1])}
                         data-root={root.note}
-
                         checked={rootState[root.note][accidentalLabel][root.accidentals[1]]['checked']}
                       />
                       <Form.Check.Label
                         className={`${accidentalLabel}-label-${root.note}`}
                         data-color={root.color}
-                        // onClick={this.unselectRadio}
                         for={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}
                       >
                         {root.accidentals[1]}
