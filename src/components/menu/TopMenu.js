@@ -41,6 +41,7 @@ class TopMenu extends Component {
   };
 
   setClefImage = (img) => {
+    console.log("setClefImage", img);
     this.setState({
       clefImage: _.startCase(img) + "Clef",
     });
@@ -129,6 +130,7 @@ class TopMenu extends Component {
                 setTitle={this.setClefTitle}
                 setImage={this.setClefImage}
                 initOption={this.props.state.clef}
+                displayPicto={true}
               />
             }
           />

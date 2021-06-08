@@ -37,20 +37,21 @@ class SubMenu extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.selected !== prevProps.selected) {
-      if (this.props.displayClef) {
-        this.selectPictoClef();
-      }
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.selected !== prevProps.selected) {
+  //     if (this.props.displayClef) {
+  //       this.selectPictoClef();
+  //     }
+  //   }
+  // }
+
 
   selectPictoClef() {
     // Better solution to load dyncamically components
     // but not working on github pages
     //ClefComponent = loadable(props => import(`../../assets/img/${imgClass}Clef`));
     // in render : <ClefComponent clef={this.props.selected} />
-    console.log("selectPictoClef this.props.selected", this.props.selected);
+    // console.log("selectPictoClef this.props.selected", this.props.selected);
     // dirty solution :
     switch (this.props.selected) {
       case "treble":
@@ -64,14 +65,17 @@ class SubMenu extends Component {
         break;
       case "alto":
         ClefComponent = AltoClef;
+        break;
       default:
         ClefComponent = TrebleClef;
     }
   }
 
+
+
   render() {
     let isActive = this.state.active ? "selected" : null;
-
+    this.selectPictoClef();
     return (
       <div className="sub-menu">
         <div className={`button ${isActive}`} onClick={this.toggleClass}>

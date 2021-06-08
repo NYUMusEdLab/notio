@@ -53,7 +53,12 @@ class ListRadio extends Component {
         }
         this.props.handleChange(option);
         this.props.setTitle(option);
-        if (this.props.displayPicto) this.props.setImage(option);
+        console.log("this.props.displayPicto", this.props.displayPicto);
+        if (this.props.displayPicto) {
+          console.log("ListRadio setImage");
+
+          this.props.setImage(option);
+        }
       }
     );
   };

@@ -73,7 +73,12 @@
     }
 
     .content {
-      padding: 14.5vh 1vw 1vh 1vw;
+      padding: 17.7vh 1vw 1vh 1vw;
+
+      @media (min-height: 1537px) {
+        padding: 14.9vh 1vw 1vh 1vw;
+      }
+
     }
   }
 }
