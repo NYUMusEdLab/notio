@@ -512,7 +512,7 @@ class Keyboard extends Component {
       displayNotesBuilder = generateExtendedScale(notes, currentRoot);
 
     } else {
-      console.log("currentRoot.index", currentRoot.index);
+      // console.log("currentRoot.index", currentRoot.index);
       displayNotesBuilder = notes.slice(
         currentRoot.index,
         currentRoot.index + 13

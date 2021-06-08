@@ -4,34 +4,36 @@
     margin-bottom: 0.5vw;
 
   }
+
   .form-check {
     input[type="radio"] {
       opacity: 0;
-      cursor: pointer;
+      cursor : pointer;
 
     }
+
     &-label {
-      border: 1px solid black;
+      border       : 1px solid black;
       border-radius: 25%;
-      width: 2vw;
-      text-align: center;
-      display: block;
-      cursor: pointer;
-      position: relative;
-      left: -2vw;
-      transition: all 0.2s ease-out;
+      width        : 2vw;
+      text-align   : center;
+      display      : block;
+      cursor       : pointer;
+      position     : relative;
+      left         : -2vw;
+      transition   : all 0.2s ease-out;
 
     }
 
-    &-input[class^="accidental"] + &-label {
+    &-input[class^="accidental"]+&-label {
       border: 1px solid black;
-      color: black;
+      color : black;
     }
 
     .form-check-input:disabled~.form-check-label,
     .form-check-input[disabled]~.form-check-label {
       border: none;
-      color: #777;
+      color : #777;
       cursor: default;
     }
   }
