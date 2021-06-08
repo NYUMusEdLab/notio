@@ -14,8 +14,8 @@ class Root extends Component {
     super(props);
     console.log("this.props.baseNote", this.props.baseNote);
     this.state = {
-      root: this.props.baseNote,
-      accidental: "",
+      root: this.props.baseNote.charAt(0),
+      accidental: this.props.baseNote.charAt(1) ? this.props.baseNote.charAt(1) : "",
       accidentalChecked: false,
       accidentalDisabled: true,
       bgColor: "transparent",
@@ -199,13 +199,15 @@ class Root extends Component {
 
       // this.inputRefs[root][accidentalLabel][accidentalValue].checked = false;
       this.setState({
+        // root: e.target.dataset.root,
         accidental: e.target.value,
-        rootState: this.setRootState(root + accidentalValue, true)
+        rootState: this.setRootState(root + accidentalValue, true) // + accidentalValue
       });
     } else {
 
       // this.inputRefs[root][accidentalLabel][accidentalValue].checked = true;
       this.setState({
+        // root: e.target.dataset.root,
         accidental: "",
         rootState: this.setRootState(root, false)
       });
@@ -246,7 +248,7 @@ class Root extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state !== prevState) {
-      this.props.handleChangeRoot(this.state.root + this.state.accidental);
+      this.props.handleChangeRoot(this.state.root + this.state.accidental); 
     }
   }
 
@@ -274,11 +276,11 @@ class Root extends Component {
           }
 
           .${accidentalLabel}-input-${root.note}:not([disabled]) ~ .form-check-label:hover {
-            background-color: ${rootMenu[0].color};
+            // background-color: ${rootMenu[0].color};
           }
 
           .${accidentalLabel}-input-${root.note}:checked ~ .form-check-label {
-            background-color: ${rootMenu[0].color};
+            // background-color: ${rootMenu[0].color};
           }
           `}</style>
               <Form.Row>

@@ -498,10 +498,11 @@ class Keyboard extends Component {
     });
 
     let baseScale = this.state.currentScale;//this.generateCurrentScale(scaleSteps.steps);
-    console.log("baseScale", baseScale, scaleSteps.steps);
+    console.log("baseScale", baseScale, scaleSteps.steps, rootNote);
+    console.log("emili* baseNote", baseNote);
     // ROOT : Get the root and its index
     let currentRoot = this.getRootInfo(rootNote, baseNote);
-    console.log("currentRoot", currentRoot);
+    console.log("emili* currentRoot", currentRoot);
     let displayNotesBuilder;
     let scaleStart = 0;
 
