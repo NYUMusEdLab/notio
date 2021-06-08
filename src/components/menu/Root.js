@@ -61,7 +61,7 @@ class Root extends Component {
           rootState[root.note]['checked'] = value;
 
           if (baseNote.charAt(1)) {
-            if (baseNote.charAt(1) == acc) {
+            if (baseNote.charAt(1) === acc) {
               // Set current root - checked to true
               rootState[root.note][accidentalLabel][acc]['checked'] = value;
             }
@@ -69,13 +69,14 @@ class Root extends Component {
         }
       });
 
+      return null;
     });
     return rootState;
   }
 
   disableAllAccidentals() {
     for (const [rootIndex, rootObj] of Object.entries(this.inputRefs)) {
-      for (const [accindentalIndex, accidentalObj] of Object.entries(rootObj[accidentalLabel])) {
+      for (const [accindentalIndex] of Object.entries(rootObj[accidentalLabel])) {
         this.inputRefs[rootIndex][accidentalLabel][accindentalIndex].disabled = true;
       }
     }
@@ -114,15 +115,12 @@ class Root extends Component {
     if (e.target.name === rootLabel) {
       this.setState({
         root: e.target.value,
-        accidental: "",
+        accidental: "", // re-init accidental when changing root
       });
       this.disableAllAccidentals();
     }
 
     if (e.target.name === accidentalLabel) {
-      let root = e.target.dataset.root;
-      let accidentalValue = e.target.value;
-
       this.setState({
         accidental: e.target.value,
       })
@@ -137,7 +135,7 @@ class Root extends Component {
     if (this.state.accidental !== accidentalValue) {
       this.setState({
         accidental: e.target.value,
-        rootState: this.setRootState(root + accidentalValue, true) // + accidentalValue
+        rootState: this.setRootState(root + accidentalValue, true)
       });
     } else {
       this.setState({
