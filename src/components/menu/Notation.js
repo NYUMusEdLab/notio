@@ -8,8 +8,8 @@ export const notations = [
   "German",
   "Romance",
   "Relative",
-  "Scale_Steps",
-  "Chord_extensions",
+  "Scale Steps",
+  "Chord extensions",
 ];
 
 class Notation extends Component {
