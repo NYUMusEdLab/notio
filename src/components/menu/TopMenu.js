@@ -194,7 +194,6 @@ class TopMenu extends Component {
           <Settings
             title="Settings"
             label="Settings"
-
           />
         </div>
       </div>
