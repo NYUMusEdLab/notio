@@ -17,6 +17,13 @@ import scales from "../../data/scalesObj";
 import NotationImg from "../../assets/img/Notation";
 import clefs from "../../data/clefs";
 
+
+const sounds = [
+  { name: 'piano' },
+  { name: 'xylo' },
+
+]
+
 class TopMenu extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +41,12 @@ class TopMenu extends Component {
     });
   };
 
+  setSoundTitle = (title) => {
+    this.setState({
+      titleSound: title,
+    });
+  };
+
   setClefTitle = (title) => {
     this.setState({
       clefTitle: title,
@@ -41,12 +54,12 @@ class TopMenu extends Component {
   };
 
   setClefImage = (img) => {
-    console.log("setClefImage", img);
     this.setState({
       clefImage: _.startCase(img) + "Clef",
     });
   };
   render() {
+    console.log("topmenu scales", scales);
     return (
       <div className="navbar ">
         {/* Toggle Piano */}
@@ -64,6 +77,23 @@ class TopMenu extends Component {
             title="Extended Keyboard"
             onChange={this.props.toggleExtendedKeyboard}
             checked={this.props.state.extendedKeyboard}
+          />
+        </div>
+
+        {/* Sounds */}
+        <div className="navbar-item menu-scale">
+          <SubMenu
+            title="Sound"
+            selected={this.state.titleSound}
+            content={
+              <ListRadio
+                nameField="scale"
+                data={sounds}
+                handleChange={this.props.handleChangeSound}
+                setTitle={this.setSoundTitle}
+                initOption="piano"
+              />
+            }
           />
         </div>
 

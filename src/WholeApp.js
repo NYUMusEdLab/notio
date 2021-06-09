@@ -38,6 +38,10 @@ class WholeApp extends Component {
     this.handleSelectClef = this.handleSelectClef.bind(this);
   }
 
+  handleChangeSound = (sound) => {
+
+  };
+
   handleClickOctave = (action) => {
     switch (action) {
       case "minus":
@@ -249,6 +253,7 @@ class WholeApp extends Component {
           handleSelectClef={this.handleSelectClef}
           handleChangeRoot={this.handleChangeRoot}
           handleChangeVideoUrl={this.handleChangeVideoUrl}
+          handleChangeSound={this.handleChangeSound}
           resetVideoUrl={this.resetVideoUrl}
           saveSessionToDB={this.saveSessionToDB}
           sessionID={this.state.sessionID}
