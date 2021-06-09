@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SettingsSVG from "../../assets/img/Settings";
-import ShareLink from "./ShareLink";
 import Popup from "./Popup";
 
 class Settings extends Component {
@@ -24,7 +23,7 @@ class Settings extends Component {
           draggable={false}
           picto=<SettingsSVG />
           hasBG={true}
-          content=<div className="img--wrapper"><img src={require('../../img/custom_mode.PNG')} /></div>
+          content=<div className="img--wrapper"><img src={require('../../img/custom_mode.PNG')} alt="settings" /></div>
         />
       </div>
     );
