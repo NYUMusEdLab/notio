@@ -1,0 +1,44 @@
+.side-menu {
+  background-color: white;
+  float           : right;
+  width           : 2%;
+  height          : 7.6vw;
+
+  display              : grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows   : 1fr 1fr 1fr;
+  gap                  : 0px 0px;
+  grid-auto-flow       : row;
+  grid-template-areas  :
+    "area1 . ."
+    "Area2 . ."
+    "Area3 . .";
+
+
+  img {
+    width: 1.5vw;
+  }
+
+  .area {
+    margin    : 0.3vw 0.2vw;
+    text-align: center;
+    display   : table;
+  }
+}
+
+
+.area1 {
+  grid-area: area1;
+  height   : 100%;
+}
+
+.Area2 {
+  grid-area: Area2;
+  height   : 100%;
+
+}
+
+.Area3 {
+  grid-area: Area3;
+
+}

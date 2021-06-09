@@ -62,140 +62,148 @@ class TopMenu extends Component {
   render() {
     console.log("topmenu scales", scales);
     return (
-      <div className="navbar ">
-        {/* Toggle Piano */}
-        <div className="navbar-item toggle">
-          <Toggle
-            title="Show keyboard"
-            onChange={this.props.togglePiano}
-            checked={this.props.state.pianoOn}
-          />
-        </div>
+      <div>
+        <div className="navbar ">
+          {/* Toggle Piano */}
+          <div className="navbar-item toggle">
+            <Toggle
+              title="Show keyboard"
+              onChange={this.props.togglePiano}
+              checked={this.props.state.pianoOn}
+            />
+          </div>
 
-        {/* Toggle Extended */}
-        <div className="navbar-item toggle">
-          <Toggle
-            title="Extended Keyboard"
-            onChange={this.props.toggleExtendedKeyboard}
-            checked={this.props.state.extendedKeyboard}
-          />
-        </div>
+          {/* Toggle Extended */}
+          <div className="navbar-item toggle">
+            <Toggle
+              title="Extended Keyboard"
+              onChange={this.props.toggleExtendedKeyboard}
+              checked={this.props.state.extendedKeyboard}
+            />
+          </div>
 
-        {/* Sounds */}
-        <div className="navbar-item menu-scale">
-          <SubMenu
-            title="Sound"
-            selected={this.state.titleSound}
+          {/* Sounds */}
+          <div className="navbar-item menu-scale">
+            <SubMenu
+              title="Sound"
+              selected={this.state.titleSound}
+              content={
+                <ListRadio
+                  nameField="scale"
+                  data={sounds}
+                  handleChange={this.props.handleChangeSound}
+                  setTitle={this.setSoundTitle}
+                  initOption="piano"
+                />
+              }
+            />
+          </div>
+
+          {/* Notation */}
+          <div className="navbar-item menu-notation">
+            <SubMenu
+              title="Notation"
+              selected=<NotationImg />
             content={
-              <ListRadio
-                nameField="scale"
-                data={sounds}
-                handleChange={this.props.handleChangeSound}
-                setTitle={this.setSoundTitle}
-                initOption="piano"
+              <Notation
+                initOptions={this.props.state.notation}
+                handleChange={this.props.handleChangeNotation}
               />
             }
           />
         </div>
 
-        {/* Notation */}
-        <div className="navbar-item menu-notation">
-          <SubMenu
-            title="Notation"
-            selected=<NotationImg />
-            content={
-            <Notation
-              initOptions={this.props.state.notation}
-              handleChange={this.props.handleChangeNotation}
-            />
-          }
-          />
-        </div>
-
-        {/* Root */}
-        <div className="navbar-item menu-root">
-          <SubMenu
-            title="Root"
-            selected={this.props.state.baseNote}
-            selectedImg=<RootMenu color={'#ff0000'} />
+          {/* Root */}
+          <div className="navbar-item menu-root">
+            <SubMenu
+              title="Root"
+              selected={this.props.state.baseNote}
+              selectedImg=<RootMenu color={'#ff0000'} />
             //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
             content={
-            <Root
-              label="Root"
-              baseNote={this.props.state.baseNote}
-              handleChangeRoot={this.props.handleChangeRoot}
-            />
-          }
+              <Root
+                label="Root"
+                baseNote={this.props.state.baseNote}
+                handleChangeRoot={this.props.handleChangeRoot}
+              />
+            }
           />
           {/* <div class="half-circle"></div> */}
+          </div>
+
+          {/* Scale */}
+          <div className="navbar-item menu-scale">
+            <SubMenu
+              title="Scale"
+              selected={this.state.titleNotation}
+              content={
+                <ListRadio
+                  nameField="scale"
+                  data={scales}
+                  handleChange={this.props.handleChangeScale}
+                  setTitle={this.setScaleTitle}
+                  initOption={this.props.state.scale}
+                />
+              }
+            />
+          </div>
+
+          {/* Clef */}
+          <div className="navbar-item menu-clef">
+            <SubMenu
+              title="Clefs"
+              selected={this.state.clefTitle}
+              displayClef={true}
+              content={
+                <ListRadio
+                  nameField="clef"
+                  data={clefs}
+                  handleChange={this.props.handleSelectClef}
+                  setTitle={this.setClefTitle}
+                  setImage={this.setClefImage}
+                  initOption={this.props.state.clef}
+                  displayPicto={true}
+                />
+              }
+            />
+          </div>
+
+          {/* Video */}
+          <div className="navbar-item menu-video">
+            <VideoTutorial
+              title="Video Player"
+              label="video"
+              handleChangeVideoUrl={this.props.handleChangeVideoUrl}
+              videoUrl={this.props.state.videoUrl}
+              resetVideoUrl={this.props.resetVideoUrl}
+            />
+          </div>
+
+          {/* Share */}
+          <div className="navbar-item menu-share">
+            <Share
+              title="Share this setup"
+              label="Share"
+              saveSessionToDB={this.props.saveSessionToDB}
+              sessionID={this.props.sessionID}
+            />
+          </div>
+
+
+          {/* Settings */}
+          <div className="navbar-item menu-settings">
+            <Settings
+              title="Settings"
+              label="Settings"
+            />
+          </div>
+        </div>
+        <div class="side-menu">
+          <div class="area1 area"><img src={require('../../img/info.png')} /></div>
+          <div class="Area2 area"><img src={require('../../img/question_mark.png')} /></div>
+          <div class="Area3 area"><img src={require('../../img/home.png')} /></div>
         </div>
 
-        {/* Scale */}
-        <div className="navbar-item menu-scale">
-          <SubMenu
-            title="Scale"
-            selected={this.state.titleNotation}
-            content={
-              <ListRadio
-                nameField="scale"
-                data={scales}
-                handleChange={this.props.handleChangeScale}
-                setTitle={this.setScaleTitle}
-                initOption={this.props.state.scale}
-              />
-            }
-          />
-        </div>
-
-        {/* Clef */}
-        <div className="navbar-item menu-clef">
-          <SubMenu
-            title="Clefs"
-            selected={this.state.clefTitle}
-            displayClef={true}
-            content={
-              <ListRadio
-                nameField="clef"
-                data={clefs}
-                handleChange={this.props.handleSelectClef}
-                setTitle={this.setClefTitle}
-                setImage={this.setClefImage}
-                initOption={this.props.state.clef}
-                displayPicto={true}
-              />
-            }
-          />
-        </div>
-
-        {/* Video */}
-        <div className="navbar-item menu-video">
-          <VideoTutorial
-            title="Video Player"
-            label="video"
-            handleChangeVideoUrl={this.props.handleChangeVideoUrl}
-            videoUrl={this.props.state.videoUrl}
-            resetVideoUrl={this.props.resetVideoUrl}
-          />
-        </div>
-
-        {/* Share */}
-        <div className="navbar-item menu-share">
-          <Share
-            title="Share this setup"
-            label="Share"
-            saveSessionToDB={this.props.saveSessionToDB}
-            sessionID={this.props.sessionID}
-          />
-        </div>
-
-
-        {/* Settings */}
-        <div className="navbar-item menu-settings">
-          <Settings
-            title="Settings"
-            label="Settings"
-          />
-        </div>
       </div>
     );
   }
