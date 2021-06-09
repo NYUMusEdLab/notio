@@ -7,6 +7,7 @@ import SubMenu from "./SubMenu";
 import Notation from "./Notation";
 import VideoTutorial from "./VideoTutorial";
 import Share from "./Share";
+import Settings from "./Settings";
 import Root from "./Root";
 import RootMenu from "../../assets/img/RootMenu";
 // import { findColor } from '../utils.js';
@@ -184,6 +185,16 @@ class TopMenu extends Component {
             label="Share"
             saveSessionToDB={this.props.saveSessionToDB}
             sessionID={this.props.sessionID}
+          />
+        </div>
+
+
+        {/* Settings */}
+        <div className="navbar-item menu-settings">
+          <Settings
+            title="Settings"
+            label="Settings"
+
           />
         </div>
       </div>

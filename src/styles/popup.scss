@@ -6,6 +6,7 @@
   height          : 100vh;
   left            : 0;
   visibility      : hidden;
+  top             : 0;
 
   &.show {
     visibility: visible;

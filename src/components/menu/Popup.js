@@ -10,6 +10,7 @@ class Popup extends Component {
     onClickCloseHandler: () => { },
     hasBG: false,
     hasMinize: false,
+    draggable: false,
   };
   state = {
     minimized: false,
