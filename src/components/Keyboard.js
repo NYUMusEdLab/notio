@@ -643,9 +643,10 @@ class Keyboard extends Component {
             }
             break;
           default:
-          //note.note_english;
+          // note.note_english;
         }
       }
+
 
       let noteThatWillSound;
       let noteOffset = note.octaveOffset;
