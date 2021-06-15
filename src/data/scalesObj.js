@@ -34,7 +34,7 @@ const scales = [
     numbers: ['1', 'b3', '4', '5', '7'],
   },
   {
-    name: "Minor Natural/Aeolian",
+    name: "Natural Minor/Aeolian",
     steps: [0, 2, 3, 5, 7, 8, 10, 12],
     numbers: ['1', '2', 'b3', '4', '5', 'b6', '7']
   },
