@@ -32,7 +32,7 @@ const rootMenu = [
   {
     note: "A",
     note_romance: "La",
-    accidentals: ['#', 'b'],
+    accidentals: ['b'],
     color: "#87cefa"
   },
   {
@@ -44,7 +44,7 @@ const rootMenu = [
   {
     note: "H",
     note_romance: "",
-    accidentals: ['#', 'B'],
+    accidentals: ['B'],
     color: "#ee82ee"
   },
 ];

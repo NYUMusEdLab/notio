@@ -219,30 +219,32 @@ class Root extends Component {
                     </Form.Check.Label>
                   </Form.Check>
                 </Col>
-                <Col lg={3}>
-                  <Form.Check
-                  >
-                    <Form.Check.Input
-                      type="radio"
-                      id={`${rootLabel}-` + root.note_romance}
-                      className={`${rootLabel}-input-${root.note_romance}`}
-                      label={root.note_romance}
-                      name={rootLabel}
-                      onChange={this.handleChange}
-                      value={root.note}
-                      data-rootdisplayed={root.note_romance}
-                      ref={(ref) => this.setRef(ref, root.note_romance)}
-                      checked={this.state.rootDisplayed === root.note_romance ? true : false}
-                    />
-                    <Form.Check.Label
-                      data-color={root.color}
-                      className={`${rootLabel}-label-${root.note_romance}`}
-                      for={`${rootLabel}-` + root.note_romance}
+                {root.note_romance ?
+                  <Col lg={3}>
+                    <Form.Check
                     >
-                      {root.note_romance}
-                    </Form.Check.Label>
-                  </Form.Check>
-                </Col>
+                      <Form.Check.Input
+                        type="radio"
+                        id={`${rootLabel}-` + root.note_romance}
+                        className={`${rootLabel}-input-${root.note_romance}`}
+                        label={root.note_romance}
+                        name={rootLabel}
+                        onChange={this.handleChange}
+                        value={root.note}
+                        data-rootdisplayed={root.note_romance}
+                        ref={(ref) => this.setRef(ref, root.note_romance)}
+                        checked={this.state.rootDisplayed === root.note_romance ? true : false}
+                      />
+                      <Form.Check.Label
+                        data-color={root.color}
+                        className={`${rootLabel}-label-${root.note_romance}`}
+                        for={`${rootLabel}-` + root.note_romance}
+                      >
+                        {root.note_romance}
+                      </Form.Check.Label>
+                    </Form.Check>
+                  </Col>
+                  : ""}
                 <Col lg={3}>
                   {root.accidentals[0] ?
                     <Form.Check>
