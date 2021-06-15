@@ -59,6 +59,13 @@ class TopMenu extends Component {
       clefImage: _.startCase(img) + "Clef",
     });
   };
+
+  handleChangeTitle = (note) => {
+    this.setState({
+      titleRoot: note,
+    });
+  }
+
   render() {
     console.log("topmenu scales", scales);
     return (
@@ -111,13 +118,13 @@ class TopMenu extends Component {
               />
             }
           />
-        </div>
+          </div>
 
           {/* Root */}
           <div className="navbar-item menu-root">
             <SubMenu
               title="Root"
-              selected={this.props.state.baseNote}
+              selected={this.state.titleRoot}
               selectedImg=<RootMenu color={'#ff0000'} />
             //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
             content={
@@ -125,10 +132,11 @@ class TopMenu extends Component {
                 label="Root"
                 baseNote={this.props.state.baseNote}
                 handleChangeRoot={this.props.handleChangeRoot}
+                handleChangeTitle={this.handleChangeTitle}
               />
             }
           />
-          {/* <div class="half-circle"></div> */}
+            {/* <div class="half-circle"></div> */}
           </div>
 
           {/* Scale */}

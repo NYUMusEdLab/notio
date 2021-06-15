@@ -17,7 +17,8 @@ class Root extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      root: this.props.baseNote.charAt(0),
+      root: this.props.baseNote.charAt(0), // English Notation : C, D, E...
+      rootDisplayed: this.props.baseNote.charAt(0), // English or Romance (used for display in menu)
       accidental: this.props.baseNote.charAt(1) ? this.props.baseNote.charAt(1) : "",
       accidentalChecked: false,
       accidentalDisabled: true,
@@ -113,11 +114,19 @@ class Root extends Component {
   handleChange = (e) => {
 
     if (e.target.name === rootLabel) {
+
+      // reinit accidentals if root not the same from previous
+      if (e.target.value !== this.state.root) {
+        this.disableAllAccidentals();
+        this.setState({
+          accidental: "",
+        });
+      }
+
       this.setState({
         root: e.target.value,
-        accidental: "", // re-init accidental when changing root
+        rootDisplayed: e.target.dataset.rootdisplayed,
       });
-      this.disableAllAccidentals();
     }
 
     if (e.target.name === accidentalLabel) {
@@ -148,27 +157,30 @@ class Root extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state !== prevState) {
       this.props.handleChangeRoot(this.state.root + this.state.accidental);
+      this.props.handleChangeTitle(this.state.rootDisplayed + this.state.accidental);
     }
   }
 
   render() {
     const { rootState } = this.state;
+
     return (
       <div>
         <Form>
           {rootMenu.map((root, index) => (
 
-
-            <div>
+            < div >
               {/* dynamic styles with dynamic colors */}
-              <style>{`
-          .${rootLabel}-label-${root.note}:hover {
+              <style> {`
+          .${rootLabel}-label-${root.note}:hover,
+          .${rootLabel}-label-${root.note_romance}:hover {
             background-color: ${rootMenu[0].color};
             // we should use "root.color" to get color by root
             // but it isn't asked for the Notio tool
           }
 
-          .${rootLabel}-input-${root.note}:checked ~ .form-check-label {
+          .${rootLabel}-input-${root.note}:checked ~ .form-check-label,
+          .${rootLabel}-input-${root.note_romance}:checked ~ .form-check-label {
             background-color: ${rootMenu[0].color};
           }
 
@@ -180,8 +192,9 @@ class Root extends Component {
             background-color: ${rootMenu[0].color};
           }
           `}</style>
+
               <Form.Row>
-                <Col lg={4}>
+                <Col lg={3}>
                   <Form.Check
                   >
                     <Form.Check.Input
@@ -192,8 +205,10 @@ class Root extends Component {
                       name={rootLabel}
                       onChange={this.handleChange}
                       value={root.note}
+                      data-rootdisplayed={root.note}
+
                       ref={(ref) => this.setRef(ref, root.note)}
-                      checked={this.state.root.charAt(0) === root.note ? true : false}
+                      checked={this.state.rootDisplayed === root.note ? true : false}
                     />
                     <Form.Check.Label
                       data-color={root.color}
@@ -204,8 +219,31 @@ class Root extends Component {
                     </Form.Check.Label>
                   </Form.Check>
                 </Col>
-                <Col lg={4}>
-
+                <Col lg={3}>
+                  <Form.Check
+                  >
+                    <Form.Check.Input
+                      type="radio"
+                      id={`${rootLabel}-` + root.note_romance}
+                      className={`${rootLabel}-input-${root.note_romance}`}
+                      label={root.note_romance}
+                      name={rootLabel}
+                      onChange={this.handleChange}
+                      value={root.note}
+                      data-rootdisplayed={root.note_romance}
+                      ref={(ref) => this.setRef(ref, root.note_romance)}
+                      checked={this.state.rootDisplayed === root.note_romance ? true : false}
+                    />
+                    <Form.Check.Label
+                      data-color={root.color}
+                      className={`${rootLabel}-label-${root.note_romance}`}
+                      for={`${rootLabel}-` + root.note_romance}
+                    >
+                      {root.note_romance}
+                    </Form.Check.Label>
+                  </Form.Check>
+                </Col>
+                <Col lg={3}>
                   {root.accidentals[0] ?
                     <Form.Check>
                       <Form.Check.Input
@@ -220,7 +258,6 @@ class Root extends Component {
                         value={root.accidentals[0]}
                         ref={(ref) => this.setRef(ref, root.note, root.accidentals[0],)}
                         data-root={root.note}
-
                         checked={rootState[root.note][accidentalLabel][root.accidentals[0]]['checked']}
                       />
                       <Form.Check.Label
@@ -234,7 +271,7 @@ class Root extends Component {
                     </Form.Check>
                     : ''}
                 </Col>
-                <Col lg={4}>
+                <Col lg={3}>
                   {root.accidentals[1] ?
                     <Form.Check>
                       <Form.Check.Input
@@ -263,7 +300,8 @@ class Root extends Component {
                 </Col>
               </Form.Row>
             </div>
-          ))}
+          ))
+          }
         </Form>
       </div >
     );
