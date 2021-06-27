@@ -55,7 +55,7 @@ class MusicScale {
   }
 
 
-  SetRootNote(toneName) {
+  SetRootNote = (toneName) => {
     this.RootNote = rootNote.find(obj => {
       return obj.note === toneName;
     });
@@ -101,8 +101,9 @@ class MusicScale {
 
     //  middleScale add whole octaves
     if (AmbitusFullOctaves > 0) {
+      let nextOctave = [];
       for (let i = 0; i < AmbitusFullOctaves; i++) {
-        let nextOctave = this.SemitoneSteps.map(s => s + octaveOffset * 12)
+        nextOctave = this.SemitoneSteps.map(s => s + octaveOffset * 12);
         scale.push(nextOctave)
         octaveOffset++;
       }

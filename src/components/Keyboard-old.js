@@ -13,8 +13,7 @@ import {
   generateExtendedScale
 } from "./theory";
 import { Piano } from '@tonejs/piano'
-import MusicScale from "../Model/MusicScale";
- //import MusicScale from "../Model/MusicScale"; // Can't import, lots of errors
+// import MusicScale from "../Model/MusicScale"; // Can't import, lots of errors
 
 
 
@@ -25,7 +24,7 @@ const keycodes = ['KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK',
 const keycodesExtended = ['KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK',
   'KeyL', 'Semicolon', 'Quote', 'BracketLeft', 'Equal'];
 
-let targetArr, activeElementsforKeyboard, scaleReciepe, keyboardLayoutScaleReciepe;
+let targetArr, activeElementsforKeyboard, scaleSteps;
 let onlyScaleIndex = 0;
 
 let threeLowerOctave = new Set();
@@ -41,11 +40,8 @@ class Keyboard extends Component {
 
     this.state = {
       activeNotes: new Set(),
-      keyboardLayoutScaleReciepe:{},
-      keyBoardLayoutScale:[],
-      scaleReciepe: {},
-      currentScale: [],
-      
+      currentScale: "",
+      scaleSteps: {},
       mouse_is_down: false
     };
 
@@ -269,7 +265,7 @@ class Keyboard extends Component {
 
   };
 
-  generateScales = scaleReciepe => {
+  generateScales = scaleSteps => {
 
     //TODO: NOTE that this creates a full scale with all naming and numbering and tones embedded.
     // I believe this can replace a lot of the code in keyboard
@@ -304,13 +300,13 @@ class Keyboard extends Component {
         }
         else if (!scale.includes("Pentatonic") && !scale.includes("Blues")) {
           theScale[notation[i]] = makeScaleMajorMinor(
-            scaleReciepe,
+            scaleSteps,
             baseNote,
             notation[i]
           );
         } else {
           theScale[notation[i]] = makeScalePentatonicBlues(
-            scaleReciepe,
+            scaleSteps,
             baseNote,
             scale,
             notation[i]
@@ -326,29 +322,27 @@ class Keyboard extends Component {
 
 
   static getDerivedStateFromProps(nextProps) {
-    let scaleReciepe = scales.find(obj => obj.name === nextProps.scale);
+    let scaleSteps = scales.find(obj => obj.name === nextProps.scale);
     return {
-      scaleReciepe: scaleReciepe
+      scaleSteps: scaleSteps
     };
   }
 
 
   componentDidMount() {
     console.log('CompDidMount:currentScale',this.state.currentScale )
-    console.log('CompDidMount:scaleReciepe',this.state.scaleReciepe )
+    console.log('CompDidMount:scaleSteps',this.state.scaleSteps )
     console.log('CompDidMount:activeNotes',this.state.activeNotes )
 
-    keyboardLayoutScaleReciepe = scales.find(
-      obj => obj.name === "Chromatic"
-    );
-    scaleReciepe = scales.find(
+
+    scaleSteps = scales.find(
       obj => obj.name === this.props.scale
     );
     this.setState({
-      keyBoardLayoutScale:new MusicScale(keyboardLayoutScaleReciepe,"C",0,24),
-      scaleReciepe,
-      currentScale: //this.generateCurrentScale(scaleReciepe.steps)
-      new MusicScale(scaleReciepe,this.props.root,0,24)
+      scaleSteps,
+      currentScale: this.generateCurrentScale(
+        scaleSteps.steps
+      )
     });
 
     const keyboard = document.querySelector(".Keyboard");
@@ -412,9 +406,9 @@ class Keyboard extends Component {
         }
         return null;
       });
-      scaleReciepe = scales.find(obj => obj.name === scale);
+      scaleSteps = scales.find(obj => obj.name === scale);
       this.setState({
-        currentScale: this.generateCurrentScale(scaleReciepe.steps)
+        currentScale: this.generateCurrentScale(scaleSteps.steps)
       });
       threeLowerOctave.clear();
     }
@@ -422,7 +416,7 @@ class Keyboard extends Component {
     // scale index on keyboard
     onlyScaleIndex = this.scaleShifting(extendedKeyboard, scale);
     console.log('CompDidUpdate:currentScale',this.state.currentScale )
-    console.log('CompDidUpdate:scaleReciepe',this.state.scaleReciepe )
+    console.log('CompDidUpdate:scaleSteps',this.state.scaleSteps )
     console.log('CompDidUpdate:activeNotes',this.state.activeNotes )
 
 
@@ -490,9 +484,9 @@ class Keyboard extends Component {
 
     let isMajorSeventh = false;
 
-    scaleReciepe = scales.find(obj => obj.name === scale);
+    scaleSteps = scales.find(obj => obj.name === scale);
 
-    const theScale = this.generateScales(scaleReciepe.steps);
+    const theScale = this.generateScales(scaleSteps.steps);
 
     let scaleObj; // get object from scalesObj.js
     scales.forEach(obj => {
@@ -534,9 +528,9 @@ class Keyboard extends Component {
 
       // noteName : array of note name per key functions of selected notation
       let noteName = [];
-      const isKeyInScale = scaleReciepe.steps.includes(index);
+      const isKeyInScale = scaleSteps.steps.includes(index);
 
-      if (index === scaleReciepe.major_seventh) {
+      if (index === scaleSteps.major_seventh) {
         isMajorSeventh = true;
       } else {
         isMajorSeventh = false;
