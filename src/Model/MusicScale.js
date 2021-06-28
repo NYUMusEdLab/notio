@@ -1,4 +1,6 @@
 import rootNote from "../data/rootNote";
+import { makeScaleMajorMinor } from "../components/theory";
+import noteMappingObj from "../data/noteMappingObj";
 import noteMapping from "../data/noteMappingObj";
 import notes from "../data/notes";
 import { notations } from "../components/menu/Notation";
@@ -55,7 +57,7 @@ class MusicScale {
   }
 
 
-  SetRootNote = (toneName) => {
+  SetRootNote(toneName) {
     this.RootNote = rootNote.find(obj => {
       return obj.note === toneName;
     });
@@ -101,10 +103,10 @@ class MusicScale {
 
     //  middleScale add whole octaves
     if (AmbitusFullOctaves > 0) {
-      let nextOctave = [];
+      let calculateSemitoneWithOffset = semitone => semitone + octaveOffset * 12;
       for (let i = 0; i < AmbitusFullOctaves; i++) {
-        nextOctave = this.SemitoneSteps.map(s => s + octaveOffset * 12);
-        scale.push(nextOctave)
+        let nextOctave = this.SemitoneSteps.map(calculateSemitoneWithOffset);
+        scale.push(nextOctave);
         octaveOffset++;
       }
     }
@@ -131,11 +133,10 @@ class MusicScale {
   BuildExtendedScaleTones(scaleSteps) {
     let theScale = scaleSteps.map((step, index) => {
       let tempnote = notes[(step + this.Transposition) % notes.length];
-      let note = { ...tempnote };
-      note.octaveOffset = this.Octave + Math.floor((step + this.Transposition) / 12);
       const tempextensionText = "" + this.Recipe.numbers[index % this.SemitoneSteps.length];
+      const octaveOffset = this.Octave + Math.floor((step + this.Transposition) / 12);
 
-      note.chord_extension = tempextensionText;
+      let note = { ...tempnote, chord_extension: tempextensionText, octaveOffset:octaveOffset };
       return note;
     });
 
@@ -202,7 +203,7 @@ class MusicScale {
           break;
 
         case "Scale_Steps":
-          if (this.Name == "Chromatic") {
+          if (this.Name === "Chromatic") {
             theScale[whichNotation] = this.MakeChromatic(semiToneSteps, rootNoteName, "Chromatic", whichNotation);
           }
           else {
@@ -214,7 +215,7 @@ class MusicScale {
 
         case "Chord_extensions":
 
-          if (this.Name == "Chromatic") {
+          if (this.Name === "Chromatic") {
             theScale[whichNotation] = this.MakeChromatic(semiToneSteps, rootNoteName, "Chromatic", whichNotation);
           }
           else {
@@ -227,7 +228,7 @@ class MusicScale {
       }
       //console.log(theScale)
       //case "Relative":
-      // if(this.Name == "Chromatic"){
+      // if(this.Name === "Chromatic"){
       //   theScale[whichNotation] = this.MakeChromatic(semiToneSteps,rootNoteName,"Chromatic",whichNotation)[whichNotation]; 
       // }
 
@@ -252,7 +253,7 @@ class MusicScale {
   }
 
 
-  static MakeChromatic(scaleFormula, keyName, scaleName, whichNotation) {
+  MakeChromatic(scaleFormula, keyName, scaleName, whichNotation) {
     // const TONENAMES  =  {Romance: ['Do', 'D0#', 'Re','Re#', 'Mi', 'Fa', 'Fa#', 'Sol', 'Sol#', 'LA', 'LA#', 'Ti'],
     //                   English: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
     //                   German:  ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'H']};
@@ -301,7 +302,7 @@ class MusicScale {
     let tonenameOffset = this.noteNameToIndex(keyName)
     let startingNote = tonenameOffset;
 
-    if (whichNotation == "Chord_extensions" || whichNotation == "Scale_Steps") {
+    if (whichNotation === "Chord_extensions" || whichNotation === "Scale_Steps") {
       let relative = this.findScaleStartIndexRelativToRoot(scaleFormula, this.Recipe.steps.length);
       startingNote = relative
     }
@@ -314,7 +315,7 @@ class MusicScale {
     let myScaleFormula = scaleFormula;
     let myScale = [];
 
-    if (keyName == "F" || keyName.includes("b")) {
+    if (keyName === "F" || keyName.includes("b")) {
       try {
         myScale = myScaleFormula.map((step, index) => TONE_NAMES[whichNotation].flats[(index + startingNote) % 12])
       }
@@ -322,7 +323,7 @@ class MusicScale {
         myScale = myScaleFormula.map((step, index) => "err!" + (index + startingNote) % TONE_NAMES.English.sharps.length); // high note used to indicate error
       }
     }
-    else if (this.noteNameToIndex(keyName) != -1) {
+    else if (this.noteNameToIndex(keyName) !== -1) {
       try {
         myScale = myScaleFormula.map((step, index) => TONE_NAMES[whichNotation].sharps[(index + startingNote) % 12])
       }
@@ -338,10 +339,8 @@ class MusicScale {
     return myScale;
   }
 
-  static makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
+  makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
     const ALPHA_NAMES = {};
-
-    // @Todo : why beginning at A and not Do ?
     ALPHA_NAMES.English = ["A", "B", "C", "D", "E", "F", "G"];
     ALPHA_NAMES.German = ["A", "H", "C", "D", "E", "F", "G"];
     ALPHA_NAMES.Romance = ["La", "Si", "Do", "Re", "Mi", "Fa", "Sol"];
@@ -409,7 +408,7 @@ class MusicScale {
     return myScale;
   }
 
-  static makeScalePentatonicBlues(scaleFormula, keyName, scaleName, whichNotation) {
+  makeScalePentatonicBlues(scaleFormula, keyName, scaleName, whichNotation) {
 
     let ALPHA_NAMES = ["A", "B", "C", "D", "E", "F", "G"];
     //for the major pentatonic scale, we don't include the name of the 2nd and the 6th note
@@ -567,7 +566,7 @@ class MusicScale {
   //#endregion
 
   //#region Helpers
-  static noteNameToIndex(noteName) {
+  noteNameToIndex(noteName) {
     let i;
     let IndexNumber = -1; // default if not found
     // check all three arrays for the nameName
@@ -583,10 +582,9 @@ class MusicScale {
     return Number(IndexNumber); // it should be a number already, but...
   }
 
-  static findScaleStartIndexRelativToRoot(recipe, scaleLength) {
-    let i;
+  findScaleStartIndexRelativToRoot(recipe, scaleLength) {
     let IndexNumber = -1;
-    let firstInScale = recipe.find(e => e % 12 == 0);
+    let firstInScale = recipe.find(e => e % 12 === 0);
     IndexNumber = scaleLength - (recipe.indexOf(firstInScale) % scaleLength);
     return IndexNumber;
   }

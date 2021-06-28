@@ -82,11 +82,11 @@ class Keyboard extends Component {
       return;
     } // prevent key from firing multiple times when key pressed for a long time
 
-    if (window.event && "repeat" in window.event) {
-      if (window.event.repeat) {
-        return false;
-      }
-    }
+    // if (window.event && "repeat" in window.event) {
+    //   if (window.event.repeat) {
+    //     return false;
+    //   }
+    // }
 
     let buttonPressed;
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
@@ -254,6 +254,7 @@ class Keyboard extends Component {
     console.log("Updated CurrentScale" + newScale)
     
   }
+
   //this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
   generateCurrentScale = scaleFormula => {
     const { scale, baseNote } = this.props;
@@ -325,8 +326,8 @@ class Keyboard extends Component {
   //#endregion
 
 
-  static getDerivedStateFromProps(nextProps) {
-    let scaleReciepe = scales.find(obj => obj.name === nextProps.scale);
+  convert_ScaleNameTo_ScaleReciepe(scaleName) {
+    let scaleReciepe = scales.find(obj => obj.name === scaleName)
     return {
       scaleReciepe: scaleReciepe
     };
@@ -338,17 +339,16 @@ class Keyboard extends Component {
     console.log('CompDidMount:scaleReciepe',this.state.scaleReciepe )
     console.log('CompDidMount:activeNotes',this.state.activeNotes )
 
-    keyboardLayoutScaleReciepe = scales.find(
-      obj => obj.name === "Chromatic"
-    );
-    scaleReciepe = scales.find(
-      obj => obj.name === this.props.scale
-    );
+    keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
+    let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,"C",0,24)
+    scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(this.props.scale); 
+    let currentScale = new MusicScale(scaleReciepe,this.props.baseNote,0,24)
+    
     this.setState({
-      keyBoardLayoutScale:new MusicScale(keyboardLayoutScaleReciepe,"C",0,24),
+      keyBoardLayoutScale:keyboardLayoutScale ,
       scaleReciepe,
-      currentScale: //this.generateCurrentScale(scaleReciepe.steps)
-      new MusicScale(scaleReciepe,this.props.root,0,24)
+      currentScale: currentScale//this.generateCurrentScale(scaleReciepe.steps)
+      
     });
 
     const keyboard = document.querySelector(".Keyboard");
@@ -377,7 +377,6 @@ class Keyboard extends Component {
 
     // determine the scale shifting
     onlyScaleIndex = this.scaleShifting(this.props.extendedKeyboard, this.props.scale);
-
 
     targetArr = Array.from(
       document.querySelectorAll(".Key")
@@ -429,7 +428,7 @@ class Keyboard extends Component {
   }
 
   componentWillUnmount() {
-    Tone.context.close();
+    //Tone.context.close();
     document.removeEventListener("keydown", this.handleKeyDown, false);
     document.removeEventListener("keyup", this.handleKeyUp, false);
   }
