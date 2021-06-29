@@ -424,8 +424,8 @@ class Keyboard extends Component {
       let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,"C",scaleStart, ambitus)
       keyboardLayoutScale.init();
     //let keyboardLayoutScale= makeScale(keyboardLayoutScaleReciepe,"C",0,24)
-      scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(this.props.scale); 
-      let currentScale = new MusicScale(scaleReciepe,this.props.baseNote,scaleStart,ambitus)
+      scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName); 
+      let currentScale = new MusicScale(scaleReciepe,baseNote,scaleStart,ambitus)
       currentScale.init();
       this.setState({
         keyBoardLayoutScale:keyboardLayoutScale ,
@@ -470,6 +470,23 @@ class Keyboard extends Component {
     return r + shifting;
   }
 
+  updateScales(){
+      const { notation, scale: scaleName, baseNote, extendedKeyboard } = this.props;
+      const scaleStart  = extendedKeyboard ?  7:0
+      const ambitus     = extendedKeyboard ? 24:13 
+      keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
+      let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,"C",scaleStart, ambitus)
+    //let keyboardLayoutScale= makeScale(keyboardLayoutScaleReciepe,"C",0,24)
+      scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName); 
+      let currentScale = new MusicScale(scaleReciepe,baseNote,scaleStart,ambitus)
+      this.setState({
+        keyBoardLayoutScale:keyboardLayoutScale ,
+        scaleReciepe,
+        currentScale:currentScale
+      });
+
+  }
+
   getRootInfo(rootNote, baseNote) {
     return rootNote.find(obj => {
       return obj.note === baseNote;
@@ -503,6 +520,8 @@ class Keyboard extends Component {
     // let root = this.props.baseNote;
     // let myScale = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleToneNames
 
+    //TODO: JAKOB Fix lifecycle, the scales needs to be constructed the first time the keyboard loads, but without calling setState which updates the scales again.
+    this.updateScales();
 
     let isMajorSeventh = false;
 
@@ -521,24 +540,25 @@ class Keyboard extends Component {
 
     // ROOT : Get the root and its index
     let currentRoot = this.getRootInfo(rootNote, baseNote);
-    let displayNotesBuilder = this.state.currentScale;
+    let displayNotesBuilder = this.state.currentScale.ExtendedScaleTones;
     let scaleStart = 0;
 
     // EXTENDED KEYBOARD : notes when extendedKeyboard is on  
-    if (extendedKeyboard) {
-      scaleStart = 7;
-      // build extended scale
-      displayNotesBuilder = generateExtendedScale(notes, currentRoot);
+    // if (extendedKeyboard) {
+    //   scaleStart = 7;
+    //   // build extended scale
+    //   displayNotesBuilder = generateExtendedScale(notes, currentRoot);
 
-    } else {
-      displayNotesBuilder = notes.slice(
-        currentRoot.index,
-        currentRoot.index + 13
-      );
-    }
+    // } else {
+    //   displayNotesBuilder = notes.slice(
+    //     currentRoot.index,
+    //     currentRoot.index + 13
+    //   );
+    // }
     const displayNotes = displayNotesBuilder;
-    console.log("----JAKOB:")
-    console.log(displayNotesBuilder,this.state.currentScale)
+    console.log("----JAKOB:dispNotesB",displayNotes)
+    console.log("----JAKOB:currentScale",this.state.currentScale)
+
 
     //we use relativeCount for Scale Steps
     let relativeCount = this.scaleShifting(extendedKeyboard, scale);
