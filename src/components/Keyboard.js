@@ -12,8 +12,10 @@ import {
   makeScalePentatonicBlues,
   generateExtendedScale
 } from "./theory";
+import {makeScale} from "./MusicScaleFactory";
 import { Piano } from '@tonejs/piano'
 import MusicScale from "../Model/MusicScale";
+//import MusicScale from "../Model/MusicScale";
  //import MusicScale from "../Model/MusicScale"; // Can't import, lots of errors
 
 
@@ -44,7 +46,7 @@ class Keyboard extends Component {
       keyboardLayoutScaleReciepe:{},
       keyBoardLayoutScale:[],
       scaleReciepe: {},
-      currentScale: [],
+      currentScale: {},
       
       mouse_is_down: false
     };
@@ -327,22 +329,26 @@ class Keyboard extends Component {
 
 
   convert_ScaleNameTo_ScaleReciepe(scaleName) {
-    let scaleReciepe = scales.find(obj => obj.name === scaleName)
-    return {
-      scaleReciepe: scaleReciepe
-    };
+    return scaleReciepe = scales.find(obj => obj.name === scaleName);
   }
 
 
   componentDidMount() {
+    const { notation, scale:scaleName, baseNote, extendedKeyboard } = this.props;
+
     console.log('CompDidMount:currentScale',this.state.currentScale )
     console.log('CompDidMount:scaleReciepe',this.state.scaleReciepe )
     console.log('CompDidMount:activeNotes',this.state.activeNotes )
 
-    keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
-    let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,"C",0,24)
-    scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(this.props.scale); 
-    let currentScale = new MusicScale(scaleReciepe,this.props.baseNote,0,24)
+    const scaleStart  = extendedKeyboard ?  7:0
+      const ambitus     = extendedKeyboard ? 24:13 
+      keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
+      let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,"C",scaleStart, ambitus)
+      keyboardLayoutScale.init();
+    //let keyboardLayoutScale= makeScale(keyboardLayoutScaleReciepe,"C",0,24)
+      scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName); 
+      let currentScale = new MusicScale(scaleReciepe,baseNote,scaleStart,ambitus)
+      currentScale.init();
     
     this.setState({
       keyBoardLayoutScale:keyboardLayoutScale ,
@@ -376,7 +382,7 @@ class Keyboard extends Component {
     );
 
     // determine the scale shifting
-    onlyScaleIndex = this.scaleShifting(this.props.extendedKeyboard, this.props.scale);
+    onlyScaleIndex = this.scaleShifting(extendedKeyboard, scaleName);
 
     targetArr = Array.from(
       document.querySelectorAll(".Key")
@@ -397,10 +403,10 @@ class Keyboard extends Component {
   //#region Component Lifecycle functions
   componentDidUpdate(prevProps) {
     //refresh the keys every time we update the props
-    const { notation, scale, baseNote, extendedKeyboard } = this.props;
+    const { notation, scale: scaleName, baseNote, extendedKeyboard } = this.props;
     if (
       notation !== prevProps.notation ||
-      scale !== prevProps.scale ||
+      scaleName !== prevProps.scale ||
       baseNote !== prevProps.baseNote ||
       extendedKeyboard !== prevProps.extendedKeyboard
     ) {
@@ -411,17 +417,28 @@ class Keyboard extends Component {
         }
         return null;
       });
-      scaleReciepe = scales.find(obj => obj.name === scale);
+      //scaleReciepe = scales.find(obj => obj.name === scale);
+      const scaleStart  = extendedKeyboard ?  7:0
+      const ambitus     = extendedKeyboard ? 24:13 
+      keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
+      let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,"C",scaleStart, ambitus)
+      keyboardLayoutScale.init();
+    //let keyboardLayoutScale= makeScale(keyboardLayoutScaleReciepe,"C",0,24)
+      scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(this.props.scale); 
+      let currentScale = new MusicScale(scaleReciepe,this.props.baseNote,scaleStart,ambitus)
+      currentScale.init();
       this.setState({
-        currentScale: this.generateCurrentScale(scaleReciepe.steps)
+        keyBoardLayoutScale:keyboardLayoutScale ,
+        scaleReciepe,
+        currentScale:currentScale
       });
       threeLowerOctave.clear();
     }
 
     // scale index on keyboard
-    onlyScaleIndex = this.scaleShifting(extendedKeyboard, scale);
+    onlyScaleIndex = this.scaleShifting(extendedKeyboard, scaleName);
     console.log('CompDidUpdate:currentScale',this.state.currentScale )
-    console.log('CompDidUpdate:scaleReciepe',this.state.scaleReciepe )
+    //console.log('CompDidUpdate:scaleReciepe',this.state.scaleReciepe )
     console.log('CompDidUpdate:activeNotes',this.state.activeNotes )
 
 
@@ -504,7 +521,7 @@ class Keyboard extends Component {
 
     // ROOT : Get the root and its index
     let currentRoot = this.getRootInfo(rootNote, baseNote);
-    let displayNotesBuilder;
+    let displayNotesBuilder = this.state.currentScale;
     let scaleStart = 0;
 
     // EXTENDED KEYBOARD : notes when extendedKeyboard is on  
@@ -520,6 +537,8 @@ class Keyboard extends Component {
       );
     }
     const displayNotes = displayNotesBuilder;
+    console.log("----JAKOB:")
+    console.log(displayNotesBuilder,this.state.currentScale)
 
     //we use relativeCount for Scale Steps
     let relativeCount = this.scaleShifting(extendedKeyboard, scale);

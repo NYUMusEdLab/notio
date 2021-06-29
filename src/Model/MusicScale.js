@@ -13,11 +13,12 @@ import scales from "../data/scalesObj";
 class MusicScale {
 
   constructor(scaleRecipe, rootnote, startingFromStep, ambitusInSemitones) {
+    this.Recipe = {...scaleRecipe};
     this.Name = scaleRecipe.name;
-    this.RootNoteName = rootnote;//The scale root
-    this.Recipe = scaleRecipe;
     this.SemitoneSteps = scaleRecipe.steps;
     this.ExtensionNumbers = scaleRecipe["numbers"];
+
+    this.RootNoteName = rootnote;//The scale root
     this.StartToneStep = startingFromStep;
     this.AmbitusInSemiNotes = ambitusInSemitones > 12 ? ambitusInSemitones : 12;
     //this.OctaveOffset = octaveOffset;
@@ -43,6 +44,10 @@ class MusicScale {
   //#region Public Functions
 
   init() {
+    this.Name = this.Recipe.name;
+    this.SemitoneSteps = [...this.Recipe.steps];
+    this.ExtensionNumbers = [...this.Recipe["numbers"]];
+
     this.RootNote = rootNote.find(obj => {
       return obj.note === this.RootNoteName;
     });
