@@ -568,10 +568,12 @@ class Keyboard extends Component {
     
 
     // Loop on note list
-    const noteList =  this.state.keyboardLayoutScale.MidiNoteNr.map((note) => {
+    const noteList =  this.state.keyboardLayoutScale.MidiNoteNr.map((note,index) => {
       let noteName = []
+      let isKeyInScale = false
       let toneindex = this.state.currentScale.MidiNoteNr.indexOf(note)%12
       if (toneindex !== -1){
+        isKeyInScale = true
         for (let i = 0; i < notation.length; i++) {
           //   /* eslint-disable no-duplicate-case */
             const notationName = notation[i]
@@ -874,37 +876,37 @@ class Keyboard extends Component {
       // const wholeNote = noteThatWillSound + (octave + noteOffset);
       // if (typeof wholeNote === "string")
       //   threeLowerOctave.add(noteThatWillSound + (octave + noteOffset));
-
+      const currentNote = this.state.keyboardLayoutScale.ExtendedScaleTones[index]
       return (
-        <p>-| {noteName} |</p> 
-        // <Key
-        //   keyIndex={arrayIndex} // Index in loop of notes
-        //   index={index} // index on Keyboard
-        //   note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset}`} //sounding note
-        //   noteNameEnglish={note.note_english}
-        //   notation={notation}
-        //   noteName={noteName}
-        //   color={colors[index]}
-        //   offColor={note.colorRGBA}
-        //   keyColor={note.pianoColor}
-        //   isOn={isKeyInScale}
-        //   root={baseNote}
-        //   isMajorSeventh={isMajorSeventh}
-        //   synth={synth}
-        //   isMouseDown={mouse_is_down}
-        //   pianoOn={pianoOn}
-        //   theme={theme}
-        //   clef={clef}
-        //   trebleStaffOn={trebleStaffOn}
-        //   showOffNotes={showOffNotes}
-        //   isActive={this.state.activeNotes.has(
-        //     `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
-        //     }`
-        //   )}
-        //   noteOn={this.noteOn}
-        //   noteOff={this.noteOff}
-        //   extendedKeyboard={extendedKeyboard}
-        // />
+        //<p>-| {noteName} |</p> 
+        <Key
+          keyIndex={index} // Index in loop of notes
+          index={index} // index on Keyboard
+          note={`${ currentNote.note_english}${octave + currentNote.octaveOffset}`} //sounding note
+          noteNameEnglish={currentNote.note_english}
+          notation={notation}
+          noteName={noteName}
+          color={colors[index]}
+          offColor={currentNote.colorRGBA}
+          keyColor={currentNote.pianoColor}
+          isOn={isKeyInScale}
+          root={baseNote}
+          isMajorSeventh={false}
+          synth={synth}
+          isMouseDown={mouse_is_down}
+          pianoOn={pianoOn}
+          theme={theme}
+          clef={clef}
+          trebleStaffOn={trebleStaffOn}
+          showOffNotes={showOffNotes}
+          isActive={this.state.activeNotes.has(
+            `${currentNote.note_english}${octave + currentNote.octaveOffset /*+ Math.floor(index/12)*/
+            }`
+          )}
+          noteOn={this.noteOn}
+          noteOff={this.noteOff}
+          extendedKeyboard={extendedKeyboard}
+        />
       );
 
       // DEBUG MODE
