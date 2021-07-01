@@ -31,6 +31,8 @@ class MusicScale {
   Recipe;
   SemitoneSteps = [];//Corresponding steps in C chromatic scale
   ExtendedScaleSteps = {};
+  ExtendedScaleStepsRelativeToC = [];
+  MidiNoteNr
   ExtendedScaleToneNames = {};
   ExtendedScaleTones = [];
   ExtensionNumbers;//The numbers written on a chord like A(7b9)
@@ -56,8 +58,10 @@ class MusicScale {
     //this.addNumberExtensions();
     this.Notations = notations
     this.ExtendedScaleSteps = [...this.BuildExtendedScaleSteps()];
+    this.MidiNoteNr = this.MakeMidinumbering(this.ExtendedScaleSteps,this.Transposition)
+    this.ExtendedScaleStepsRelativeToC = this.ExtendedScaleSteps.map((step=>(step - this.Transposition+12)))
     this.ExtendedScaleToneNames = { ...this.BuildExtendedScaleToneNames(this.Recipe.numbers, this.ExtendedScaleSteps, this.RootNote.note, this.Notations, this.Name) };
-    this.ExtendedScaleTones = [...this.BuildExtendedScaleTones(this.ExtendedScaleSteps)];
+    this.ExtendedScaleTones = [...this.BuildExtendedScaleTones(this.ExtendedScaleSteps, this.ExtendedScaleToneNames)];
     //console.log("basis:",this.ExtendedScaleToneNames);
   }
 
@@ -135,13 +139,16 @@ class MusicScale {
 
 
   ////convert steps to notes 
-  BuildExtendedScaleTones(scaleSteps) {
+  BuildExtendedScaleTones(scaleSteps, toneNames) {
     let theScale = scaleSteps.map((step, index) => {
       let tempnote = notes[(step + this.Transposition) % notes.length];
-      const tempextensionText = "" + this.Recipe.numbers[index % this.SemitoneSteps.length];
+      const tempextensionText = toneNames.Chord_extensions[index]
+      const tempStepText = toneNames.Scale_Steps[index]
+
+      //const tempextensionText = "" + this.Recipe.numbers[index % this.SemitoneSteps.length];
       const octaveOffset = this.Octave + Math.floor((step + this.Transposition) / 12);
 
-      let note = { ...tempnote, chord_extension: tempextensionText, octaveOffset:octaveOffset };
+      let note = { ...tempnote, scale_step: tempStepText, chord_extension: tempextensionText, octaveOffset:octaveOffset };
       return note;
     });
 
@@ -171,6 +178,11 @@ class MusicScale {
 
   //#region Naming Functions
 
+  MakeMidinumbering(extendedScaleNumbers, transposition){
+    const middleC3 = 48
+    return extendedScaleNumbers.map((nr)=> middleC3 + nr  + this.Transposition)
+  }
+
   BuildExtendedScaleToneNames(ScaleStepNumbers, semiToneSteps, rootNoteName, notation, scaleName) {
     //const basicScale =['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] 
     // let toneNames = [];
@@ -178,7 +190,7 @@ class MusicScale {
 
 
     let maxdistanceBetweenAdjacentNotes = semiToneSteps.map((step, index) => semiToneSteps[index + 1] - step);
-    maxdistanceBetweenAdjacentNotes.pop();
+    maxdistanceBetweenAdjacentNotes.pop();//removes the last note in the list, since it has no dist to next note
     const maxDist = Math.max(...maxdistanceBetweenAdjacentNotes);
 
     notation.forEach(whichNotation => {
@@ -207,9 +219,9 @@ class MusicScale {
           theScale["Relative"] = semiToneSteps.map(step => notes[step % notes.length].note_relative);
           break;
 
-        case "Scale_Steps":
+        case "Scale Steps":
           if (this.Name === "Chromatic") {
-            theScale[whichNotation] = this.MakeChromatic(semiToneSteps, rootNoteName, "Chromatic", whichNotation);
+            theScale["Scale_Steps"] = this.MakeChromatic(semiToneSteps, rootNoteName, "Chromatic", "Scale_Steps");
           }
           else {
             let length = this.Recipe.numbers.length;
@@ -218,10 +230,10 @@ class MusicScale {
           }
           break;
 
-        case "Chord_extensions":
+        case "Chord extensions":
 
           if (this.Name === "Chromatic") {
-            theScale[whichNotation] = this.MakeChromatic(semiToneSteps, rootNoteName, "Chromatic", whichNotation);
+            theScale["Chord_extensions"] = this.MakeChromatic(semiToneSteps, rootNoteName, "Chromatic", "Chord_extensions");
           }
           else {
             theScale["Chord_extensions"] = this.makeChordExtensions(semiToneSteps, rootNoteName);
@@ -241,6 +253,7 @@ class MusicScale {
     return theScale;
   }
 
+  
   MakeScaleNotations(scaleFormula, keyName, scaleName, whichNotation) {
 
     let theScale = {};

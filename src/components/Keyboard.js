@@ -19,7 +19,6 @@ import MusicScale from "../Model/MusicScale";
  //import MusicScale from "../Model/MusicScale"; // Can't import, lots of errors
 
 
-
 // Using 'code' property for compatibility with AZERTY, QWERTY... keyboards 
 const keycodes = ['KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK',
   'KeyL', 'Semicolon', 'Quote'];
@@ -40,16 +39,17 @@ class Keyboard extends Component {
   //#region Constructor
   constructor(props) {
     super(props);
-
+    const tempRecipe = scales[1];
     this.state = {
       activeNotes: new Set(),
       keyboardLayoutScaleReciepe:{},
-      keyBoardLayoutScale:[],
+      keyboardLayoutScale:new MusicScale(tempRecipe,"C",0,13),
       scaleReciepe: {},
-      currentScale: {},
+      currentScale: new MusicScale(tempRecipe,"C",0,13+12),
       
       mouse_is_down: false
     };
+    this.updateScales()
 
     this.synth = new Piano({
       velocities: 5
@@ -340,22 +340,23 @@ class Keyboard extends Component {
     console.log('CompDidMount:scaleReciepe',this.state.scaleReciepe )
     console.log('CompDidMount:activeNotes',this.state.activeNotes )
 
-    const scaleStart  = extendedKeyboard ?  7:0
-      const ambitus     = extendedKeyboard ? 24:13 
-      keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
-      let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,"C",scaleStart, ambitus)
-      keyboardLayoutScale.init();
-    //let keyboardLayoutScale= makeScale(keyboardLayoutScaleReciepe,"C",0,24)
-      scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName); 
-      let currentScale = new MusicScale(scaleReciepe,baseNote,scaleStart,ambitus)
-      currentScale.init();
+    this.updateScales()
+    //   const scaleStart  = extendedKeyboard ?  7:0
+    //   const ambitus     = extendedKeyboard ? 24:13 
+    //   keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
+    //   let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,"C",scaleStart, ambitus)
+    //   keyboardLayoutScale.init();
+    // //let keyboardLayoutScale= makeScale(keyboardLayoutScaleReciepe,"C",0,24)
+    //   scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName); 
+    //   let currentScale = new MusicScale(scaleReciepe,baseNote,scaleStart,ambitus)
+    //   currentScale.init();
     
-    this.setState({
-      keyBoardLayoutScale:keyboardLayoutScale ,
-      scaleReciepe,
-      currentScale: currentScale//this.generateCurrentScale(scaleReciepe.steps)
+    // this.setState({
+    //   keyBoardLayoutScale:keyboardLayoutScale ,
+    //   scaleReciepe,
+    //   currentScale: currentScale//this.generateCurrentScale(scaleReciepe.steps)
       
-    });
+    // });
 
     const keyboard = document.querySelector(".Keyboard");
 
@@ -418,20 +419,21 @@ class Keyboard extends Component {
         return null;
       });
       //scaleReciepe = scales.find(obj => obj.name === scale);
-      const scaleStart  = extendedKeyboard ?  7:0
-      const ambitus     = extendedKeyboard ? 24:13 
-      keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
-      let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,"C",scaleStart, ambitus)
-      keyboardLayoutScale.init();
-    //let keyboardLayoutScale= makeScale(keyboardLayoutScaleReciepe,"C",0,24)
-      scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName); 
-      let currentScale = new MusicScale(scaleReciepe,baseNote,scaleStart,ambitus)
-      currentScale.init();
-      this.setState({
-        keyBoardLayoutScale:keyboardLayoutScale ,
-        scaleReciepe,
-        currentScale:currentScale
-      });
+      this.updateScales();
+    //   const scaleStart  = extendedKeyboard ?  7:0
+    //   const ambitus     = extendedKeyboard ? 24:13 
+    //   keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
+    //   let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,"C",scaleStart, ambitus)
+    //   keyboardLayoutScale.init();
+    // //let keyboardLayoutScale= makeScale(keyboardLayoutScaleReciepe,"C",0,24)
+    //   scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName); 
+    //   let currentScale = new MusicScale(scaleReciepe,baseNote,scaleStart,ambitus)
+    //   currentScale.init();
+    //   this.setState({
+    //     keyBoardLayoutScale:keyboardLayoutScale ,
+    //     scaleReciepe,
+    //     currentScale:currentScale
+    //   });
       threeLowerOctave.clear();
     }
 
@@ -520,26 +522,24 @@ class Keyboard extends Component {
     // let root = this.props.baseNote;
     // let myScale = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleToneNames
 
-    //TODO: JAKOB Fix lifecycle, the scales needs to be constructed the first time the keyboard loads, but without calling setState which updates the scales again.
-    this.updateScales();
+    
+    // let isMajorSeventh = false;
 
-    let isMajorSeventh = false;
+    // scaleReciepe = scales.find(obj => obj.name === scale);
 
-    scaleReciepe = scales.find(obj => obj.name === scale);
+    // const theScale = this.state.currentScale.ExtendedScaleTones//this.generateScales(scaleReciepe.steps);
 
-    const theScale = this.generateScales(scaleReciepe.steps);
+    // let scaleObj; // get object from scalesObj.js
+    // scales.forEach(obj => {
+    //   if (obj.name === scale) {
+    //     scaleObj = obj;
+    //   }
+    // });
 
-    let scaleObj; // get object from scalesObj.js
-    scales.forEach(obj => {
-      if (obj.name === scale) {
-        scaleObj = obj;
-      }
-    });
+    // let baseScale = this.state.currentScale.BasisScale;
 
-    let baseScale = this.state.currentScale;
-
-    // ROOT : Get the root and its index
-    let currentRoot = this.getRootInfo(rootNote, baseNote);
+    // // ROOT : Get the root and its index
+    // let currentRoot = this.getRootInfo(rootNote, baseNote);
     let displayNotesBuilder = this.state.currentScale.ExtendedScaleTones;
     let scaleStart = 0;
 
@@ -564,202 +564,347 @@ class Keyboard extends Component {
     let relativeCount = this.scaleShifting(extendedKeyboard, scale);
     let relativeCountScale = this.scaleShifting(extendedKeyboard, scale, -1);
     let relativeCountChord = relativeCount;
+    let currentScaleIndex = 0
+    
 
     // Loop on note list
-    const noteList = displayNotes.map((note, arrayIndex) => {
-      // index : influence on color position
-      const index = (arrayIndex + scaleStart) % 12;
+    const noteList =  this.state.keyboardLayoutScale.MidiNoteNr.map((note) => {
+      let noteName = []
+      let toneindex = this.state.currentScale.MidiNoteNr.indexOf(note)%12
+      if (toneindex !== -1){
+        for (let i = 0; i < notation.length; i++) {
+          //   /* eslint-disable no-duplicate-case */
+            const notationName = notation[i]
+            switch (notationName) {
+              case "Romance":
+                noteName.push(this.state.currentScale.ExtendedScaleToneNames.Romance[toneindex])
+                break;
 
-      // noteName : array of note name per key functions of selected notation
-      let noteName = [];
-      const isKeyInScale = scaleReciepe.steps.includes(index);
+              case "English":
+                noteName.push(this.state.currentScale.ExtendedScaleToneNames.English[toneindex])
+                break;
 
-      if (index === scaleReciepe.major_seventh) {
-        isMajorSeventh = true;
-      } else {
-        isMajorSeventh = false;
-      }
-      let alreadyAdded = false; //this variable is to make sure we don't increment our relativeCountScale index double if we have to notations selected
+              case "German":
+                noteName.push(this.state.currentScale.ExtendedScaleToneNames.German[toneindex])
+                break;
 
-      for (let i = 0; i < notation.length; i++) {
-        /* eslint-disable no-duplicate-case */
+              case "Relative":
+                noteName.push(this.state.currentScale.ExtendedScaleToneNames.Relative[toneindex])
+                break;
 
-        switch (notation[i]) {
-          case "Romance":
-          case "English":
-          case "German":
-            if (
-              !alreadyAdded &&
-              isKeyInScale
-            ) {
-              relativeCountScale++;
+
+
+                //alreadyAdded = true;
+              // case "Romance":
+              //   if (isKeyInScale) {
+              //     noteName.push(
+              //       theScale[notation[i]][
+              //       relativeCountScale %
+              //       (theScale[
+              //         notation[i]
+              //       ].length -
+              //         1)
+              //       ]
+              //     );
+              //   }
+              //   break;
+              // case "English":
+              //   if (isKeyInScale) {
+              //     noteName.push(
+              //       theScale[notation[i]][
+              //       relativeCountScale %
+              //       (theScale[
+              //         notation[i]
+              //       ].length -
+              //         1)
+              //       ]
+              //     );
+              //   }
+              //   break;
+              // case "German":
+              //   if (isKeyInScale) {
+              //     noteName.push(
+              //       theScale[notation[i]][
+              //       relativeCountScale %
+              //       (theScale[
+              //         notation[i]
+              //       ].length -
+              //         1)
+              //       ]
+              //     );
+              //   }
+              //   break;
+              // case "Relative":
+              //   if (isKeyInScale) {
+              //     noteName.push(
+              //       notes[index]
+              //         .note_relative
+              //     );
+              //   }
+              //   break;
+              case "Scale Steps":
+                noteName.push(this.state.currentScale.ExtendedScaleToneNames.Scale_Steps[toneindex])
+                break;
+                // if (isKeyInScale) {
+                //   noteName.push(
+                //     scaleObj.numbers[
+                //     relativeCount++ %
+                //     scaleObj.numbers
+                //       .length
+                //     ]
+                //   );
+                // }
+                // break;
+              case "Chord extensions":
+                noteName.push(this.state.currentScale.ExtendedScaleToneNames.Chord_extensions[toneindex])
+                break;
+                // if (isKeyInScale) {
+                //   // get number (1, b3, #4...)
+                //   let numberString =
+                //     scaleObj.numbers[
+                //     relativeCountChord++ %
+                //     scaleObj.numbers
+                //       .length
+                //     ];
+                //   let number,
+                //     accidential = "";
+                //   if (
+                //     !isNaN(
+                //       numberString.substr(
+                //         0,
+                //         1
+                //       )
+                //     )
+                //   ) {
+                //     // only number (no accidential), add one octave to number
+                //     number =
+                //       parseInt(
+                //         numberString
+                //       ) + 7;
+                //   } else {
+                //     // we got # or b in front of number, preserve that
+                //     number =
+                //       parseInt(
+                //         numberString.substr(
+                //           1
+                //         )
+                //       ) + 7;
+                //     accidential = numberString.substr(
+                //       0,
+                //       1
+                //     );
+                //   }
+                //   if (number % 2 === 1) {
+                //     // only show odd numbers (9, 11, 13)
+                //     noteName.push(
+                //       accidential + number
+                //     );
+                //   }
+                // }
+                // break;
+              default:
+              // note.note_english;
             }
-            alreadyAdded = true;
-          case "Romance":
-            if (isKeyInScale) {
-              noteName.push(
-                theScale[notation[i]][
-                relativeCountScale %
-                (theScale[
-                  notation[i]
-                ].length -
-                  1)
-                ]
-              );
-            }
-            break;
-          case "English":
-            if (isKeyInScale) {
-              noteName.push(
-                theScale[notation[i]][
-                relativeCountScale %
-                (theScale[
-                  notation[i]
-                ].length -
-                  1)
-                ]
-              );
-            }
-            break;
-          case "German":
-            if (isKeyInScale) {
-              noteName.push(
-                theScale[notation[i]][
-                relativeCountScale %
-                (theScale[
-                  notation[i]
-                ].length -
-                  1)
-                ]
-              );
-            }
-            break;
-          case "Relative":
-            if (isKeyInScale) {
-              noteName.push(
-                notes[index]
-                  .note_relative
-              );
-            }
-            break;
-          case "Scale Steps":
-            if (isKeyInScale) {
-              noteName.push(
-                scaleObj.numbers[
-                relativeCount++ %
-                scaleObj.numbers
-                  .length
-                ]
-              );
-            }
-            break;
-          case "Chord extensions":
-            if (isKeyInScale) {
-              // get number (1, b3, #4...)
-              let numberString =
-                scaleObj.numbers[
-                relativeCountChord++ %
-                scaleObj.numbers
-                  .length
-                ];
-              let number,
-                accidential = "";
-              if (
-                !isNaN(
-                  numberString.substr(
-                    0,
-                    1
-                  )
-                )
-              ) {
-                // only number (no accidential), add one octave to number
-                number =
-                  parseInt(
-                    numberString
-                  ) + 7;
-              } else {
-                // we got # or b in front of number, preserve that
-                number =
-                  parseInt(
-                    numberString.substr(
-                      1
-                    )
-                  ) + 7;
-                accidential = numberString.substr(
-                  0,
-                  1
-                );
-              }
-              if (number % 2 === 1) {
-                // only show odd numbers (9, 11, 13)
-                noteName.push(
-                  accidential + number
-                );
-              }
-            }
-            break;
-          default:
-          // note.note_english;
-        }
-      }
-
-
-      let noteThatWillSound;
-      let noteOffset = note.octaveOffset;
-
-      if (isKeyInScale) {
-
-        if (scale.includes("Chromatic")) {
-          noteThatWillSound = baseScale[onlyScaleIndex % (baseScale.length)];
-
-        } else {
-          noteThatWillSound = baseScale[onlyScaleIndex % (baseScale.length - 1)];
-        }
-
-        //special cases = C enharmonics
-        if (noteThatWillSound === "Cb") noteOffset++;
-        if (noteThatWillSound === "B#") noteOffset--;
-        onlyScaleIndex++;
-      } else {
-        noteThatWillSound = null;
+          }
+          //   /* eslint-disable no-duplicate-case */
       }
 
 
-      // WholeNote represent the format Ab4 which is used to display
-      // notes on musical staff
-      const wholeNote = noteThatWillSound + (octave + noteOffset);
-      if (typeof wholeNote === "string")
-        threeLowerOctave.add(noteThatWillSound + (octave + noteOffset));
+        //displayNotes.map((note, arrayIndex) => {
+      // // index : influence on color position
+      // const index = (arrayIndex + scaleStart) % 12;
+
+      // // noteName : array of note name per key functions of selected notation
+      // let noteName = [];
+      // const isKeyInScale = scaleReciepe.steps.includes(index);
+
+      // if (index === scaleReciepe.major_seventh) {
+      //   isMajorSeventh = true;
+      // } else {
+      //   isMajorSeventh = false;
+      // }
+      // let alreadyAdded = false; //this variable is to make sure we don't increment our relativeCountScale index double if we have to notations selected
+
+      // for (let i = 0; i < notation.length; i++) {
+      //   /* eslint-disable no-duplicate-case */
+
+      //   switch (notation[i]) {
+      //     case "Romance":
+      //     case "English":
+      //     case "German":
+      //       if (
+      //         !alreadyAdded &&
+      //         isKeyInScale
+      //       ) {
+      //         relativeCountScale++;
+      //       }
+      //       alreadyAdded = true;
+      //     case "Romance":
+      //       if (isKeyInScale) {
+      //         noteName.push(
+      //           theScale[notation[i]][
+      //           relativeCountScale %
+      //           (theScale[
+      //             notation[i]
+      //           ].length -
+      //             1)
+      //           ]
+      //         );
+      //       }
+      //       break;
+      //     case "English":
+      //       if (isKeyInScale) {
+      //         noteName.push(
+      //           theScale[notation[i]][
+      //           relativeCountScale %
+      //           (theScale[
+      //             notation[i]
+      //           ].length -
+      //             1)
+      //           ]
+      //         );
+      //       }
+      //       break;
+      //     case "German":
+      //       if (isKeyInScale) {
+      //         noteName.push(
+      //           theScale[notation[i]][
+      //           relativeCountScale %
+      //           (theScale[
+      //             notation[i]
+      //           ].length -
+      //             1)
+      //           ]
+      //         );
+      //       }
+      //       break;
+      //     case "Relative":
+      //       if (isKeyInScale) {
+      //         noteName.push(
+      //           notes[index]
+      //             .note_relative
+      //         );
+      //       }
+      //       break;
+      //     case "Scale Steps":
+      //       if (isKeyInScale) {
+      //         noteName.push(
+      //           scaleObj.numbers[
+      //           relativeCount++ %
+      //           scaleObj.numbers
+      //             .length
+      //           ]
+      //         );
+      //       }
+      //       break;
+      //     case "Chord extensions":
+      //       if (isKeyInScale) {
+      //         // get number (1, b3, #4...)
+      //         let numberString =
+      //           scaleObj.numbers[
+      //           relativeCountChord++ %
+      //           scaleObj.numbers
+      //             .length
+      //           ];
+      //         let number,
+      //           accidential = "";
+      //         if (
+      //           !isNaN(
+      //             numberString.substr(
+      //               0,
+      //               1
+      //             )
+      //           )
+      //         ) {
+      //           // only number (no accidential), add one octave to number
+      //           number =
+      //             parseInt(
+      //               numberString
+      //             ) + 7;
+      //         } else {
+      //           // we got # or b in front of number, preserve that
+      //           number =
+      //             parseInt(
+      //               numberString.substr(
+      //                 1
+      //               )
+      //             ) + 7;
+      //           accidential = numberString.substr(
+      //             0,
+      //             1
+      //           );
+      //         }
+      //         if (number % 2 === 1) {
+      //           // only show odd numbers (9, 11, 13)
+      //           noteName.push(
+      //             accidential + number
+      //           );
+      //         }
+      //       }
+      //       break;
+      //     default:
+      //     // note.note_english;
+      //   }
+      // }
+
+
+      // let noteThatWillSound;
+      // let noteOffset = note.octaveOffset;
+
+      // if (isKeyInScale) {
+
+      //   if (scale.includes("Chromatic")) {
+      //     noteThatWillSound = baseScale[onlyScaleIndex % (baseScale.length)];
+
+      //   } else {
+      //     noteThatWillSound = baseScale[onlyScaleIndex % (baseScale.length - 1)];
+      //   }
+
+      //   //special cases = C enharmonics
+      //   if (noteThatWillSound === "Cb") noteOffset++;
+      //   if (noteThatWillSound === "B#") noteOffset--;
+      //   onlyScaleIndex++;
+      // } else {
+      //   noteThatWillSound = null;
+      // }
+
+
+      // // WholeNote represent the format Ab4 which is used to display
+      // // notes on musical staff
+      // const wholeNote = noteThatWillSound + (octave + noteOffset);
+      // if (typeof wholeNote === "string")
+      //   threeLowerOctave.add(noteThatWillSound + (octave + noteOffset));
 
       return (
-        <Key
-          keyIndex={arrayIndex} // Index in loop of notes
-          index={index} // index on Keyboard
-          note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset}`} //sounding note
-          noteNameEnglish={note.note_english}
-          notation={notation}
-          noteName={noteName}
-          color={colors[index]}
-          offColor={note.colorRGBA}
-          keyColor={note.pianoColor}
-          isOn={isKeyInScale}
-          root={baseNote}
-          isMajorSeventh={isMajorSeventh}
-          synth={synth}
-          isMouseDown={mouse_is_down}
-          pianoOn={pianoOn}
-          theme={theme}
-          clef={clef}
-          trebleStaffOn={trebleStaffOn}
-          showOffNotes={showOffNotes}
-          isActive={this.state.activeNotes.has(
-            `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
-            }`
-          )}
-          noteOn={this.noteOn}
-          noteOff={this.noteOff}
-          extendedKeyboard={extendedKeyboard}
-        />
+        <p>-| {noteName} |</p> 
+        // <Key
+        //   keyIndex={arrayIndex} // Index in loop of notes
+        //   index={index} // index on Keyboard
+        //   note={`${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset}`} //sounding note
+        //   noteNameEnglish={note.note_english}
+        //   notation={notation}
+        //   noteName={noteName}
+        //   color={colors[index]}
+        //   offColor={note.colorRGBA}
+        //   keyColor={note.pianoColor}
+        //   isOn={isKeyInScale}
+        //   root={baseNote}
+        //   isMajorSeventh={isMajorSeventh}
+        //   synth={synth}
+        //   isMouseDown={mouse_is_down}
+        //   pianoOn={pianoOn}
+        //   theme={theme}
+        //   clef={clef}
+        //   trebleStaffOn={trebleStaffOn}
+        //   showOffNotes={showOffNotes}
+        //   isActive={this.state.activeNotes.has(
+        //     `${noteThatWillSound ? noteThatWillSound : note.note_english}${octave + noteOffset /*+ Math.floor(index/12)*/
+        //     }`
+        //   )}
+        //   noteOn={this.noteOn}
+        //   noteOff={this.noteOff}
+        //   extendedKeyboard={extendedKeyboard}
+        // />
       );
 
       // DEBUG MODE
