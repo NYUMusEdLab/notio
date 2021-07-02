@@ -500,19 +500,19 @@ class Keyboard extends Component {
       }
 
 
-      const currentNote = keyboardLayoutScale.ExtendedScaleTones[index]
+      const keyboardNote = keyboardLayoutScale.ExtendedScaleTones[index]
       return (
         //<p>-| {noteName} |</p> 
         <Key
           keyIndex={index} // Index in loop of notes
           index={index} // index on Keyboard
-          note={`${ currentNote.note_english}${octave + currentNote.octaveOffset}`} //sounding note
-          noteNameEnglish={currentNote.note_english}
+          note={`${ noteName ? currentScale.ExtendedScaleToneNames.English[toneindex] :keyboardNote.note_english}${octave + keyboardNote.octaveOffset}`} //sounding note
+          noteNameEnglish={keyboardNote.note_english}
           notation={notation}
           noteName={noteName}
           color={colors[index%colors.length]}
-          offColor={currentNote.colorRGBA}
-          keyColor={currentNote.pianoColor}
+          offColor={keyboardNote.colorRGBA}
+          keyColor={keyboardNote.pianoColor}
           isOn={isKeyInScale}
           root={baseNote}
           isMajorSeventh={true}
@@ -524,7 +524,7 @@ class Keyboard extends Component {
           trebleStaffOn={trebleStaffOn}
           showOffNotes={showOffNotes}
           isActive={this.state.activeNotes.has(
-            `${currentNote.note_english}${octave + currentNote.octaveOffset /*+ Math.floor(index/12)*/
+            `${keyboardNote.note_english}${octave + keyboardNote.octaveOffset /*+ Math.floor(index/12)*/
             }`
           )}
           noteOn={this.noteOn}
