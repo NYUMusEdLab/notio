@@ -4,15 +4,7 @@ import React, { Component } from "react";
 import Key from "./Key";
 import * as Tone from 'tone';
 import scales from "../data/scalesObj";
-import rootNote from "../data/rootNote";
-import notes from "../data/notes";
 import colors from "../data/colors";
-import {
-  makeScaleMajorMinor,
-  makeScalePentatonicBlues,
-  generateExtendedScale
-} from "./theory";
-import {makeScale} from "./MusicScaleFactory";
 import { Piano } from '@tonejs/piano'
 import MusicScale from "../Model/MusicScale";
 
@@ -24,7 +16,6 @@ const keycodesExtended = ['KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ'
   'KeyL', 'Semicolon', 'Quote', 'BracketLeft', 'Equal'];
 
 let targetArr, activeElementsforKeyboard, scaleReciepe, keyboardLayoutScaleReciepe;
-let onlyScaleIndex = 0;
 
 let threeLowerOctave = new Set();
 
@@ -320,8 +311,7 @@ class Keyboard extends Component {
 
 
   componentDidMount() {
-    const { notation, scale:scaleName, baseNote, extendedKeyboard } = this.props;
-    
+
     const keyboard = document.querySelector(".Keyboard");
 
     document.addEventListener(
@@ -423,7 +413,7 @@ class Keyboard extends Component {
   // }
 
   updateScales(){
-      const { notation, scale: scaleName, baseNote, extendedKeyboard } = this.props;
+      const {scale: scaleName, baseNote, extendedKeyboard } = this.props;
       const scaleStart  = extendedKeyboard ?  7:0
       const ambitus     = extendedKeyboard ? 24:13 
       keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
@@ -445,7 +435,6 @@ class Keyboard extends Component {
   render() {
     const {
       notation, // : array string notation ["colors", "english", etc...]
-      scale,
       octave,
       baseNote,
       pianoOn,
@@ -459,25 +448,13 @@ class Keyboard extends Component {
 
     const { synth } = this;
     const { mouse_is_down } = this.state;
-
-    
-    
     const {keyboardLayoutScale,currentScale} = this.updateScales();
     
-    let displayNotesBuilder = currentScale.ExtendedScaleTones;
-    let scaleStart = 0;
-
-    
-    const displayNotes = currentScale;
-    console.log("----JAKOB:dispNotesB",displayNotes)
-    console.log("----JAKOB:currentScale",this.state.currentScale)
-
-
     //we use relativeCount for Scale Steps
-    let relativeCount = this.scaleShifting(extendedKeyboard, scale);
-    let relativeCountScale = this.scaleShifting(extendedKeyboard, scale, -1);
-    let relativeCountChord = relativeCount;
-    let currentScaleIndex = 0
+    // let relativeCount = this.scaleShifting(extendedKeyboard, scale);
+    // let relativeCountScale = this.scaleShifting(extendedKeyboard, scale, -1);
+    // let relativeCountChord = relativeCount;
+    // let currentScaleIndex = 0
     
     // Loop on note list
     const noteList =  keyboardLayoutScale.ExtendedScaleTones.map((note,index) => {
@@ -485,7 +462,7 @@ class Keyboard extends Component {
 
       let noteName = []
       let isKeyInScale = false
-      let toneindex = displayNotes.MidiNoteNr.indexOf(note.midi_nr)%12
+      let toneindex = currentScale.MidiNoteNr.indexOf(note.midi_nr)%12
       if (toneindex !== -1){
         isKeyInScale = true
         for (let i = 0; i < notation.length; i++) {
@@ -493,27 +470,27 @@ class Keyboard extends Component {
             const notationName = notation[i]
             switch (notationName) {
               case "Romance":
-                noteName.push(displayNotes.ExtendedScaleToneNames.Romance[toneindex])
+                noteName.push(currentScale.ExtendedScaleToneNames.Romance[toneindex])
                 break;
 
               case "English":
-                noteName.push(displayNotes.ExtendedScaleToneNames.English[toneindex])
+                noteName.push(currentScale.ExtendedScaleToneNames.English[toneindex])
                 break;
 
               case "German":
-                noteName.push(displayNotes.ExtendedScaleToneNames.German[toneindex])
+                noteName.push(currentScale.ExtendedScaleToneNames.German[toneindex])
                 break;
 
               case "Relative":
-                noteName.push(displayNotes.ExtendedScaleToneNames.Relative[toneindex])
+                noteName.push(currentScale.ExtendedScaleToneNames.Relative[toneindex])
                 break;
 
               case "Scale Steps":
-                noteName.push(displayNotes.ExtendedScaleToneNames.Scale_Steps[toneindex])
+                noteName.push(currentScale.ExtendedScaleToneNames.Scale_Steps[toneindex])
                 break;
                 
               case "Chord extensions":
-                noteName.push(displayNotes.ExtendedScaleToneNames.Chord_extensions[toneindex])
+                noteName.push(currentScale.ExtendedScaleToneNames.Chord_extensions[toneindex])
                 break;
                
               default:
