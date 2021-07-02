@@ -6,6 +6,7 @@
 
 const notes = [
   {
+    midi_nr:"12",
     note_romance: "Do",
     note_english: "C",
     note_german: "C",
@@ -16,6 +17,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"13",
     note_romance: "Do#",
     note_english: "Db",
     note_german: "Db",
@@ -26,6 +28,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"14",
     note_romance: "Re",
     note_english: "D",
     note_german: "D",
@@ -36,6 +39,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"15",
     note_romance: "Re#",
     note_english: "Eb",
     note_german: "Eb",
@@ -46,6 +50,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"16",
     note_romance: "Mi",
     note_english: "E",
     note_german: "E",
@@ -56,6 +61,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"17",
     note_romance: "Fa",
     note_english: "F",
     note_german: "F",
@@ -66,6 +72,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"18",
     note_romance: "Fa#",
     note_english: "Gb",
     note_german: "Gb",
@@ -76,6 +83,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"19",
     note_romance: "Sol",
     note_english: "G",
     note_german: "G",
@@ -86,6 +94,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"20",
     note_romance: "Sol#",
     note_english: "Ab",
     note_german: "Ab",
@@ -96,6 +105,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"21",
     note_romance: "La",
     note_english: "A",
     note_german: "A",
@@ -106,6 +116,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"22",
     note_romance: "La#",
     note_english: "Bb",
     note_german: "B",
@@ -116,6 +127,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"23",
     note_romance: "Si",
     note_english: "B",
     note_german: "H",
@@ -126,6 +138,7 @@ const notes = [
     octaveOffset: 0
   },
   {
+    midi_nr:"24",
     note_romance: "Do",
     note_english: "C",
     note_german: "C",
@@ -136,6 +149,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"25",
     note_romance: "Do#",
     note_english: "Db",
     note_german: "Db",
@@ -146,6 +160,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"26",
     note_romance: "Re",
     note_english: "D",
     note_german: "D",
@@ -156,6 +171,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"27",
     note_romance: "Re#",
     note_english: "Eb",
     note_german: "Eb",
@@ -166,6 +182,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"28",
     note_romance: "Mi",
     note_english: "E",
     note_german: "E",
@@ -176,6 +193,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"29",
     note_romance: "Fa",
     note_english: "F",
     note_german: "F",
@@ -186,6 +204,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"30",
     note_romance: "Fa#",
     note_english: "Gb",
     note_german: "Gb",
@@ -196,6 +215,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"31",
     note_romance: "Sol",
     note_english: "G",
     note_german: "G",
@@ -206,6 +226,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"32",
     note_romance: "Sol#",
     note_english: "Ab",
     note_german: "Ab",
@@ -216,6 +237,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"33",
     note_romance: "La",
     note_english: "A",
     note_german: "A",
@@ -226,6 +248,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"34",
     note_romance: "La#",
     note_english: "Bb",
     note_german: "B",
@@ -236,6 +259,7 @@ const notes = [
     octaveOffset: 1
   },
   {
+    midi_nr:"35",
     note_romance: "Si",
     note_english: "B",
     note_german: "H",

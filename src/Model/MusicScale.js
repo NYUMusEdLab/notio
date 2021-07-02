@@ -12,34 +12,39 @@ import scales from "../data/scalesObj";
 // StartToneStep defines which chromatic step (0-11)
 class MusicScale {
 
-  constructor(scaleRecipe, rootnote, startingFromStep, ambitusInSemitones) {
+  constructor(scaleRecipe=null, rootnote="C", startingFromStep=0, ambitusInSemitones=36) {
+    if(scaleRecipe !== null){
     this.Recipe = {...scaleRecipe};
     this.Name = scaleRecipe.name;
     this.SemitoneSteps = scaleRecipe.steps;
     this.ExtensionNumbers = scaleRecipe["numbers"];
-
     this.RootNoteName = rootnote;//The scale root
     this.StartToneStep = startingFromStep;
     this.AmbitusInSemiNotes = ambitusInSemitones > 12 ? ambitusInSemitones : 12;
     //this.OctaveOffset = octaveOffset;
     this.init()
+    }else {
+    this.RootNoteName = rootnote;//The scale root
+    this.StartToneStep = startingFromStep;
+    this.AmbitusInSemiNotes = ambitusInSemitones > 12 ? ambitusInSemitones : 12;
+    }
   }
 
   Name = "";
-  RootNoteName;
-  RootNote;
-  Recipe;
+  RootNoteName = "";
+  RootNote = {};
+  Recipe={};
   SemitoneSteps = [];//Corresponding steps in C chromatic scale
   ExtendedScaleSteps = {};
   ExtendedScaleStepsRelativeToC = [];
-  MidiNoteNr
+  MidiNoteNr = []
   ExtendedScaleToneNames = {};
   ExtendedScaleTones = [];
-  ExtensionNumbers;//The numbers written on a chord like A(7b9)
-  StartToneStep; //select a tone on index 0-11
+  ExtensionNumbers=[];//The numbers written on a chord like A(7b9)
+  StartToneStep = 0; //select a tone on index 0-11
   BasisScale = []; //one octave of the scale starting at C
-  AmbitusInSemiNotes;//How many halftones must the actual scale span
-  Transposition; //= () =>  this.RootNote.index;
+  AmbitusInSemiNotes = 24;//How many halftones must the actual scale span
+  Transposition = 0; //= () =>  this.RootNote.index;
   Octave = 0;
   Notations = [];
 
@@ -58,10 +63,11 @@ class MusicScale {
     //this.addNumberExtensions();
     this.Notations = notations
     this.ExtendedScaleSteps = [...this.BuildExtendedScaleSteps()];
-    this.MidiNoteNr = this.MakeMidinumbering(this.ExtendedScaleSteps,this.Transposition)
     this.ExtendedScaleStepsRelativeToC = this.ExtendedScaleSteps.map((step=>(step - this.Transposition+12)))
     this.ExtendedScaleToneNames = { ...this.BuildExtendedScaleToneNames(this.Recipe.numbers, this.ExtendedScaleSteps, this.RootNote.note, this.Notations, this.Name) };
     this.ExtendedScaleTones = [...this.BuildExtendedScaleTones(this.ExtendedScaleSteps, this.ExtendedScaleToneNames)];
+    this.MidiNoteNr = this.MakeMidinumbering(this.ExtendedScaleTones)
+
     //console.log("basis:",this.ExtendedScaleToneNames);
   }
 
@@ -177,10 +183,11 @@ class MusicScale {
 
 
   //#region Naming Functions
-
-  MakeMidinumbering(extendedScaleNumbers, transposition){
-    const middleC3 = 48
-    return extendedScaleNumbers.map((nr)=> middleC3 + nr  + this.Transposition)
+//TODO: JAKOB this can be deleted I believe
+  MakeMidinumbering(extendedScaleTones, transposition){
+    return extendedScaleTones.map((tone)=> tone.midi_nr)
+    // const middleC3 = 48
+    // return extendedScaleNumbers.map((nr)=> middleC3 + nr  + this.Transposition)
   }
 
   BuildExtendedScaleToneNames(ScaleStepNumbers, semiToneSteps, rootNoteName, notation, scaleName) {
