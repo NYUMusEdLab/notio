@@ -462,7 +462,7 @@ class Keyboard extends Component {
 
       let noteName = []
       let isKeyInScale = false
-      let toneindex = currentScale.MidiNoteNr.indexOf(note.midi_nr)%12
+      let toneindex = currentScale.MidiNoteNr.indexOf(keyboardLayoutScale.MidiNoteNr[index])
       if (toneindex !== -1){
         isKeyInScale = true
         for (let i = 0; i < notation.length; i++) {
@@ -499,14 +499,16 @@ class Keyboard extends Component {
           //   /* eslint-disable no-duplicate-case */
       }
 
+      const keyboardNote = isKeyInScale ? currentScale.ExtendedScaleTones[toneindex] : keyboardLayoutScale.ExtendedScaleTones[index]
 
-      const keyboardNote = keyboardLayoutScale.ExtendedScaleTones[index]
+      //const keyboardNote = keyboardLayoutScale.ExtendedScaleTones[index]
+      
       return (
         //<p>-| {noteName} |</p> 
         <Key
           keyIndex={index} // Index in loop of notes
           index={index} // index on Keyboard
-          note={`${ noteName ? currentScale.ExtendedScaleToneNames.English[toneindex] :keyboardNote.note_english}${octave + keyboardNote.octaveOffset}`} //sounding note
+          note={`${ isKeyInScale ? currentScale.ExtendedScaleToneNames.English[toneindex] : keyboardNote.note_english}${octave + keyboardNote.octaveOffset}`} //sounding note
           noteNameEnglish={keyboardNote.note_english}
           notation={notation}
           noteName={noteName}

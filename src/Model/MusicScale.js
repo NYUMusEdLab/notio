@@ -84,7 +84,7 @@ class MusicScale {
         this.ExtendedScaleToneNames
       ),
     ];
-    this.MidiNoteNr = this.MakeMidinumbering(this.ExtendedScaleTones);
+    this.MidiNoteNr = this.MakeMidinumbering(this.ExtendedScaleTones, this.ExtendedScaleSteps);
 
     //console.log("basis:",this.ExtendedScaleToneNames);
   }
@@ -182,9 +182,15 @@ class MusicScale {
       const tempStepText = toneNames.Scale_Steps[index];
 
       //const tempextensionText = "" + this.Recipe.numbers[index % this.SemitoneSteps.length];
-      const octaveOffset =
+     
+      let  octaveOffset = 
         this.Octave + Math.floor((step + this.Transposition) / 12);
-
+      //special case when displaying B# and Cb
+      if (toneNames.English[index] === "Cb") 
+      {octaveOffset++;}
+      if (toneNames.English[index] === "B#") 
+      {octaveOffset--;}
+        
       let note = {
         ...tempnote,
         scale_step: tempStepText,
@@ -402,8 +408,12 @@ class MusicScale {
   //   return temp;
   // }
 
-  MakeMidinumbering(extendedScaleTones) {
-    return extendedScaleTones.map((tone) => tone.midi_nr);
+  MakeMidinumbering(extendedScaleTones, extendedScaleSteps) {
+    const startStep = extendedScaleSteps[0]
+    const startMidiNr = extendedScaleTones[0].midi_nr    
+    return extendedScaleTones.map((tone,index) => {
+      return startMidiNr + extendedScaleSteps[index]-startStep
+    });
   }
   //#endregion
 
