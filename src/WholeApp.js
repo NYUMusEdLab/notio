@@ -11,7 +11,7 @@ import { notio_tutorial } from './data/config';
 
 class WholeApp extends Component {
   state = {
-    octave: 3,
+    octave: 4,
     scale: "Major (Ionian)",
     clef: "treble",
     baseNote: "C",

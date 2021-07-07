@@ -585,7 +585,7 @@ MakeChromatic(scaleFormula, keyName, whichNotation) {
       scaleFormula,
       this.Recipe.steps.length
     );
-    startingNote = relative;
+    startingNote = 0//relative;
   }
 
   //console.log(root, startingNote);
@@ -599,30 +599,30 @@ MakeChromatic(scaleFormula, keyName, whichNotation) {
     try {
       myScale = myScaleFormula.map(
         (step, index) =>
-          TONE_NAMES[whichNotation].flats[(index + startingNote) % 12]
+          TONE_NAMES[whichNotation].flats[(step + startingNote) % 12]
       );
     } catch {
       myScale = myScaleFormula.map(
         (step, index) =>
-          "err!" + ((index + startingNote) % TONE_NAMES.English.sharps.length)
+          "err!" + ((step + startingNote) % TONE_NAMES.English.sharps.length)
       ); // high note used to indicate error
     }
   } else if (this.noteNameToIndex(keyName) !== -1) {
     try {
       myScale = myScaleFormula.map(
         (step, index) =>
-          TONE_NAMES[whichNotation].sharps[(index + startingNote) % 12]
+          TONE_NAMES[whichNotation].sharps[(step + startingNote) % 12]
       );
     } catch {
       myScale = myScaleFormula.map(
         (step, index) =>
-          "err!" + ((index + startingNote) % TONE_NAMES.English.sharps.length)
+          "err!" + ((step + startingNote) % TONE_NAMES.English.sharps.length)
       ); // high note used to indicate error
     }
   } else {
     myScale = myScaleFormula.map(
       (step, index) =>
-        "err!" + ((index + startingNote) % TONE_NAMES.English.sharps.length)
+        "err!" + ((step + startingNote) % TONE_NAMES.English.sharps.length)
     ); // high note used to indicate error
   }
 
@@ -799,11 +799,20 @@ makeScalePentatonicBlues(scaleFormula, keyName, scaleName, whichNotation) {
     return Number(IndexNumber); // it should be a number already, but...
   }
 
+  //Calculates what index in scale contains the root
   findScaleStartIndexRelativToRoot(recipe, scaleLength) {
     let IndexNumber = -1;
     let firstInScale = recipe.find((e) => e % 12 === 0);
-    IndexNumber = scaleLength - (recipe.indexOf(firstInScale) % scaleLength);
+    IndexNumber = firstInScale !== 0 ? scaleLength - (recipe.indexOf(firstInScale) % scaleLength) : 0
     return IndexNumber;
+  }
+
+  next(recipe,index){
+    return index < recipe.length -1 ? index++ : 0 
+  }
+
+  previous(recipe,index){
+    return index > 1 ? index-- : recipe.length-1 
   }
 }
 export default MusicScale;

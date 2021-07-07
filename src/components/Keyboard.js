@@ -21,6 +21,12 @@ let threeLowerOctave = new Set();
 
 const pressedKeys = new Set();
 
+
+/*There are two scales:
+* keyboardlayoutScale- is the scale that represents all the keys on the piano.
+* currentScale       - is the scale the scale that should be shown on the piano (the scale selected by the user)
+* 
+*/
 class Keyboard extends Component {
 
   //#region Constructor
@@ -231,80 +237,6 @@ class Keyboard extends Component {
   //#endregion
 
 
-  //#region Scale Generation
-  
-
-  // //this function will generate the notes (english) that will be passed to ToneJs, with Enharmonicss
-  // generateCurrentScale = scaleFormula => {
-  //   const { scale, baseNote } = this.props;
-  //   if (scale.includes("Chromatic")) {
-  //     return ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-  //   }
-  //   else if (!scale.includes("Pentatonic") && !scale.includes("Blues")) {
-  //     return makeScaleMajorMinor(scaleFormula, baseNote, "English");
-  //   }
-  //   else {
-  //     return makeScalePentatonicBlues(scaleFormula, baseNote, scale, "English");
-  //   }
-
-  // };
-
-  // generateScales = scaleReciepe => {
-
-  //   //TODO: NOTE that this creates a full scale with all naming and numbering and tones embedded.
-  //   // I believe this can replace a lot of the code in keyboard
-  //   // let fromstep = this.props.extendedKeyboard === true ? 7 : 0;
-  //   // let ambitus = this.props.extendedKeyboard === true ? 21 : 13;
-  //   // let recipe = scales.find(obj => obj.name === this.props.scale);
-  //   // let root = this.props.baseNote;
-  //   // let myScale = new MusicScale(recipe, root, fromstep, ambitus).ExtendedScaleToneNames
-
-  //   // return myScale;
-  //   // console.log("jakob scale", myScale);
-
-  //   let theScale = {};
-
-  //   const { notation, scale, baseNote } = this.props;
-
-  //   //this is my scale after applying the formulas for minor and major with the correct name
-  //   //works only for major scales and for harmonic minor, melodic minor and natural minor
-  //   for (let i = 0; i < notation.length; i++) {
-  //     if (
-  //       notation[i] === "English" ||
-  //       notation[i] === "German" ||
-  //       notation[i] === "Romance"
-  //     ) {
-  //       if (scale.includes("Chromatic")) {
-  //         // Todo : has to be replaced by Jakob's function
-  //         return {
-  //           Romance: ['Do', 'Do#', 'Ré', 'Ré#', 'Mi', 'Fa', 'Fa#', 'Sol', 'Sol#', 'La', 'La#', 'Si'],
-  //           German: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'H'],
-  //           English: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
-  //         };
-  //       }
-  //       else if (!scale.includes("Pentatonic") && !scale.includes("Blues")) {
-  //         theScale[notation[i]] = makeScaleMajorMinor(
-  //           scaleReciepe,
-  //           baseNote,
-  //           notation[i]
-  //         );
-  //       } else {
-  //         theScale[notation[i]] = makeScalePentatonicBlues(
-  //           scaleReciepe,
-  //           baseNote,
-  //           scale,
-  //           notation[i]
-  //         );
-  //       }
-  //     }
-  //   }
-
-  //   return theScale;
-  // };
-
-  //#endregion
-
-
   convert_ScaleNameTo_ScaleReciepe(scaleName) {
     return scaleReciepe = scales.find(obj => obj.name === scaleName);
   }
@@ -394,33 +326,16 @@ class Keyboard extends Component {
 
   //#endregion
 
-  // // TODO : Maybe can be improved and determine dynamically by a formula
-  // scaleShifting(isExtendedKeyboard, scale, shifting = 0) {
-  //   let currentRoot = this.getRootInfo(rootNote, this.props.baseNote);
 
-  //   let r = isExtendedKeyboard
-  //     ? scale.includes("Pentatonic")
-  //       ? 3
-  //       : scale.includes("Chromatic")
-  //         ? 7 + currentRoot.index
-  //         : scale.includes("Locrian")
-  //           ? 5
-  //           : 4
-  //     : scale.includes("Chromatic")
-  //       ? currentRoot.index
-  //       : 0;
-  //   return r + shifting;
-  // }
 
   updateScales(){
       const {scale: scaleName, baseNote, extendedKeyboard } = this.props;
-      const scaleStart  = extendedKeyboard ?  7:0
-      const ambitus     = extendedKeyboard ? 24:13 
-      keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
-      let keyboardLayoutScale= new MusicScale(keyboardLayoutScaleReciepe,baseNote,scaleStart, ambitus)
-    //let keyboardLayoutScale= makeScale(keyboardLayoutScaleReciepe,"C",0,24)
-      scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName); 
-      let currentScale = new MusicScale(scaleReciepe,baseNote,scaleStart,ambitus)
+      const scaleStart  = extendedKeyboard ?  7:0   //Decides on what chromatic step  the extended scale start on 7 == starts on the fifth, 2 == starts on the major second. TODO: this should be set elsewhere not as a magic number in a function!!
+      const ambitus     = extendedKeyboard ? 24:13  //Decides How many halftones should be shown on the keyboard, 13 == shows an octave from Root to Root                    TODO: this should be set elsewhere not as a magic number in a function!!
+      const keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic");
+      const keyboardLayoutScale    = new MusicScale(keyboardLayoutScaleReciepe,baseNote,scaleStart, ambitus)
+      const scaleReciepe               = this.convert_ScaleNameTo_ScaleReciepe(scaleName); 
+      const currentScale           = new MusicScale(scaleReciepe,baseNote,scaleStart,ambitus)
       
       return {keyboardLayoutScale,currentScale}
   }
@@ -450,23 +365,20 @@ class Keyboard extends Component {
     const { mouse_is_down } = this.state;
     const {keyboardLayoutScale,currentScale} = this.updateScales();
     
-    //we use relativeCount for Scale Steps
-    // let relativeCount = this.scaleShifting(extendedKeyboard, scale);
-    // let relativeCountScale = this.scaleShifting(extendedKeyboard, scale, -1);
-    // let relativeCountChord = relativeCount;
-    // let currentScaleIndex = 0
+
     
     // Loop on note list
+    //creates all keys on the keyboard, their naming, color, and activeness (can they be played or not)
     const noteList =  keyboardLayoutScale.ExtendedScaleTones.map((note,index) => {
      
 
       let noteName = []
-      let isKeyInScale = false
+      let isKeyInScale = false //If this is false , the tone will be grayed out on the keyboard (only layout)
       let toneindex = currentScale.MidiNoteNr.indexOf(keyboardLayoutScale.MidiNoteNr[index])
       if (toneindex !== -1){
         isKeyInScale = true
         for (let i = 0; i < notation.length; i++) {
-          //   /* eslint-disable no-duplicate-case */
+          
             const notationName = notation[i]
             switch (notationName) {
               case "Romance":
@@ -494,14 +406,15 @@ class Keyboard extends Component {
                 break;
                
               default:
+                console.error("This notation is not supported:",notationName)
             }
           }
           //   /* eslint-disable no-duplicate-case */
       }
 
+      //keyboardNote is either a note in the currentScale thus playable and namable or 
+      //a note not in the scale and thus grayed out, no name and not playable
       const keyboardNote = isKeyInScale ? currentScale.ExtendedScaleTones[toneindex] : keyboardLayoutScale.ExtendedScaleTones[index]
-
-      //const keyboardNote = keyboardLayoutScale.ExtendedScaleTones[index]
       
       return (
         //<p>-| {noteName} |</p> 
@@ -517,7 +430,7 @@ class Keyboard extends Component {
           keyColor={keyboardNote.pianoColor}
           isOn={isKeyInScale}
           root={baseNote}
-          isMajorSeventh={true}
+          isMajorSeventh={true}//TODO: I believe that this should be removed!!(JAKOB)
           synth={synth}
           isMouseDown={mouse_is_down}
           pianoOn={pianoOn}
