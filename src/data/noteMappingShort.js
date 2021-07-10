@@ -36,3 +36,8 @@ export const ROMANCE_MIDI_FLAT_NAMES = [
 export const ROMANCE_MIDI_DOUBLE_FLAT_NAMES = [
                     'Do', 'Reb', 'Mibb', 'Mib', 'Fab', 'Fa', 'Solb', 'Labb', 'Lab', 'Sibb', 'Sib', 'Dob',
                     'Do', 'Reb', 'Mibb', 'Mib', 'Fab', 'Fa', 'Solb', 'Labb', 'Lab', 'Sibb', 'Sib', 'Dob'];
+
+export const ENGLISH_SHARP_NAMES = ['B#', 'C#', 'D', 'D#', 'E', 'E#', 'F#', 'G', 'G#', 'A', 'A#', 'B','C'];
+                            
+  
+export const ENGLISH_FLAT_NAMES =['B','C', 'Db', 'D', 'Eb', 'Fb', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'Cb'];

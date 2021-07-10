@@ -74,6 +74,11 @@ const scales = [
     name: "Major Blues",
     steps: [0, 2, 3, 4, 7, 9],
     numbers: ['1', '2', 'b3', '3', '5', '6'],
+  },
+  {
+    name: "Custom",
+    steps: [0, 1, 2, 3, 6, 11],
+    numbers: ['1', 'b2', '2', 'b3', '#11', '△7'],
   }
 ];
 

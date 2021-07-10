@@ -12,7 +12,7 @@ import { notio_tutorial } from './data/config';
 class WholeApp extends Component {
   state = {
     octave: 4,
-    scale: "Major (Ionian)",
+    scale: "Custom",//"Major (Ionian)",
     clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
