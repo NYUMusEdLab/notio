@@ -70,7 +70,6 @@ class MusicScale {
     this.Name = this.Recipe.name;
     this.SemitoneSteps = [...this.Recipe.steps];
     this.ExtensionNumbers = [...this.Recipe["numbers"]];
-
     this.RootNote = rootNote.find((obj) => {
       return obj.note === this.RootNoteName;
     });
@@ -81,6 +80,8 @@ class MusicScale {
     //this.addNumberExtensions();
     this.Notations = notations;
     this.ExtendedScaleSteps = [...this.BuildExtendedScaleSteps()];
+    this.Octave = this.ExtendedScaleSteps[0]%12 === 0 ? this.Octave : this.Octave-1
+
     // this.ExtendedScaleStepsRelativeToC = this.ExtendedScaleSteps.map((step=>(step - this.Transposition+12)))
     this.ExtendedScaleToneNames = {
       ...this.BuildExtendedScaleToneNames(
@@ -395,7 +396,7 @@ class MusicScale {
 //TODO: implement support for extended scale. And check problem with sharp keys like root===C#
 //makes English and German noteNaming based on chord-extension numberig.
   MakeCustomScale(scaleFormula, keyName, whichNotation, scaleRecipe) {
-    const majorScale = this.MakeChromatic([0,2,4,5,7,9,11], keyName, whichNotation)
+    const majorScale = this.MakeChromatic([0,2,4,5,7,9,11], keyName, whichNotation)//this.MakeScaleMajorMinor([0,2,4,5,7,9,11], keyName, whichNotation)
     let tempScale = []
     let numbers = this.makeScaleNumbers(scaleRecipe,scaleFormula, keyName)
     if(whichNotation === "Chord extensions"){
@@ -413,7 +414,7 @@ class MusicScale {
         basisToneNumber = number.replace('#','')
         accidental = '#'
      }
-      else if (number === 7){
+      else if (number === "7"){
         basisToneNumber = 7
           accidental = 'b'
         }
@@ -502,10 +503,13 @@ class MusicScale {
 
   MakeMidinumbering(extendedScaleTones, extendedScaleSteps) {
     const startStep = extendedScaleSteps[0]
-    const startMidiNr = extendedScaleTones[0].midi_nr    
-    return extendedScaleTones.map((tone,index) => {
+    const OneOctaveSteps = extendedScaleSteps.map(step => step % 12)
+    const distanceFrom_C0_Midi_Nr12 = this.noteNameToIndex(extendedScaleTones[0].note_english)
+    const startMidiNr = 12+distanceFrom_C0_Midi_Nr12 //midi_nr12_index//extendedScaleTones[0].midi_nr    
+    const midinumbers = extendedScaleTones.map((tone,index) => {
       return startMidiNr + extendedScaleSteps[index]-startStep
     });
+    return midinumbers
   }
   //#endregion
 

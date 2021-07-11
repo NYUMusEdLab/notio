@@ -76,11 +76,37 @@ const scales = [
     numbers: ['1', '2', 'b3', '3', '5', '6'],
   },
   {
-    name: "Custom",
+    name: "Whole tone Custom",
+    steps: [0, 2, 4, 6, 8, 10],
+    numbers: ['1', '2', '3', '#4', '#5', '7'],
+    // steps: [0, 1, 2, 3, 6, 11],
+    // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
+  },
+  {
+    name: "Dim scale major7 Custom",
+    steps: [0, 2, 3, 5, 6, 8, 9, 11],
+    numbers: ['1', '2', 'b3', '4','#4', '#5','6', '△7'],
+    // steps: [0, 1, 2, 3, 6, 11],
+    // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
+  },
+  {
+    name: "Dim scale minor7 Custom",
+    steps: [0, 1, 3, 4, 6, 7, 9, 10],
+    numbers: ['1', 'b2', 'b3', '3','#4', '5','6', '7'],
+    // steps: [0, 1, 2, 3, 6, 11],
+    // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
+  },
+  {
+    name: "Major Custom",
     steps: [0, 2, 4, 5, 7, 9, 11],
     numbers: ['1', '2', '3', '4', '5', '6', '△7'],
     // steps: [0, 1, 2, 3, 6, 11],
     // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
+  },
+  {
+    name: "Strange Custom",
+    steps: [0, 1, 2, 3, 6, 11],
+    numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
   }
 ];
 
