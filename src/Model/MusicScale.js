@@ -563,10 +563,10 @@ MakeChromatic(scaleFormula, keyName, whichNotation) {
     whichNotation === "Chord_extensions" ||
     whichNotation === "Scale_Steps"
   ) {
-    let relative = this.findScaleStartIndexRelativToRoot(
-      scaleFormula,
-      this.Recipe.steps.length
-    );
+    // let relative = this.findScaleStartIndexRelativToRoot(
+    //   scaleFormula,
+    //   this.Recipe.steps.length
+    // );
     startingNote = 0//relative;
   }
 

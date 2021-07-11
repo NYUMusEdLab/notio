@@ -15,7 +15,7 @@ const keycodes = ['KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK',
 const keycodesExtended = ['KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK',
   'KeyL', 'Semicolon', 'Quote', 'BracketLeft', 'Equal'];
 
-let targetArr, activeElementsforKeyboard, scaleReciepe, keyboardLayoutScaleReciepe;
+let targetArr, activeElementsforKeyboard //, scaleReciepe, keyboardLayoutScaleReciepe;
 
 let threeLowerOctave = new Set();
 
@@ -238,7 +238,8 @@ class Keyboard extends Component {
 
 
   convert_ScaleNameTo_ScaleReciepe(scaleName) {
-    return scaleReciepe = scales.find(obj => obj.name === scaleName);
+    const  scaleReciepe = scales.find(obj => obj.name === scaleName);
+    return scaleReciepe
   }
 
 
