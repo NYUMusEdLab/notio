@@ -266,11 +266,21 @@ class MusicScale {
         case "Romance":
           switch (maxDist) {
             case 2:
-              theScale[whichNotation] = this.makeScaleMajorMinor(
+              if (scaleName.includes("Custom"))
+              theScale[whichNotation] = this.MakeCustomScale(//this.makeScaleMajorMinor(
                 semiToneSteps,
                 rootNoteName,
-                whichNotation
+                whichNotation,
+                this.Recipe
               );
+              else {
+                theScale[whichNotation] = this.makeScaleMajorMinor(
+                  semiToneSteps,
+                  rootNoteName,
+                  whichNotation                
+                  );
+
+              }
               break;
             case 1:
               theScale[whichNotation] = this.MakeChromatic(
@@ -385,7 +395,7 @@ class MusicScale {
 //TODO: implement support for extended scale. And check problem with sharp keys like root===C#
 //makes English and German noteNaming based on chord-extension numberig.
   MakeCustomScale(scaleFormula, keyName, whichNotation, scaleRecipe) {
-    const majorScale = this.makeScaleMajorMinor([0,2,4,5,7,9,11], keyName, whichNotation)
+    const majorScale = this.MakeChromatic([0,2,4,5,7,9,11], keyName, whichNotation)
     let tempScale = []
     let numbers = this.makeScaleNumbers(scaleRecipe,scaleFormula, keyName)
     if(whichNotation === "Chord extensions"){
@@ -802,7 +812,7 @@ makeScalePentatonicBlues(scaleFormula, keyName, scaleName, whichNotation) {
         result = basistoneName+'#'
         break
       case 2:
-        result = basistoneName + 'x'
+        result = basistoneName + '##'//'x'
         break
       case -1:
         result = basistoneName + 'b'
