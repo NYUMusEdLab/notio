@@ -95,11 +95,11 @@ class VideoTutorial extends Component {
                         <Form.Label>Video url</Form.Label>
                         <Form.Control type="text" placeholder="Enter url" />
                         <Form.Text className="text-muted">
-                          Change the Notio tutorials by any other video url</Form.Text>
+                          Enter the url for any video that you want to use with the app</Form.Text>
 
                         <Button variant="primary" type="submit">
-                          Change video
-                      </Button>
+                          Use this video
+                        </Button>
                         <Button variant="outline-danger" onClick={this.resetVideoUrl}>Reset to Notio Tutorial</Button>
                       </Form.Group>
                     </Form>
