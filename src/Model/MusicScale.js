@@ -382,7 +382,8 @@ class MusicScale {
     return theScale;
   }
 
-
+//TODO: implement support for extended scale. And check problem with sharp keys like root===C#
+//makes English and German noteNaming based on chord-extension numberig.
   MakeCustomScale(scaleFormula, keyName, whichNotation, scaleRecipe) {
     const majorScale = this.makeScaleMajorMinor([0,2,4,5,7,9,11], keyName, whichNotation)
     let tempScale = []
@@ -418,6 +419,7 @@ class MusicScale {
     return tempScale
   }
 
+  //Used for creating complete scale description, based on major scale like 1,2,b3,#11,5,13
   makeScaleNumbers(recipe, scaleFormula, keyName) {
     let extendedNumbers = [];
     let extensions = recipe.numbers;
