@@ -243,6 +243,7 @@ class MusicScale {
   //#region Naming Functions
   
 
+  //TODO: splice this function with MakeScaleNotations() function
   BuildExtendedScaleToneNames(
     ScaleStepNumbers,
     semiToneSteps,
@@ -266,14 +267,20 @@ class MusicScale {
         case "German":
         case "Romance":
           switch (maxDist) {
-            case 2:
+            case 2://All scales with a max distance of 2 , is expected to contain one of each letter (ABCDEFG), if that is not the intention add "Custom" to the name" 
               if (scaleName.includes("Custom"))
-              theScale[whichNotation] = this.MakeCustomScale(//this.makeScaleMajorMinor(
+              theScale[whichNotation] = this.MakeScaleNotations(
                 semiToneSteps,
                 rootNoteName,
-                whichNotation,
-                this.Recipe
-              );
+                scaleName,
+                whichNotation
+              ); //this.ExtendedScaleSteps.map(step => basicScale[step%12])};
+              // theScale[whichNotation] = this.MakeCustomScale(//this.makeScaleMajorMinor(
+              //   semiToneSteps,
+              //   rootNoteName,
+              //   whichNotation,
+              //   this.Recipe
+              // );
               else {
                 theScale[whichNotation] = this.makeScaleMajorMinor(
                   semiToneSteps,
@@ -503,9 +510,8 @@ class MusicScale {
 
   MakeMidinumbering(extendedScaleTones, extendedScaleSteps) {
     const startStep = extendedScaleSteps[0]
-    const OneOctaveSteps = extendedScaleSteps.map(step => step % 12)
     const distanceFrom_C0_Midi_Nr12 = this.noteNameToIndex(extendedScaleTones[0].note_english)
-    const startMidiNr = 12+distanceFrom_C0_Midi_Nr12 //midi_nr12_index//extendedScaleTones[0].midi_nr    
+    const startMidiNr = distanceFrom_C0_Midi_Nr12 //midi_nr12_index//extendedScaleTones[0].midi_nr    
     const midinumbers = extendedScaleTones.map((tone,index) => {
       return startMidiNr + extendedScaleSteps[index]-startStep
     });
@@ -606,6 +612,7 @@ MakeChromatic(scaleFormula, keyName, whichNotation) {
   return myScale;
 }
 
+//TODO: must be fixed to handle C# major, G# major and D# major, now it repeats tones in steadt of producing Fx and Gx
 makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
   const ALPHA_NAMES = {};
   ALPHA_NAMES.English = ["A", "B", "C", "D", "E", "F", "G"];
