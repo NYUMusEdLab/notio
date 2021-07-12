@@ -15,7 +15,7 @@ const ShareLink = (props) => {
     return (
       <div class="share-link">
         <h2>Share</h2>
-        <p>Share your current state of the application :</p>
+        <p>Share your current setup:</p>
         <a href={url} title="" target="_blank" rel="noopener noreferrer">
           {fullUrl}
         </a>

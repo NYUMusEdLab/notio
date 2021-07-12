@@ -30,6 +30,14 @@
       color : black;
     }
 
+    @media (min-width: 1537px) {
+      .form-check-label {
+        width: 1.8vw;
+      }
+    }
+
+
+
     .form-check-input:disabled~.form-check-label,
     .form-check-input[disabled]~.form-check-label {
       border: none;
