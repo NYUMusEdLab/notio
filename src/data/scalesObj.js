@@ -112,6 +112,11 @@ const scales = [
     name: "Strange Custom #11",
     steps: [0, 1, 2, 3, 6, 11],
     numbers: ['1', 'b2', '2', 'b3', '#4', '△7'],
+  },
+  {
+    name: "Mixolydian b9b13 Custom",
+    steps: [0, 1, 4, 5, 7, 8, 10],
+    numbers: ['1', 'b2', '3', '4', '5','b6', '7'],
   }
 ];
 

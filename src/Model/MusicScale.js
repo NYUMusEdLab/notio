@@ -242,8 +242,16 @@ class MusicScale {
 
   //#region Naming Functions
   
-
-  //TODO: splice this function with MakeScaleNotations() function
+  /* Creates an array of strings containing different noteNames based on scale name and 
+  *  notation. 
+  * params:  
+  *   ScaleStepNumbers: the numbers from a scaleObj 
+  *   semiToneSteps: an array containing All the relative steps in the scale 
+  *   rootNoteName: string
+  *   notation: string (German, or Chord extensions ....)
+  *   scaleName: 
+  */
+  //TODO: splice this function with MakeScaleNotations() function. Maybe use a scaleObj as param to replace ScaleStepNumbers and scaleName
   BuildExtendedScaleToneNames(
     ScaleStepNumbers,
     semiToneSteps,
@@ -358,6 +366,10 @@ class MusicScale {
     return theScale;
   }
 
+   /* Creates an array of strings containing different noteNames based on scale name and 
+  *  notation. 
+  */
+  //TODO: splice this function with BuildExtendedScaleToneNames() function. 
   MakeScaleNotations(scaleFormula, keyName, scaleName, whichNotation) {
     let theScale = {};
 
@@ -400,44 +412,11 @@ class MusicScale {
     return theScale;
   }
 
-//TODO: implement support for extended scale. And check problem with sharp keys like root===C#
-//makes English and German noteNaming based on chord-extension numberig.
-  MakeCustomScale(scaleFormula, keyName, whichNotation, scaleRecipe) {
-    const majorScale = this.MakeChromatic([0,2,4,5,7,9,11], keyName, whichNotation)//this.MakeScaleMajorMinor([0,2,4,5,7,9,11], keyName, whichNotation)
-    let tempScale = []
-    let numbers = this.makeScaleNumbers(scaleRecipe,scaleFormula, keyName)
-    if(whichNotation === "Chord extensions"){
-      tempScale = [...numbers]
-    }
-    else {
-     tempScale = numbers.map(number => {
-      let accidental = ''
-      let basisToneNumber = number
-      if (number.includes("b")){
-         basisToneNumber = number.replace('b','')
-         accidental = 'b'
-      }
-      else if (number.includes("#")){
-        basisToneNumber = number.replace('#','')
-        accidental = '#'
-     }
-      else if (number === "7"){
-        basisToneNumber = 7
-          accidental = 'b'
-        }
-        else if (number === "△7"){
-          basisToneNumber = 7
-            accidental = ''
-        }
-        const index =  Number(basisToneNumber)-1
-        const temp = this.addAccidental(majorScale[(index%7)], accidental)
-        return temp
-      })
-    }
-    return tempScale
-  }
 
-  //Used for creating complete scale description, based on major scale like 1,2,b3,#11,5,13
+/*
+*  Used for creating complete scale description, based on major scale like 1,2,b3,#11,5,13
+*/
+//TODO: remove keyName param
   makeScaleNumbers(recipe, scaleFormula, keyName) {
     let extendedNumbers = [];
     let extensions = recipe.numbers;
@@ -454,6 +433,7 @@ class MusicScale {
     return extendedNumbers;
   }
 
+  //TODO: remove keyName param
   makeChordExtensions(recipe, scaleFormula, keyName) {
     let theScale = [];
     let extensions = recipe.numbers;
@@ -487,27 +467,12 @@ class MusicScale {
     return theScale;
   }
 
-  // addNumberExtensions() {
-  //   let temp = [];
 
-  //   const { steps, numbers: Chord_extensions } = this.Recipe;
-
-  //   for (let i = 0; i < steps.length; i++) {
-  //     let tempnote = notes[(steps[i] + this.Transposition) % 12];
-  //     const tempdistToRoot = steps[i];
-  //     const tempscale_step = "" + (i + 1);
-  //     const tempextensionText = "" + Chord_extensions[i];
-  //     let note = Object.assign({}, tempnote);
-  //     note.scale_step = tempscale_step;
-  //     note.dist_toRoot = tempdistToRoot;
-  //     note.chord_extension = tempextensionText;
-
-  //     temp.push(note);
-  //   }
-
-  //   return temp;
-  // }
-
+  /*This function creates an array of midi-numbers making the first C === midi_nr 12
+  * params: 
+  *   extendedScaleTones: a list of note Objects
+  *   extendedScaleSteps: an array containing All the relative steps in the scale
+  */
   MakeMidinumbering(extendedScaleTones, extendedScaleSteps) {
     const indexOfRoot = extendedScaleSteps.map(t=>t%12).indexOf(0)//find index of the first root in the scale steps
     const distanceFrom_C0_Midi_Nr12 = this.noteNameToIndex(extendedScaleTones[indexOfRoot].note_english)
@@ -517,6 +482,53 @@ class MusicScale {
   //#endregion
 
 //#region scaleFactories
+
+/* Produces an array of toneNames with added accidentals.
+* the basis scale is based on a chromatic scale, this can be changed to
+* using a major scale by changing the first line to use MakeScaleMajorMinor()
+* params: 
+*   scaleFormula:  array of all relative scalesteps  
+*   keyName: string with the name of the root
+*   whichNotation:  string
+*   scaleRecipe: scaleObj
+ */
+MakeCustomScale(scaleFormula, keyName, whichNotation, scaleRecipe) {
+  const majorScale = this.MakeChromatic([0,2,4,5,7,9,11], keyName, whichNotation)//this.MakeScaleMajorMinor([0,2,4,5,7,9,11], keyName, whichNotation)
+  let tempScale = []
+  let numbers = this.makeScaleNumbers(scaleRecipe,scaleFormula, keyName)
+  if(whichNotation === "Chord extensions"){
+    tempScale = [...numbers]
+  }
+  else {
+   tempScale = numbers.map(number => {
+    let accidental = ''
+    let basisToneNumber = number
+    if (number.includes("b")){
+       basisToneNumber = number.replace('b','')
+       accidental = 'b'
+    }
+    else if (number.includes("#")){
+      basisToneNumber = number.replace('#','')
+      accidental = '#'
+   }
+    else if (number === "7"){
+      basisToneNumber = 7
+        accidental = 'b'
+      }
+      else if (number === "△7"){
+        basisToneNumber = 7
+          accidental = ''
+      }
+      const index =  Number(basisToneNumber)-1
+      const temp = this.addAccidental(majorScale[(index%7)], accidental)
+      return temp
+    })
+  }
+  return tempScale
+}
+
+
+
 MakeChromatic(scaleFormula, keyName, whichNotation) {
   const TONE_NAMES = {
     English: {
@@ -787,19 +799,27 @@ makeScalePentatonicBlues(scaleFormula, keyName, scaleName, whichNotation) {
     return IndexNumber;
   }
 
+  /* Returns the next element in an array, making it circular
+  */
   next(recipe,index){
     return index === recipe.length-1 ? 0 : index + 1
   }
-
+/* Returns the previous element in an array, making it circular
+  */
   previous(recipe,index){
     return index === 0 ? recipe.length-1 : index-1
   }
 
-  createMajorScale(basetone){
+  createMajorScale(basetone, notation){
     const formula = scales[0]
-    return this.makeScaleMajorMinor(formula,basetone,"English")
+    return this.makeScaleMajorMinor(formula,basetone,notation)
   }
-
+  /* 
+  *  adds accidentals to toneName, replacing several accidentals with the corresponding toneName
+  * A### == C 
+  * only handles single letter names like (ABCDEFG)
+  */
+ //TODO: check compatibility with German H
   addAccidental(toneName, accidental){
     const ENGLISH_SHARP_NAMES =['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const ENGLISH_FLAT_NAMES =['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
