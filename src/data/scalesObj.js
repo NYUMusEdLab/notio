@@ -104,9 +104,14 @@ const scales = [
     // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
   },
   {
-    name: "Strange Custom",
+    name: "Strange Custom b5",
     steps: [0, 1, 2, 3, 6, 11],
     numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
+  },
+  {
+    name: "Strange Custom #11",
+    steps: [0, 1, 2, 3, 6, 11],
+    numbers: ['1', 'b2', '2', 'b3', '#4', '△7'],
   }
 ];
 

@@ -509,12 +509,9 @@ class MusicScale {
   // }
 
   MakeMidinumbering(extendedScaleTones, extendedScaleSteps) {
-    const startStep = extendedScaleSteps[0]
-    const distanceFrom_C0_Midi_Nr12 = this.noteNameToIndex(extendedScaleTones[0].note_english)
-    const startMidiNr = distanceFrom_C0_Midi_Nr12 //midi_nr12_index//extendedScaleTones[0].midi_nr    
-    const midinumbers = extendedScaleTones.map((tone,index) => {
-      return startMidiNr + extendedScaleSteps[index]-startStep
-    });
+    const indexOfRoot = extendedScaleSteps.map(t=>t%12).indexOf(0)//find index of the first root in the scale steps
+    const distanceFrom_C0_Midi_Nr12 = this.noteNameToIndex(extendedScaleTones[indexOfRoot].note_english)
+    const midinumbers = extendedScaleSteps.map(step => step+distanceFrom_C0_Midi_Nr12)
     return midinumbers
   }
   //#endregion
