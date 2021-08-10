@@ -15,7 +15,8 @@ class MusicScale {
     scaleRecipe = null,
     rootnote = "C",
     startingFromStep = 0,
-    ambitusInSemitones = 36
+    ambitusInSemitones = 36,
+    colors = ["#ff0000", "#ff8c00", "#ffff00", "#c0c0c0", "#ffffff", "#228b22", "#00ff7f", "#00ffff", "#0000ff", "#87cefa", "#8a2be2", "#ee82ee"]
   ) {
     if (scaleRecipe !== null) {
       this.Recipe = { ...scaleRecipe };
@@ -27,6 +28,7 @@ class MusicScale {
       this.AmbitusInSemiNotes =
         ambitusInSemitones > 12 ? ambitusInSemitones : 12;
       //this.OctaveOffset = octaveOffset;
+      this.Colors = colors;
       this.init();
     } else {
       this.RootNoteName = rootnote; //The scale root
@@ -53,6 +55,7 @@ class MusicScale {
   Transposition = 0; //= () =>  this.RootNote.index;
   Octave = 0;
   Notations = [];
+  Colors = []
 
   //#region Public Functions
 
@@ -99,8 +102,11 @@ class MusicScale {
       ),
     ];
     this.MidiNoteNr = this.MakeMidinumbering(this.ExtendedScaleTones, this.ExtendedScaleSteps);
-
-    //console.log("basis:",this.ExtendedScaleToneNames);
+    this.Colors = this.MakeColors(this.ExtendedScaleSteps, this.Colors)
+    console.log("basis:",this.ExtendedScaleToneNames);
+  }
+  MakeColors(ExtendedScaleSteps, Colors) {
+    return ExtendedScaleSteps.map(step => Colors[step % Colors.length])
   }
 
   // SetRootNote(toneName) {

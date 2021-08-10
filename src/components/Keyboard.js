@@ -372,12 +372,13 @@ class Keyboard extends Component {
     //creates all keys on the keyboard, their naming, color, and activeness (can they be played or not)
     const noteList =  keyboardLayoutScale.ExtendedScaleTones.map((note,index) => {
      
-
+      let toneColor
       let noteName = []
       let isKeyInScale = false //If this is false , the tone will be grayed out on the keyboard (only layout)
       let toneindex = currentScale.MidiNoteNr.indexOf(keyboardLayoutScale.MidiNoteNr[index])
       if (toneindex !== -1){
         isKeyInScale = true
+        toneColor = currentScale.Colors[toneindex]
         for (let i = 0; i < notation.length; i++) {
           
             const notationName = notation[i]
@@ -426,7 +427,7 @@ class Keyboard extends Component {
           noteNameEnglish={keyboardNote.note_english}
           notation={notation}
           noteName={noteName}
-          color={colors[index%colors.length]}
+          color = {toneColor} //{colors[index%colors.length]}
           offColor={keyboardNote.colorRGBA}
           keyColor={keyboardNote.pianoColor}
           isOn={isKeyInScale}
