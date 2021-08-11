@@ -8,12 +8,29 @@ const scales = [
     default: true
   },
   {
+    name: "Major (Ionian) Custom",
+    steps: [0, 2, 4, 5, 7, 9, 11],
+    numbers: ['1', '2', '3', '4', '5', '6', '△7'],
+    major_seventh: 11,
+    default: true
+  },
+  {
     name: "Chromatic",
     steps: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     numbers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
   },
   {
+    name: "Chromatic Custom",
+    steps: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    numbers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+  },
+  {
     name: "Mixolydian",
+    steps: [0, 2, 4, 5, 7, 9, 10],
+    numbers: ['1', '2', '3', '4', '5', '6', '7']
+  },
+  {
+    name: "Mixolydian Custom",
     steps: [0, 2, 4, 5, 7, 9, 10],
     numbers: ['1', '2', '3', '4', '5', '6', '7']
   },
@@ -24,7 +41,18 @@ const scales = [
     major_seventh: 11
   },
   {
+    name: "Lydian Custom",
+    steps: [0, 2, 4, 6, 7, 9, 11],
+    numbers: ['1', '2', '3', '#4', '5', '6', '△7'],
+    major_seventh: 11
+  },
+  {
     name: "Major Pentatonic",
+    steps: [0, 2, 4, 7, 9],
+    numbers: ['1', '2', '3', '5', '6']
+  },
+  {
+    name: "Major Pentatonic Custom",
     steps: [0, 2, 4, 7, 9],
     numbers: ['1', '2', '3', '5', '6']
   },
@@ -34,8 +62,17 @@ const scales = [
     numbers: ['1', 'b3', '4', '5', '7'],
   },
   {
-
+    name: "Minor Pentatonic Custom",
+    steps: [0, 3, 5, 7, 10],
+    numbers: ['1', 'b3', '4', '5', '7'],
+  },
+  {
     name: "Natural Minor/Aeolian",
+    steps: [0, 2, 3, 5, 7, 8, 10, 12],
+    numbers: ['1', '2', 'b3', '4', '5', 'b6', '7']
+  },
+  {
+    name: "Natural Minor/Aeolian Custom",
     steps: [0, 2, 3, 5, 7, 8, 10, 12],
     numbers: ['1', '2', 'b3', '4', '5', 'b6', '7']
   },
@@ -45,7 +82,18 @@ const scales = [
     numbers: ['1', '2', 'b3', '4', '5', '6', '7']
   },
   {
+    name: "Dorian Custom",
+    steps: [0, 2, 3, 5, 7, 9, 10],
+    numbers: ['1', '2', 'b3', '4', '5', '6', '7']
+  },
+  {
     name: "Harmonic Minor",
+    steps: [0, 2, 3, 5, 7, 8, 11],
+    numbers: ['1', '2', 'b3', '4', '5', 'b6', '△7'],
+    major_seventh: 11
+  },
+  {
+    name: "Harmonic Minor Custom",
     steps: [0, 2, 3, 5, 7, 8, 11],
     numbers: ['1', '2', 'b3', '4', '5', 'b6', '△7'],
     major_seventh: 11
@@ -57,7 +105,18 @@ const scales = [
     major_seventh: 11
   },
   {
+    name: "Melodic Minor Custom",
+    steps: [0, 2, 3, 5, 7, 9, 11],
+    numbers: ['1', '2', 'b3', '4', '5', '6', '△7'],
+    major_seventh: 11
+  },
+  {
     name: "Phrygian",
+    steps: [0, 1, 3, 5, 7, 8, 10],
+    numbers: ['1', 'b2', 'b3', '4', '5', 'b6', '7']
+  },
+  {
+    name: "Phrygian Custom",
     steps: [0, 1, 3, 5, 7, 8, 10],
     numbers: ['1', 'b2', 'b3', '4', '5', 'b6', '7']
   },
@@ -67,12 +126,27 @@ const scales = [
     numbers: ['1', 'b2', 'b3', '4', 'b5', 'b6', '7']
   },
   {
+    name: "Locrian Custom",
+    steps: [0, 1, 3, 5, 6, 8, 10],
+    numbers: ['1', 'b2', 'b3', '4', 'b5', 'b6', '7']
+  },
+  {
     name: "Minor Blues",
     steps: [0, 3, 5, 6, 7, 10],
     numbers: ['1', 'b3', '4', '#4', '5', '7'],
   },
   {
+    name: "Minor Blues Custom",
+    steps: [0, 3, 5, 6, 7, 10],
+    numbers: ['1', 'b3', '4', 'b5', '5', '7'],
+  },
+  {
     name: "Major Blues",
+    steps: [0, 2, 3, 4, 7, 9],
+    numbers: ['1', '2', 'b3', '3', '5', '6'],
+  },
+  {
+    name: "Major Blues Custom",
     steps: [0, 2, 3, 4, 7, 9],
     numbers: ['1', '2', 'b3', '3', '5', '6'],
   },
