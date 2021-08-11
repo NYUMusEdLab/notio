@@ -171,23 +171,7 @@ const scales = [
     // steps: [0, 1, 2, 3, 6, 11],
     // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
   },
-  {
-    name: "Major Custom",
-    steps: [0, 2, 4, 5, 7, 9, 11],
-    numbers: ['1', '2', '3', '4', '5', '6', '△7'],
-    // steps: [0, 1, 2, 3, 6, 11],
-    // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
-  },
-  {
-    name: "Strange Custom b5",
-    steps: [0, 1, 2, 3, 6, 11],
-    numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
-  },
-  {
-    name: "Strange Custom #11",
-    steps: [0, 1, 2, 3, 6, 11],
-    numbers: ['1', 'b2', '2', 'b3', '#4', '△7'],
-  },
+  
   {
     name: "Mixolydian b9b13 Custom",
     steps: [0, 1, 4, 5, 7, 8, 10],

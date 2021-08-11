@@ -3,6 +3,7 @@ import noteMapping from "../data/noteMappingObj";
 import notes from "../data/notes";
 import { notations } from "../components/menu/Notation";
 import scales from "../data/scalesObj";
+import absoluteMajorScales from "../data/absoluteMajorScales";
 
 
 //*A scale consists of 3 parts:
@@ -498,8 +499,9 @@ class MusicScale {
 *   whichNotation:  string
 *   scaleRecipe: scaleObj
  */
+//TODO: fix majorscale, this function should produce a correct major scale
 MakeCustomScale(scaleFormula, keyName, whichNotation, scaleRecipe) {
-  const majorScale = this.MakeChromatic([0,2,4,5,7,9,11], keyName, whichNotation)//this.MakeScaleMajorMinor([0,2,4,5,7,9,11], keyName, whichNotation)
+  const majorScale = this.getMajorScale(keyName, whichNotation)//this.MakeChromatic([0,2,4,5,7,9,11], keyName, whichNotation)//this.MakeScaleMajorMinor([0,2,4,5,7,9,11], keyName, whichNotation)
   let tempScale = []
   let numbers = this.makeScaleNumbers(scaleRecipe,scaleFormula, keyName)
   if(whichNotation === "Chord extensions"){
@@ -819,6 +821,68 @@ makeScalePentatonicBlues(scaleFormula, keyName, scaleName, whichNotation) {
   createMajorScale(basetone, notation){
     const formula = scales[0]
     return this.makeScaleMajorMinor(formula,basetone,notation)
+  }
+
+  getMajorScale(basetone, notation){
+    let foneticTonename = ""
+    switch (basetone){
+      case "C":
+        foneticTonename = "C"
+        break
+      case "C#":
+        foneticTonename = "Cis"
+        break
+      case "Db":
+        foneticTonename = "Db"
+        break
+      case "D":
+        foneticTonename = "D"
+        break
+      case "D#":
+        foneticTonename = "Dis"
+        break
+      case "Eb":
+        foneticTonename = "Eb"
+        break
+      case "E":
+        foneticTonename = "E"
+        break
+      case "F":
+        foneticTonename = "F"
+        break
+      case "F#":
+        foneticTonename = "Fis"
+        break
+      case "Gb":
+        foneticTonename = "Gb"
+        break
+      case "G":
+        foneticTonename = "G"
+        break
+      case "G#":
+        foneticTonename = "Gis"
+        break
+      case "Ab":
+        foneticTonename = "Ab"
+        break
+      case "A":
+        foneticTonename = "A"
+        break
+      case "A#":
+        foneticTonename = "Ais"
+        break
+      case "Bb":
+        foneticTonename = "Bb"
+        break
+      case "B":
+        foneticTonename = "B"
+        break
+      default: 
+        break
+    }
+
+  return absoluteMajorScales[notation][foneticTonename];
+ 
   }
   /* 
   *  adds accidentals to toneName, replacing several accidentals with the corresponding toneName
