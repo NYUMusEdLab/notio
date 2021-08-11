@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import Key from "./Key";
 import * as Tone from 'tone';
 import scales from "../data/scalesObj";
-import colors from "../data/colors";
+//import colors from "../data/colors";
 import { Piano } from '@tonejs/piano'
 import MusicScale from "../Model/MusicScale";
 
