@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import Key from "./Key";
 import * as Tone from 'tone';
 import scales from "../data/scalesObj";
-import colors from "../data/colors";
+//import colors from "../data/colors";
 import { Piano } from '@tonejs/piano'
 import MusicScale from "../Model/MusicScale";
 
@@ -378,7 +378,8 @@ class Keyboard extends Component {
       let toneindex = currentScale.MidiNoteNr.indexOf(keyboardLayoutScale.MidiNoteNr[index])
       if (toneindex !== -1){
         isKeyInScale = true
-        toneColor = currentScale.Colors[toneindex]
+        //TODO: decide how to store custom color, should it be in the --import colors from "../data/colors";-- or some other way.
+        toneColor = currentScale.Colors[toneindex] 
         for (let i = 0; i < notation.length; i++) {
           
             const notationName = notation[i]
