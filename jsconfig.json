@@ -4,8 +4,8 @@
     "paths": {
       "assets/*": [
         "src/assets/*"
-      ],
-    }
+      ]
+    },
     "checkJs": true,
     "jsx": "react"
   },

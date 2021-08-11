@@ -204,7 +204,7 @@ class Root extends Component {
                       label={root.note}
                       name={rootLabel}
                       onChange={this.handleChange}
-                      value={root.note}
+                      value={root.note !== 'H' ? root.note : 'B' }
                       data-rootdisplayed={root.note}
 
                       ref={(ref) => this.setRef(ref, root.note)}
