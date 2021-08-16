@@ -87,7 +87,7 @@ class SubMenu extends Component {
               {this.props.selected}
             </span>
           ) : (
-            <span class="sub-menu--title--selected">{this.props.selected}</span>
+            <span className="sub-menu--title--selected">{this.props.selected}</span>
           )}
           <ArrowDown />
         </div>

@@ -192,7 +192,6 @@ class WholeApp extends Component {
     /**
      * disable right click
      */
-    /*
     document.oncontextmenu = function () {
       return false;
     };
@@ -211,7 +210,6 @@ class WholeApp extends Component {
         loading: false,
       });
     }
-    */
   }
 
   toggleMenu = () => {
