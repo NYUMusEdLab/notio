@@ -5,7 +5,6 @@ import _ from "lodash";
 import Toggle from "./Toggle";
 import SubMenu from "./SubMenu";
 import Notation from "./Notation";
-import CustomScaleSelector from "./CustomScaleSelector";
 import VideoTutorial from "./VideoTutorial";
 import Share from "./Share";
 import Settings from "./Settings";
@@ -111,8 +110,7 @@ class TopMenu extends Component {
           <div className="navbar-item menu-notation">
             <SubMenu
               title="Notation"
-              selected={this.props.state.notation}
-              selectedImg = <NotationImg />
+              selected=<NotationImg />
             content={
               <Notation
                 initOptions={this.props.state.notation}
@@ -121,22 +119,6 @@ class TopMenu extends Component {
             }
           />
           </div>
-
-          {/* CustomScaleSelector */}
-          <div className="navbar-item menu-scale">
-            <SubMenu
-                title="CustomScale"
-                selected={this.props.state.notation}
-                selectedImg = <NotationImg />
-            content={
-              <CustomScaleSelector
-                initOptions={this.props.state.notation}
-                handleChange={this.props.handleChangeNotation}
-              />
-            }
-          />
-          </div>
-          
 
           {/* Root */}
           <div className="navbar-item menu-root">
@@ -224,10 +206,10 @@ class TopMenu extends Component {
             />
           </div>
         </div>
-        <div className="side-menu">
-          <div className="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
-          <div className="Area2 area"><img src={require('../../img/question_mark.png')} alt="help" /></div>
-          <div className="Area3 area"><img src={require('../../img/home.png')} alt="home" /></div>
+        <div class="side-menu">
+          <div class="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
+          <div class="Area2 area"><img src={require('../../img/question_mark.png')} alt="help" /></div>
+          <div class="Area3 area"><img src={require('../../img/home.png')} alt="home" /></div>
         </div>
 
       </div>
