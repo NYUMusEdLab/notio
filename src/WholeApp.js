@@ -6,13 +6,12 @@ import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import LoadingScreen from "./components/LoadingScreen";
 import "./style.scss";
 import db from "./Firebase";
-import { notio_tutorial } from './data/config';
-
+import { notio_tutorial } from "./data/config";
 
 class WholeApp extends Component {
   state = {
     octave: 4,
-    scale: "Major (Ionian)",
+    scale: "Major (Ionian) Custom",
     clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
@@ -38,9 +37,7 @@ class WholeApp extends Component {
     this.handleSelectClef = this.handleSelectClef.bind(this);
   }
 
-  handleChangeSound = (sound) => {
-
-  };
+  handleChangeSound = (sound) => {};
 
   handleClickOctave = (action) => {
     switch (action) {
@@ -119,7 +116,7 @@ class WholeApp extends Component {
       theme,
       showOffNotes,
       clef,
-      videoUrl
+      videoUrl,
     } = this.state;
     db.collection("sessions")
       .add({
@@ -133,7 +130,7 @@ class WholeApp extends Component {
         theme: theme,
         showOffNotes: showOffNotes,
         clef: clef,
-        videoUrl: videoUrl
+        videoUrl: videoUrl,
       })
       .then((docRef) => {
         console.log("Session written with ID: ", docRef.id);
@@ -165,7 +162,7 @@ class WholeApp extends Component {
           showOffNotes: result.showOffNotes,
           clef: result.clef,
           loading: false,
-          videoUrl: result.videoUrl
+          videoUrl: result.videoUrl,
         });
       } else {
         this.setState({ loading: false });
