@@ -11,7 +11,7 @@ import { notio_tutorial } from "./data/config";
 class WholeApp extends Component {
   state = {
     octave: 4,
-    scale: "Major (Ionian) Custom",
+    scale: "Major (Ionian) Custom"
     clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
@@ -33,6 +33,7 @@ class WholeApp extends Component {
     this.togglePiano = this.togglePiano.bind(this);
     this.toggleExtendedKeyboard = this.toggleExtendedKeyboard.bind(this);
     this.handleChangeNotation = this.handleChangeNotation.bind(this);
+    this.handleChangeCustomScale = this.handleChangeCustomScale.bind(this);
     this.handleSelectScale = this.handleSelectScale.bind(this);
     this.handleSelectClef = this.handleSelectClef.bind(this);
   }
@@ -77,6 +78,11 @@ class WholeApp extends Component {
   handleChangeNotation = (selectedNotation) => {
     console.log(selectedNotation + " Notation selected");
     this.setState({ notation: selectedNotation });
+  };
+
+  handleChangeCustomScale = (customScaleName) =>{
+    console.log(customScaleName + "Custom Scale Created");
+    this.setState({ scale: customScaleName})
   };
 
   handleSelectTheme = (selectedTheme) => {
@@ -210,7 +216,7 @@ class WholeApp extends Component {
   }
 
   toggleMenu = () => {
-    this.setState({ menuOpen: !this.state.menuOpen });
+    // this.setState({ menuOpen: !this.state.menuOpen });
   };
   togglePiano = () => {
     this.setState({ pianoOn: !this.state.pianoOn });
