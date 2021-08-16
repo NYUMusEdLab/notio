@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
     "@loadable/component": "^5.14.1",
     "@testing-library/dom": "^8.1.0",
     "@testing-library/react": "^12.0.0",
@@ -30,7 +32,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && cp netlify.toml build/netlify.toml",
-    "test": "react-scripts test -o",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|@tonejs/piano|gsap)/)\"",
     "test-unit": "react-scripts test unit --watchAll",
     "test-int": "react-scripts test int --watchAll",
     "eject": "react-scripts eject",
@@ -39,7 +41,9 @@
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
-    "react-scripts": "^2.1.8"
+    "@babel/preset-react": "^7.14.5",
+    "react-scripts": "^2.1.8",
+    "react-test-renderer": "^17.0.2"
   },
   "browserslist": {
     "production": [
@@ -52,5 +56,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+
   }
 }
