@@ -11,6 +11,7 @@ Detailed info about Notio [here](http://musedlab.org/notio)
 [Notio hosted at Github Pages. 2020](https://nyumusedlab.github.io/notio/)
 
 You can see the project [here. 2019 dev of project](https://notio.pestanias.now.sh/)
+
 ## Install packages
 
 `yarn install`
@@ -27,3 +28,8 @@ You can see the project [here. 2019 dev of project](https://notio.pestanias.now.
 ## To deplot to Github Pages
 
 - `yarn deploy`. This will also make a build for you.
+
+## The code is formatted with the Prettier plugin.
+
+-tab size 2
+-allow double and single quotes
