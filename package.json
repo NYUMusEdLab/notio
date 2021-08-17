@@ -32,9 +32,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && cp netlify.toml build/netlify.toml",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|@tonejs/piano|gsap)/)\"",
-    "test-unit": "react-scripts test unit --watchAll",
-    "test-int": "react-scripts test int --watchAll",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|@tonejs/piano|gsap)/)\" --watchAll",
+    "test-ci": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|@tonejs/piano|gsap)/)\" --ci",
     "eject": "react-scripts eject",
     "now-build": "react-scripts build",
     "predeploy": "npm run build",

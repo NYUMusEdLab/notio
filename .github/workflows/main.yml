@@ -1,0 +1,15 @@
+name: NotioCI
+
+# This action will activate at each pull request
+on: [pull_request]
+
+# This is the description of the different groupings of commands which will be runs.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: yarn
+    - name: Run CI tests
+      run: yarn test-ci

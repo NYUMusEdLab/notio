@@ -70,7 +70,7 @@ class Popup extends Component {
             {this.props.picto}
           </div>
           <div className="title--wrapper">
-            <span className="title">{this.props.title}</span>
+            <span className="title" title={this.props.title}>{this.props.title}</span>
           </div>
 
         </div>
