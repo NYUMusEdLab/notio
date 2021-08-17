@@ -6,13 +6,18 @@ import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import LoadingScreen from "./components/LoadingScreen";
 import "./style.scss";
 import db from "./Firebase";
-import { notio_tutorial } from './data/config';
-
+import { notio_tutorial } from "./data/config";
+import scales from "./data/scalesObj";
 
 class WholeApp extends Component {
   state = {
     octave: 4,
-    scale: "Strange Custom #11",//"Major (Ionian)",
+    scale: "Major (Ionian)",
+    scaleObject: {
+      name: "Major (Ionian)",
+      steps: [0, 2, 4, 5, 7, 9, 11],
+      numbers: ["1", "2", "3", "4", "5", "6", "△7"],
+    },
     clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
@@ -39,9 +44,7 @@ class WholeApp extends Component {
     this.handleSelectClef = this.handleSelectClef.bind(this);
   }
 
-  handleChangeSound = (sound) => {
-
-  };
+  handleChangeSound = (sound) => {};
 
   handleClickOctave = (action) => {
     switch (action) {
@@ -56,9 +59,14 @@ class WholeApp extends Component {
         break;
     }
   };
+
   handleSelectScale = (selectedScale) => {
     console.log(selectedScale + " SCALE selected");
-    this.setState({ scale: selectedScale });
+    const newScaleObject = scales.find((obj) => obj.name === selectedScale);
+    this.setState({
+      scale: selectedScale,
+      scaleObject: newScaleObject,
+    });
   };
 
   handleSelectClef = (selectedClef) => {
@@ -83,9 +91,17 @@ class WholeApp extends Component {
     this.setState({ notation: selectedNotation });
   };
 
-  handleChangeCustomScale = (customScaleName) =>{
+  handleChangeCustomScale = (customScaleName, customsteps, customNumbers) => {
     console.log(customScaleName + "Custom Scale Created");
-    this.setState({ scale: customScaleName})
+    alert("Custom Scale Created " + customScaleName + customNumbers);
+    this.setState({
+      scale: customScaleName,
+      scaleObject: {
+        name: customScaleName,
+        steps: customsteps,
+        numbers: customNumbers,
+      },
+    });
   };
 
   handleSelectTheme = (selectedTheme) => {
@@ -117,6 +133,7 @@ class WholeApp extends Component {
     const {
       octave,
       scale,
+      scaleObject,
       baseNote,
       notation,
       pianoOn,
@@ -125,12 +142,13 @@ class WholeApp extends Component {
       theme,
       showOffNotes,
       clef,
-      videoUrl
+      videoUrl,
     } = this.state;
     db.collection("sessions")
       .add({
         octave: octave,
         scale: scale,
+        scaleObject: scaleObject,
         baseNote: baseNote,
         notation: notation,
         pianoOn: pianoOn,
@@ -139,7 +157,7 @@ class WholeApp extends Component {
         theme: theme,
         showOffNotes: showOffNotes,
         clef: clef,
-        videoUrl: videoUrl
+        videoUrl: videoUrl,
       })
       .then((docRef) => {
         console.log("Session written with ID: ", docRef.id);
@@ -161,6 +179,7 @@ class WholeApp extends Component {
         this.setState({
           octave: result.octave,
           scale: result.scale,
+          scaleObject: result.scaleObject,
           baseNote: result.baseNote,
           notation: result.notation,
           pianoOn: result.pianoOn,
@@ -171,7 +190,7 @@ class WholeApp extends Component {
           showOffNotes: result.showOffNotes,
           clef: result.clef,
           loading: false,
-          videoUrl: result.videoUrl
+          videoUrl: result.videoUrl,
         });
       } else {
         this.setState({ loading: false });
@@ -205,10 +224,7 @@ class WholeApp extends Component {
     // const { match } = this.props;
     // const { params } = match;
     const sessionId = this.props.match.params.sessionId;
-    console.log(
-      "********************** componentDidMount sessionId",
-      sessionId
-    );
+    console.log("********************** componentDidMount sessionId", sessionId);
     if (sessionId) {
       this.openSavedSession(sessionId);
     } else {
@@ -235,16 +251,8 @@ class WholeApp extends Component {
   };
 
   render() {
-    const {
-      loading,
-      showOffNotes,
-      menuOpen,
-      octave,
-      scale,
-      baseNote,
-      theme,
-      trebleStaffOn,
-    } = this.state;
+    const { loading, showOffNotes, menuOpen, octave, scale, baseNote, theme, trebleStaffOn } =
+      this.state;
     console.log("whole app", this.state.notation);
 
     return loading ? (
@@ -256,6 +264,7 @@ class WholeApp extends Component {
           toggleExtendedKeyboard={this.toggleExtendedKeyboard}
           handleChangeNotation={this.handleChangeNotation}
           handleChangeScale={this.handleSelectScale}
+          handleChangeCustomScale={this.handleChangeCustomScale}
           handleSelectClef={this.handleSelectClef}
           handleChangeRoot={this.handleChangeRoot}
           handleChangeVideoUrl={this.handleChangeVideoUrl}
@@ -274,27 +283,19 @@ class WholeApp extends Component {
             <div
               className="closeMenu"
               onClick={this.toggleMenu}
-              style={{ backgroundColor: "#FFFFFF", cursor: "pointer" }}
-            >
+              style={{ backgroundColor: "#FFFFFF", cursor: "pointer" }}>
               (x)
             </div>
             <div className="Menu-Row">
               <Octaves octave={octave} handleClick={this.handleClickOctave} />
               <Scale scale={scale} handleSelect={this.handleSelectScale} />
-              <CircleFifthsSVG
-                rootNote={baseNote}
-                handleChange={this.handleChangeRoot}
-              />
+              <CircleFifthsSVG rootNote={baseNote} handleChange={this.handleChangeRoot} />
             </div>
             <div className="Menu-Row">
               <div className="Menu-label"></div>
               <div className="Menu-label">
                 Musical Staff (Treble){" "}
-                <img
-                  height="30"
-                  src="/img/treble-clef.png"
-                  alt="treble cleff"
-                />
+                <img height="30" src="/img/treble-clef.png" alt="treble cleff" />
               </div>
               <div className="Menu-label">Show notes that are not in scale</div>
               <div className="Menu-label">Share this setup</div>
@@ -303,11 +304,7 @@ class WholeApp extends Component {
               <Theme theme={theme} handleSelect={this.handleSelectTheme} />
               <div className="toggle-switch">
                 <div className="checkbox">
-                  <input
-                    type="checkbox"
-                    checked={trebleStaffOn}
-                    onChange={this.toggleStaff}
-                  />
+                  <input type="checkbox" checked={trebleStaffOn} onChange={this.toggleStaff} />
                   <label />
                 </div>
               </div>
@@ -331,8 +328,7 @@ class WholeApp extends Component {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={`/shared/${this.state.sessionID}`}
-                >
+                  href={`/shared/${this.state.sessionID}`}>
                   {window.location.hostname}/shared/{this.state.sessionID}
                 </a>
               </div>
