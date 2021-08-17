@@ -4,11 +4,11 @@ class Piano{
     }
 
     toDestination(){
-        return "Going To Destination"
+        return this;
     }
 
     async load(){
-        return new Promise(() => "SomeData");
+        return await jest.fn(() => Promise.resolve({}))
     }
 }
 

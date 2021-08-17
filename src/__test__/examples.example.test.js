@@ -15,19 +15,20 @@ test("Example with basis WholeApp rendering showing the menu items are present",
     </MemoryRouter>
     );
     
-    screen.getByAltText("treble clef");
+    // Texts directly present in the DOM
+    screen.getByText("Show keyboard");
     screen.getByText("Extended Keyboard");
-})
-/*
-test("Example with rendering the TopMenu and choosing something in the menu", () => {
-    render(<TopMenu />)
+    screen.getByText("Sound");
+    screen.getByText("Notation");
+    screen.getByText("Video Player");
+    screen.getByText("Settings");
 
-    expect(1).toBe(1);
-})
+    // Text which should be accessed differently in the DOM
 
-test("Example with rendering the Keyboard and playing a sound", () => {
-    render(<Keyboard />)
-
-    expect(1).toBe(1);
+    // SVGs which are accesible by their title in the DOM
+    const twoTrebles = screen.getAllByTitle("Treble Clef");
+    expect(twoTrebles.length).toBe(2);
+    screen.getByTitle("Alto Clef");
+    screen.getByTitle("Bass Clef");
+    screen.getByTitle("Tenor Clef");
 })
-*/

@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import Key from "./Key";
-import Tone from 'tone';
+import * as Tone from 'tone';
 import scales from "../data/scalesObj";
 //import colors from "../data/colors";
 import { Piano } from '@tonejs/piano'
