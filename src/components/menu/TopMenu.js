@@ -13,18 +13,14 @@ import Root from "./Root";
 import RootMenu from "../../assets/img/RootMenu";
 // import { findColor } from '../utils.js';
 
-
 import ListRadio from "../form/ListRadio";
 import scales from "../../data/scalesObj";
 import NotationImg from "../../assets/img/Notation";
+import CustomScaleImg from "../../assets/img/CustomScale";
+
 import clefs from "../../data/clefs";
 
-
-const sounds = [
-  { name: 'piano' },
-  { name: 'xylo' },
-
-]
+const sounds = [{ name: "piano" }, { name: "xylo" }];
 
 class TopMenu extends Component {
   constructor(props) {
@@ -65,7 +61,7 @@ class TopMenu extends Component {
     this.setState({
       titleRoot: note,
     });
-  }
+  };
 
   render() {
     console.log("topmenu scales", scales);
@@ -112,48 +108,47 @@ class TopMenu extends Component {
             <SubMenu
               title="Notation"
               selected={this.props.state.notation}
-              selectedImg = <NotationImg />
-            content={
-              <Notation
-                initOptions={this.props.state.notation}
-                handleChange={this.props.handleChangeNotation}
-              />
-            }
-          />
+              selectedImg=<NotationImg />
+              content={
+                <Notation
+                  initOptions={this.props.state.notation}
+                  handleChange={this.props.handleChangeNotation}
+                />
+              }
+            />
           </div>
 
           {/* CustomScaleSelector */}
-          <div className="navbar-item menu-scale">
+          <div className="navbar-item menu-custom-scale">
             <SubMenu
-                title="CustomScale"
-                selected={this.props.state.notation}
-                selectedImg = <NotationImg />
-            content={
-              <CustomScaleSelector
-                initOptions={this.props.state.notation}
-                handleChange={this.props.handleChangeNotation}
-              />
-            }
-          />
+              title="CustomScale"
+              selected={this.props.state.scaleObject.name}
+              selectedImg=<CustomScaleImg />
+              content={
+                <CustomScaleSelector //TODO: add initoptions for custom scale, matching current scale, add function handleCustomScale
+                  initOptions={this.props.state.scaleObject} //TODO: fix to customscale creation
+                  handleChange={this.props.handleChangeCustomScale} //TODO: fix denne funktion så den ændrer på custom scale i stedet
+                />
+              }
+            />
           </div>
-          
 
           {/* Root */}
           <div className="navbar-item menu-root">
             <SubMenu
               title="Root"
               selected={this.state.titleRoot}
-              selectedImg=<RootMenu color={'#ff0000'} />
-            //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
-            content={
-              <Root
-                label="Root"
-                baseNote={this.props.state.baseNote}
-                handleChangeRoot={this.props.handleChangeRoot}
-                handleChangeTitle={this.handleChangeTitle}
-              />
-            }
-          />
+              selectedImg=<RootMenu color={"#ff0000"} />
+              //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
+              content={
+                <Root
+                  label="Root"
+                  baseNote={this.props.state.baseNote}
+                  handleChangeRoot={this.props.handleChangeRoot}
+                  handleChangeTitle={this.handleChangeTitle}
+                />
+              }
+            />
             {/* <div class="half-circle"></div> */}
           </div>
 
@@ -215,21 +210,22 @@ class TopMenu extends Component {
             />
           </div>
 
-
           {/* Settings */}
           <div className="navbar-item menu-settings">
-            <Settings
-              title="Settings"
-              label="Settings"
-            />
+            <Settings title="Settings" label="Settings" />
           </div>
         </div>
         <div className="side-menu">
-          <div className="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
-          <div className="Area2 area"><img src={require('../../img/question_mark.png')} alt="help" /></div>
-          <div className="Area3 area"><img src={require('../../img/home.png')} alt="home" /></div>
+          <div className="area1 area">
+            <img src={require("../../img/info.png")} alt="about" />
+          </div>
+          <div className="Area2 area">
+            <img src={require("../../img/question_mark.png")} alt="help" />
+          </div>
+          <div className="Area3 area">
+            <img src={require("../../img/home.png")} alt="home" />
+          </div>
         </div>
-
       </div>
     );
   }
