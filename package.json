@@ -29,7 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && cp netlify.toml build/netlify.toml",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|@tonejs/piano|gsap)/)\" --watchAll",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|gsap)/)\" --watchAll",
     "test-ci": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|@tonejs/piano|gsap)/)\" --ci",
     "eject": "react-scripts eject",
     "now-build": "react-scripts build",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "react-scripts": "^2.1.8",
-    "react-test-renderer": "^17.0.2"
+    "react-test-renderer": "^16.13.1"
   },
   "browserslist": {
     "production": [
