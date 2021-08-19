@@ -2,7 +2,7 @@ import rootNote from "../data/rootNote";
 import noteMapping from "../data/noteMappingObj";
 import notes from "../data/notes";
 import { notations } from "../components/menu/Notation";
-import scales from "../data/scalesObj";
+import sc from "../data/scalesObj";
 import absoluteMajorScales from "../data/absoluteMajorScales";
 
 //*A scale consists of 3 parts:
@@ -29,8 +29,10 @@ class MusicScale {
       "#87cefa",
       "#8a2be2",
       "#ee82ee",
-    ]
+    ],
+    scales = [...sc]
   ) {
+    this.scales = scales
     if (scaleRecipe !== null) {
       this.Recipe = { ...scaleRecipe };
       this.Name = scaleRecipe.name;
@@ -50,7 +52,7 @@ class MusicScale {
         ambitusInSemitones > 12 ? ambitusInSemitones : 12;
     }
   }
-
+  scales = []
   Name = "";
   RootNoteName = "";
   RootNote = {};
@@ -927,8 +929,9 @@ class MusicScale {
     return index === 0 ? recipe.length - 1 : index - 1;
   }
 
+  //TODO: !!!!!!!!this is closely coupled to the scales array , where the first element has to be the major Ionian scale, this is not good!!
   createMajorScale(basetone, notation) {
-    const formula = scales[0];
+    const formula = this.scales[0];
     return this.makeScaleMajorMinor(formula, basetone, notation);
   }
 

@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import Key from "./Key";
 import * as Tone from "tone";
-import scales from "../data/scalesObj";
+// import scales from "../data/scalesObj";
 //import colors from "../data/colors";
 import { Piano } from "@tonejs/piano";
 import MusicScale from "../Model/MusicScale";
@@ -54,6 +54,7 @@ class Keyboard extends Component {
     this.state = {
       activeNotes: new Set(),
       mouse_is_down: false,
+      scales: this.props.scaleList,
     };
 
     this.synth = new Piano({
@@ -254,7 +255,7 @@ class Keyboard extends Component {
   //#endregion
 
   convert_ScaleNameTo_ScaleReciepe(scaleName) {
-    const scaleReciepe = scales.find((obj) => obj.name === scaleName);
+    const scaleReciepe = this.state.scales.find((obj) => obj.name === scaleName);
     return scaleReciepe;
   }
 
@@ -335,7 +336,7 @@ class Keyboard extends Component {
     const scaleStart = extendedKeyboard ? 7 : 0; //Decides on what chromatic step  the extended scale start on 7 == starts on the fifth, 2 == starts on the major second. TODO: this should be set elsewhere not as a magic number in a function!!
     const ambitus = extendedKeyboard ? 24 : 13; //Decides How many halftones should be shown on the keyboard, 13 == shows an octave from Root to Root                    TODO: this should be set elsewhere not as a magic number in a function!!
     const keyboardLayoutScaleReciepe =
-      this.convert_ScaleNameTo_ScaleReciepe("Chromatic"); // ("Major Pentatonic Custom"); //
+      this.convert_ScaleNameTo_ScaleReciepe("Chromatic"); // Returns a scaleObj
     const keyboardLayoutScale = new MusicScale(
       keyboardLayoutScaleReciepe,
       baseNote,

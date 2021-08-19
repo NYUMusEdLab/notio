@@ -24,7 +24,7 @@ export const Scale = props => {
       value={props.scale}
       selectName="Scale"
       valueToExtract="name"
-      selectEls={scales}
+      selectEls={props.scales}
       handleSelect={props.handleSelect}
     />
   );

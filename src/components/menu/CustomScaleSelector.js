@@ -37,7 +37,7 @@ class CustomScaleSelector extends Component {
   }
 
   handleAddScaleSteps(event) {
-    this.setState({ numbers: [event] });
+    this.setState({ numbers: event });
     //alert("!!!!!!!!added number: " + this.state.steps);
   }
   handleChange(event) {

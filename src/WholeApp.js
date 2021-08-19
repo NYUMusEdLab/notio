@@ -9,6 +9,7 @@ import db from "./Firebase";
 import { notio_tutorial } from "./data/config";
 import scales from "./data/scalesObj";
 
+
 class WholeApp extends Component {
   state = {
     octave: 4,
@@ -18,6 +19,7 @@ class WholeApp extends Component {
       steps: [0, 2, 4, 5, 7, 9, 11],
       numbers: ["1", "2", "3", "4", "5", "6", "△7"],
     },
+    scaleList: [...scales],//new ScaleStore(),
     clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
@@ -62,7 +64,7 @@ class WholeApp extends Component {
 
   handleSelectScale = (selectedScale) => {
     console.log(selectedScale + " SCALE selected");
-    const newScaleObject = scales.find((obj) => obj.name === selectedScale);
+    const newScaleObject = this.state.scaleList.find((obj) => obj.name === selectedScale);
     this.setState({
       scale: selectedScale,
       scaleObject: newScaleObject,
@@ -94,14 +96,22 @@ class WholeApp extends Component {
   handleChangeCustomScale = (customScaleName, customsteps, customNumbers) => {
     console.log(customScaleName + "Custom Scale Created");
     alert("Custom Scale Created " + customScaleName + customNumbers);
+    // this.state.scaleList.Add({name: customScaleName,
+    //   steps: customsteps,
+    //   numbers: customNumbers,})
     this.setState({
+      scaleList : [...this.state.scaleList,{name: customScaleName,
+        steps: customsteps,
+        numbers: customNumbers,}],
       scale: customScaleName,
       scaleObject: {
         name: customScaleName,
         steps: customsteps,
         numbers: customNumbers,
       },
+      
     });
+
   };
 
   handleSelectTheme = (selectedTheme) => {
@@ -251,7 +261,7 @@ class WholeApp extends Component {
   };
 
   render() {
-    const { loading, showOffNotes, menuOpen, octave, scale, baseNote, theme, trebleStaffOn } =
+    const { loading, showOffNotes, menuOpen, octave, scale, scaleList, baseNote, theme, trebleStaffOn } =
       this.state;
     console.log("whole app", this.state.notation);
 
@@ -288,7 +298,7 @@ class WholeApp extends Component {
             </div>
             <div className="Menu-Row">
               <Octaves octave={octave} handleClick={this.handleClickOctave} />
-              <Scale scale={scale} handleSelect={this.handleSelectScale} />
+              <Scale scale={scale} scales={scaleList} handleSelect={this.handleSelectScale} />
               <CircleFifthsSVG rootNote={baseNote} handleChange={this.handleChangeRoot} />
             </div>
             <div className="Menu-Row">
@@ -338,6 +348,8 @@ class WholeApp extends Component {
           <Keyboard
             octave={this.state.octave}
             scale={this.state.scale}
+            scaleObject = {this.state.scaleObject}
+            scaleList = {this.state.scaleList}
             baseNote={this.state.baseNote}
             notation={this.state.notation}
             pianoOn={this.state.pianoOn}
