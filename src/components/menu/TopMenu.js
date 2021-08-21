@@ -5,7 +5,6 @@ import _ from "lodash";
 import Toggle from "./Toggle";
 import SubMenu from "./SubMenu";
 import Notation from "./Notation";
-import CustomScaleSelector from "./CustomScaleSelector";
 import VideoTutorial from "./VideoTutorial";
 import Share from "./Share";
 import Settings from "./Settings";
@@ -19,6 +18,7 @@ import NotationImg from "../../assets/img/Notation";
 import CustomScaleImg from "../../assets/img/CustomScale";
 
 import clefs from "../../data/clefs";
+import CustomScaleSelector from "./CustomScaleSelector";
 
 const sounds = [{ name: "piano" }, { name: "xylo" }];
 
@@ -108,7 +108,7 @@ class TopMenu extends Component {
             <SubMenu
               title="Notation"
               selected={this.props.state.notation}
-              selectedImg=<NotationImg />
+              selectedImg= < NotationImg />
               content={
                 <Notation
                   initOptions={this.props.state.notation}
@@ -123,7 +123,7 @@ class TopMenu extends Component {
             <SubMenu
               title="CustomScale"
               selected={this.props.state.scaleObject.name}
-              selectedImg=<CustomScaleImg />
+              selectedImg=< CustomScaleImg />
               content={
                 <CustomScaleSelector //TODO: add initoptions for custom scale, matching current scale, add function handleCustomScale
                   initOptions={this.props.state.scaleObject} //TODO: fix to customscale creation
@@ -215,16 +215,10 @@ class TopMenu extends Component {
             <Settings title="Settings" label="Settings" />
           </div>
         </div>
-        <div className="side-menu">
-          <div className="area1 area">
-            <img src={require("../../img/info.png")} alt="about" />
-          </div>
-          <div className="Area2 area">
-            <img src={require("../../img/question_mark.png")} alt="help" />
-          </div>
-          <div className="Area3 area">
-            <img src={require("../../img/home.png")} alt="home" />
-          </div>
+        <div class="side-menu">
+          <div class="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
+          <div class="Area2 area"><img src={require('../../img/question_mark.png')} alt="help" /></div>
+          <div class="Area3 area"><img src={require('../../img/home.png')} alt="home" /></div>
         </div>
       </div>
     );

@@ -13,9 +13,9 @@ import scales from "./data/scalesObj";
 class WholeApp extends Component {
   state = {
     octave: 4,
-    scale: "Major (Ionian)",
+    scale: "Major (Ionian) Custom",
     scaleObject: {
-      name: "Major (Ionian)",
+      name: "Major (Ionian) Custom",
       steps: [0, 2, 4, 5, 7, 9, 11],
       numbers: ["1", "2", "3", "4", "5", "6", "△7"],
     },
@@ -41,7 +41,6 @@ class WholeApp extends Component {
     this.togglePiano = this.togglePiano.bind(this);
     this.toggleExtendedKeyboard = this.toggleExtendedKeyboard.bind(this);
     this.handleChangeNotation = this.handleChangeNotation.bind(this);
-    this.handleChangeCustomScale = this.handleChangeCustomScale.bind(this);
     this.handleSelectScale = this.handleSelectScale.bind(this);
     this.handleSelectClef = this.handleSelectClef.bind(this);
   }
@@ -245,7 +244,7 @@ class WholeApp extends Component {
   }
 
   toggleMenu = () => {
-    // this.setState({ menuOpen: !this.state.menuOpen });
+    this.setState({ menuOpen: !this.state.menuOpen });
   };
   togglePiano = () => {
     this.setState({ pianoOn: !this.state.pianoOn });
