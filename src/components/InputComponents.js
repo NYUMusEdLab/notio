@@ -2,7 +2,7 @@ import React from "react";
 import Select from "./Select";
 
 import rootNote from "../data/rootNote";
-import scales from "../data/scalesObj";
+// import scales from "../data/scalesObj";
 import themes from "../data/themes";
 
 export const Octaves = props => {

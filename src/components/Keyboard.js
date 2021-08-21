@@ -255,7 +255,7 @@ class Keyboard extends Component {
   //#endregion
 
   convert_ScaleNameTo_ScaleReciepe(scaleName) {
-    const scaleReciepe = this.state.scales.find((obj) => obj.name === scaleName);
+    const scaleReciepe = this.props.scaleList.find((obj) => obj.name === scaleName);
     return scaleReciepe;
   }
 

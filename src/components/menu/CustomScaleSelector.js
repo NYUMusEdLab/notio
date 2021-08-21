@@ -21,7 +21,7 @@ export const customScaleSteps = [
   "7",
   "△7",
 ];
-
+//TODO: block b5 if #4 is selected , do this for all similar tones
 class CustomScaleSelector extends Component {
   constructor(props) {
     super(props);
@@ -45,9 +45,59 @@ class CustomScaleSelector extends Component {
   }
 
   handleSubmit(event) {
-    alert("A new custom scale was submitted: " + this.state.name + this.state.numbers);
-    this.props.handleChange(this.state.name, this.state.steps, this.state.numbers);
+    let sortedNumbers = this.state.numbers
+    sortedNumbers.sort(this.scaleNumberSort)
+    const scaleSteps = sortedNumbers.map(this.scalenumberToStep)
+    alert("A new custom scale was submitted: " + this.state.name + sortedNumbers);
+    this.props.handleChange(this.state.name, scaleSteps, sortedNumbers);
     event.preventDefault();
+  }
+
+   scalenumberToStep = n => {
+    const indexes={
+      "1":0,
+      "b2":1,
+      "2":2,
+      "#2":3,
+      "b3":3,
+      "3":4,
+      "4":5,
+      "#4":6,
+      "b5":6,
+      "5":7,
+      "#5":8,
+      "b6":8,
+      "6":9,
+      "7":10,
+      "△7":11,
+    };
+    return indexes[n]
+   }
+   scaleNumberSort = (a,b)=>{
+    const indexes={
+      "1":0,
+      "b2":1,
+      "2":2,
+      "#2":3,
+      "b3":3,
+      "3":4,
+      "4":5,
+      "#4":6,
+      "b5":6,
+      "5":7,
+      "#5":8,
+      "b6":8,
+      "6":9,
+      "7":10,
+      "△7":11,
+    };
+
+    if (indexes[a]<indexes[b]){
+      return -1;
+    }
+    else if (indexes[a]>=indexes[b]){
+      return 1;
+    }
   }
 
   componentDidMount() {}
