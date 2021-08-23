@@ -164,6 +164,7 @@ class TopMenu extends Component {
                 scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
                 handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
                     />
+                <line />
 
                 <ListRadio
                   nameField="scale"

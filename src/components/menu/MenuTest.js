@@ -13,18 +13,18 @@ import CustomScaleImg from "../../assets/img/CustomScale";
 export const Menu = (props ) => (
   <div className="menu">
     <Popup
-      trigger={<div className="menu-item"> Customise </div>}
-      position="right top"
+      trigger={<div className="sub-menu"> - Customise -</div>}
+      position="left top"
       on="hover"
       closeOnDocumentClick
       mouseLeaveDelay={300}
       mouseEnterDelay={0}
-      contentStyle={{ padding: '0px', border: 'none' }}
+      contentStyle={{ padding: '2px', border: 'none' }}
       arrow={false}
       
     >
-      <div className="sub-menu">
-      <div className="navbar-item menu-custom-scale">
+       <div className="sub-menu">
+          <div className="navbar-item menu-custom-scale">
             <SubMenu
               title="CustomScale"
               selected={"CustomScale"}
@@ -38,12 +38,8 @@ export const Menu = (props ) => (
             />
             
           </div>
-      {/* <ListCheckbox
-          options={customScaleSteps}
-          handleCheckboxChange={props.handleCheckboxChange}
-          initOptions={props.scaleObject.numbers}
-        /> */}
-      </div>
+        </div>
     </Popup>
+    < div> ____________ </div>
   </div>
 );
