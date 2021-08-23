@@ -100,7 +100,10 @@ class CustomScaleSelector extends Component {
     }
   }
 
-  componentDidMount() {}
+  //Consider this, it may be a bad idea, then just delete it, that will then display the currently selected scale name
+  componentDidMount() {
+    this.setState({name: "Custom"})
+  }
 
   render() {
     return (

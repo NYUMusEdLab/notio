@@ -19,6 +19,7 @@ import CustomScaleImg from "../../assets/img/CustomScale";
 
 import clefs from "../../data/clefs";
 import CustomScaleSelector from "./CustomScaleSelector";
+import { Menu } from "./MenuTest";
 
 const sounds = [{ name: "piano" }, { name: "xylo" }];
 
@@ -119,7 +120,7 @@ class TopMenu extends Component {
           </div>
 
           {/* CustomScaleSelector */}
-          <div className="navbar-item menu-custom-scale">
+          {/* <div className="navbar-item menu-custom-scale">
             <SubMenu
               title="CustomScale"
               selected={this.props.state.scaleObject.name}
@@ -131,8 +132,8 @@ class TopMenu extends Component {
                 />
               }
             />
-          </div>
-
+          </div> */}
+              
           {/* Root */}
           <div className="navbar-item menu-root">
             <SubMenu
@@ -158,13 +159,20 @@ class TopMenu extends Component {
               title="Scale"
               selected={this.state.titleNotation}
               content={
+                <>
+                <Menu state = {this.props.state}
+                scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
+                handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
+                    />
+
                 <ListRadio
                   nameField="scale"
                   data={this.props.state.scaleList}
                   handleChange={this.props.handleChangeScale}
                   setTitle={this.setScaleTitle}
-                  initOption={this.props.state.scale}
-                />
+                  initOption={this.props.state.scale} />
+                  </>
+
               }
             />
           </div>
