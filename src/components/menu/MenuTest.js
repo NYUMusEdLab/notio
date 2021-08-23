@@ -13,13 +13,13 @@ import CustomScaleImg from "../../assets/img/CustomScale";
 export const Menu = (props ) => (
   <div className="menu">
     <Popup
-      trigger={<div className="menu-item"> Customize scale </div>}
+      trigger={<div className="menu-item"> Customise </div>}
       position="right top"
       on="hover"
       closeOnDocumentClick
       mouseLeaveDelay={300}
       mouseEnterDelay={0}
-      contentStyle={{ padding: '0px', border: '1' }}
+      contentStyle={{ padding: '0px', border: 'none' }}
       arrow={false}
       
     >
