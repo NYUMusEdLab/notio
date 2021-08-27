@@ -14,7 +14,7 @@ class Popup extends Component {
   };
   state = {
     minimized: false,
-    show: false,
+    show: this.props.active ? true : false,
   };
 
   componentDidMount() {

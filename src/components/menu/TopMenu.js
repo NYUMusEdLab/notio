@@ -164,7 +164,6 @@ class TopMenu extends Component {
                 scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
                 handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
                     />
-                <line />
 
                 <ListRadio
                   nameField="scale"
@@ -201,9 +200,11 @@ class TopMenu extends Component {
           {/* Video */}
           <div className="navbar-item menu-video">
             <VideoTutorial
+              active = {this.props.videoActive}
               title="Video Player"
               label="video"
               handleChangeVideoUrl={this.props.handleChangeVideoUrl}
+              handleChangeVideoVisibility = {this.props.handleChangeVideoVisibility}
               videoUrl={this.props.state.videoUrl}
               resetVideoUrl={this.props.resetVideoUrl}
             />

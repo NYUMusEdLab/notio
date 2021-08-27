@@ -64,12 +64,14 @@ class VideoTutorial extends Component {
     return (
       <div>
         <Popup
+          active = {this.props.active}
+
           class="popup-video"
           title={this.props.title}
           draggable={true}
           picto={components[this.props.label]}
-          onClickMenuHandler={this.handlePlayPause}
-          onClickCloseHandler={this.handlePlayPause}
+          onClickMenuHandler={this.handlePlayPause, this.props.handleChangeVideoVisibility}
+          onClickCloseHandler={this.handlePlayPause, this.props.handleChangeVideoVisibility}
           hasMinize={true}
           content={
             <div class="tabs-wrapper">

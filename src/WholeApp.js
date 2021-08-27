@@ -34,6 +34,7 @@ class WholeApp extends Component {
     loading: true,
     // videoUrl: 'https://www.youtube.com/watch?v=g4mHPeMGTJM', // silence test video for coding
     videoUrl: notio_tutorial,
+    videoActive : true
   };
 
   constructor(props) {
@@ -43,6 +44,7 @@ class WholeApp extends Component {
     this.handleChangeNotation = this.handleChangeNotation.bind(this);
     this.handleSelectScale = this.handleSelectScale.bind(this);
     this.handleSelectClef = this.handleSelectClef.bind(this);
+    this.handleChangeVideoVisibility = this.handleChangeVideoVisibility.bind(this);
   }
 
   handleChangeSound = (sound) => {};
@@ -124,12 +126,18 @@ class WholeApp extends Component {
   };
 
   handleChangeVideoUrl = (url) => {
-    this.setState({ videoUrl: url });
+    this.setState({ videoUrl: url,
+    videoActive : true });
   };
 
   resetVideoUrl = () => {
     this.setState({ videoUrl: notio_tutorial });
   };
+  
+  handleChangeVideoVisibility = () => {
+    const isActive = !this.state.videoActive
+    this.setState({ 
+      videoActive : isActive });  };
 
   // TODO: make generic handleSelect
   // handleSelect = (selectedElement, selectedValue) => {
@@ -152,6 +160,7 @@ class WholeApp extends Component {
       showOffNotes,
       clef,
       videoUrl,
+      videoActive,
     } = this.state;
     db.collection("sessions")
       .add({
@@ -167,6 +176,7 @@ class WholeApp extends Component {
         showOffNotes: showOffNotes,
         clef: clef,
         videoUrl: videoUrl,
+        videoActive:videoActive,
       })
       .then((docRef) => {
         console.log("Session written with ID: ", docRef.id);
@@ -200,6 +210,7 @@ class WholeApp extends Component {
           clef: result.clef,
           loading: false,
           videoUrl: result.videoUrl,
+          videoActive: result.videoActive,
         });
       } else {
         this.setState({ loading: false });
@@ -277,8 +288,10 @@ class WholeApp extends Component {
           handleSelectClef={this.handleSelectClef}
           handleChangeRoot={this.handleChangeRoot}
           handleChangeVideoUrl={this.handleChangeVideoUrl}
+          handleChangeVideoVisibility = {this.handleChangeVideoVisibility}
           handleChangeSound={this.handleChangeSound}
           resetVideoUrl={this.resetVideoUrl}
+          videoActive = {this.state.videoActive}
           saveSessionToDB={this.saveSessionToDB}
           sessionID={this.state.sessionID}
           state={this.state}

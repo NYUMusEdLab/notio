@@ -21,8 +21,9 @@ class SubMenu extends Component {
   constructor(props) {
     super(props);
     this.toggleClass = this.toggleClass.bind(this);
+    const initactive = props.active ? true : false
     this.state = {
-      active: false,
+      active: initactive,
     };
   }
 

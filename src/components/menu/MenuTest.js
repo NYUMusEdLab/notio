@@ -24,8 +24,9 @@ export const Menu = (props ) => (
       
     >
        <div className="sub-menu">
-          <div className="navbar-item menu-custom-scale">
+          <div className="navbar-item menu-custom-scale" >
             <SubMenu
+              active={true}
               title="CustomScale"
               selected={"CustomScale"}
               selectedImg=< CustomScaleImg />
