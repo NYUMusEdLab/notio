@@ -13,9 +13,9 @@ import scales from "./data/scalesObj";
 class WholeApp extends Component {
   state = {
     octave: 4,
-    scale: "Major (Ionian) Custom",
+    scale: "Major (Ionian)",
     scaleObject: {
-      name: "Major (Ionian) Custom",
+      name: "Major (Ionian)",
       steps: [0, 2, 4, 5, 7, 9, 11],
       numbers: ["1", "2", "3", "4", "5", "6", "△7"],
     },
