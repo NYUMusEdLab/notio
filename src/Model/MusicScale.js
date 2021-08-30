@@ -126,22 +126,7 @@ class MusicScale {
     return ExtendedScaleSteps.map((step) => Colors[step % Colors.length]);
   }
 
-  // SetRootNote(toneName) {
-  //   this.RootNote = rootNote.find(obj => {
-  //     return obj.note === toneName;
-  //   });
-  //   this.BuildExtendedScaleSteps();
-  // }
-
-  // SetStartTone(startToneStep) {
-  //   this.StartToneStep = startToneStep;
-  //   this.BuildExtendedScaleSteps();
-  // }
-
-  // SetAmbitusInHalfNotes(Ambitus) {
-  //   this.AmbitusInSemiNotes = Ambitus;
-  //   this.BuildExtendedScaleSteps();
-  // }
+  
   //#endregion
 
   //#region ScaleSteps Creators
@@ -301,27 +286,27 @@ class MusicScale {
         case "Romance":
           switch (maxDist) {
             case 2: //All scales with a max distance of 2 , is expected to contain one of each letter (ABCDEFG), if that is not the intention add "Custom" to the name"
-              if (scaleName.includes("Custom"))
+              // if (scaleName.includes("Custom"))
                 theScale[whichNotation] = this.MakeScaleNotations(
                   semiToneSteps,
                   rootNoteName,
                   scaleName,
                   whichNotation
                 );
-              //this.ExtendedScaleSteps.map(step => basicScale[step%12])};
-              // theScale[whichNotation] = this.MakeCustomScale(//this.makeScaleMajorMinor(
-              //   semiToneSteps,
-              //   rootNoteName,
-              //   whichNotation,
-              //   this.Recipe
-              // );
-              else {
-                theScale[whichNotation] = this.makeScaleMajorMinor(
-                  semiToneSteps,
-                  rootNoteName,
-                  whichNotation
-                );
-              }
+             
+              // else {
+              //   theScale[whichNotation] = this.MakeScaleNotations(
+              //     semiToneSteps,
+              //     rootNoteName,
+              //     scaleName,
+              //     whichNotation
+              //   );
+                // theScale[whichNotation] = this.makeScaleMajorMinor(
+                //   semiToneSteps,
+                //   rootNoteName,
+                //   whichNotation
+                // );
+              // }
               break;
             case 1:
               theScale[whichNotation] = this.MakeChromatic(
