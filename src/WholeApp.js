@@ -34,7 +34,7 @@ class WholeApp extends Component {
     loading: true,
     // videoUrl: 'https://www.youtube.com/watch?v=g4mHPeMGTJM', // silence test video for coding
     videoUrl: notio_tutorial,
-    videoActive : true
+    videoActive : false
   };
 
   constructor(props) {

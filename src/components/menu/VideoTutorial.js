@@ -24,6 +24,7 @@ class VideoTutorial extends Component {
 
   handlePlayPause = () => {
     this.setState({ playing: !this.state.playing });
+    this.props.handleChangeVideoVisibility()
   };
 
   handleSubmit = (event) => {
@@ -70,8 +71,8 @@ class VideoTutorial extends Component {
           title={this.props.title}
           draggable={true}
           picto={components[this.props.label]}
-          onClickMenuHandler={this.handlePlayPause, this.props.handleChangeVideoVisibility}
-          onClickCloseHandler={this.handlePlayPause, this.props.handleChangeVideoVisibility}
+          onClickMenuHandler={this.handlePlayPause}
+          onClickCloseHandler={this.handlePlayPause}
           hasMinize={true}
           content={
             <div class="tabs-wrapper">
