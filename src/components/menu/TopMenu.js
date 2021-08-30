@@ -15,11 +15,11 @@ import RootMenu from "../../assets/img/RootMenu";
 import ListRadio from "../form/ListRadio";
 import scales from "../../data/scalesObj";
 import NotationImg from "../../assets/img/Notation";
-import CustomScaleImg from "../../assets/img/CustomScale";
+// import CustomScaleImg from "../../assets/img/CustomScale";
 
 import clefs from "../../data/clefs";
-import CustomScaleSelector from "./CustomScaleSelector";
-import { Menu } from "./MenuTest";
+// import CustomScaleSelector from "./CustomScaleSelector";
+import { DropdownCustomScaleMenu } from "./DropdownCustomScaleMenu";
 
 const sounds = [{ name: "piano" }, { name: "xylo" }];
 
@@ -139,7 +139,7 @@ class TopMenu extends Component {
             <SubMenu
               title="Root"
               selected={this.state.titleRoot}
-              selectedImg=<RootMenu color={"#ff0000"} />
+              selectedImg= <RootMenu color={"#ff0000"} />
               //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
               content={
                 <Root
@@ -160,7 +160,7 @@ class TopMenu extends Component {
               selected={this.state.titleNotation}
               content={
                 <>
-                <Menu state = {this.props.state}
+                <DropdownCustomScaleMenu state = {this.props.state}
                 scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
                 handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
                     />
