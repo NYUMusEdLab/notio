@@ -404,7 +404,9 @@ class MusicScale {
         //scaleName,
         whichNotation
       );
-    } else if (scaleName.includes("Custom")) {
+    } 
+    else //(scaleName.includes("Custom")) 
+    {
       switch (whichNotation) {
         case "English":
         case "German":
@@ -423,19 +425,21 @@ class MusicScale {
             whichNotation
           );
       }
-    } else if (
-      !scaleName.includes("Pentatonic") &&
-      !scaleName.includes("Blues")
-    ) {
-      theScale = this.makeScaleMajorMinor(scaleFormula, keyName, whichNotation);
-    } else {
-      theScale = this.makeScalePentatonicBlues(
-        scaleFormula,
-        keyName,
-        scaleName,
-        whichNotation
-      );
-    }
+    } 
+    // else if (
+    //   !scaleName.includes("Pentatonic") &&
+    //   !scaleName.includes("Blues")
+    // ) {
+    //   theScale = this.makeScaleMajorMinor(scaleFormula, keyName, whichNotation);
+    // } 
+    // else {
+    //   theScale = this.makeScalePentatonicBlues(
+    //     scaleFormula,
+    //     keyName,
+    //     scaleName,
+    //     whichNotation
+    //   );
+    // }
     return theScale;
   }
 
