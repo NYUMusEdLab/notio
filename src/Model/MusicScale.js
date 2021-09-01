@@ -600,7 +600,7 @@ class MusicScale {
           "G",
           "Ab",
           "A",
-          "Hb",
+          "B",
           "H",
         ],
       },
