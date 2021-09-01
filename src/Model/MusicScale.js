@@ -1080,7 +1080,7 @@ class MusicScale {
         }
         break;
     }
-    return result != "Hb" ? result: "B";
+    return result !== "Hb" ? result: "B";
   }
 }
 
