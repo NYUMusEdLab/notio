@@ -10,7 +10,7 @@ const TenorClef = props => (
       <g>
          <g transform="matrix(0.09337188,0,0,0.09337188,-71.941161,-140.54414)">
             <g transform="matrix(2.058765,0,0,1.875045,-6892.157,-4468.622)"><path
-               classNameName="fil0 str0"
+               className="fil0 str0"
                d="M 3678.7614,4900.9092 H 7336.1886"
             />
                <path

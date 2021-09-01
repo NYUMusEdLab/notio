@@ -24,6 +24,7 @@ class VideoTutorial extends Component {
 
   handlePlayPause = () => {
     this.setState({ playing: !this.state.playing });
+    this.props.handleChangeVideoVisibility()
   };
 
   handleSubmit = (event) => {
@@ -64,6 +65,8 @@ class VideoTutorial extends Component {
     return (
       <div>
         <Popup
+          active = {this.props.active}
+
           class="popup-video"
           title={this.props.title}
           draggable={true}
