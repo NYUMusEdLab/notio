@@ -204,7 +204,7 @@ class Keyboard extends Component {
 
   //#region Sound Handlers
   playNote = (note) => {
-    // this.synth.keyDown(note);
+    //TODO: consider implementing doubleSharp in a better way
     if (note&&note.length>3){
     note = this.convertDoubleAccidental(note)
     }
@@ -212,6 +212,7 @@ class Keyboard extends Component {
   };
 
   releaseNote = (note) => {
+    //TODO: consider implementing doubleSharp in a better way
     if (note&&note.length>3){
       note = this.convertDoubleAccidental(note)
       }
