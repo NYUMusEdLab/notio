@@ -1082,6 +1082,7 @@ class MusicScale {
     }
     return result !== "Hb" ? result: "B";
   }
+  
 }
 
 export default MusicScale;
