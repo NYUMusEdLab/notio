@@ -108,7 +108,7 @@ class TopMenu extends Component {
           <div className="navbar-item menu-notation">
             <SubMenu
               title="Notation"
-              selected={this.props.state.notation}
+              selected={""}
               selectedImg= < NotationImg />
               content={
                 <Notation
