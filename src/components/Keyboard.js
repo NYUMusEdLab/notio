@@ -398,7 +398,9 @@ class Keyboard extends Component {
       "Bb",
       "B",
     ];
-    let octave = toneName.at(-1);
+    let octave = toneName[toneName.length-1];
+
+    // let octave = toneName.at(-1); //this crashes safari browser
     toneName = toneName.slice(0, -1)
     let result = "";
     const regexFlat = /[b]/gi;
