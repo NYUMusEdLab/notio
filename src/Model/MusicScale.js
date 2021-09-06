@@ -600,7 +600,7 @@ class MusicScale {
           "G",
           "Ab",
           "A",
-          "Hb",
+          "B",
           "H",
         ],
       },
@@ -1082,6 +1082,7 @@ class MusicScale {
     }
     return result !== "Hb" ? result: "B";
   }
+  
 }
 
 export default MusicScale;

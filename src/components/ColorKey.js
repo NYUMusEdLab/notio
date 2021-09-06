@@ -171,13 +171,24 @@ class ColorKey extends Component {
     const noteNames = noteName
       ? noteName.map(function (item, i) {
         item = item.toString();
-        if (item.indexOf("b") === 2) {
+        const regexFlat = /[b]/gi;
+        const regexSharp = /[#]/gi;
+
+        let flats = item.match(regexFlat)
+        let sharps = item.match(regexSharp)
+        if (flats && flats.length === 2) {
           //doubleflat
-          item = item.replace("bb", "\u1D12B");
-        } else if (item.indexOf("b") === 1) {
+          item = item.replace("bb", "𝄫");
+          //item = item.replace("bb", "\u1D12B");
+        } else if (flats && flats.length === 1) {
           //flat
           item = item.replace("b", "\u266D");
         }
+        else if (sharps && sharps.length === 2){
+          //doubleSharp
+          item = item.replace("##", "×");//𝄪
+        }
+
         return (
           <div className="noteName" key={i}>
             {item}
