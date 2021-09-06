@@ -204,18 +204,11 @@ class Keyboard extends Component {
 
   //#region Sound Handlers
   playNote = (note) => {
-    //TODO: consider implementing doubleSharp in a better way
-    if (note&&note.length>3){
-    note = this.convertDoubleAccidental(note)
-    }
+    // this.synth.keyDown(note);
     this.synth.keyDown({ note: note });
   };
 
   releaseNote = (note) => {
-    //TODO: consider implementing doubleSharp in a better way
-    if (note&&note.length>3){
-      note = this.convertDoubleAccidental(note)
-      }
     this.synth.keyUp({ note: note });
   };
 
@@ -365,57 +358,6 @@ class Keyboard extends Component {
     return rootNote.find((obj) => {
       return obj.note === baseNote;
     });
-  }
-
-
-  //TODO: this crashes when the tone is in either end of ENGLISH_SHARP_NAMES, ...use the functions from musicscale (.previous and .next)
-  convertDoubleAccidental=(toneName)=>{
-    const ENGLISH_SHARP_NAMES = [
-      "C",
-      "C#",
-      "D",
-      "D#",
-      "E",
-      "F",
-      "F#",
-      "G",
-      "G#",
-      "A",
-      "A#",
-      "B",
-    ];
-    const ENGLISH_FLAT_NAMES = [
-      "C",
-      "Db",
-      "D",
-      "Eb",
-      "E",
-      "F",
-      "Gb",
-      "G",
-      "Ab",
-      "A",
-      "Bb",
-      "B",
-    ];
-    let octave = toneName.at(-1);
-    toneName = toneName.slice(0, -1)
-    let result = "";
-    const regexFlat = /[b]/gi;
-    const regexSharp = /[#]/gi;
-
-    let flats = toneName.match(regexFlat)
-    let sharps = toneName.match(regexSharp)
-    if (ENGLISH_FLAT_NAMES.includes(toneName) || ENGLISH_SHARP_NAMES.includes(toneName)){
-       result=toneName;
-    }
-    else if (sharps && sharps.length === 2){
-        result = ENGLISH_SHARP_NAMES[ENGLISH_SHARP_NAMES.indexOf(toneName.slice(0, -1))+1]
-    }
-    else if (flats && flats.length === 2){
-      result = ENGLISH_FLAT_NAMES[ENGLISH_FLAT_NAMES.indexOf(toneName.slice(0, -1))-1]
-  }
-    return result + octave;
   }
 
   //#region render function

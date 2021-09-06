@@ -68,18 +68,11 @@ class MusicalStaff extends Component {
         console.log("2");
 
         return new StaveNote(note).addAccidental(0, new Accidental("b"));
-      } 
-      else if (note.keys[0].includes("##")) {
-        console.log("4");
-
-        return new StaveNote(note).addAccidental(0, new Accidental("##"));}
-      else if (note.keys[0].includes("#")) {
+      } else if (note.keys[0].includes("#")) {
         console.log("3");
 
         return new StaveNote(note).addAccidental(0, new Accidental("#"));
-      } 
-      
-      else {
+      } else {
         console.log("************ 4", note);
 
         return new StaveNote(note);
