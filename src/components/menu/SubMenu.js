@@ -7,6 +7,7 @@ import TrebleClef from "../../assets/img/TrebleClef";
 import BassClef from "../../assets/img/BassClef";
 import TenorClef from "../../assets/img/TenorClef";
 import AltoClef from "../../assets/img/AltoClef";
+import NoNoteClef from "../../assets/img/NoNoteClef";
 
 
 // import _ from "lodash";
@@ -67,6 +68,9 @@ class SubMenu extends Component {
       case "alto":
         ClefComponent = AltoClef;
         break;
+      case "no notes":
+        ClefComponent = NoNoteClef;
+        break;
       default:
         ClefComponent = TrebleClef;
     }
@@ -88,7 +92,7 @@ class SubMenu extends Component {
               {this.props.selected}
             </span>
           ) : (
-            <span class="sub-menu--title--selected">{this.props.selected}</span>
+            <span className="sub-menu--title--selected">{this.props.selected}</span>
           )}
           <ArrowDown />
         </div>

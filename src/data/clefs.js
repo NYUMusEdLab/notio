@@ -15,6 +15,10 @@ const clefs = [
   {
     name: 'tenor',
     svg: 'TenorClef',
+  },
+  {
+      name: "no note",
+      svg: "NoNoteClef",
   }
 ];
 
