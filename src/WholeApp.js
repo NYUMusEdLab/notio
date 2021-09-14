@@ -122,7 +122,8 @@ class WholeApp extends Component {
 
   handleChangeRoot = (selectedRoot) => {
     console.log(selectedRoot + " Root selected");
-    this.setState({ baseNote: selectedRoot });
+    const convertedRoot = selectedRoot === 'HB' ? 'Bb': selectedRoot === 'Hb' ? 'Bb':selectedRoot  === 'H' ? 'B' : selectedRoot;
+    this.setState({ baseNote: convertedRoot });
   };
 
   handleChangeVideoUrl = (url) => {
