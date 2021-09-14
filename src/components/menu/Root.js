@@ -201,7 +201,7 @@ class Root extends Component {
                       type="radio"
                       id={`${rootLabel}-` + root.note}
                       className={`${rootLabel}-input-${root.note}`}
-                      label={root.note}
+                      //label={root.note}
                       name={rootLabel}
                       onChange={this.handleChange}
                       value={root.note}
@@ -213,7 +213,7 @@ class Root extends Component {
                     <Form.Check.Label
                       data-color={root.color}
                       className={`${rootLabel}-label-${root.note}`}
-                      for={`${rootLabel}-` + root.note}
+                      htmlFor={`${rootLabel}-` + root.note}
                     >
                       {root.note}
                     </Form.Check.Label>
@@ -227,7 +227,7 @@ class Root extends Component {
                         type="radio"
                         id={`${rootLabel}-` + root.note_romance}
                         className={`${rootLabel}-input-${root.note_romance}`}
-                        label={root.note_romance}
+                        //label={root.note_romance}
                         name={rootLabel}
                         onChange={this.handleChange}
                         value={root.note}
@@ -238,7 +238,7 @@ class Root extends Component {
                       <Form.Check.Label
                         data-color={root.color}
                         className={`${rootLabel}-label-${root.note_romance}`}
-                        for={`${rootLabel}-` + root.note_romance}
+                        htmlFor={`${rootLabel}-` + root.note_romance}
                       >
                         {root.note_romance}
                       </Form.Check.Label>
@@ -252,7 +252,7 @@ class Root extends Component {
                         type="radio"
                         className={`${accidentalLabel}-input-${root.note}`}
                         disabled={this.state.root.charAt(0) === root.note ? false : this.state.accidentalDisabled}
-                        label={root.accidentals[0]}
+                        //label={root.accidentals[0]}
                         id={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}
                         name={accidentalLabel}
                         onChange={this.handleChange}
@@ -266,7 +266,7 @@ class Root extends Component {
                         data-root={root.note}
                         className={`${accidentalLabel}-label-${root.note}`}
                         data-color={root.color}
-                        for={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}
+                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}
                       >
                         {root.accidentals[0]}
                       </Form.Check.Label>
@@ -280,7 +280,7 @@ class Root extends Component {
                         type="radio"
                         className={`${accidentalLabel}-input-${root.note}`}
                         disabled={this.state.root.charAt(0) === root.note ? false : this.state.accidentalDisabled}
-                        label={root.accidentals[1]}
+                        //label={root.accidentals[1]}
                         id={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}
                         name={accidentalLabel}
                         onChange={this.handleChange}
@@ -293,7 +293,7 @@ class Root extends Component {
                       <Form.Check.Label
                         className={`${accidentalLabel}-label-${root.note}`}
                         data-color={root.color}
-                        for={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}
+                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}
                       >
                         {root.accidentals[1]}
                       </Form.Check.Label>
