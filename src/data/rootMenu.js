@@ -43,7 +43,7 @@ const rootMenu = [
   },
   {
     note: "H",
-    note_romance: "SI",
+    note_romance: "SI\n",
     accidentals: ['B'],
     color: "#ee82ee"
   },

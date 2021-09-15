@@ -5,6 +5,7 @@ import rootMenu from "../../data/rootMenu";
 
 
 const rootLabel = "root";
+const romanceLabel = "romance"
 const accidentalLabel = "accidental";
 
 class Root extends Component {
@@ -39,6 +40,13 @@ class Root extends Component {
 
       // Set root - checked to false
       rootState[root.note]['checked'] = false;
+
+      // init RomanceNotation
+      if (!rootState[root.note][romanceLabel]) {
+        rootState[root.note][romanceLabel] = {}
+      }
+      // Set romance - checked to false
+      rootState[root.note][romanceLabel]['checked'] = false;
 
       // add accidentals
       root.accidentals.forEach(function (acc) {
@@ -89,26 +97,26 @@ class Root extends Component {
     });
   }
 
-  setRef = (ref, root, accidental = null) => {
-    if (ref !== null) {
-      if (!this.inputRefs[root]) {
-        this.inputRefs[root] = {};
-        if (!this.inputRefs[root][accidentalLabel]) {
-          this.inputRefs[root][accidentalLabel] = {};
-        }
-      }
+  // setRef = (ref, root, accidental = null) => {
+  //   if (ref !== null) {
+  //     if (!this.inputRefs[root]) {
+  //       this.inputRefs[root] = {};
+  //       if (!this.inputRefs[root][accidentalLabel]) {
+  //         this.inputRefs[root][accidentalLabel] = {};
+  //       }
+  //     }
 
-      // add note
-      if (ref.name === rootLabel) {
-        this.inputRefs[root][rootLabel] = ref;
-      }
+  //     // add note
+  //     if (ref.name === rootLabel) {
+  //       this.inputRefs[root][rootLabel] = ref;
+  //     }
 
-      // add accidentals
-      if (ref.name === accidentalLabel) {
-        this.inputRefs[root][accidentalLabel][ref.value] = ref;
-      }
-    }
-  };
+  //     // add accidentals
+  //     if (ref.name === accidentalLabel) {
+  //       this.inputRefs[root][accidentalLabel][ref.value] = ref;
+  //     }
+  //   }
+  // };
 
   // Set states of current root and accidental
   handleChange = (e) => {
@@ -136,6 +144,22 @@ class Root extends Component {
     }
   }
 
+  handleClickRoot = (e)=>{
+    let root = e.target.value;
+ 
+     if (this.state.root !== root) {
+       this.setState({
+         accidental: "",
+         rootState: this.setRootState(root, true)
+       });
+     } else {
+       this.setState({
+         accidental: "",
+         rootState: this.setRootState(root, false)
+       });
+     }
+ 
+  }
   // Handle (un)select of accidentals radio buttons
   handleClick = (e) => {
     let root = e.target.dataset.root;
@@ -204,11 +228,14 @@ class Root extends Component {
                       //label={root.note}
                       name={rootLabel}
                       onChange={this.handleChange}
+                      onClick={this.handleClickRoot}
                       value={root.note}
                       data-rootdisplayed={root.note}
 
-                      ref={(ref) => this.setRef(ref, root.note)}
+                      //ref={(ref) => this.setRef(ref, root.note)}
                       checked={this.state.rootDisplayed === root.note ? true : false}
+                      //checked={this.state.rootState[root.note]['checked']}
+
                     />
                     <Form.Check.Label
                       data-color={root.color}
@@ -232,8 +259,10 @@ class Root extends Component {
                         onChange={this.handleChange}
                         value={root.note}
                         data-rootdisplayed={root.note_romance}
-                        ref={(ref) => this.setRef(ref, root.note_romance)}
+                        //ref={(ref) => this.setRef(ref, root.note_romance)}
                         checked={this.state.rootDisplayed === root.note_romance ? true : false}
+                        //checked={rootState[root.note][romanceLabel]['checked']}
+
                       />
                       <Form.Check.Label
                         data-color={root.color}
@@ -258,7 +287,7 @@ class Root extends Component {
                         onChange={this.handleChange}
                         onClick={this.handleClick}
                         value={root.accidentals[0]}
-                        ref={(ref) => this.setRef(ref, root.note, root.accidentals[0],)}
+                        //ref={(ref) => this.setRef(ref, root.note, root.accidentals[0],)}
                         data-root={root.note}
                         checked={rootState[root.note][accidentalLabel][root.accidentals[0]]['checked']}
                       />
@@ -286,7 +315,7 @@ class Root extends Component {
                         onChange={this.handleChange}
                         onClick={this.handleClick}
                         value={root.accidentals[1]}
-                        ref={(ref) => this.setRef(ref, root.note, root.accidentals[1])}
+                        //ref={(ref) => this.setRef(ref, root.note, root.accidentals[1])}
                         data-root={root.note}
                         checked={rootState[root.note][accidentalLabel][root.accidentals[1]]['checked']}
                       />
