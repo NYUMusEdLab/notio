@@ -6,7 +6,9 @@ const BassClef = props => (
       width="35"
       height="65"
       viewBox="0 0 683.61717 1523.3183"
-   ><g transform="matrix(0.07781866,0,0,0.07781866,21.529094,265.78191)">
+   >
+        <title>Bass Clef</title>   
+    <g transform="matrix(0.07781866,0,0,0.07781866,21.529094,265.78191)">
          <g transform="matrix(4.588483,0,0,4.575039,-4898.431,-28736.72)"><path
             class="fil0 str0"
             d="M 984,7559 H 2953"
