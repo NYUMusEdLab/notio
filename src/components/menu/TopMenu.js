@@ -31,6 +31,7 @@ class TopMenu extends Component {
       clefTitle: "",
       clefImage: "",
       titleRoot: this.props.state.baseNote,
+      trebleStaffOn: props.trebleStaffOn,
     };
   }
 
@@ -63,6 +64,8 @@ class TopMenu extends Component {
       titleRoot: note,
     });
   };
+
+  
 
   render() {
     console.log("topmenu scales", scales);
@@ -184,6 +187,7 @@ class TopMenu extends Component {
               selected={this.state.clefTitle}
               displayClef={true}
               content={
+                <>
                 <ListRadio
                   nameField="clef"
                   data={clefs}
@@ -193,6 +197,17 @@ class TopMenu extends Component {
                   initOption={this.props.state.clef}
                   displayPicto={true}
                 />
+                <div className="Menu-label">
+                Musical Staff (Treble){" "}
+                <img height="30" src="/img/treble-clef.png" alt="treble cleff" />
+              </div>
+              <div className="toggle-switch">
+                <div className="checkbox">
+                  <input type="checkbox" checked={this.state.trebleStaffOn} onChange={this.props.toggleStaff} />
+                  <label />
+                </div>
+              </div>
+                </>
               }
             />
           </div>

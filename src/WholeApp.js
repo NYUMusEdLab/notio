@@ -283,6 +283,7 @@ class WholeApp extends Component {
         <TopMenu
           togglePiano={this.togglePiano}
           toggleExtendedKeyboard={this.toggleExtendedKeyboard}
+          toggleStaff={this.toggleStaff}
           handleChangeNotation={this.handleChangeNotation}
           handleChangeScale={this.handleSelectScale}
           handleChangeCustomScale={this.handleChangeCustomScale}
