@@ -57,10 +57,21 @@ class TopMenu extends Component {
       clefImage: _.startCase(img) + "Clef",
     });
   };
-
+ //special cases: when the rootpicker returns HB we want to display a B for the german notation, when it returns a SI B we want a SIb
   handleChangeTitle = (note) => {
+    let convertedNote = note;
+    switch (note){
+      case 'HB':
+        convertedNote = 'B'
+        break;
+      case 'SI\nB':
+        convertedNote = 'SIb'
+        break;
+        default:
+          break;
+    }
     this.setState({
-      titleRoot: note,
+      titleRoot: convertedNote,
     });
   };
 
