@@ -7,6 +7,7 @@ const TenorClef = props => (
       width="35"
       height="65"
       viewBox="0 0 683.61717 1523.3183" >
+          <title>Tenor Clef</title>
       <g>
          <g transform="matrix(0.09337188,0,0,0.09337188,-71.941161,-140.54414)">
             <g transform="matrix(2.058765,0,0,1.875045,-6892.157,-4468.622)"><path
