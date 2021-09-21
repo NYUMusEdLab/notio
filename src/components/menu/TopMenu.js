@@ -171,17 +171,18 @@ class TopMenu extends Component {
               selected={this.state.titleNotation}
               content={
                 <>
-                <DropdownCustomScaleMenu state = {this.props.state}
-                scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
-                handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
-                    />
-
                 <ListRadio
                   nameField="scale"
                   data={this.props.state.scaleList}
                   handleChange={this.props.handleChangeScale}
                   setTitle={this.setScaleTitle}
                   initOption={this.props.state.scale} />
+                  <DropdownCustomScaleMenu 
+                  menuTextClassName="form-radio"
+                  state = {this.props.state}
+                  scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
+                  handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
+                    />
                   </>
 
               }

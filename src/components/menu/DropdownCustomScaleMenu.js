@@ -16,11 +16,15 @@ export class DropdownCustomScaleMenu extends Component {
   
   render() {
     return(
-    <div className="menu">
+    <div 
+    className={this.props.menuTextClassName}>
       <Popup
-        trigger={<div className="sub-menu"> - Customise -</div>}
+        trigger={<div className="label-wrapper">Customise</div>}
         position="left top"
         on="hover"
+        repositionOnResize = {true}
+        offsetY={-300}
+        closeOnEscape ={true}
         closeOnDocumentClick
         mouseLeaveDelay={300}
         mouseEnterDelay={0}
@@ -31,8 +35,9 @@ export class DropdownCustomScaleMenu extends Component {
         <div className="sub-menu">
             <div className="navbar-item menu-custom-scale" >
               <SubMenu
+                className = {this.props.menuTextClassName}
                 active={true}
-                title="CustomScale"
+                title=""
                 selected={"CustomScale"}
                 selectedImg= <CustomScaleImg />
                 content={
@@ -46,7 +51,6 @@ export class DropdownCustomScaleMenu extends Component {
             </div>
           </div>
       </Popup>
-      < div> ____________ </div>
     </div>
   );
   }
