@@ -74,6 +74,7 @@ const scales = [
     steps: [0, 2, 3, 4, 7, 9],
     numbers: ["1", "2", "b3", "3", "5", "6"],
   },
+  //theese are commented out to make the scale menu shorter, not overlapping the keys on the keyboard
   // {
   //   name: "Whole tone",
   //   steps: [0, 2, 4, 6, 8, 10],
