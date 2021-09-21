@@ -39,7 +39,7 @@ export class DropdownCustomScaleMenu extends Component {
                 active={true}
                 title=""
                 selected={"CustomScale"}
-                selectedImg= <CustomScaleImg />
+                selectedImg= {<CustomScaleImg />}
                 content={
                   <CustomScaleSelector //TODO: add initoptions for custom scale, matching current scale, add function handleCustomScale
                     initOptions={this.props.state.scaleObject} //TODO: fix to customscale creation

@@ -120,7 +120,7 @@ class TopMenu extends Component {
             <SubMenu
               title="Notation"
               selected={""}
-              selectedImg= < NotationImg />
+              selectedImg= {< NotationImg />}
               content={
                 <Notation
                   initOptions={this.props.state.notation}
@@ -150,7 +150,7 @@ class TopMenu extends Component {
             <SubMenu
               title="Root"
               selected={this.state.titleRoot}
-              selectedImg= <RootMenu color={"#ff0000"} />
+              selectedImg= {<RootMenu color={"#ff0000"} />}
               //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
               content={
                 <Root
@@ -237,10 +237,10 @@ class TopMenu extends Component {
             <Settings title="Settings" label="Settings" />
           </div>
         </div>
-        <div class="side-menu">
-          <div class="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
-          <div class="Area2 area"><img src={require('../../img/question_mark.png')} alt="help" /></div>
-          <div class="Area3 area"><img src={require('../../img/home.png')} alt="home" /></div>
+        <div className="side-menu">
+          <div className="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
+          <div className="Area2 area"><img src={require('../../img/question_mark.png')} alt="help" /></div>
+          <div className="Area3 area"><img src={require('../../img/home.png')} alt="home" /></div>
         </div>
       </div>
     );
