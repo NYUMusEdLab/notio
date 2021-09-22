@@ -12,7 +12,7 @@ const components = {
   'bass': <BassClef />,
   'tenor': <TenorClef />,
   'alto': <AltoClef />,
-  'no note': <NoNoteClef />,
+  'no clef': <NoNoteClef />,
 };
 
 const Radio = ({ nameField, label, isSelected, onRadioChange }) => (
