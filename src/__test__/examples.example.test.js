@@ -46,4 +46,6 @@ test("Example with basis WholeApp rendering showing the menu items are present",
     userEvent.click(altoRadios[0])
     const twoAltos = screen.getAllByTitle("Alto Clef");
     expect(twoAltos.length).toBe(2)
+    const oneTreble = screen.getAllByTitle("Treble Clef");
+    expect(oneTreble.length).toBe(1)
 })
