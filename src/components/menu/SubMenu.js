@@ -7,6 +7,7 @@ import TrebleClef from "../../assets/img/TrebleClef";
 import BassClef from "../../assets/img/BassClef";
 import TenorClef from "../../assets/img/TenorClef";
 import AltoClef from "../../assets/img/AltoClef";
+import NoNoteClef from "../../assets/img/NoNoteClef";
 
 
 // import _ from "lodash";
@@ -66,6 +67,9 @@ class SubMenu extends Component {
         break;
       case "alto":
         ClefComponent = AltoClef;
+        break;
+      case "no clef":
+        ClefComponent = NoNoteClef;
         break;
       default:
         ClefComponent = TrebleClef;

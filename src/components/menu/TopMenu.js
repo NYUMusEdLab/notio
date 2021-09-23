@@ -225,10 +225,10 @@ class TopMenu extends Component {
             <Settings title="Settings" label="Settings" />
           </div>
         </div>
-        <div class="side-menu">
-          <div class="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
-          <div class="Area2 area"><img src={require('../../img/question_mark.png')} alt="help" /></div>
-          <div class="Area3 area"><img src={require('../../img/home.png')} alt="home" /></div>
+        <div className="side-menu">
+          <div className="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
+          <div className="Area2 area"><img src={require('../../img/question_mark.png')} alt="help" /></div>
+          <div className="Area3 area"><img src={require('../../img/home.png')} alt="home" /></div>
         </div>
       </div>
     );
