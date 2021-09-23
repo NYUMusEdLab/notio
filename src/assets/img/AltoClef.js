@@ -8,6 +8,7 @@ const AltoClef = props => (
       width="35"
       height="65"
       viewBox="0 0 683.61717 1523.3183">
+          <title>Alto Clef</title>
       <g><g
          transform="matrix(0.35725103,0,0,0.35602336,-1628.0799,-1557.1278)"
       ><path

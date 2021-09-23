@@ -8,6 +8,7 @@ const CircleFifthsImg = props => (
     height={395.51}
     {...props}
   >
+      <title>Circle of Fifths</title>
     <path fill="none" d="M-1-1h582v402H-1z" />
     <g className="note note_D">
       <path

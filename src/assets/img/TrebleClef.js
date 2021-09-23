@@ -7,9 +7,11 @@ const TrebleClef = props => (
       width="35"
       height="65"
       viewBox="0 0 683.61717 1523.3183"
+   >
+       <title>Treble Clef</title>
+   <g
    ><g
-   ><g
-
+    
       id="g247"
       transform="matrix(0.09170451,0,0,0.09170451,-40.594256,171.31066)"><g
          transform="matrix(3.817349,0,0,3.808092,-3380.452,-23251.63)"><path
@@ -37,9 +39,6 @@ const TrebleClef = props => (
                   id="path17-54"
                /></g></g></g>
    </svg >
-
-
-
 );
 
 export default TrebleClef;
