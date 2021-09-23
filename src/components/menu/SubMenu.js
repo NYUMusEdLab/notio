@@ -97,7 +97,7 @@ class SubMenu extends Component {
           <ArrowDown />
         </div>
         <div className="title--wrapper">
-          <span className={`title ${isActive}`}>{this.props.title}</span>
+          <span className={`title ${isActive}`} title={this.props.title}>{this.props.title}</span>
         </div>
         {/* <hr className={isActive} /> */}
 

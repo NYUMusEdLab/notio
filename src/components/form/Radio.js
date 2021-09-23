@@ -22,6 +22,7 @@ const Radio = ({ nameField, label, isSelected, onRadioChange }) => (
       <input
         type="radio"
         value={label}
+        data-testid={"Radio:"+label}
         name={nameField}
         checked={isSelected}
         onChange={onRadioChange}
