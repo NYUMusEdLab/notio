@@ -38,4 +38,14 @@ test("Example with basis WholeApp rendering showing the menu items are present",
     screen.getByTitle("Alto Clef");
     screen.getByTitle("Bass Clef");
     screen.getByTitle("Tenor Clef");
+
+    // Example of using the userevent library, where we click on the AltoClef to change Clef (ie. now there are two AltoClefs in the menu)
+    const altoRadios = screen.getAllByTestId("Radio:alto")    //To make this work, Radios input received a datatest-id equal to the label.
+    expect(altoRadios.length).toBe(1)                   //  To make the code more clear, all datatest-ids should have a standard of Component:value
+                                                        //  This is generally bad practice, since we choose something the user can't see
+    userEvent.click(altoRadios[0])
+    const twoAltos = screen.getAllByTitle("Alto Clef");
+    expect(twoAltos.length).toBe(2)
+    const oneTreble = screen.getAllByTitle("Treble Clef");
+    expect(oneTreble.length).toBe(1)
 })
