@@ -157,7 +157,7 @@ class Keyboard extends Component {
         //this.playNote(previousOctave[previousOctave.length - 2]);
       }
       if (e.code === "KeyD") {
-        this.playNote(activeScale.BasisScale[(scaleLength-1)-(0%scaleLength)].note_english+(octave-1));
+        this.playNote(activeScale.BasisScale[(scaleLength-1)-(0%scaleLength)].note_english+(octave));
         //this.playNote(previousOctave[previousOctave.length - 2]);
       }
       if (e.code === "KeyS") {
@@ -424,7 +424,7 @@ class Keyboard extends Component {
       ambitus
     );
 
-    if (this.state.activeScale.Name !== currentScale.Name) {
+    if (this.state.activeScale.Name !== currentScale.Name || this.state.activeScale.RootNoteName !== currentScale.RootNoteName) {
     this.setState({activeScale: currentScale})
     }
     return { keyboardLayoutScale, currentScale };
