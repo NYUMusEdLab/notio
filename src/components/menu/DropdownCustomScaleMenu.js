@@ -2,15 +2,9 @@
 
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
-
-// import ListCheckbox from "../form/ListCheckbox";
-// import CustomScaleSelector, { customScaleSteps } from "./CustomScaleSelector";
-
 import CustomScaleSelector from "./CustomScaleSelector";
 import SubMenu from "./SubMenu";
 import CustomScaleImg from "../../assets/img/CustomScale";
-
-// import Checkbox from "../form/Checkbox";
 
 export class DropdownCustomScaleMenu extends Component {
   

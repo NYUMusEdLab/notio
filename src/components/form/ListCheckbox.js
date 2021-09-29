@@ -44,7 +44,7 @@ class ListCheckbox extends Component {
   createCheckboxes = () => this.props.options.map(this.createCheckbox);
 
   render() {
-    console.log("********** this.props.checked", this.props.checked);
+    // console.log("********** this.props.checked", this.props.checked);
     return this.createCheckboxes();
   }
 }

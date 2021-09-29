@@ -97,27 +97,6 @@ class Root extends Component {
     });
   }
 
-  // setRef = (ref, root, accidental = null) => {
-  //   if (ref !== null) {
-  //     if (!this.inputRefs[root]) {
-  //       this.inputRefs[root] = {};
-  //       if (!this.inputRefs[root][accidentalLabel]) {
-  //         this.inputRefs[root][accidentalLabel] = {};
-  //       }
-  //     }
-
-  //     // add note
-  //     if (ref.name === rootLabel) {
-  //       this.inputRefs[root][rootLabel] = ref;
-  //     }
-
-  //     // add accidentals
-  //     if (ref.name === accidentalLabel) {
-  //       this.inputRefs[root][accidentalLabel][ref.value] = ref;
-  //     }
-  //   }
-  // };
-
   // Set states of current root and accidental
   handleChange = (e) => {
 
@@ -225,16 +204,12 @@ class Root extends Component {
                       type="radio"
                       id={`${rootLabel}-` + root.note}
                       className={`${rootLabel}-input-${root.note}`}
-                      //label={root.note}
                       name={rootLabel}
                       onChange={this.handleChange}
                       onClick={this.handleClickRoot}
                       value={root.note}
                       data-rootdisplayed={root.note}
-
-                      //ref={(ref) => this.setRef(ref, root.note)}
                       checked={this.state.rootDisplayed === root.note ? true : false}
-                      //checked={this.state.rootState[root.note]['checked']}
 
                     />
                     <Form.Check.Label
@@ -254,15 +229,11 @@ class Root extends Component {
                         type="radio"
                         id={`${rootLabel}-` + root.note_romance}
                         className={`${rootLabel}-input-${root.note_romance}`}
-                        //label={root.note_romance}
                         name={rootLabel}
                         onChange={this.handleChange}
                         value={root.note}
                         data-rootdisplayed={root.note_romance}
-                        //ref={(ref) => this.setRef(ref, root.note_romance)}
                         checked={this.state.rootDisplayed === root.note_romance ? true : false}
-                        //checked={rootState[root.note][romanceLabel]['checked']}
-
                       />
                       <Form.Check.Label
                         data-color={root.color}
@@ -281,13 +252,11 @@ class Root extends Component {
                         type="radio"
                         className={`${accidentalLabel}-input-${root.note}`}
                         disabled={this.state.root.charAt(0) === root.note ? false : this.state.accidentalDisabled}
-                        //label={root.accidentals[0]}
                         id={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}
                         name={accidentalLabel}
                         onChange={this.handleChange}
                         onClick={this.handleClick}
                         value={root.accidentals[0]}
-                        //ref={(ref) => this.setRef(ref, root.note, root.accidentals[0],)}
                         data-root={root.note}
                         checked={rootState[root.note][accidentalLabel][root.accidentals[0]]['checked']}
                       />
@@ -309,13 +278,11 @@ class Root extends Component {
                         type="radio"
                         className={`${accidentalLabel}-input-${root.note}`}
                         disabled={this.state.root.charAt(0) === root.note ? false : this.state.accidentalDisabled}
-                        //label={root.accidentals[1]}
                         id={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}
                         name={accidentalLabel}
                         onChange={this.handleChange}
                         onClick={this.handleClick}
                         value={root.accidentals[1]}
-                        //ref={(ref) => this.setRef(ref, root.note, root.accidentals[1])}
                         data-root={root.note}
                         checked={rootState[root.note][accidentalLabel][root.accidentals[1]]['checked']}
                       />

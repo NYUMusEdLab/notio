@@ -92,14 +92,12 @@ class MusicScale {
     this.Transposition = this.RootNote.index; //  notes.findIndex(note => note.note_english===this.RootNote)
     this.BasisScale = this.SemitoneSteps.map(
       (step) => notes[(step + this.Transposition) % notes.length]
-    ); //noteMappingObj["English"].Sharp_Names[(step)%12]);
-    //this.addNumberExtensions();
+    ); 
     this.Notations = notations;
     this.ExtendedScaleSteps = [...this.BuildExtendedScaleSteps()];
     this.Octave =
       this.ExtendedScaleSteps[0] % 12 === 0 ? this.Octave : this.Octave - 1;
 
-    // this.ExtendedScaleStepsRelativeToC = this.ExtendedScaleSteps.map((step=>(step - this.Transposition+12)))
     this.ExtendedScaleToneNames = {
       ...this.BuildExtendedScaleToneNames(
         this.Recipe.numbers,
@@ -120,7 +118,7 @@ class MusicScale {
       this.ExtendedScaleSteps
     );
     this.Colors = this.MakeColors(this.ExtendedScaleSteps, this.Colors);
-    console.log("basis:", this.ExtendedScaleToneNames);
+    // console.log("basis:", this.ExtendedScaleToneNames);
   }
   MakeColors(ExtendedScaleSteps, Colors) {
     return ExtendedScaleSteps.map((step) => Colors[step % Colors.length]);
@@ -269,10 +267,8 @@ class MusicScale {
     notation,
     scaleName
   ) {
-    //const basicScale =['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    // let toneNames = [];
-    let theScale = {};
 
+    let theScale = {};
     let maxdistanceBetweenAdjacentNotes = semiToneSteps.map(
       (step, index) => semiToneSteps[index + 1] - step
     );
@@ -313,7 +309,7 @@ class MusicScale {
                 semiToneSteps,
                 rootNoteName,
                 whichNotation
-              ); // this.ExtendedScaleSteps.map(step => basicScale[step%12]);
+              ); 
               break;
 
             default:
@@ -411,20 +407,7 @@ class MusicScale {
           );
       }
     } 
-    // else if (
-    //   !scaleName.includes("Pentatonic") &&
-    //   !scaleName.includes("Blues")
-    // ) {
-    //   theScale = this.makeScaleMajorMinor(scaleFormula, keyName, whichNotation);
-    // } 
-    // else {
-    //   theScale = this.makeScalePentatonicBlues(
-    //     scaleFormula,
-    //     keyName,
-    //     scaleName,
-    //     whichNotation
-    //   );
-    // }
+
     return theScale;
   }
 
@@ -670,8 +653,6 @@ class MusicScale {
       },
     };
 
-    // let root = keyName;
-    // let offset;
     let tonenameOffset = this.noteNameToIndex(keyName);
     let startingNote = tonenameOffset;
 
@@ -686,10 +667,7 @@ class MusicScale {
       startingNote = 0; //relative;
     }
 
-    //console.log(root, startingNote);
-    //console.log("scaleFormula",scaleFormula)
-    //console.log("keyName", keyName)
-    //console.log("whichNotation", whichNotation)
+    
     let myScaleFormula = scaleFormula;
     let myScale = [];
 
@@ -724,7 +702,6 @@ class MusicScale {
       ); // high note used to indicate error
     }
 
-    // //console.log("myscale",myScale);
     return myScale;
   }
 
@@ -918,11 +895,7 @@ class MusicScale {
     return index === 0 ? recipe.length - 1 : index - 1;
   }
 
-  //TODO: !!!!!!!!this is closely coupled to the scales array , where the first element has to be the major Ionian scale, this is not good!!
-  // createMajorScale(basetone, notation) {
-  //   const formula = this.scales[0];
-  //   return this.makeScaleMajorMinor(formula, basetone, notation);
-  // }
+ 
 
   getMajorScale(basetone, notation) {
     let foneticTonename = "";
@@ -1023,10 +996,8 @@ class MusicScale {
     let deconstructedToneName = toneName.split("");
     let basistoneName = deconstructedToneName.shift();
     let Accidentals = [...deconstructedToneName];
-    //Accidentals.push(Accidental)
     const convertAccidentalToStep = (accid) =>
       accid === "b" ? -1 : accid === "#" ? 1 : accid === "x" ? 2 : 0;
-    //Accidentals = Accidentals.map(accidental => accidental === 'b' ? -1 : accidental === '#' ? 1 : 0)
     const stepsFromToneName = Accidentals.reduce(
       (accumulator, accid) => convertAccidentalToStep(accid) + accumulator,
       0

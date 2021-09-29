@@ -2,22 +2,14 @@
 
 import React, { Component } from "react";
 import ArrowDown from "../arrows/Down";
-
 import TrebleClef from "../../assets/img/TrebleClef";
 import BassClef from "../../assets/img/BassClef";
 import TenorClef from "../../assets/img/TenorClef";
 import AltoClef from "../../assets/img/AltoClef";
 import NoNoteClef from "../../assets/img/NoNoteClef";
 
-
-// import _ from "lodash";
-
-// const Clefs = {
-//   Treble: TrebleClef,
-// };
 let ClefComponent = TrebleClef;
 
-// let clefPath = '';
 class SubMenu extends Component {
   constructor(props) {
     super(props);
@@ -39,13 +31,7 @@ class SubMenu extends Component {
     }
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.selected !== prevProps.selected) {
-  //     if (this.props.displayClef) {
-  //       this.selectPictoClef();
-  //     }
-  //   }
-  // }
+  
 
 
   selectPictoClef() {

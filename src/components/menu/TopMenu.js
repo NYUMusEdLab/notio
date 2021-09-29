@@ -13,7 +13,7 @@ import RootMenu from "../../assets/img/RootMenu";
 // import { findColor } from '../utils.js';
 
 import ListRadio from "../form/ListRadio";
-import scales from "../../data/scalesObj";
+// import scales from "../../data/scalesObj";
 import NotationImg from "../../assets/img/Notation";
 // import CustomScaleImg from "../../assets/img/CustomScale";
 
@@ -76,7 +76,7 @@ class TopMenu extends Component {
   };
 
   render() {
-    console.log("topmenu scales", scales);
+    // console.log("topmenu scales", scales);
     return (
       <div>
         <div className="navbar ">

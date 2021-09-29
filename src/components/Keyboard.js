@@ -63,7 +63,7 @@ class Keyboard extends Component {
     this.vol = new Tone.Volume(4);
 
     this.synth.load().then(() => {
-      console.log("--------------- Piano loaded!");
+      // console.log("--------------- Piano loaded!");
     });
     //this.synth.chain(this.vol, Tone.Master);
   }
@@ -275,9 +275,6 @@ class Keyboard extends Component {
     keyboard.addEventListener("mousedown", this.mouseDown, false);
     keyboard.addEventListener("mouseup", this.mouseUp, false);
 
-    // // determine the scale shifting
-    // onlyScaleIndex = this.scaleShifting(extendedKeyboard, scaleName);
-
     targetArr = Array.from(document.querySelectorAll(".Key"));
 
     //only count the elements that are in the scale (className= .note .on)
@@ -312,16 +309,8 @@ class Keyboard extends Component {
         }
         return null;
       });
-
-      //this.updateScales();
       threeLowerOctave.clear();
     }
-
-    // // scale index on keyboard
-    // onlyScaleIndex = this.scaleShifting(extendedKeyboard, scaleName);
-    // console.log('CompDidUpdate:currentScale',this.state.currentScale )
-    // //console.log('CompDidUpdate:scaleReciepe',this.state.scaleReciepe )
-    // console.log('CompDidUpdate:activeNotes',this.state.activeNotes )
   }
 
   componentWillUnmount() {
@@ -505,7 +494,6 @@ class Keyboard extends Component {
           : keyboardLayoutScale.ExtendedScaleTones[index];
 
         return (
-          //<p>-| {noteName} |</p>
           <Key
             keyIndex={index} // Index in loop of notes
             index={index} // index on Keyboard

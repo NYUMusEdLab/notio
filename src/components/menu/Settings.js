@@ -15,6 +15,7 @@ class Settings extends Component {
 
   render() {
     // const { url, playing } = this.state;
+    //TODO: check what content is pointing to (custom_mode.PNG ????)
     return (
       <div>
         <Popup
