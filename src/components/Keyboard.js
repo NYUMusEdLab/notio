@@ -121,7 +121,7 @@ class Keyboard extends Component {
       }*/
       this.noteOn(buttonPressed.dataset.note);
     } else if (!extendedKeyboard) {
-      let threeLowerOctaveArr = Array.from(threeLowerOctave);
+      // let threeLowerOctaveArr = Array.from(threeLowerOctave);
       // TODO:lowernotes are played when clicked QAZ
       ///let currentRoot = rootNote.find(obj => {
       //   return obj.note === baseNote;
@@ -133,10 +133,10 @@ class Keyboard extends Component {
       // console.log(lowerNotes);
       // TODO: it's not correct
 
-      let previousOctave = threeLowerOctaveArr.map(function (note) {
-        let currentOctave = note.match(/(\d+)/)[0];
-        return note.replace(/(\d+)/, currentOctave - 1);
-      });
+      // let previousOctave = threeLowerOctaveArr.map(function (note) {
+      //   let currentOctave = note.match(/(\d+)/)[0];
+      //   return note.replace(/(\d+)/, currentOctave - 1);
+      // });
       if (e.code === "ArrowDown") {
         this.setState({octave: octave-1})
       }
@@ -204,11 +204,11 @@ class Keyboard extends Component {
       this.noteOff(buttonReleased.dataset.note);
     } else if (!extendedKeyboard) {
       //TODO: it's not correct
-      let threeLowerOctaveArr = Array.from(threeLowerOctave);
-      let previousOctave = threeLowerOctaveArr.map(function (note) {
-        let currentOctave = note.match(/(\d+)/)[0];
-        return note.replace(/(\d+)/, currentOctave - 1);
-      });
+      // let threeLowerOctaveArr = Array.from(threeLowerOctave);
+      // let previousOctave = threeLowerOctaveArr.map(function (note) {
+      //   let currentOctave = note.match(/(\d+)/)[0];
+      //   return note.replace(/(\d+)/, currentOctave - 1);
+      // });
 
       // if (e.code === "KeyQ") {
       //   this.releaseNote(this.state.activeScale.BasisScale[6].note_english+(octave-1));
