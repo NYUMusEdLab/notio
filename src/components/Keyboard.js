@@ -143,6 +143,18 @@ class Keyboard extends Component {
       if (e.code === "ArrowUp") {
         this.setState({octave: octave+1})
       }
+      if (e.code === "KeyE") {
+        this.playNote(this.state.activeScale.BasisScale[2].note_english+(octave));
+        //this.playNote(previousOctave[previousOctave.length - 2]);
+      }
+      if (e.code === "KeyW") {
+        this.playNote(this.state.activeScale.BasisScale[1].note_english+(octave));
+        //this.playNote(previousOctave[previousOctave.length - 2]);
+      }
+      if (e.code === "KeyQ") {
+        this.playNote(this.state.activeScale.BasisScale[0].note_english+(octave));
+        //this.playNote(previousOctave[previousOctave.length - 2]);
+      }
       if (e.code === "KeyD") {
         this.playNote(this.state.activeScale.BasisScale[scaleLength-1].note_english+(octave-1));
         //this.playNote(previousOctave[previousOctave.length - 2]);
@@ -155,13 +167,16 @@ class Keyboard extends Component {
         // this.playNote(previousOctave[previousOctave.length - 3]);
         this.playNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave-1));
       }
-      if (e.code === "KeyQ") {
-        this.playNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave));
+      if (e.code === "KeyC") {
+        this.playNote(this.state.activeScale.BasisScale[scaleLength-4].note_english+(octave-1));
         //this.playNote(previousOctave[previousOctave.length - 2]);
       }
-      
+      if (e.code === "KeyX") {
+        this.playNote(this.state.activeScale.BasisScale[scaleLength-5].note_english+(octave-1));
+        //this.playNote(previousOctave[previousOctave.length - 2]);
+      }
       if (e.code === "KeyZ") {
-        this.playNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave-2));
+        this.playNote(this.state.activeScale.BasisScale[scaleLength-6].note_english+(octave-1));
       }
     }
   };
@@ -203,6 +218,18 @@ class Keyboard extends Component {
       // if (e.code === "KeyZ") {
       //   this.releaseNote(this.state.activeScale.ExtendedScaleToneNames['English'][0]+(octave-1));
       // }
+      if (e.code === "KeyE") {
+        this.releaseNote(this.state.activeScale.BasisScale[2].note_english+(octave));
+        //this.releaseNote(previousOctave[previousOctave.length - 2]);
+      }
+      if (e.code === "KeyW") {
+        this.releaseNote(this.state.activeScale.BasisScale[1].note_english+(octave));
+        //this.releaseNote(previousOctave[previousOctave.length - 2]);
+      }
+      if (e.code === "KeyQ") {
+        this.releaseNote(this.state.activeScale.BasisScale[0].note_english+(octave));
+        //this.releaseNote(previousOctave[previousOctave.length - 2]);
+      }
       if (e.code === "KeyD") {
         this.releaseNote(this.state.activeScale.BasisScale[scaleLength-1].note_english+(octave-1));
         //this.releaseNote(previousOctave[previousOctave.length - 2]);
@@ -215,13 +242,16 @@ class Keyboard extends Component {
         // this.releaseNote(previousOctave[previousOctave.length - 3]);
         this.releaseNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave-1));
       }
-      if (e.code === "KeyQ") {
-        this.releaseNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave));
+      if (e.code === "KeyC") {
+        this.releaseNote(this.state.activeScale.BasisScale[scaleLength-4].note_english+(octave-1));
         //this.releaseNote(previousOctave[previousOctave.length - 2]);
       }
-      
+      if (e.code === "KeyX") {
+        this.releaseNote(this.state.activeScale.BasisScale[scaleLength-5].note_english+(octave-1));
+        //this.releaseNote(previousOctave[previousOctave.length - 2]);
+      }
       if (e.code === "KeyZ") {
-        this.releaseNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave-2));
+        this.releaseNote(this.state.activeScale.BasisScale[scaleLength-6].note_english+(octave-1));
       }
     }
   };
