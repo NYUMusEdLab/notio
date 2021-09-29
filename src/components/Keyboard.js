@@ -51,10 +51,15 @@ class Keyboard extends Component {
   //#region Constructor
   constructor(props) {
     super(props);
+    const scaleStart= props.extendedKeyboard ? 7 : 0; 
+    const ambitus= props.extendedKeyboard ? 24 : 13;
+    const activeScale= new MusicScale(props.scaleObject,props.baseNote,scaleStart,ambitus)
     this.state = {
       activeNotes: new Set(),
       mouse_is_down: false,
       scales: this.props.scaleList,
+      activeScale: activeScale,
+      octave: this.props.octave
     };
 
     this.synth = new Piano({
@@ -81,6 +86,9 @@ class Keyboard extends Component {
     //e.preventDefault();
 
     const { extendedKeyboard } = this.props;
+    const{octave} = this.state
+    const scaleLength = this.state.activeScale.BasisScale.length
+
 
     if (Tone.context.state !== "running") {
       Tone.context.resume();
@@ -129,15 +137,31 @@ class Keyboard extends Component {
         let currentOctave = note.match(/(\d+)/)[0];
         return note.replace(/(\d+)/, currentOctave - 1);
       });
-
-      if (e.code === "KeyQ") {
-        this.playNote(previousOctave[previousOctave.length - 2]);
+      if (e.code === "ArrowDown") {
+        this.setState({octave: octave-1})
+      }
+      if (e.code === "ArrowUp") {
+        this.setState({octave: octave+1})
+      }
+      if (e.code === "KeyD") {
+        this.playNote(this.state.activeScale.BasisScale[scaleLength-1].note_english+(octave-1));
+        //this.playNote(previousOctave[previousOctave.length - 2]);
+      }
+      if (e.code === "KeyS") {
+        this.playNote(this.state.activeScale.BasisScale[scaleLength-2].note_english+(octave-1));
+        //this.playNote(previousOctave[previousOctave.length - 2]);
       }
       if (e.code === "KeyA") {
-        this.playNote(previousOctave[previousOctave.length - 3]);
+        // this.playNote(previousOctave[previousOctave.length - 3]);
+        this.playNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave-1));
       }
+      if (e.code === "KeyQ") {
+        this.playNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave));
+        //this.playNote(previousOctave[previousOctave.length - 2]);
+      }
+      
       if (e.code === "KeyZ") {
-        this.playNote(previousOctave[previousOctave.length - 4]);
+        this.playNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave-2));
       }
     }
   };
@@ -145,7 +169,9 @@ class Keyboard extends Component {
   handleKeyUp = (e) => {
     //e.preventDefault();
 
-    const { extendedKeyboard } = this.props;
+    const { extendedKeyboard} = this.props;
+    const{octave} = this.state
+    const scaleLength = this.state.activeScale.BasisScale.length
 
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
     const mapKeyUp = activeKeyCodes.indexOf(e.code);
@@ -168,14 +194,34 @@ class Keyboard extends Component {
         return note.replace(/(\d+)/, currentOctave - 1);
       });
 
-      if (e.code === "KeyQ") {
-        this.releaseNote(previousOctave[previousOctave.length - 2]);
+      // if (e.code === "KeyQ") {
+      //   this.releaseNote(this.state.activeScale.BasisScale[6].note_english+(octave-1));
+      // }
+      // if (e.code === "KeyA") {
+      //   this.releaseNote(this.state.activeScale.ExtendedScaleToneNames['English'][1]+(octave-1));
+      // }
+      // if (e.code === "KeyZ") {
+      //   this.releaseNote(this.state.activeScale.ExtendedScaleToneNames['English'][0]+(octave-1));
+      // }
+      if (e.code === "KeyD") {
+        this.releaseNote(this.state.activeScale.BasisScale[scaleLength-1].note_english+(octave-1));
+        //this.releaseNote(previousOctave[previousOctave.length - 2]);
+      }
+      if (e.code === "KeyS") {
+        this.releaseNote(this.state.activeScale.BasisScale[scaleLength-2].note_english+(octave-1));
+        //this.releaseNote(previousOctave[previousOctave.length - 2]);
       }
       if (e.code === "KeyA") {
-        this.releaseNote(previousOctave[previousOctave.length - 3]);
+        // this.releaseNote(previousOctave[previousOctave.length - 3]);
+        this.releaseNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave-1));
       }
+      if (e.code === "KeyQ") {
+        this.releaseNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave));
+        //this.releaseNote(previousOctave[previousOctave.length - 2]);
+      }
+      
       if (e.code === "KeyZ") {
-        this.releaseNote(previousOctave[previousOctave.length - 4]);
+        this.releaseNote(this.state.activeScale.BasisScale[scaleLength-3].note_english+(octave-2));
       }
     }
   };
