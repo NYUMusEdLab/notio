@@ -423,6 +423,9 @@ class Keyboard extends Component {
       ambitus
     );
 
+    if (this.state.activeScale.Name !== currentScale.Name) {
+    this.setState({activeScale: currentScale})
+    }
     return { keyboardLayoutScale, currentScale };
   }
 
