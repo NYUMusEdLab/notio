@@ -272,7 +272,7 @@ class WholeApp extends Component {
   };
 
   render() {
-    const { loading, showOffNotes, menuOpen, octave, scale, scaleList, baseNote, theme, trebleStaffOn } =
+    const { loading, showOffNotes, menuOpen, scale, scaleList, baseNote, theme, trebleStaffOn } =
       this.state;
     console.log("whole app", this.state.notation);
 

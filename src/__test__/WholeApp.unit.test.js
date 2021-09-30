@@ -14,3 +14,21 @@ test("Hello", () => {
 
     expect(1).toBe(1);
 })
+
+test("Hello", () => {
+    
+    <MemoryRouter>
+        render(<Route exact path="/" component={WholeApp}></Route>);
+    </MemoryRouter>
+
+    expect(1).toBe(1);
+})
+
+test("Hello", () => {
+    
+    <MemoryRouter>
+        render(<Route exact path="/" component={WholeApp}></Route>);
+    </MemoryRouter>
+
+    expect(1).toBe(1);
+})

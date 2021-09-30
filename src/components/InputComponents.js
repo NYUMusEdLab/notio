@@ -9,7 +9,7 @@ export const Octaves = props => {
   return (
     <div className="octave">
       <div>
-        <p>Octave:{props.octave}</p>
+        <p>Octave: {props.octave}</p>
         <button onClick={() => props.handleClick("minus")}>-</button>
         <button onClick={() => props.handleClick("plus")}>+</button>
       </div>
