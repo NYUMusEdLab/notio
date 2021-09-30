@@ -8,10 +8,9 @@ import themes from "../data/themes";
 export const Octaves = props => {
   return (
     <div className="octave">
-      <div>Octave:</div>
       <div>
+        <p>Octave:{props.octave}</p>
         <button onClick={() => props.handleClick("minus")}>-</button>
-        <p>{props.octave}</p>
         <button onClick={() => props.handleClick("plus")}>+</button>
       </div>
     </div>

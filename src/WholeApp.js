@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Keyboard from "./components/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
-import { Octaves, Scale, Theme } from "./components/InputComponents";
+import { Scale, Theme } from "./components/InputComponents";
 import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import LoadingScreen from "./components/LoadingScreen";
 import "./style.scss";
@@ -287,6 +287,7 @@ class WholeApp extends Component {
           handleChangeScale={this.handleSelectScale}
           handleChangeCustomScale={this.handleChangeCustomScale}
           handleSelectClef={this.handleSelectClef}
+          handleClickOctave={this.handleClickOctave}
           handleChangeRoot={this.handleChangeRoot}
           handleChangeVideoUrl={this.handleChangeVideoUrl}
           handleChangeVideoVisibility = {this.handleChangeVideoVisibility}
@@ -310,7 +311,6 @@ class WholeApp extends Component {
               (x)
             </div>
             <div className="Menu-Row">
-              <Octaves octave={octave} handleClick={this.handleClickOctave} />
               <Scale scale={scale} scales={scaleList} handleSelect={this.handleSelectScale} />
               <CircleFifthsSVG rootNote={baseNote} handleChange={this.handleChangeRoot} />
             </div>

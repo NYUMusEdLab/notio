@@ -10,6 +10,7 @@ import Share from "./Share";
 import Settings from "./Settings";
 import Root from "./Root";
 import RootMenu from "../../assets/img/RootMenu";
+import { Octaves } from "../InputComponents";
 // import { findColor } from '../utils.js';
 
 import ListRadio from "../form/ListRadio";
@@ -93,6 +94,8 @@ class TopMenu extends Component {
               title="Sound"
               selected={this.state.titleSound}
               content={
+                <div>
+                <Octaves octave={this.props.state.octave} handleClick={this.props.handleClickOctave} />
                 <ListRadio
                   nameField="scale"
                   data={sounds}
@@ -100,6 +103,7 @@ class TopMenu extends Component {
                   setTitle={this.setSoundTitle}
                   initOption="piano"
                 />
+                </div>
               }
             />
           </div>
