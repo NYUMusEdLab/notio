@@ -121,7 +121,7 @@ class Keyboard extends Component {
       }*/
       this.noteOn(buttonPressed.dataset.note);
     } else if (!extendedKeyboard) {
-     //TODO:Do some integer division to find out how many times the number before the modulus can run through the scale. the octave offset should be based on that.
+     //TODO:Refactor this code is not DRY
       if (e.code === "ArrowDown") {
         this.setState({octave: octave-1})
       }
@@ -193,22 +193,7 @@ class Keyboard extends Component {
       }
       this.noteOff(buttonReleased.dataset.note);
     } else if (!extendedKeyboard) {
-      //TODO: it's not correct
-      // let threeLowerOctaveArr = Array.from(threeLowerOctave);
-      // let previousOctave = threeLowerOctaveArr.map(function (note) {
-      //   let currentOctave = note.match(/(\d+)/)[0];
-      //   return note.replace(/(\d+)/, currentOctave - 1);
-      // });
-
-      // if (e.code === "KeyQ") {
-      //   this.releaseNote(this.state.activeScale.BasisScale[6].note_english+(octave-1));
-      // }
-      // if (e.code === "KeyA") {
-      //   this.releaseNote(this.state.activeScale.ExtendedScaleToneNames['English'][1]+(octave-1));
-      // }
-      // if (e.code === "KeyZ") {
-      //   this.releaseNote(this.state.activeScale.ExtendedScaleToneNames['English'][0]+(octave-1));
-      // }
+         //TODO:Refactor this code is not DRY
       if (e.code === "KeyE") {
         const note = activeScale.BasisScale[2%scaleLength]
         this.releaseNote(note.note_english+(octave-1 + note.octaveOffset+1+Math.floor(2/scaleLength)));
@@ -249,41 +234,7 @@ class Keyboard extends Component {
         this.releaseNote(note.note_english+(octave-1 + note.octaveOffset-Math.floor(5/scaleLength)));
         //this.playNote(activeScale.BasisScale[(scaleLength-1)-(5%scaleLength)].note_english+(octave-1-Math.floor(5/scaleLength)));
       }
-      // if (e.code === "KeyE") {
-      //   this.releaseNote(activeScale.BasisScale[2%scaleLength].note_english+(octave));
-      //   //this.releaseNote(previousOctave[previousOctave.length - 2]);
-      // }
-      // if (e.code === "KeyW") {
-      //   this.releaseNote(activeScale.BasisScale[1%scaleLength].note_english+(octave));
-      //   //this.releaseNote(previousOctave[previousOctave.length - 2]);
-      // }
-      // if (e.code === "KeyQ") {
-      //   this.releaseNote(activeScale.BasisScale[0].note_english+(octave));
-      //   //this.releaseNote(previousOctave[previousOctave.length - 2]);
-      // }
-      // if (e.code === "KeyD") {
-      //   this.releaseNote(activeScale.BasisScale[(scaleLength-1)-(0%scaleLength)].note_english+(octave-1));
-      //   //this.releaseNote(previousOctave[previousOctave.length - 2]);
-      // }
-      // if (e.code === "KeyS") {
-      //   this.releaseNote(activeScale.BasisScale[(scaleLength-1)-(1%scaleLength)].note_english+(octave-1));
-      //   //this.releaseNote(previousOctave[previousOctave.length - 2]);
-      // }
-      // if (e.code === "KeyA") {
-      //   // this.releaseNote(previousOctave[previousOctave.length - 3]);
-      //   this.releaseNote(activeScale.BasisScale[(scaleLength-1)-(2%scaleLength)].note_english+(octave-1-Math.floor(2/scaleLength)));
-      // }
-      // if (e.code === "KeyC") {
-      //   this.releaseNote(activeScale.BasisScale[(scaleLength-1)-(3%scaleLength)].note_english+(octave-1-Math.floor(3/scaleLength)));
-      //   //this.releaseNote(previousOctave[previousOctave.length - 2]);
-      // }
-      // if (e.code === "KeyX") {
-      //   this.releaseNote(activeScale.BasisScale[(scaleLength-1)-(4%scaleLength)].note_english+(octave-1-Math.floor(4/scaleLength)));
-      //   //this.releaseNote(previousOctave[previousOctave.length - 2]);
-      // }
-      // if (e.code === "KeyZ") {
-      //   this.releaseNote(activeScale.BasisScale[(scaleLength-1)-(5%scaleLength)].note_english+(octave-1-Math.floor(5/scaleLength)));
-      // }
+      
     }
   };
 
