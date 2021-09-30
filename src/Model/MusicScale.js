@@ -91,7 +91,11 @@ class MusicScale {
     });
     this.Transposition = this.RootNote.index; //  notes.findIndex(note => note.note_english===this.RootNote)
     this.BasisScale = this.SemitoneSteps.map(
-      (step) => notes[(step + this.Transposition) % notes.length]
+      (step) => {
+        let tempnote = notes[(step + this.Transposition) % notes.length];
+        let octaveOffset = this.Octave + Math.floor((step + this.Transposition) / 12);
+        return {...tempnote, octaveOffset: octaveOffset};
+      }
     ); 
     this.Notations = notations;
     this.ExtendedScaleSteps = [...this.BuildExtendedScaleSteps()];
