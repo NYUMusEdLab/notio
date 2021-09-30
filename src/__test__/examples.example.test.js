@@ -8,7 +8,6 @@ import TopMenu from "../components/menu/TopMenu";
 import Keyboard from "../components/Keyboard";
 
 describe("Example with basis WholeApp rendering to", () => {
-    // Describe IS NEEDED otherwise the render function wont get cleaned up properly!!!
     test("this example showing basic functionality", () => {
         // WARNING: The "@tonejs/piano" and "tone" libraries are mocked.
         // This is seen in the __mocks__ folder
