@@ -71,6 +71,13 @@ class MusicScale {
   Octave = 0;
   Notations = [];
   Colors = [];
+  NoteNameWithOctaveNumber = (currentOctave,distToCurrentOctave,distFromRoot) => {
+    const note = this.BasisScale[((this.BasisScale.length)+(distFromRoot%this.BasisScale.length))%this.BasisScale.length]//distFromRoot%scale.length];
+    //const note = this.BasisScale[distFromRoot%this.BasisScale.length];
+    const noteName = note.note_english;
+    const octaveNumber = currentOctave + distToCurrentOctave + note.octaveOffset+Math.floor(distFromRoot/this.BasisScale.length);
+    return noteName+octaveNumber;
+  }
 
   //#region Public Functions
 
