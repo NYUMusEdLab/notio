@@ -76,13 +76,6 @@ class Keyboard extends Component {
   //#endregion
 
   //#region Keypress Handlers
-  calculate_NoteNameWithOctaveNumber = (currentOctave,distToCurrentOctave,distFromRoot,scale) => {
-    const note = scale[(scale.length-1)+(distFromRoot%scale.length)]//distFromRoot%scale.length];
-    const noteName = note.note_english;
-    const octaveNumber = currentOctave + distToCurrentOctave + note.octaveOffset-Math.floor(distFromRoot/scale.length);
-    return noteName+octaveNumber;
-  }
-
   handleKeyDown = (e) => {
     /* this helps us deal with this problem in Chrome:
      *
@@ -132,7 +125,6 @@ class Keyboard extends Component {
       if (e.code === "ArrowUp") {
         this.setState({octave: octave+1})
       }
-     //TODO:Refactor this code is not DRY
       if (e.code === "KeyE") {
         const StepsAboveRoot = 2;//root==0, 2 selects the third tone in the scale
         const distToCurrentOctave = 0;
@@ -202,7 +194,7 @@ class Keyboard extends Component {
       }
       this.noteOff(buttonReleased.dataset.note);
     } else if (!extendedKeyboard) {
-         //TODO:Refactor this code is not DRY
+
          if (e.code === "KeyE") {
           const StepsAboveRoot = 2;//root==0, 2 selects the third tone in the scale
           const distToCurrentOctave = 0;
@@ -579,7 +571,7 @@ class Keyboard extends Component {
               isKeyInScale
                 ? currentScale.ExtendedScaleToneNames.English[toneindex]
                 : keyboardNote.note_english
-            }${octave + keyboardNote.octaveOffset}`} //sounding note
+            }${octave + keyboardNote.octaveOffset}`} //sounding note //could use the function in MusicScale: NoteNameWithOctaveNumber = (currentOctave,distToCurrentOctave,distFromRoot)
             noteNameEnglish={keyboardNote.note_english}
             notation={notation}
             noteName={noteName}
