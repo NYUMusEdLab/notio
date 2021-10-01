@@ -7,7 +7,14 @@ import * as Tone from "tone";
 //import colors from "../data/colors";
 import { Piano } from "@tonejs/piano";
 import MusicScale from "../Model/MusicScale";
+//import colors from "../data/colors";
 
+const colorsD = {
+  pastel:["#F8BBD0", "#E1BEE7", "#D1C4E9", "#C5CAE9", "#BBDEFB", "#B2EBF2", "#B2DFDB", "#C8E6C9", "#DCEDC8", "#FFF9C4", "#FFECB3", "#FFE0B2"],
+  greenis:["#FFAAAA", "#CCFFFF", "#FFFFCC", "#99CCCC", "#66CC99", "#9999CC", "#CC6699", "#FF9900", "#CC99CC", "#FFCC99", "#CCCCFF", "#CCCCCC"],
+  bright:["#ff0000", "#ff8c00", "#ffff00", "#c0c0c0", "#ffffff", "#228b22", "#00ff7f", "#00ffff", "#0000ff", "#87cefa", "#8a2be2", "#ee82ee"],
+  other:["#cd0223", "#d45331", "#e39255", "#ecbb10", "#e3d98a", "#47e643", "#28cbb9", "#049496", "#2f7ecc", "#674ed8", "#a059ed", "#ba04ff", "#ba05a5"]
+};
 // Using 'code' property for compatibility with AZERTY, QWERTY... keyboards
 const keycodes = [
   "KeyF",
@@ -37,7 +44,6 @@ const keycodesExtended = [
 ];
 
 let targetArr, activeElementsforKeyboard; //, scaleReciepe, keyboardLayoutScaleReciepe;
-
 let threeLowerOctave = new Set();
 
 const pressedKeys = new Set();
@@ -59,7 +65,8 @@ class Keyboard extends Component {
       mouse_is_down: false,
       scales: this.props.scaleList,
       activeScale: activeScale,
-      octave: this.props.octave 
+      octave: this.props.octave,
+      colorname: "bright" 
     };
 
     this.synth = new Piano({
@@ -118,7 +125,19 @@ class Keyboard extends Component {
       }*/
       this.noteOn(buttonPressed.dataset.note);
     } else if (!extendedKeyboard) {
-     
+      if (e.code === "Digit1") {
+        this.setState({colorname:"pastel"})
+      }
+      if (e.code === "Digit2") {
+        this.setState({colorname:"greenis"})
+      }
+      if (e.code === "Digit3") {
+        this.setState({colorname:"bright"})
+      }
+      if (e.code === "Digit4") {
+        this.setState({colorname:"other"})
+      }
+
       if (e.code === "ArrowDown") {
         this.setState({octave: octave-1})
       }
@@ -402,17 +421,21 @@ class Keyboard extends Component {
       keyboardLayoutScaleReciepe,
       baseNote,
       scaleStart,
-      ambitus
+      ambitus,
+      colorsD[this.state.colorname]
     );
     const scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName);
     const currentScale = new MusicScale(
       scaleReciepe,
       baseNote,
       scaleStart,
-      ambitus
+      ambitus,
+      colorsD[this.state.colorname]
+
     );
 
-    if (this.state.activeScale.Name !== currentScale.Name || this.state.activeScale.RootNoteName !== currentScale.RootNoteName) {
+    if (this.state.activeScale.Name !== currentScale.Name || 
+      this.state.activeScale.RootNoteName !== currentScale.RootNoteName) {
     this.setState({activeScale: currentScale})
     }
     return { keyboardLayoutScale, currentScale };
