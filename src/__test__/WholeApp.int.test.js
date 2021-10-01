@@ -11,15 +11,13 @@ import WholeApp from "../WholeApp";
     (And later on tests integration between plugins and the TopMenu and/or KeyBoard)
 */
 
-describe("Sound menu in the TopMenu to", () =>{
-    test("Octave plus button in Sound menu should increase octave", () => {
+describe("Root menu in the TopMenu to", () =>{
+    test("Octave plus button should increase octave", () => {
         render(
             <MemoryRouter>
                 <Route exact path="/" component={WholeApp}></Route>;
             </MemoryRouter>
         );
-        const sound_menu = screen.getByText("Sound");
-        userEvent.click(sound_menu);
         const octave_in_sound_menu = screen.getByText("Octave:",{exact:false})
         expect(octave_in_sound_menu.textContent).toBe("Octave: 4")
     
@@ -30,14 +28,12 @@ describe("Sound menu in the TopMenu to", () =>{
         // Assert that the SoundMaker module receives the proper octave when playing a note
     })
 
-    test("Octave minus button in Sound menu should decrease octave on keyboard", () => {
+    test("Octave minus button should decrease octave", () => {
         render(
             <MemoryRouter>
                 <Route exact path={"/"} component={WholeApp}></Route>;
             </MemoryRouter>
         );
-        const sound_menu = screen.getByText("Sound");
-        userEvent.click(sound_menu);
         const octave_in_sound_menu = screen.getByText("Octave:",{exact:false})
         expect(octave_in_sound_menu.textContent).toBe("Octave: 4")
     

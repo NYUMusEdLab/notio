@@ -94,8 +94,6 @@ class TopMenu extends Component {
               title="Sound"
               selected={this.state.titleSound}
               content={
-                <div>
-                <Octaves octave={this.props.state.octave} handleClick={this.props.handleClickOctave} />
                 <ListRadio
                   nameField="scale"
                   data={sounds}
@@ -103,7 +101,6 @@ class TopMenu extends Component {
                   setTitle={this.setSoundTitle}
                   initOption="piano"
                 />
-                </div>
               }
             />
           </div>
@@ -146,12 +143,15 @@ class TopMenu extends Component {
               selectedImg= <RootMenu color={"#ff0000"} />
               //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
               content={
+                <div>
                 <Root
                   label="Root"
                   baseNote={this.props.state.baseNote}
                   handleChangeRoot={this.props.handleChangeRoot}
                   handleChangeTitle={this.handleChangeTitle}
                 />
+                <Octaves octave={this.props.state.octave} handleClick={this.props.handleClickOctave} />
+                </div>
               }
             />
             {/* <div class="half-circle"></div> */}
