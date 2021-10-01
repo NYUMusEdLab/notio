@@ -111,6 +111,19 @@ class Keyboard extends Component {
     let buttonPressed;
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
     const mapKeyDown = activeKeyCodes.indexOf(e.code);
+    if (e.code === "Digit1") {
+      this.setState({colorname:"pastel"})
+    }
+    if (e.code === "Digit2") {
+      this.setState({colorname:"greenis"})
+    }
+    if (e.code === "Digit3") {
+      this.setState({colorname:"bright"})
+    }
+    if (e.code === "Digit4") {
+      this.setState({colorname:"other"})
+    }
+
     if (
       activeKeyCodes.includes(e.code) &&
       mapKeyDown + 1 <= activeElementsforKeyboard.length
@@ -125,19 +138,7 @@ class Keyboard extends Component {
       }*/
       this.noteOn(buttonPressed.dataset.note);
     } else if (!extendedKeyboard) {
-      if (e.code === "Digit1") {
-        this.setState({colorname:"pastel"})
-      }
-      if (e.code === "Digit2") {
-        this.setState({colorname:"greenis"})
-      }
-      if (e.code === "Digit3") {
-        this.setState({colorname:"bright"})
-      }
-      if (e.code === "Digit4") {
-        this.setState({colorname:"other"})
-      }
-
+      
       if (e.code === "ArrowDown") {
         this.setState({octave: octave-1})
       }
