@@ -80,8 +80,9 @@ class Popup extends Component {
         ) : (
           ""
         )}
+        {/* THIS CODE BREAKS ALL TESTS!!! 
         <div
-          class={
+          className={
             this.props.class +
             ` notio-popup ${minimized ? "minimized" : ""} ${show ? "show" : ""}`
           }
@@ -97,19 +98,19 @@ class Popup extends Component {
               <CrossSVG />
             </div>
             {this.props.hasMinize ? (
-              <div
-                class="minimize notio-popup--button"
-                onClick={this.handleMinimize}
-              >
-                <UnderscoreSVG />
-              </div>
+            <div
+              class="minimize notio-popup--button"
+              onClick={this.handleMinimize}
+            >
+              <UnderscoreSVG />
+            </div>
             ) : (
               ""
             )}
           </div>
           {this.props.content}
-          {/* <div class='resize-handle'></div> */}
         </div>
+        */}
       </div>
     );
   }
