@@ -18,13 +18,13 @@ describe("Root menu in the TopMenu to", () =>{
                 <Route exact path="/" component={WholeApp}></Route>;
             </MemoryRouter>
         );
-        const octave_in_sound_menu = screen.getByText("Octave:",{exact:false})
-        expect(octave_in_sound_menu.textContent).toBe("Octave: 4")
+        const octave_in_menu = screen.getByText("Octave:",{exact:false})
+        expect(octave_in_menu.textContent).toBe("Octave: 4")
     
         const plus_button = screen.getByText("+");
         userEvent.click(plus_button);
 
-        expect(octave_in_sound_menu.textContent).toBe("Octave: 5")
+        expect(octave_in_menu.textContent).toBe("Octave: 5")
         // Assert that the SoundMaker module receives the proper octave when playing a note
     })
 
@@ -34,13 +34,13 @@ describe("Root menu in the TopMenu to", () =>{
                 <Route exact path={"/"} component={WholeApp}></Route>;
             </MemoryRouter>
         );
-        const octave_in_sound_menu = screen.getByText("Octave:",{exact:false})
-        expect(octave_in_sound_menu.textContent).toBe("Octave: 4")
+        const octave_in_menu = screen.getByText("Octave:",{exact:false})
+        expect(octave_in_menu.textContent).toBe("Octave: 4")
     
         const plus_button = screen.getByText("-");
         userEvent.click(plus_button);
 
-        expect(octave_in_sound_menu.textContent).toBe("Octave: 3")
+        expect(octave_in_menu.textContent).toBe("Octave: 3")
         // Assert that the SoundMaker module receives the proper octave when playing a note
     })
 })

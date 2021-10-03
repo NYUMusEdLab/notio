@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import gsap from "gsap";
 import Draggable from "gsap/Draggable";
-import UnderscoreSVG from "../../assets/img/Underscore";
-import CrossSVG from "../../assets/img/Cross";
+//import UnderscoreSVG from "../../assets/img/Underscore";
+//import CrossSVG from "../../assets/img/Cross";
 
 class Popup extends Component {
   static defaultProps = {
@@ -55,13 +55,11 @@ class Popup extends Component {
   };
 
   render() {
-    console.log("this.props.hasMinize", this.props.hasMinize);
-    const { minimized, show } = this.state;
     return (
       <div>
-        <div class="button">
+        <div className="button">
           <div
-            class="circledButton"
+            className="circledButton"
             onClick={(e) => {
               this.props.onClickMenuHandler();
               this.handleShow();
@@ -76,7 +74,7 @@ class Popup extends Component {
         </div>
 
         {this.props.hasBG ? (
-          <div class={`notio-popup--bg ${show ? "show" : ""}`}></div>
+          <div className={`notio-popup--bg ${this.state.show ? "show" : ""}`}></div>
         ) : (
           ""
         )}
@@ -84,7 +82,7 @@ class Popup extends Component {
         <div
           className={
             this.props.class +
-            ` notio-popup ${minimized ? "minimized" : ""} ${show ? "show" : ""}`
+            ` notio-popup ${this.state.minimized ? "minimized" : ""} ${show ? "show" : ""}`
           }
         >
           <div class="notio-popup--header clearfix">
