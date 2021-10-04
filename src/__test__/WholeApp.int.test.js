@@ -2,7 +2,8 @@ import * as React from 'react'; // Necessary to run the tests, apparently.
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Piano } from "@tonejs/piano";
+import SoundMaker from "../components/SoundMaker";
+jest.mock("../components/SoundMaker");
 import WholeApp from "../WholeApp";
 
 /*
@@ -11,8 +12,13 @@ import WholeApp from "../WholeApp";
     (And later on tests integration between plugins and the TopMenu and/or KeyBoard)
 */
 
+beforeEach(() => {
+    SoundMaker.mockClear();
+})
+
 describe("Root menu in the TopMenu to", () =>{
     test("Octave plus button should increase octave", () => {
+        expect(SoundMaker).not.toHaveBeenCalled();
         render(
             <MemoryRouter>
                 <Route exact path="/" component={WholeApp}></Route>;
@@ -25,10 +31,13 @@ describe("Root menu in the TopMenu to", () =>{
         userEvent.click(plus_button);
 
         expect(octave_in_menu.textContent).toBe("Octave: 5")
+        expect(SoundMaker).toHaveBeenCalledTimes(1);
         // Assert that the SoundMaker module receives the proper octave when playing a note
+        //expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith("D");
     })
 
     test("Octave minus button should decrease octave", () => {
+        expect(SoundMaker).not.toHaveBeenCalled();
         render(
             <MemoryRouter>
                 <Route exact path={"/"} component={WholeApp}></Route>;
@@ -41,6 +50,8 @@ describe("Root menu in the TopMenu to", () =>{
         userEvent.click(plus_button);
 
         expect(octave_in_menu.textContent).toBe("Octave: 3")
+        expect(SoundMaker).toHaveBeenCalledTimes(1);
         // Assert that the SoundMaker module receives the proper octave when playing a note
+        //expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith("D");
     })
 })
