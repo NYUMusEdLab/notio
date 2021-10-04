@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import gsap from "gsap";
 import Draggable from "gsap/Draggable";
-//import UnderscoreSVG from "../../assets/img/Underscore";
-//import CrossSVG from "../../assets/img/Cross";
+import UnderscoreSVG from "../../assets/img/Underscore";
+import CrossSVG from "../../assets/img/Cross";
 
 class Popup extends Component {
   static defaultProps = {
@@ -78,11 +78,10 @@ class Popup extends Component {
         ) : (
           ""
         )}
-        {/* THIS CODE BREAKS ALL TESTS!!! 
         <div
           className={
             this.props.class +
-            ` notio-popup ${this.state.minimized ? "minimized" : ""} ${show ? "show" : ""}`
+            ` notio-popup ${this.state.minimized ? "minimized" : ""} ${this.state.show ? "show" : ""}`
           }
         >
           <div class="notio-popup--header clearfix">
@@ -108,7 +107,6 @@ class Popup extends Component {
           </div>
           {this.props.content}
         </div>
-        */}
       </div>
     );
   }
