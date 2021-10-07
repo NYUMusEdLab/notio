@@ -10,6 +10,7 @@ import Share from "./Share";
 import Settings from "./Settings";
 import Root from "./Root";
 import RootMenu from "../../assets/img/RootMenu";
+import { Octaves } from "../InputComponents";
 // import { findColor } from '../utils.js';
 
 import ListRadio from "../form/ListRadio";
@@ -153,12 +154,15 @@ class TopMenu extends Component {
               selectedImg= {<RootMenu color={"#ff0000"} />}
               //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
               content={
+                <div>
                 <Root
                   label="Root"
                   baseNote={this.props.state.baseNote}
                   handleChangeRoot={this.props.handleChangeRoot}
                   handleChangeTitle={this.handleChangeTitle}
                 />
+                <Octaves octave={this.props.state.octave} handleClick={this.props.handleClickOctave} />
+                </div>
               }
             />
             {/* <div class="half-circle"></div> */}

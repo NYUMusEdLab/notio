@@ -5,7 +5,7 @@ import Key from "./Key";
 import * as Tone from "tone";
 // import scales from "../data/scalesObj";
 //import colors from "../data/colors";
-import { Piano } from "@tonejs/piano";
+import SoundMaker from "./SoundMaker";
 import MusicScale from "../Model/MusicScale";
 //import colors from "../data/colors";
 
@@ -69,14 +69,17 @@ class Keyboard extends Component {
       colorname: "bright" 
     };
 
-    this.synth = new Piano({
+    this.synth = new SoundMaker({
+      instrument: "piano",
       velocities: 5,
-    }).toDestination();
-    this.vol = new Tone.Volume(4);
+   // }).toDestination();
+    //this.vol = new Tone.Volume(4);
 
-    this.synth.load().then(() => {
+    //this.synth.load().then(() => {
       // console.log("--------------- Piano loaded!");
+      volume: 4,
     });
+    //this.vol = new Tone.Volume(4);
     //this.synth.chain(this.vol, Tone.Master);
   }
 
@@ -291,17 +294,17 @@ class Keyboard extends Component {
   playNote = (note) => {
     //TODO: consider implementing doubleSharp in a better way
     if (note&&note.length>3){
-    note = this.convertDoubleAccidental(note)
+        note = this.convertDoubleAccidental(note)
     }
-    this.synth.keyDown({ note: note });
+    this.synth.startSound(note);
   };
 
   releaseNote = (note) => {
     //TODO: consider implementing doubleSharp in a better way
     if (note&&note.length>3){
-      note = this.convertDoubleAccidental(note)
-      }
-    this.synth.keyUp({ note: note });
+        note = this.convertDoubleAccidental(note)
+    }
+    this.synth.stopSound(note);
   };
 
   noteOn = (note) => {
