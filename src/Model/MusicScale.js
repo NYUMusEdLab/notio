@@ -72,6 +72,13 @@ class MusicScale {
   Notations = [];
   Colors = [];
 
+  NoteNameWithOctaveNumber = (currentOctave,distToCurrentOctave,distFromRoot) => {
+    const note = this.BasisScale[((this.BasisScale.length)+(distFromRoot%this.BasisScale.length))%this.BasisScale.length]//distFromRoot%scale.length];
+    const noteName = note.note_english;
+    const octaveNumber = currentOctave + distToCurrentOctave + note.octaveOffset+Math.floor(distFromRoot/this.BasisScale.length);
+    return noteName+octaveNumber;
+  }
+
   //#region Public Functions
 
   init() {
@@ -91,15 +98,17 @@ class MusicScale {
     });
     this.Transposition = this.RootNote.index; //  notes.findIndex(note => note.note_english===this.RootNote)
     this.BasisScale = this.SemitoneSteps.map(
-      (step) => notes[(step + this.Transposition) % notes.length]
-    ); //noteMappingObj["English"].Sharp_Names[(step)%12]);
-    //this.addNumberExtensions();
+      (step) => {
+        let tempnote = notes[(step + this.Transposition) % notes.length];
+        let octaveOffset = this.Octave + Math.floor((step + this.Transposition) / 12);
+        return {...tempnote, octaveOffset: octaveOffset};
+      }
+    ); 
     this.Notations = notations;
     this.ExtendedScaleSteps = [...this.BuildExtendedScaleSteps()];
     this.Octave =
       this.ExtendedScaleSteps[0] % 12 === 0 ? this.Octave : this.Octave - 1;
 
-    // this.ExtendedScaleStepsRelativeToC = this.ExtendedScaleSteps.map((step=>(step - this.Transposition+12)))
     this.ExtendedScaleToneNames = {
       ...this.BuildExtendedScaleToneNames(
         this.Recipe.numbers,
@@ -120,7 +129,7 @@ class MusicScale {
       this.ExtendedScaleSteps
     );
     this.Colors = this.MakeColors(this.ExtendedScaleSteps, this.Colors);
-    console.log("basis:", this.ExtendedScaleToneNames);
+    // console.log("basis:", this.ExtendedScaleToneNames);
   }
   MakeColors(ExtendedScaleSteps, Colors) {
     return ExtendedScaleSteps.map((step) => Colors[step % Colors.length]);
@@ -269,10 +278,8 @@ class MusicScale {
     notation,
     scaleName
   ) {
-    //const basicScale =['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    // let toneNames = [];
-    let theScale = {};
 
+    let theScale = {};
     let maxdistanceBetweenAdjacentNotes = semiToneSteps.map(
       (step, index) => semiToneSteps[index + 1] - step
     );
@@ -313,7 +320,7 @@ class MusicScale {
                 semiToneSteps,
                 rootNoteName,
                 whichNotation
-              ); // this.ExtendedScaleSteps.map(step => basicScale[step%12]);
+              ); 
               break;
 
             default:
@@ -363,7 +370,6 @@ class MusicScale {
             theScale["Chord_extensions"] = this.makeChordExtensions(
               this.Recipe,
               semiToneSteps,
-              rootNoteName
             );
           }
           break;
@@ -411,28 +417,14 @@ class MusicScale {
           );
       }
     } 
-    // else if (
-    //   !scaleName.includes("Pentatonic") &&
-    //   !scaleName.includes("Blues")
-    // ) {
-    //   theScale = this.makeScaleMajorMinor(scaleFormula, keyName, whichNotation);
-    // } 
-    // else {
-    //   theScale = this.makeScalePentatonicBlues(
-    //     scaleFormula,
-    //     keyName,
-    //     scaleName,
-    //     whichNotation
-    //   );
-    // }
+
     return theScale;
   }
 
   /*
    *  Used for creating complete scale description, based on major scale like 1,2,b3,#11,5,13
    */
-  //TODO: remove keyName param
-  makeScaleNumbers(recipe, scaleFormula, keyName) {
+  makeScaleNumbers(recipe, scaleFormula) {
     let extendedNumbers = [];
     let extensions = recipe.numbers;
     let relative = this.findScaleStartIndexRelativToRoot(
@@ -448,8 +440,7 @@ class MusicScale {
     return extendedNumbers;
   }
 
-  //TODO: remove keyName param
-  makeChordExtensions(recipe, scaleFormula, keyName) {
+  makeChordExtensions(recipe, scaleFormula) {
     let theScale = [];
     let extensions = recipe.numbers;
     let relative = this.findScaleStartIndexRelativToRoot(
@@ -510,11 +501,10 @@ class MusicScale {
    *   whichNotation:  string
    *   scaleRecipe: scaleObj
    */
-  //TODO: fix majorscale, this function should produce a correct major scale
   MakeCustomScale(scaleFormula, keyName, whichNotation, scaleRecipe) {
     const majorScale = this.getMajorScale(keyName, whichNotation); //this.MakeChromatic([0,2,4,5,7,9,11], keyName, whichNotation)//this.MakeScaleMajorMinor([0,2,4,5,7,9,11], keyName, whichNotation)
     let tempScale = [];
-    let numbers = this.makeScaleNumbers(scaleRecipe, scaleFormula, keyName);
+    let numbers = this.makeScaleNumbers(scaleRecipe, scaleFormula);
     if (whichNotation === "Chord extensions") {
       tempScale = [...numbers];
     } else {
@@ -670,8 +660,6 @@ class MusicScale {
       },
     };
 
-    // let root = keyName;
-    // let offset;
     let tonenameOffset = this.noteNameToIndex(keyName);
     let startingNote = tonenameOffset;
 
@@ -686,10 +674,7 @@ class MusicScale {
       startingNote = 0; //relative;
     }
 
-    //console.log(root, startingNote);
-    //console.log("scaleFormula",scaleFormula)
-    //console.log("keyName", keyName)
-    //console.log("whichNotation", whichNotation)
+    
     let myScaleFormula = scaleFormula;
     let myScale = [];
 
@@ -724,159 +709,10 @@ class MusicScale {
       ); // high note used to indicate error
     }
 
-    // //console.log("myscale",myScale);
     return myScale;
   }
 
-  //TODO: must be fixed to handle C# major, G# major and D# major, now it repeats tones in steadt of producing Fx and Gx
-  // makeScaleMajorMinor(scaleFormula, keyName, whichNotation) {
-  //   const ALPHA_NAMES = {};
-  //   ALPHA_NAMES.English = ["A", "B", "C", "D", "E", "F", "G"];
-  //   ALPHA_NAMES.German = ["A", "H", "C", "D", "E", "F", "G"];
-  //   ALPHA_NAMES.Romance = ["La", "Si", "Do", "Re", "Mi", "Fa", "Sol"];
-  //   let root = keyName;
-  //   let offset;
-  //   for (let i = 0; i < ALPHA_NAMES["English"].length; i++) {
-  //     if (root.includes(ALPHA_NAMES["English"][i])) {
-  //       offset = i + this.findScaleStartIndexRelativToRoot(scaleFormula, 7);
-  //       break;
-  //     }
-  //   }
-  //   let startingNote = this.noteNameToIndex(keyName);
-  //   //console.log(root, startingNote);
-  //   //console.log("scaleFormula", scaleFormula)
-  //   //console.log("keyName", keyName)
-  //   //console.log("whichNotation", whichNotation)
-  //   let myScaleFormula = scaleFormula;
-  //   let myScale = [];
-  //   for (let j = 0; j < myScaleFormula.length; j++) {
-  //     const RelativeToneIndex = (myScaleFormula[j] + startingNote) % 12;
-
-  //     if (
-  //       noteMapping["English"].Sharp_Names[RelativeToneIndex].includes(
-  //         ALPHA_NAMES["English"][(offset + j) % ALPHA_NAMES["English"].length]
-  //       )
-  //     ) {
-  //       // //console.log("push A");
-  //       myScale.push(noteMapping[whichNotation].Sharp_Names[RelativeToneIndex]);
-  //     } else if (
-  //       noteMapping["English"].Flat_Names[RelativeToneIndex].includes(
-  //         ALPHA_NAMES["English"][(offset + j) % ALPHA_NAMES["English"].length]
-  //       )
-  //     ) {
-  //       // //console.log("push B");
-  //       myScale.push(noteMapping[whichNotation].Flat_Names[RelativeToneIndex]);
-  //     } else if (
-  //       noteMapping["English"].Double_Flat_Names[RelativeToneIndex].includes(
-  //         ALPHA_NAMES["English"][(offset + j) % ALPHA_NAMES["English"].length]
-  //       )
-  //     ) {
-  //       // //console.log("push C");
-  //       // //console.log('noteMapping["English"].Double_Flat_Names[RelativeToneIndex]', noteMapping["English"].Double_Flat_Names[RelativeToneIndex]);
-  //       myScale.push(
-  //         noteMapping[whichNotation].Double_Flat_Names[RelativeToneIndex]
-  //       );
-  //       ////console.log('includes MIDI_DOUBLE_FLAT_NAMES', ENGLISH_MIDI_DOUBLE_FLAT_NAMES[RelativeToneIndex] );
-  //     } else {
-  //       ////console.log("push D");
-
-  //       myScale.push("err!" + ((offset + j) % ALPHA_NAMES["English"].length)); // high note used to indicate error
-  //     }
-  //   }
-  //   // //console.log("myscale",myScale);
-  //   return myScale;
-  // }
-
-  // makeScalePentatonicBlues(scaleFormula, keyName, scaleName, whichNotation) {
-  //   let ALPHA_NAMES = ["A", "B", "C", "D", "E", "F", "G"];
-  //   //for the major pentatonic scale, we don't include the name of the 2nd and the 6th note
-  //   let root = keyName;
-  //   let offset;
-  //   for (let i = 0; i < ALPHA_NAMES.length; i++) {
-  //     if (root.includes(ALPHA_NAMES[i])) {
-  //       offset = i;
-  //       break;
-  //     }
-  //   }
-
-  //   let ALPHA_NAMES_PENTATONIC = [];
-
-  //   for (let j = 0; j < ALPHA_NAMES.length; j++) {
-  //     if (scaleName.includes("Major")) {
-  //       let removeFourth = (offset + 3) % ALPHA_NAMES.length;
-  //       let removeSeventh = (offset + 6) % ALPHA_NAMES.length;
-
-  //       if (j !== removeFourth && j !== removeSeventh) {
-  //         ALPHA_NAMES_PENTATONIC.push(ALPHA_NAMES[j % ALPHA_NAMES.length]);
-  //       }
-  //       if (
-  //         scaleName === "Major Blues" &&
-  //         j === (offset + 1) % ALPHA_NAMES.length
-  //       ) {
-  //         ALPHA_NAMES_PENTATONIC.push(
-  //           ALPHA_NAMES[(j + 1) % ALPHA_NAMES.length]
-  //         );
-  //       }
-  //     } else if (scaleName.includes("Minor")) {
-  //       let removeSecond = (offset + 1) % ALPHA_NAMES.length;
-  //       let removeSixth = (offset + 5) % ALPHA_NAMES.length;
-
-  //       if (j !== removeSecond && j !== removeSixth) {
-  //         ALPHA_NAMES_PENTATONIC.push(ALPHA_NAMES[j]);
-  //       }
-
-  //       if (
-  //         scaleName === "Minor Blues" &&
-  //         j === (offset + 3) % ALPHA_NAMES.length
-  //       ) {
-  //         ALPHA_NAMES_PENTATONIC.push(ALPHA_NAMES[j]);
-  //       }
-  //     }
-  //   }
-  //   for (let j = 0; j < ALPHA_NAMES_PENTATONIC.length; j++) {
-  //     if (root.includes(ALPHA_NAMES_PENTATONIC[j])) {
-  //       //let majorscale = scales.find((obj) => obj.name === "Major (Ionian)");
-
-  //       offset =
-  //         j +
-  //         this.findScaleStartIndexRelativToRoot(
-  //           scaleFormula,
-  //           this.Recipe.steps.length
-  //         );
-  //       break;
-  //     }
-  //   }
-  //   let startingNote = this.noteNameToIndex(keyName);
-  //   let myScaleFormula = scaleFormula;
-  //   let myScale = [];
-  //   for (let k = 0; k < myScaleFormula.length; k++) {
-  //     const formulaNumber = (myScaleFormula[k] + startingNote) % 12;
-  //     if (
-  //       noteMapping.English.Sharp_Names[formulaNumber].includes(
-  //         ALPHA_NAMES_PENTATONIC[(offset + k) % ALPHA_NAMES_PENTATONIC.length]
-  //       )
-  //     ) {
-  //       myScale.push(noteMapping[whichNotation].Sharp_Names[formulaNumber]);
-  //     } else if (
-  //       noteMapping.English.Flat_Names[formulaNumber].includes(
-  //         ALPHA_NAMES_PENTATONIC[(offset + k) % ALPHA_NAMES_PENTATONIC.length]
-  //       )
-  //     ) {
-  //       myScale.push(noteMapping[whichNotation].Flat_Names[formulaNumber]);
-  //     } else if (
-  //       noteMapping.English.Double_Flat_Names[formulaNumber].includes(
-  //         ALPHA_NAMES_PENTATONIC[(offset + k) % ALPHA_NAMES_PENTATONIC.length]
-  //       )
-  //     ) {
-  //       myScale.push(
-  //         noteMapping[whichNotation].Double_Flat_Names[formulaNumber]
-  //       );
-  //     } else {
-  //       myScale.push("err!"); // high note used to indicate error
-  //     }
-  //   }
-  //   return myScale;
-  // }
+  
   ////#endregion
 
   //#region Helpers
@@ -918,11 +754,7 @@ class MusicScale {
     return index === 0 ? recipe.length - 1 : index - 1;
   }
 
-  //TODO: !!!!!!!!this is closely coupled to the scales array , where the first element has to be the major Ionian scale, this is not good!!
-  // createMajorScale(basetone, notation) {
-  //   const formula = this.scales[0];
-  //   return this.makeScaleMajorMinor(formula, basetone, notation);
-  // }
+ 
 
   getMajorScale(basetone, notation) {
     let foneticTonename = "";
@@ -1023,10 +855,8 @@ class MusicScale {
     let deconstructedToneName = toneName.split("");
     let basistoneName = deconstructedToneName.shift();
     let Accidentals = [...deconstructedToneName];
-    //Accidentals.push(Accidental)
     const convertAccidentalToStep = (accid) =>
       accid === "b" ? -1 : accid === "#" ? 1 : accid === "x" ? 2 : 0;
-    //Accidentals = Accidentals.map(accidental => accidental === 'b' ? -1 : accidental === '#' ? 1 : 0)
     const stepsFromToneName = Accidentals.reduce(
       (accumulator, accid) => convertAccidentalToStep(accid) + accumulator,
       0

@@ -1,6 +1,4 @@
 import React from "react";
-// import logo from '../../img/alto_clef.svg'
-
 import TrebleClef from '../../assets/img/TrebleClef';
 import BassClef from '../../assets/img/BassClef';
 import TenorClef from '../../assets/img/TenorClef';

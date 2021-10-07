@@ -31,6 +31,7 @@ class ColorKey extends Component {
     }
   };
 
+  //TODO: check if this is used or can be used to fix the unresponsive keys color when pressed
   onMouseOver = (e) => {
     if (this.props.isOn) {
       // this.setState((state) => {
@@ -39,6 +40,7 @@ class ColorKey extends Component {
     }
   };
 
+  //TODO: check if this is used or can be used to fix the unresponsive keys color when pressed
   onMouseOut = (e) => {
     if (this.props.isOn) {
       // this.setState((state) => {
@@ -98,8 +100,6 @@ class ColorKey extends Component {
 
   initColor = (color) => {
     this._colorInit = Color(color);
-    // this._colorActive = this._color
-    // this._colorInit = this._color.darken(0.2)
   };
 
   componentDidUpdate(prevProps) {
@@ -154,19 +154,8 @@ class ColorKey extends Component {
       clef,
     } = this.props;
 
-    // let offKeyColorWithTheme;
-
-    // switch (theme) {
-    //   case "light":
-    //     offKeyColorWithTheme = ["#eee", "#ddd"]; //offColor;
-    //     break;
-    //   case "dark":
-    //     offKeyColorWithTheme = ["#000", "#333"];
-    //     break;
-    //   default:
-    //     offKeyColorWithTheme = ["#ddd", "#ccc"]; //offColor;
-    // }
-    console.log("ColorKey note", note);
+    
+    // console.log("ColorKey note", note);
 
     const noteNames = noteName
       ? noteName.map(function (item, i) {
@@ -196,19 +185,16 @@ class ColorKey extends Component {
         );
       })
       : null;
-    console.log("this.state.myWidth", this.state.myWidth);
-    console.log("-- note", note);
+    // console.log("this.state.myWidth", this.state.myWidth);
+    // console.log("-- note", note);
 
     return (
       <div
         ref={this.keyRef}
         className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${isOn ? "on" : "off"
           } ${(note.includes("C") && !note.includes("#") && !note.includes("b")) ||
-            note.includes("B#")
-            ? "" /*"c-mark"*/
-            : ""
-          }
-                    `}
+            note.includes("B#") ? "" /*"c-mark"*/: ""}
+        `}
         style={{
           height: pianoOn ? "70%" : "100%",
           background: isOn
@@ -261,7 +247,6 @@ ColorKey.propTypes = {
   notation: PropTypes.array,
   noteName: PropTypes.array,
   color: PropTypes.string,
-  //offcolor: PropTypes.string,
   keyColor: PropTypes.string,
   isOn: PropTypes.bool,
   root: PropTypes.string,

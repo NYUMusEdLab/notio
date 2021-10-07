@@ -10,7 +10,7 @@ const ShareLink = (props) => {
     function copyToClipBoard() {
       navigator.clipboard.writeText(fullUrl);
     }
-    console.log("hasCopied", hasCopied);
+    // console.log("hasCopied", hasCopied);
 
     return (
       <div class="share-link">
@@ -27,7 +27,7 @@ const ShareLink = (props) => {
         >
           copy
         </button>
-        <span class={`message ${hasCopied ? "show" : ""}`}>
+        <span className={`message ${hasCopied ? "show" : ""}`}>
           The link has been copied
         </span>
       </div>

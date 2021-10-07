@@ -64,7 +64,7 @@ class WholeApp extends Component {
   };
 
   handleSelectScale = (selectedScale) => {
-    console.log(selectedScale + " SCALE selected");
+    // console.log(selectedScale + " SCALE selected");
     const newScaleObject = this.state.scaleList.find((obj) => obj.name === selectedScale);
     this.setState({
       scale: selectedScale,
@@ -73,7 +73,7 @@ class WholeApp extends Component {
   };
 
   handleSelectClef = (selectedClef) => {
-    console.log(selectedClef + " clef selected");
+    // console.log(selectedClef + " clef selected");
     const staff_on = selectedClef === "no clef" ? false : true;
     this.setState({ clef: selectedClef, trebleStaffOn: staff_on });
   };
@@ -91,12 +91,12 @@ class WholeApp extends Component {
   */
 
   handleChangeNotation = (selectedNotation) => {
-    console.log(selectedNotation + " Notation selected");
+    // console.log(selectedNotation + " Notation selected");
     this.setState({ notation: selectedNotation });
   };
 
   handleChangeCustomScale = (customScaleName, customsteps, customNumbers) => {
-    console.log(customScaleName + "Custom Scale Created");
+    // console.log(customScaleName + "Custom Scale Created");
     alert("Custom Scale Created " + customScaleName + customNumbers);
     // this.state.scaleList.Add({name: customScaleName,
     //   steps: customsteps,
@@ -117,13 +117,14 @@ class WholeApp extends Component {
   };
 
   handleSelectTheme = (selectedTheme) => {
-    console.log(selectedTheme + " Theme selected");
+    // console.log(selectedTheme + " Theme selected");
     this.setState({ theme: selectedTheme });
   };
 
   handleChangeRoot = (selectedRoot) => {
-    console.log(selectedRoot + " Root selected");
-    this.setState({ baseNote: selectedRoot });
+    // console.log(selectedRoot + " Root selected");
+    const convertedRoot = selectedRoot === 'HB' ? 'Bb': selectedRoot === 'Hb' ? 'Bb':selectedRoot  === 'H' ? 'B' : selectedRoot;
+    this.setState({ baseNote: convertedRoot });
   };
 
   handleChangeVideoUrl = (url) => {
@@ -147,7 +148,7 @@ class WholeApp extends Component {
   // }
 
   saveSessionToDB = () => {
-    console.log("saveSessionToDB");
+    // console.log("saveSessionToDB");
     const {
       octave,
       scale,
@@ -180,22 +181,22 @@ class WholeApp extends Component {
         videoActive:videoActive,
       })
       .then((docRef) => {
-        console.log("Session written with ID: ", docRef.id);
+        // console.log("Session written with ID: ", docRef.id);
         this.setState({ sessionID: docRef.id });
       })
       .catch((error) => {
-        console.error("Error adding document: ", error);
+        // console.error("Error adding document: ", error);
         this.setState({ sessionError: error });
       });
   };
 
   openSavedSession = (sessionId) => {
-    console.log("*********** openSaved session:", sessionId);
+    // console.log("*********** openSaved session:", sessionId);
     const ref = db.collection("sessions").doc(sessionId);
     ref.get().then((doc) => {
       if (doc.exists) {
         const result = doc.data();
-        console.log("********* result", result);
+        // console.log("********* result", result);
         this.setState({
           octave: result.octave,
           scale: result.scale,
@@ -215,7 +216,7 @@ class WholeApp extends Component {
         });
       } else {
         this.setState({ loading: false });
-        console.log("No such document!");
+        // console.log("No such document!");
       }
     });
   };
@@ -245,7 +246,7 @@ class WholeApp extends Component {
     // const { match } = this.props;
     // const { params } = match;
     const sessionId = this.props.match.params.sessionId;
-    console.log("********************** componentDidMount sessionId", sessionId);
+    // console.log("********************** componentDidMount sessionId", sessionId);
     if (sessionId) {
       this.openSavedSession(sessionId);
     } else {
@@ -274,7 +275,7 @@ class WholeApp extends Component {
   render() {
     const { loading, showOffNotes, menuOpen, octave, scale, scaleList, baseNote, theme, trebleStaffOn } =
       this.state;
-    console.log("whole app", this.state.notation);
+    // console.log("whole app", this.state.notation);
 
     return loading ? (
       <LoadingScreen />

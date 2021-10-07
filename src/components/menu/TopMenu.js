@@ -13,7 +13,7 @@ import RootMenu from "../../assets/img/RootMenu";
 // import { findColor } from '../utils.js';
 
 import ListRadio from "../form/ListRadio";
-import scales from "../../data/scalesObj";
+// import scales from "../../data/scalesObj";
 import NotationImg from "../../assets/img/Notation";
 // import CustomScaleImg from "../../assets/img/CustomScale";
 
@@ -57,15 +57,26 @@ class TopMenu extends Component {
       clefImage: _.startCase(img) + "Clef",
     });
   };
-
+ //special cases: when the rootpicker returns HB we want to display a B for the german notation, when it returns a SI B we want a SIb
   handleChangeTitle = (note) => {
+    let convertedNote = note;
+    switch (note){
+      case 'HB':
+        convertedNote = 'B'
+        break;
+      case 'SI\nB':
+        convertedNote = 'SIb'
+        break;
+        default:
+          break;
+    }
     this.setState({
-      titleRoot: note,
+      titleRoot: convertedNote,
     });
   };
 
   render() {
-    console.log("topmenu scales", scales);
+    // console.log("topmenu scales", scales);
     return (
       <div>
         <div className="navbar ">
@@ -109,7 +120,7 @@ class TopMenu extends Component {
             <SubMenu
               title="Notation"
               selected={""}
-              selectedImg= < NotationImg />
+              selectedImg= {< NotationImg />}
               content={
                 <Notation
                   initOptions={this.props.state.notation}
@@ -139,7 +150,7 @@ class TopMenu extends Component {
             <SubMenu
               title="Root"
               selected={this.state.titleRoot}
-              selectedImg= <RootMenu color={"#ff0000"} />
+              selectedImg= {<RootMenu color={"#ff0000"} />}
               //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
               content={
                 <Root
@@ -160,17 +171,18 @@ class TopMenu extends Component {
               selected={this.state.titleNotation}
               content={
                 <>
-                <DropdownCustomScaleMenu state = {this.props.state}
-                scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
-                handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
-                    />
-
                 <ListRadio
                   nameField="scale"
                   data={this.props.state.scaleList}
                   handleChange={this.props.handleChangeScale}
                   setTitle={this.setScaleTitle}
                   initOption={this.props.state.scale} />
+                  <DropdownCustomScaleMenu 
+                  menuTextClassName="form-radio"
+                  state = {this.props.state}
+                  scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
+                  handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
+                    />
                   </>
 
               }
