@@ -1,6 +1,8 @@
 class Volume{
     constructor(number){
-
+        this.context = {
+            "state": "running"
+        }
     }
 }
 

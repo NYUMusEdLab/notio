@@ -32,6 +32,7 @@ class Key extends Component {
         className={`Key ${keyColor}
           ${isOn ? "on" : "off"}`}
         data-note={note}
+        data-testid={"Key:"+note}
       >
         <ColorKey
           color={color}

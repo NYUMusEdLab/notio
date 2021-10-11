@@ -62,8 +62,6 @@ class Keyboard extends Component {
       velocities: 5,
       volume: 4,
     });
-    //this.vol = new Tone.Volume(4);
-    //this.synth.chain(this.vol, Tone.Master);
   }
 
   //#endregion
@@ -80,9 +78,9 @@ class Keyboard extends Component {
 
     const { extendedKeyboard } = this.props;
 
-    if (Tone.context.state !== "running") {
-      Tone.context.resume();
-    }
+    //if (Tone.context.state !== "running") {
+    //  Tone.context.resume();
+    //}
 
     if (e.repeat) {
       return;
@@ -188,9 +186,9 @@ class Keyboard extends Component {
      * after a user gesture on the page. <URL>
      *
      */
-    if (Tone.context.state !== "running") {
-      Tone.context.resume();
-    }
+    //if (Tone.context.state !== "running") {
+    //  Tone.context.resume();
+    //}
     this.setState({ mouse_is_down: true });
   };
 
@@ -206,6 +204,7 @@ class Keyboard extends Component {
     if (note&&note.length>3){
         note = this.convertDoubleAccidental(note)
     }
+    const h = new SoundMaker();
     this.synth.startSound(note);
   };
 
