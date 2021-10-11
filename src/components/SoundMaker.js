@@ -1,4 +1,5 @@
 import { Piano } from "@tonejs/piano";
+import * as Tone from "tone";
 
 class SoundMaker{
     /* 
@@ -6,6 +7,7 @@ class SoundMaker{
         So far only handles the Piano module from tonejs.
     */
     constructor(options){
+        this.sound = Tone;
         //this.instrument = options["instrument"];
         this.velocities = options["velocities"];
         //this.volume = options["volumen"];

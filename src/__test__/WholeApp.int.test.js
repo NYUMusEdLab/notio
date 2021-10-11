@@ -1,6 +1,6 @@
 import * as React from 'react'; // Necessary to run the tests, apparently.
 import { MemoryRouter, Route } from 'react-router-dom';
-import { waitFor, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SoundMaker from "../components/SoundMaker";
 jest.mock("../components/SoundMaker");
@@ -15,6 +15,14 @@ import WholeApp from "../WholeApp";
 beforeEach(() => {
     SoundMaker.mockClear();
 })
+
+/*
+    REMEMBER:
+    Cannot read property context of undefined!
+    Change "Remove clef" to "Remove Staff"
+    Fix problem with ReactPlayer
+    Fix the buttons with some CSS
+*/
 
 describe("Root menu in the TopMenu to", () =>{
     test("Octave plus button should increase octave", async () => {
@@ -34,9 +42,8 @@ describe("Root menu in the TopMenu to", () =>{
         expect(SoundMaker).toHaveBeenCalledTimes(1);
         const root_key = screen.getByTestId("Key:C5");
         userEvent.click(root_key);
-        await waitFor(() => expect(SoundMaker).toHaveBeenCalledTimes(1));
-        await waitFor(() => expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith("C5"));
-        await waitFor(() => expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith("C5"));
+        expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith("C5");
+        expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith("C5");
     })
 
     test("Octave minus button should decrease octave", () => {
