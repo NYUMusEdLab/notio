@@ -202,6 +202,7 @@ class ColorKey extends Component {
     return (
       <div
         ref={this.keyRef}
+        data-testid={"ColorKey:"+note} 
         className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${isOn ? "on" : "off"
           } ${(note.includes("C") && !note.includes("#") && !note.includes("b")) ||
             note.includes("B#")

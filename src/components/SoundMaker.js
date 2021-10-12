@@ -25,6 +25,14 @@ class SoundMaker{
         this.synth.load();
     }
 
+    getState(){
+        return this.sound.context.state;
+    }
+
+    resumeSound(){
+        this.sound.context.resume();
+    }
+
     startSound(note){
         this.synth.keyDown({ note: note });
     }

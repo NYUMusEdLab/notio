@@ -77,8 +77,8 @@ class Keyboard extends Component {
 
     const { extendedKeyboard } = this.props;
 
-    if (this.synth.sound.context.state !== "running") {
-        this.synth.sound.context.resume();
+    if (this.synth.getState() !== "running") {
+        this.synth.resumeSound();
     }
 
     if (e.repeat) {
@@ -185,8 +185,8 @@ class Keyboard extends Component {
      * after a user gesture on the page. <URL>
      *
      */
-    if (this.synth.sound.context.state !== "running") {
-      this.synth.sound.context.resume();
+    if (this.synth.getState() !== "running") {
+      this.synth.resumeSound();
     }
     this.setState({ mouse_is_down: true });
   };
