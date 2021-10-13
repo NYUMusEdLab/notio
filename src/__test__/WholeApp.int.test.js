@@ -13,6 +13,11 @@ import { Time } from 'tone';
     (And later on tests integration between plugins and the TopMenu and/or KeyBoard)
 */
 
+// This is necessary to make waitFor works, which makes sure Notio renders /shared/urls, otherwise its a loading screen.
+// To make sure it loads "await waitFor(() => screen.getAllByText("Root"));" is added after the render.
+import MutationObserver from 'mutation-observer'
+global.MutationObserver = MutationObserver 
+
 // Overview of Mocks necessary
 jest.mock("../components/SoundMaker");
 jest.mock("react-player/lazy");
@@ -25,15 +30,16 @@ beforeEach(() => {
 describe("Root menu in the TopMenu to", () =>{
     test.each([
         ["C", 4, ["/"]],
-        ["H", 3, ["/shared/INyllzBj7efsVe54qtFl"]]
+        ["B", 3, ["/shared/INyllzBj7efsVe54qtFl"]]
     ])("Octave plus button should increase octave", async (root_note, octave, url) => {
         expect(SoundMaker).not.toHaveBeenCalled();
-        await waitFor(() => render(
+        render(
             <MemoryRouter initialEntries ={url}>
                 <Route path="/shared/:sessionId" component={WholeApp} />
                 <Route exact path={"/"} component={WholeApp}></Route>;
             </MemoryRouter>
-        ));
+        );
+        await waitFor(() => screen.getAllByText("Root"));
         const octave_in_menu = screen.getByText("Octave:",{exact:false});
         expect(octave_in_menu.textContent).toBe("Octave: "+octave);
     
@@ -48,24 +54,29 @@ describe("Root menu in the TopMenu to", () =>{
         expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith(root_note+(octave+1));
     })
 
-    test("Octave minus button should decrease octave", () => {
+    test.each([
+        ["C", 4, ["/"]],
+        ["B", 3, ["/shared/INyllzBj7efsVe54qtFl"]]
+    ])("Octave minus button should decrease octave", async (root_note, octave, url) => {
         expect(SoundMaker).not.toHaveBeenCalled();
         render(
-            <MemoryRouter>
+            <MemoryRouter initialEntries ={url}>
+                <Route path="/shared/:sessionId" component={WholeApp} />
                 <Route exact path={"/"} component={WholeApp}></Route>;
             </MemoryRouter>
         );
-        const octave_in_menu = screen.getByText("Octave:",{exact:false})
-        expect(octave_in_menu.textContent).toBe("Octave: 4")
+        await waitFor(() => screen.getAllByText("Root"));
+        const octave_in_menu = screen.getByText("Octave:",{exact:false});
+        expect(octave_in_menu.textContent).toBe("Octave: "+octave);
     
-        const plus_button = screen.getByText("-");
-        userEvent.click(plus_button);
+        const minus_button = screen.getByText("-");
+        userEvent.click(minus_button);
 
-        expect(octave_in_menu.textContent).toBe("Octave: 3")
+        expect(octave_in_menu.textContent).toBe("Octave: "+(octave-1));
         expect(SoundMaker).toHaveBeenCalledTimes(1);
-        const root_key = screen.getByTestId("ColorKey:C3");
+        const root_key = screen.getByTestId("ColorKey:"+root_note+(octave-1));
         userEvent.click(root_key);
-        expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith("C3");
-        expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith("C3");
+        expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith(root_note+(octave-1));
+        expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith(root_note+(octave-1));
     })
 })
