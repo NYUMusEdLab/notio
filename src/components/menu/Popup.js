@@ -55,6 +55,7 @@ class Popup extends Component {
   };
 
   render() {
+    // console.log("this.props.hasMinize", this.props.hasMinize);
     return (
       <div>
         <div className="button">

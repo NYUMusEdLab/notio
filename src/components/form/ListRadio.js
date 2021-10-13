@@ -19,22 +19,12 @@ class ListRadio extends Component {
   }
 
   componentDidMount() {
-    console.log("initOption", this.props.initOption);
+    // console.log("initOption", this.props.initOption);
     if (this.props.initOption) {
       this.props.setTitle(this.props.initOption);
       if (this.props.displayPicto) this.props.setImage(this.props.initOption);
     }
-    // } else {
-    //   for (const [key, value] of Object.entries(this.props.data)) {
-    //     if (value["default"] === true) {
-    //       console.log(key);
-    //       this.props.setTitle(value["name"]);
-    //       // for clef men
-    //       // if (value["svg"]) this.props.setImage(value["svg"]);
-    //     }
-    //   }
-    // }
-
+   
   }
 
   onChange = (changeEvent) => {
@@ -53,9 +43,9 @@ class ListRadio extends Component {
         }
         this.props.handleChange(option);
         this.props.setTitle(option);
-        console.log("this.props.displayPicto", this.props.displayPicto);
+        // console.log("this.props.displayPicto", this.props.displayPicto);
         if (this.props.displayPicto) {
-          console.log("ListRadio setImage");
+          // console.log("ListRadio setImage");
 
           this.props.setImage(option);
         }

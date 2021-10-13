@@ -15,15 +15,16 @@ class Settings extends Component {
 
   render() {
     // const { url, playing } = this.state;
+    //TODO: check what content is pointing to (custom_mode.PNG ????)
     return (
       <div>
         <Popup
           title={this.props.title}
           class="popup-menu popup-Settings"
           draggable={false}
-          picto=<SettingsSVG />
+          picto={<SettingsSVG />}
           hasBG={true}
-          content=<div className="img--wrapper"><img src={require('../../img/custom_mode.PNG')} alt="settings" /></div>
+          content={<div className="img--wrapper"><img src={require('../../img/custom_mode.PNG')} alt="settings" /></div>}
         />
       </div>
     );

@@ -74,33 +74,34 @@ const scales = [
     steps: [0, 2, 3, 4, 7, 9],
     numbers: ["1", "2", "b3", "3", "5", "6"],
   },
-  {
-    name: "Whole tone",
-    steps: [0, 2, 4, 6, 8, 10],
-    numbers: ["1", "2", "3", "#4", "#5", "7"],
-    // steps: [0, 1, 2, 3, 6, 11],
-    // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
-  },
-  {
-    name: "Dim scale major7",
-    steps: [0, 2, 3, 5, 6, 8, 9, 11],
-    numbers: ["1", "2", "b3", "4", "b5", "#5", "6", "△7"],
-    // steps: [0, 1, 2, 3, 6, 11],
-    // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
-  },
-  {
-    name: "Dim scale minor7",
-    steps: [0, 1, 3, 4, 6, 7, 9, 10],
-    numbers: ["1", "b2", "b3", "3", "#4", "5", "6", "7"],
-    // steps: [0, 1, 2, 3, 6, 11],
-    // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
-  },
+  //theese are commented out to make the scale menu shorter, not overlapping the keys on the keyboard
+  // {
+  //   name: "Whole tone",
+  //   steps: [0, 2, 4, 6, 8, 10],
+  //   numbers: ["1", "2", "3", "#4", "#5", "7"],
+  //   // steps: [0, 1, 2, 3, 6, 11],
+  //   // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
+  // },
+  // {
+  //   name: "Dim scale major7",
+  //   steps: [0, 2, 3, 5, 6, 8, 9, 11],
+  //   numbers: ["1", "2", "b3", "4", "b5", "#5", "6", "△7"],
+  //   // steps: [0, 1, 2, 3, 6, 11],
+  //   // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
+  // },
+  // {
+  //   name: "Dim scale minor7",
+  //   steps: [0, 1, 3, 4, 6, 7, 9, 10],
+  //   numbers: ["1", "b2", "b3", "3", "#4", "5", "6", "7"],
+  //   // steps: [0, 1, 2, 3, 6, 11],
+  //   // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
+  // },
 
-  {
-    name: "Mixolydian b9b13",
-    steps: [0, 1, 4, 5, 7, 8, 10],
-    numbers: ["1", "b2", "3", "4", "5", "b6", "7"],
-  },
+  // {
+  //   name: "Mixolydian b9b13",
+  //   steps: [0, 1, 4, 5, 7, 8, 10],
+  //   numbers: ["1", "b2", "3", "4", "5", "b6", "7"],
+  // },
 ];
 
 export default scales;
