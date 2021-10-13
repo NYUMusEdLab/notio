@@ -21,12 +21,6 @@ beforeEach(() => {
     SoundMaker.mockClear();
 })
 
-/*
-    REMEMBER:
-    Fix problem with ReactPlayer
-    Fix the buttons with some CSS
-*/
-
 describe("Root menu in the TopMenu to", () =>{
     test("Octave plus button should increase octave", async () => {
         expect(SoundMaker).not.toHaveBeenCalled();
