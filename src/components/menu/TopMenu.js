@@ -10,7 +10,7 @@ import Share from "./Share";
 import Settings from "./Settings";
 import Root from "./Root";
 import RootMenu from "../../assets/img/RootMenu";
-import { Octaves } from "../InputComponents";
+import Octaves from "./Octaves";
 // import { findColor } from '../utils.js';
 
 import ListRadio from "../form/ListRadio";

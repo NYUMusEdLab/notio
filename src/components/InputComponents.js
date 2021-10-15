@@ -5,18 +5,6 @@ import rootNote from "../data/rootNote";
 // import scales from "../data/scalesObj";
 import themes from "../data/themes";
 
-export const Octaves = props => {
-  return (
-    <div className="octave">
-      <div>
-        <p>Octave: {props.octave}</p>
-        <button onClick={() => props.handleClick("minus")}>-</button>
-        <button onClick={() => props.handleClick("plus")}>+</button>
-      </div>
-    </div>
-  );
-};
-
 export const Scale = props => {
   return (
     <Select
