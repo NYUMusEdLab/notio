@@ -274,6 +274,7 @@ class WholeApp extends Component {
 
     const { loading, showOffNotes}=this.state;
     // console.log("whole app", this.state.notation);
+    alert(this.state.octave)
 
     return loading ? (
       <LoadingScreen />
@@ -299,64 +300,7 @@ class WholeApp extends Component {
         />
 
         <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
-          {/* <div className="MainMenuDot" onClick={this.toggleMenu}>
-            <span>&#9835;</span>
-          </div> */}
-          {/* <div className={`MainMenu slide-in-top ${menuOpen ? "open" : ""}`}>
-            <div
-              className="closeMenu"
-              onClick={this.toggleMenu}
-              style={{ backgroundColor: "#FFFFFF", cursor: "pointer" }}>
-              (x)
-            </div>
-            <div className="Menu-Row">
-              <Scale scale={scale} scales={scaleList} handleSelect={this.handleSelectScale} />
-              <CircleFifthsSVG rootNote={baseNote} handleChange={this.handleChangeRoot} />
-            </div>
-            <div className="Menu-Row">
-              <div className="Menu-label"></div>
-              <div className="Menu-label">
-                Musical Staff (Treble){" "}
-                <img height="30" src="/img/treble-clef.png" alt="treble cleff" />
-              </div>
-              <div className="Menu-label">Show notes that are not in scale</div>
-              <div className="Menu-label">Share this setup</div>
-            </div>
-            <div className="Menu-Row">
-              <Theme theme={theme} handleSelect={this.handleSelectTheme} />
-              <div className="toggle-switch">
-                <div className="checkbox">
-                  <input type="checkbox" checked={trebleStaffOn} onChange={this.toggleStaff} />
-                  <label />
-                </div>
-              </div>
-              <div className="toggle-switch">
-                <div className="checkbox">
-                  <input
-                    type="checkbox"
-                    checked={showOffNotes}
-                    onChange={this.toggleShowOffNotes}
-                  />
-                  <label />
-                </div>
-              </div>
-              <div className="share" onClick={this.saveSessionToDB}>
-                <img width="50" src="/img/share.png" alt="Share" />
-              </div>
-            </div>
-            {this.state.sessionID ? (
-              <div className="Bottom-Info-Row">
-                Your configuration has been saved here:{" "}
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`/shared/${this.state.sessionID}`}>
-                  {window.location.hostname}/shared/{this.state.sessionID}
-                </a>
-              </div>
-            ) : null}
-          </div> */}
-          {/* <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} /> */}
+          
           <Keyboard
             octave={this.state.octave}
             scale={this.state.scale}

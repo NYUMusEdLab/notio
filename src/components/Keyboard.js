@@ -65,6 +65,7 @@ class Keyboard extends Component {
       scales: this.props.scaleList,
       activeScale: activeScale,
       octave: this.props.octave,
+      octaveDist:0,
       colorname: "bright" 
     };
 
@@ -88,7 +89,8 @@ class Keyboard extends Component {
     //e.preventDefault();
 
     const { extendedKeyboard } = this.props;
-    const{activeScale,octave} = this.state
+    const{activeScale,octave,octaveDist} = this.state
+    alert(this.state.octave)
 
     if (this.synth.getState() !== "running") {
         this.synth.resumeSound();
@@ -135,57 +137,58 @@ class Keyboard extends Component {
     } else if (!extendedKeyboard) {
       
       if (e.code === "ArrowDown") {
-        this.setState({octave: octave-1})
+        this.setState({octaveDist: octaveDist-1})
       }
       if (e.code === "ArrowUp") {
-        this.setState({octave: octave+1})
+        this.setState({octaveDist: octaveDist+1})
       }
       if (e.code === "KeyE") {
         const StepsAboveRoot = 2;//root==0, 2 selects the third tone in the scale
         const distToCurrentOctave = 0;
-        this.playNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));             
+        this.playNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));             
       }
       if (e.code === "KeyW") {
         const StepsAboveRoot = 1;//root==0, 2 selects the third tone in the scale
         const distToCurrentOctave = 0;
-        this.playNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));             
+        this.playNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));             
       }
       if (e.code === "KeyQ") {
         const StepsAboveRoot = 0;//root==0, 2 selects the third tone in the scale
         const distToCurrentOctave = 0;
-        this.playNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));
+        this.playNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));
       }
       if (e.code === "KeyD") {
         const StepsAboveRoot = -1;//root==0, 2 selects the third tone in the scale
         const distToCurrentOctave = 0;
-        this.playNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));
+        this.playNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));
       }
       if (e.code === "KeyS") {
         const StepsAboveRoot = -2;//root==0, 2 selects the third tone in the scale
         const distToCurrentOctave = 0;
-        this.playNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));
+        this.playNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));
         
       }
       if (e.code === "KeyA") {
         const StepsAboveRoot = -3;//root==0, 2 selects the third tone in the scale
         const distToCurrentOctave = 0;
-        this.playNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));
+        this.playNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));
       }
       if (e.code === "KeyC") {
         const StepsAboveRoot = -4;//root==0, 2 selects the third tone in the scale
         const distToCurrentOctave = 0;
-        this.playNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));
+        this.playNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));
       }
       if (e.code === "KeyX") {
         const StepsAboveRoot = -5;//root==0, 2 selects the third tone in the scale
         const distToCurrentOctave = 0;
-        this.playNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot)); 
+        this.playNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot)); 
       }
       if (e.code === "KeyZ") {
         const StepsAboveRoot = -6;//root==0, 2 selects the third tone in the scale
         const distToCurrentOctave = 0;
-        this.playNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));        
+        this.playNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));        
       }
+
     }
   };
 
@@ -193,7 +196,7 @@ class Keyboard extends Component {
     //e.preventDefault();
 
     const { extendedKeyboard} = this.props;
-    const{activeScale,octave} = this.state
+    const{activeScale,octave, octaveDist} = this.state
 
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
     const mapKeyUp = activeKeyCodes.indexOf(e.code);
@@ -210,52 +213,52 @@ class Keyboard extends Component {
       this.noteOff(buttonReleased.dataset.note);
     } else if (!extendedKeyboard) {
 
-         if (e.code === "KeyE") {
-          const StepsAboveRoot = 2;//root==0, 2 selects the third tone in the scale
-          const distToCurrentOctave = 0;
-          this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));             
-        }
-        if (e.code === "KeyW") {
-          const StepsAboveRoot = 1;//root==0, 2 selects the third tone in the scale
-          const distToCurrentOctave = 0;
-          this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));             
-        }
-        if (e.code === "KeyQ") {
-          const StepsAboveRoot = 0;//root==0, 2 selects the third tone in the scale
-          const distToCurrentOctave = 0;
-          this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));
-        }
-        if (e.code === "KeyD") {
-          const StepsAboveRoot = -1;//root==0, 2 selects the third tone in the scale
-          const distToCurrentOctave = 0;
-          this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));
-        }
-        if (e.code === "KeyS") {
-          const StepsAboveRoot = -2;//root==0, 2 selects the third tone in the scale
-          const distToCurrentOctave = 0;
-          this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));
-          
-        }
-        if (e.code === "KeyA") {
-          const StepsAboveRoot = -3;//root==0, 2 selects the third tone in the scale
-          const distToCurrentOctave = 0;
-          this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));
-        }
-        if (e.code === "KeyC") {
-          const StepsAboveRoot = -4;//root==0, 2 selects the third tone in the scale
-          const distToCurrentOctave = 0;
-          this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));
-        }
-        if (e.code === "KeyX") {
-          const StepsAboveRoot = -5;//root==0, 2 selects the third tone in the scale
-          const distToCurrentOctave = 0;
-          this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot)); 
-        }
-        if (e.code === "KeyZ") {
-          const StepsAboveRoot = -6;//root==0, 2 selects the third tone in the scale
-          const distToCurrentOctave = 0;
-          this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave,distToCurrentOctave,StepsAboveRoot));        
-        }
+      if (e.code === "KeyE") {
+        const StepsAboveRoot = 2;//root==0, 2 selects the third tone in the scale
+        const distToCurrentOctave = 0;
+        this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));             
+      }
+      if (e.code === "KeyW") {
+        const StepsAboveRoot = 1;//root==0, 2 selects the third tone in the scale
+        const distToCurrentOctave = 0;
+        this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));             
+      }
+      if (e.code === "KeyQ") {
+        const StepsAboveRoot = 0;//root==0, 2 selects the third tone in the scale
+        const distToCurrentOctave = 0;
+        this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));
+      }
+      if (e.code === "KeyD") {
+        const StepsAboveRoot = -1;//root==0, 2 selects the third tone in the scale
+        const distToCurrentOctave = 0;
+        this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));
+      }
+      if (e.code === "KeyS") {
+        const StepsAboveRoot = -2;//root==0, 2 selects the third tone in the scale
+        const distToCurrentOctave = 0;
+        this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));
+        
+      }
+      if (e.code === "KeyA") {
+        const StepsAboveRoot = -3;//root==0, 2 selects the third tone in the scale
+        const distToCurrentOctave = 0;
+        this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));
+      }
+      if (e.code === "KeyC") {
+        const StepsAboveRoot = -4;//root==0, 2 selects the third tone in the scale
+        const distToCurrentOctave = 0;
+        this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));
+      }
+      if (e.code === "KeyX") {
+        const StepsAboveRoot = -5;//root==0, 2 selects the third tone in the scale
+        const distToCurrentOctave = 0;
+        this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot)); 
+      }
+      if (e.code === "KeyZ") {
+        const StepsAboveRoot = -6;//root==0, 2 selects the third tone in the scale
+        const distToCurrentOctave = 0;
+        this.releaseNote(activeScale.NoteNameWithOctaveNumber(octave+octaveDist,distToCurrentOctave,StepsAboveRoot));        
+      }
       
     }
   };
