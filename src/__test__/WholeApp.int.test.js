@@ -40,6 +40,7 @@ describe("Root menu in the TopMenu to", () =>{
             </MemoryRouter>
         );
         await waitFor(() => screen.getAllByText("Root"));
+        expect(SoundMaker).toHaveBeenCalledTimes(1);
         const octave_in_menu = screen.getByText("Octave:",{exact:false});
         expect(octave_in_menu.textContent).toBe("Octave: "+octave);
     
@@ -47,7 +48,6 @@ describe("Root menu in the TopMenu to", () =>{
         userEvent.click(plus_button);
 
         expect(octave_in_menu.textContent).toBe("Octave: "+(octave+1));
-        expect(SoundMaker).toHaveBeenCalledTimes(1);
         const root_key = screen.getByTestId("ColorKey:"+root_note+(octave+1));
         userEvent.click(root_key);
         expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith(root_note+(octave+1));
@@ -66,6 +66,7 @@ describe("Root menu in the TopMenu to", () =>{
             </MemoryRouter>
         );
         await waitFor(() => screen.getAllByText("Root"));
+        expect(SoundMaker).toHaveBeenCalledTimes(1);
         const octave_in_menu = screen.getByText("Octave:",{exact:false});
         expect(octave_in_menu.textContent).toBe("Octave: "+octave);
     
@@ -73,7 +74,6 @@ describe("Root menu in the TopMenu to", () =>{
         userEvent.click(minus_button);
 
         expect(octave_in_menu.textContent).toBe("Octave: "+(octave-1));
-        expect(SoundMaker).toHaveBeenCalledTimes(1);
         const root_key = screen.getByTestId("ColorKey:"+root_note+(octave-1));
         userEvent.click(root_key);
         expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith(root_note+(octave-1));
