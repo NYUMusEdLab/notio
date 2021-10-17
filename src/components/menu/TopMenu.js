@@ -237,9 +237,9 @@ class TopMenu extends Component {
           </div>
 
           {/* Settings */}
-          {/* <div className="navbar-item menu-settings">
+          <div className="navbar-item menu-settings">
             <Settings title="Settings" label="Settings" />
-          </div> */}
+          </div>
         </div>
         <div className="side-menu">
           <div className="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
