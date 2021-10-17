@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Keyboard from "./components/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
-//import { Octaves, Scale, Theme } from "./components/InputComponents";
-// import CircleFifthsSVG from "./components/CircleFifthsSVG";
+import { Scale, Theme } from "./components/InputComponents";
+import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import LoadingScreen from "./components/LoadingScreen";
 import "./style.scss";
 import db from "./Firebase";
@@ -74,7 +74,7 @@ class WholeApp extends Component {
 
   handleSelectClef = (selectedClef) => {
     // console.log(selectedClef + " clef selected");
-    const staff_on = selectedClef === "no clef" ? false : true;
+    const staff_on = selectedClef === "no staff" ? false : true;
     this.setState({ clef: selectedClef, trebleStaffOn: staff_on });
   };
 
@@ -273,7 +273,8 @@ class WholeApp extends Component {
   };
 
   render() {
-    const { loading, showOffNotes}=//, menuOpen, octave, scale, scaleList, baseNote, theme, trebleStaffOn } =
+
+    const { loading, showOffNotes, menuOpen, scale, scaleList, baseNote, theme, trebleStaffOn } =
       this.state;
     // console.log("whole app", this.state.notation);
 
@@ -288,6 +289,7 @@ class WholeApp extends Component {
           handleChangeScale={this.handleSelectScale}
           handleChangeCustomScale={this.handleChangeCustomScale}
           handleSelectClef={this.handleSelectClef}
+          handleClickOctave={this.handleClickOctave}
           handleChangeRoot={this.handleChangeRoot}
           handleChangeVideoUrl={this.handleChangeVideoUrl}
           handleChangeVideoVisibility = {this.handleChangeVideoVisibility}
@@ -311,7 +313,6 @@ class WholeApp extends Component {
               (x)
             </div>
             <div className="Menu-Row">
-              <Octaves octave={octave} handleClick={this.handleClickOctave} />
               <Scale scale={scale} scales={scaleList} handleSelect={this.handleSelectScale} />
               <CircleFifthsSVG rootNote={baseNote} handleChange={this.handleChangeRoot} />
             </div>

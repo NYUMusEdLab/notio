@@ -56,12 +56,11 @@ class Popup extends Component {
 
   render() {
     // console.log("this.props.hasMinize", this.props.hasMinize);
-    const { minimized, show } = this.state;
     return (
       <div>
-        <div class="button">
+        <div className="button">
           <div
-            class="circledButton"
+            className="circledButton"
             onClick={(e) => {
               this.props.onClickMenuHandler();
               this.handleShow();
@@ -76,14 +75,14 @@ class Popup extends Component {
         </div>
 
         {this.props.hasBG ? (
-          <div class={`notio-popup--bg ${show ? "show" : ""}`}></div>
+          <div className={`notio-popup--bg ${this.state.show ? "show" : ""}`}></div>
         ) : (
           ""
         )}
         <div
-          class={
+          className={
             this.props.class +
-            ` notio-popup ${minimized ? "minimized" : ""} ${show ? "show" : ""}`
+            ` notio-popup ${this.state.minimized ? "minimized" : ""} ${this.state.show ? "show" : ""}`
           }
         >
           <div class="notio-popup--header clearfix">
@@ -97,18 +96,17 @@ class Popup extends Component {
               <CrossSVG />
             </div>
             {this.props.hasMinize ? (
-              <div
-                class="minimize notio-popup--button"
-                onClick={this.handleMinimize}
-              >
-                <UnderscoreSVG />
-              </div>
+            <div
+              class="minimize notio-popup--button"
+              onClick={this.handleMinimize}
+            >
+              <UnderscoreSVG />
+            </div>
             ) : (
               ""
             )}
           </div>
           {this.props.content}
-          {/* <div class='resize-handle'></div> */}
         </div>
       </div>
     );
