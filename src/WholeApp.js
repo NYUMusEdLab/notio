@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Keyboard from "./components/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
-import { Octaves, Scale, Theme } from "./components/InputComponents";
-import CircleFifthsSVG from "./components/CircleFifthsSVG";
+//import { Octaves, Scale, Theme } from "./components/InputComponents";
+// import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import LoadingScreen from "./components/LoadingScreen";
 import "./style.scss";
 import db from "./Firebase";
@@ -273,7 +273,7 @@ class WholeApp extends Component {
   };
 
   render() {
-    const { loading, showOffNotes, menuOpen, octave, scale, scaleList, baseNote, theme, trebleStaffOn } =
+    const { loading, showOffNotes}=//, menuOpen, octave, scale, scaleList, baseNote, theme, trebleStaffOn } =
       this.state;
     // console.log("whole app", this.state.notation);
 
@@ -300,10 +300,10 @@ class WholeApp extends Component {
         />
 
         <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
-          <div className="MainMenuDot" onClick={this.toggleMenu}>
+          {/* <div className="MainMenuDot" onClick={this.toggleMenu}>
             <span>&#9835;</span>
-          </div>
-          <div className={`MainMenu slide-in-top ${menuOpen ? "open" : ""}`}>
+          </div> */}
+          {/* <div className={`MainMenu slide-in-top ${menuOpen ? "open" : ""}`}>
             <div
               className="closeMenu"
               onClick={this.toggleMenu}
@@ -357,8 +357,8 @@ class WholeApp extends Component {
                 </a>
               </div>
             ) : null}
-          </div>
-          <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} />
+          </div> */}
+          {/* <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} /> */}
           <Keyboard
             octave={this.state.octave}
             scale={this.state.scale}
