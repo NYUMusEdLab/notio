@@ -55,7 +55,7 @@ describe("ComputerKeyboard pressing key to", () =>{
 
     test.each([
         ["C", 4,'d', ["/"]],
-        ["C", 1,'d', ["/"]]
+        ["C", 1,'d', ["/shared/5cg2RfIti2OhF9jZC3nV"]]
         // ["B", 3,'f', ["/shared/INyllzBj7efsVe54qtFl"]]
     ])("pressing [d] in C-Major plays the major7th below the root", async (root_note, octave, keypress, url) => {
         expect(SoundMaker).not.toHaveBeenCalled();

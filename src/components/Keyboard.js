@@ -90,7 +90,6 @@ class Keyboard extends Component {
 
     const { extendedKeyboard } = this.props;
     const{activeScale,octave,octaveDist} = this.state
-    alert(this.state.octave)
 
     if (this.synth.getState() !== "running") {
         this.synth.resumeSound();
