@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Piano } from "@tonejs/piano";
 import * as Tone from "tone";
 
