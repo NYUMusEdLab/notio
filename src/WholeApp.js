@@ -273,6 +273,7 @@ class WholeApp extends Component {
   };
 
   render() {
+
     const { loading, showOffNotes, menuOpen, scale, scaleList, baseNote, theme, trebleStaffOn } =
       this.state;
     // console.log("whole app", this.state.notation);
@@ -301,10 +302,10 @@ class WholeApp extends Component {
         />
 
         <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
-          <div className="MainMenuDot" onClick={this.toggleMenu}>
+          {/* <div className="MainMenuDot" onClick={this.toggleMenu}>
             <span>&#9835;</span>
-          </div>
-          <div className={`MainMenu slide-in-top ${menuOpen ? "open" : ""}`}>
+          </div> */}
+          {/* <div className={`MainMenu slide-in-top ${menuOpen ? "open" : ""}`}>
             <div
               className="closeMenu"
               onClick={this.toggleMenu}
@@ -357,8 +358,8 @@ class WholeApp extends Component {
                 </a>
               </div>
             ) : null}
-          </div>
-          <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} />
+          </div> */}
+          {/* <div className={`modalCover ${this.state.menuOpen ? "open" : ""}`} /> */}
           <Keyboard
             octave={this.state.octave}
             scale={this.state.scale}
