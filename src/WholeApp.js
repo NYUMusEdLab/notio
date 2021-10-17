@@ -274,8 +274,6 @@ class WholeApp extends Component {
 
     const { loading, showOffNotes}=this.state;
     // console.log("whole app", this.state.notation);
-    alert(this.state.octave)
-
     return loading ? (
       <LoadingScreen />
     ) : (
@@ -300,7 +298,7 @@ class WholeApp extends Component {
         />
 
         <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
-          
+
           <Keyboard
             octave={this.state.octave}
             scale={this.state.scale}

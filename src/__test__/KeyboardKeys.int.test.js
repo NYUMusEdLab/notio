@@ -75,5 +75,34 @@ describe("ComputerKeyboard pressing key to", () =>{
         expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith('B'+(octave-1));
     })
 
+    test.each([
+        ["C", 4,'d', ["/"]],
+        ["C", 1,'d', ["/shared/5cg2RfIti2OhF9jZC3nV"]]
+        // ["B", 3,'f', ["/shared/INyllzBj7efsVe54qtFl"]]
+    ])("pressing [d] in C-Major plays the major7th below the root after octave have been increased +2", async (root_note, octave, keypress, url) => {
+        expect(SoundMaker).not.toHaveBeenCalled();
+        render(
+            <MemoryRouter initialEntries ={url}>
+                <Route path="/shared/:sessionId" component={WholeApp} />
+                <Route exact path={"/"} component={WholeApp}></Route>;
+            </MemoryRouter>
+        );
+        await waitFor(() => screen.getAllByText("Root"));
+        expect(SoundMaker).toHaveBeenCalledTimes(1);
+        expect(SoundMaker).toHaveBeenCalledTimes(1);
+        const octave_in_menu = screen.getByText("Octave:",{exact:false});
+        expect(octave_in_menu.textContent).toBe("Octave: "+octave);
+        const plus_button = screen.getByText("+");
+        userEvent.click(plus_button);
+        userEvent.click(plus_button);
+        expect(octave_in_menu.textContent).toBe("Octave: "+(octave+2));
+        
+        await userEvent.keyboard(keypress)
+
+        //const F_key = new KeyboardEvent('keydown', {key: keypress});
+        expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith('B'+(octave-1));
+        expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith('B'+(octave-1));
+    })
+
 
 })
