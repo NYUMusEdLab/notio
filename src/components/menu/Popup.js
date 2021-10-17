@@ -81,13 +81,13 @@ class Popup extends Component {
         )}
         <div
           className={
-            this.props.class +
+            this.props.className +
             ` notio-popup ${this.state.minimized ? "minimized" : ""} ${this.state.show ? "show" : ""}`
           }
         >
-          <div class="notio-popup--header clearfix">
+          <div className="notio-popup--header clearfix">
             <div
-              class="close notio-popup--button"
+              className="close notio-popup--button"
               onClick={(e) => {
                 this.props.onClickCloseHandler();
                 this.handleShow();
@@ -97,7 +97,7 @@ class Popup extends Component {
             </div>
             {this.props.hasMinize ? (
             <div
-              class="minimize notio-popup--button"
+              className="minimize notio-popup--button"
               onClick={this.handleMinimize}
             >
               <UnderscoreSVG />

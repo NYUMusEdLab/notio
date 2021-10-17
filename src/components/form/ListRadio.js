@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import Radio from "./Radio";
 class ListRadio extends Component {
-  defaultProps = {
+  static defaultProps = {
     setImage: "",
   };
 
@@ -15,7 +15,7 @@ class ListRadio extends Component {
 
   constructor(props) {
     super(props);
-    props = { ...this.defaultProps, ...props };
+    props = { ...ListRadio.defaultProps, ...props };
   }
 
   componentDidMount() {

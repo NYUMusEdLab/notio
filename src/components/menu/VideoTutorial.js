@@ -67,7 +67,7 @@ class VideoTutorial extends Component {
         <Popup
           active = {this.props.active}
 
-          class="popup-video"
+          className="popup-video"
           title={this.props.title}
           draggable={true}
           picto={components[this.props.label]}
