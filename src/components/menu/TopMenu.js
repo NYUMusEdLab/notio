@@ -7,7 +7,7 @@ import SubMenu from "./SubMenu";
 import Notation from "./Notation";
 import VideoTutorial from "./VideoTutorial";
 import Share from "./Share";
-import Settings from "./Settings";
+// import Settings from "./Settings";
 import Root from "./Root";
 import RootMenu from "../../assets/img/RootMenu";
 import Octaves from "./Octaves";

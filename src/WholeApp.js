@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Keyboard from "./components/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
-import { Scale, Theme } from "./components/InputComponents";
-import CircleFifthsSVG from "./components/CircleFifthsSVG";
 import LoadingScreen from "./components/LoadingScreen";
 import "./style.scss";
 import db from "./Firebase";
@@ -274,8 +272,7 @@ class WholeApp extends Component {
 
   render() {
 
-    const { loading, showOffNotes, menuOpen, scale, scaleList, baseNote, theme, trebleStaffOn } =
-      this.state;
+    const { loading, showOffNotes}=this.state;
     // console.log("whole app", this.state.notation);
 
     return loading ? (
