@@ -1,16 +1,19 @@
+import React, { Component } from "react";
 import { Piano } from "@tonejs/piano";
 import * as Tone from "tone";
 
-class SoundMaker{
+class SoundMaker extends Component{
     /* 
         Module handling all making of sounds.
+        Made as a Component so it updates when a new instrument is made, but never renders.
         So far only handles the Piano module from tonejs.
     */
-    constructor(options){
+    constructor(props){
+        super(props)
         this.sound = Tone;
-        //this.instrument = options["instrument"];
-        this.velocities = options["velocities"];
-        //this.volume = options["volumen"];
+        //this.instrument = options.instrument;
+        this.velocities = props.velocities;
+        //this.volume = options.volume;
         this.synth = this.chooseInstrument();
         this.initInstrument();
     }
@@ -39,6 +42,10 @@ class SoundMaker{
 
     stopSound(note){
         this.synth.keyUp({ note: note });
+    }
+
+    render(){
+        return null;
     }
 }
 
