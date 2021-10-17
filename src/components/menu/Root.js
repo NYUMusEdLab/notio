@@ -3,7 +3,6 @@ import { Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import rootMenu from "../../data/rootMenu";
 
-
 const rootLabel = "root";
 const romanceLabel = "romance"
 const accidentalLabel = "accidental";
@@ -171,7 +170,6 @@ class Root extends Component {
       <div>
         <Form>
           {rootMenu.map((root, index) => (
-
             < div >
               {/* dynamic styles with dynamic colors */}
               <style> {`

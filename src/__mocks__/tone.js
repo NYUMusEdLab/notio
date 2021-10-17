@@ -4,4 +4,4 @@ class Volume{
     }
 }
 
-module.exports = { Volume };
+export default { Volume };

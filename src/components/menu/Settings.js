@@ -22,9 +22,9 @@ class Settings extends Component {
           title={this.props.title}
           class="popup-menu popup-Settings"
           draggable={false}
-          picto=<SettingsSVG />
+          picto={<SettingsSVG />}
           hasBG={true}
-          content=<div className="img--wrapper"><img src={require('../../img/custom_mode.PNG')} alt="settings" /></div>
+          content={<div className="img--wrapper"><img src={require('../../img/custom_mode.PNG')} alt="settings" /></div>}
         />
       </div>
     );
