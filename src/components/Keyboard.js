@@ -88,8 +88,8 @@ class Keyboard extends Component {
      */
     //e.preventDefault();
 
-    const { extendedKeyboard } = this.props;
-    const{activeScale,octave,octaveDist} = this.state
+    const { extendedKeyboard,octave } = this.props;
+    const{activeScale,octaveDist} = this.state
 
     if (this.synth.getState() !== "running") {
         this.synth.resumeSound();
@@ -194,8 +194,8 @@ class Keyboard extends Component {
   handleKeyUp = (e) => {
     //e.preventDefault();
 
-    const { extendedKeyboard} = this.props;
-    const{activeScale,octave, octaveDist} = this.state
+    const { extendedKeyboard,octave} = this.props;
+    const{activeScale, octaveDist} = this.state
 
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
     const mapKeyUp = activeKeyCodes.indexOf(e.code);
