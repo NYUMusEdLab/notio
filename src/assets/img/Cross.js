@@ -2,7 +2,7 @@ import React from 'react';
 
 const Cross = props => (
 <svg
-class="cross-svg"
+className="cross-svg"
 viewBox="0 0 20 20"
 width="20"
 height="20"

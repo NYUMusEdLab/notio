@@ -20,7 +20,7 @@ class Settings extends Component {
       <div>
         <Popup
           title={this.props.title}
-          class="popup-menu popup-Settings"
+          className="popup-menu popup-Settings"
           draggable={false}
           picto={<SettingsSVG />}
           hasBG={true}

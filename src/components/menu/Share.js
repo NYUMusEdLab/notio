@@ -20,12 +20,12 @@ class Share extends Component {
       <div>
         <Popup
           title={this.props.title}
-          class="popup-menu popup-share"
+          className="popup-menu popup-share"
           draggable={false}
-          picto=<ShareSVG />
+          picto={<ShareSVG />}
           onClickMenuHandler={this.props.saveSessionToDB}
           hasBG={true}
-          content=<ShareLink sessionID={this.props.sessionID} />
+          content={<ShareLink sessionID={this.props.sessionID} />}
         />
       </div>
     );
