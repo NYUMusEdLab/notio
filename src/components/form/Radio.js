@@ -16,7 +16,7 @@ const components = {
 class Radio extends React.Component{
     constructor(props){
         super(props);
-        this.state = { 
+        this.state = {
             isSelected: props.isSelected,
             label: props.label,
             nameField: props.nameField,
@@ -27,17 +27,17 @@ class Radio extends React.Component{
     render(){
         return(
             <div className="form-radio">
-                <label className={`label-wrapper ${this.state.isSelected ? 'active' : ''}`}>
-                    {components[this.state.label]}
+                <label className={`label-wrapper ${this.props.isSelected ? 'active' : ''}`}>
+                    {components[this.props.label]}
                     <input
-                    type="radio"
-                    value={this.state.label}
-                    data-testid={"Radio:"+this.state.label}
-                    name={this.state.nameField}
-                    checked={this.state.isSelected}
-                    onChange={this.state.onRadioChange}
+                        type="radio"
+                        value={this.props.label}
+                        data-testid={"Radio:"+this.props.label}
+                        name={this.props.nameField}
+                        checked={this.props.isSelected}
+                        onChange={this.props.onRadioChange}
                     />
-                    <span className="form-radio__label">{this.state.label}</span>
+                    <span className="form-radio__label">{this.props.label}</span>
                 </label>
             </div>
         )
