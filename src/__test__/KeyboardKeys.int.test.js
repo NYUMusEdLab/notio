@@ -10,9 +10,8 @@ import WholeApp from "../WholeApp";
 import { Time } from 'tone';
 
 /*
-    File containing all integration tests of the WholeApp module.
-    Primarily tests that interactions with the TopMenu is integrated correctly with the KeyBoard.
-    (And later on tests integration between plugins and the TopMenu and/or KeyBoard)
+    "File containing all integration tests of the Keyboard Component
+Primarily tests the interaction between the Keyboard and different types of input (click, keyboard press, midi, and audio input)"
 */
 
 // This is necessary to make waitFor works, which makes sure Notio renders /shared/urls, otherwise its a loading screen.
