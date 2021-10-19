@@ -76,6 +76,8 @@ class WholeApp extends Component {
     this.setState({ clef: selectedClef, trebleStaffOn: staff_on });
   };
 
+  
+
   /** 
    * 
    * USED WITH 
@@ -285,6 +287,7 @@ class WholeApp extends Component {
           handleChangeScale={this.handleSelectScale}
           handleChangeCustomScale={this.handleChangeCustomScale}
           handleSelectClef={this.handleSelectClef}
+          handleHideStaff={this.toggleStaff}
           handleClickOctave={this.handleClickOctave}
           handleChangeRoot={this.handleChangeRoot}
           handleChangeVideoUrl={this.handleChangeVideoUrl}
