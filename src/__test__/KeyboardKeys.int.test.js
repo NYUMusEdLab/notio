@@ -11,7 +11,7 @@ import { Time } from 'tone';
 
 /*
     "File containing all integration tests of the Keyboard Component
-Primarily tests the interaction between the Keyboard and different types of input (click, keyboard press, midi, and audio input)"
+Primarily tests the interaction between the Keyboard and different types of input (click, keyboard press, midi, and audio inputgit gi)"
 */
 
 // This is necessary to make waitFor works, which makes sure Notio renders /shared/urls, otherwise its a loading screen.
@@ -20,13 +20,11 @@ import MutationObserver from 'mutation-observer'
 global.MutationObserver = MutationObserver 
 
 // Overview of Mocks necessary
-jest.mock("../components/SoundMaker");
-jest.mock("react-player/lazy");
+jest.mock("../components/SoundMaker"); // Automatic mock, which can be asserted against
+jest.mock("react-player/lazy"); // Manual mock in __mock__ folder, made just to make the tests pass
 
 beforeEach(() => {
-    ReactPlayer.mockClear();
     SoundMaker.mockClear();
-
 })
 
 describe("ComputerKeyboard pressing key to", () =>{
@@ -49,33 +47,10 @@ describe("ComputerKeyboard pressing key to", () =>{
         
         await userEvent.keyboard(keypress)
 
-        //const F_key = new KeyboardEvent('keydown', {key: keypress});
         expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith(root_note+(octave));
         expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith(root_note+(octave));
     })
 
-
-    // test.each([
-    //     ["C", 4,'d', ["/"]],//Default scale and octave
-    //     ["C", 1,'d', ["/shared/5cg2RfIti2OhF9jZC3nV"]]//C Major-scale octave 1
-    //     // ["B", 3,'f', ["/shared/INyllzBj7efsVe54qtFl"]]
-    // ])("pressing [d] in C-Major plays the major7th below the root", async (root_note, octave, keypress, url) => {
-    //     expect(SoundMaker).not.toHaveBeenCalled();
-    //     render(
-    //         <MemoryRouter initialEntries ={url}>
-    //             <Route path="/shared/:sessionId" component={WholeApp} />
-    //             <Route exact path={"/"} component={WholeApp}></Route>;
-    //         </MemoryRouter>
-    //     );
-    //     await waitFor(() => screen.getAllByText("Root"));
-    //     expect(SoundMaker).toHaveBeenCalledTimes(1);
-        
-    //     await userEvent.keyboard(keypress)
-
-    //     //const F_key = new KeyboardEvent('keydown', {key: keypress});
-    //     expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith('B'+(octave-1));
-    //     expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith('B'+(octave-1));
-    // })
 
     test.each([
         ["C", 4, "B3", 'd', 0, ["/"]],//Default scale and octave
@@ -127,7 +102,6 @@ describe("ComputerKeyboard pressing key to", () =>{
         
         await userEvent.keyboard(keypress)
 
-        //const F_key = new KeyboardEvent('keydown', {key: keypress});
         expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith(expected_tone);
         expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith(expected_tone);
     })
