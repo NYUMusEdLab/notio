@@ -123,10 +123,16 @@ class TopMenu extends Component {
               selected={""}
               selectedImg= {< NotationImg />}
               content={
+                <>
                 <Notation
                   initOptions={this.props.state.notation}
-                  handleChange={this.props.handleChangeNotation}
-                />
+                  handleChange={this.props.handleChangeNotation} />
+               <p className="label-wrapper">{"hide staff"}</p>
+               <Toggle
+              onChange={this.props.handleHideStaff}
+              checked={this.props.state.hideCleff}
+            />
+           </>
               }
             />
           </div>

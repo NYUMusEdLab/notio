@@ -73,8 +73,10 @@ class WholeApp extends Component {
   handleSelectClef = (selectedClef) => {
     // console.log(selectedClef + " clef selected");
     const staff_on = selectedClef === "no staff" ? false : true;
-    this.setState({ clef: selectedClef, trebleStaffOn: staff_on });
+    this.setState({ trebleStaffOn: staff_on });
   };
+
+  
 
   /** 
    * 
@@ -285,6 +287,7 @@ class WholeApp extends Component {
           handleChangeScale={this.handleSelectScale}
           handleChangeCustomScale={this.handleChangeCustomScale}
           handleSelectClef={this.handleSelectClef}
+          handleHideStaff={this.toggleStaff}
           handleClickOctave={this.handleClickOctave}
           handleChangeRoot={this.handleChangeRoot}
           handleChangeVideoUrl={this.handleChangeVideoUrl}
