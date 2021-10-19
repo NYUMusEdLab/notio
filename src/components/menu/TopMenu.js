@@ -165,7 +165,7 @@ class TopMenu extends Component {
                 </div>
               }
             />
-            {/* <div class="half-circle"></div> */}
+            {/* <div className="half-circle"></div> */}
           </div>
 
           {/* Scale */}

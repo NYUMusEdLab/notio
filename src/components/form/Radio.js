@@ -13,21 +13,35 @@ const components = {
   'no staff': <NoNoteClef />,
 };
 
-const Radio = ({ nameField, label, isSelected, onRadioChange }) => (
-  <div className="form-radio">
-    <label className={`label-wrapper ${isSelected ? 'active' : ''}`}>
-      {components[label]}
-      <input
-        type="radio"
-        value={label}
-        data-testid={"Radio:"+label}
-        name={nameField}
-        checked={isSelected}
-        onChange={onRadioChange}
-      />
-      <span className="form-radio__label">{label}</span>
-    </label>
-  </div>
-);
+class Radio extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = { 
+            isSelected: props.isSelected,
+            label: props.label,
+            nameField: props.nameField,
+            onRadioChange: props.onRadioChange  
+        }
+    }
+
+    render(){
+        return(
+            <div className="form-radio">
+                <label className={`label-wrapper ${this.state.isSelected ? 'active' : ''}`}>
+                    {components[this.state.label]}
+                    <input
+                    type="radio"
+                    value={this.state.label}
+                    data-testid={"Radio:"+this.state.label}
+                    name={this.state.nameField}
+                    checked={this.state.isSelected}
+                    onChange={this.state.onRadioChange}
+                    />
+                    <span className="form-radio__label">{this.state.label}</span>
+                </label>
+            </div>
+        )
+    }
+}
 
 export default Radio;

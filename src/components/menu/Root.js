@@ -170,29 +170,24 @@ class Root extends Component {
       <div>
         <Form>
           {rootMenu.map((root, index) => (
-            < div >
+            <div key={index}>
               {/* dynamic styles with dynamic colors */}
               <style> {`
-          .${rootLabel}-label-${root.note}:hover,
-          .${rootLabel}-label-${root.note_romance}:hover {
-            background-color: ${rootMenu[0].color};
-            // we should use "root.color" to get color by root
-            // but it isn't asked for the Notio tool
-          }
-
-          .${rootLabel}-input-${root.note}:checked ~ .form-check-label,
-          .${rootLabel}-input-${root.note_romance}:checked ~ .form-check-label {
-            background-color: ${rootMenu[0].color};
-          }
-
-          .${accidentalLabel}-input-${root.note}:not([disabled]) ~ .form-check-label:hover {
-            background-color: ${rootMenu[0].color};
-          }
-
-          .${accidentalLabel}-input-${root.note}:checked ~ .form-check-label {
-            background-color: ${rootMenu[0].color};
-          }
-          `}</style>
+                .${rootLabel}-label-${root.note}:hover,
+                .${rootLabel}-label-${root.note_romance}:hover {
+                background-color: ${rootMenu[0].color};
+                }
+                .${rootLabel}-input-${root.note}:checked ~ .form-check-label,
+                .${rootLabel}-input-${root.note_romance}:checked ~ .form-check-label {
+                background-color: ${rootMenu[0].color};
+                }
+                .${accidentalLabel}-input-${root.note}:not([disabled]) ~ .form-check-label:hover {
+                background-color: ${rootMenu[0].color};
+                }
+                .${accidentalLabel}-input-${root.note}:checked ~ .form-check-label {
+                background-color: ${rootMenu[0].color};
+                }`}
+              </style>
 
               <Form.Row>
                 <Col lg={3}>
