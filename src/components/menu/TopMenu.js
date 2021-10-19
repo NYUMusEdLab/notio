@@ -7,7 +7,7 @@ import SubMenu from "./SubMenu";
 import Notation from "./Notation";
 import VideoTutorial from "./VideoTutorial";
 import Share from "./Share";
-import Settings from "./Settings";
+// import Settings from "./Settings";
 import Root from "./Root";
 import RootMenu from "../../assets/img/RootMenu";
 import Octaves from "./Octaves";
@@ -237,9 +237,9 @@ class TopMenu extends Component {
           </div>
 
           {/* Settings */}
-          <div className="navbar-item menu-settings">
+          {/* <div className="navbar-item menu-settings">
             <Settings title="Settings" label="Settings" />
-          </div>
+          </div> */}
         </div>
         <div className="side-menu">
           <div className="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>

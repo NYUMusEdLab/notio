@@ -2,6 +2,7 @@
 
 import React, { Component } from "react";
 import Radio from "./Radio";
+
 class ListRadio extends Component {
   static defaultProps = {
     setImage: "",
@@ -53,20 +54,20 @@ class ListRadio extends Component {
     );
   };
 
-  createRadio = (option) => (
-    <Radio
-      nameField={this.props.nameField}
-      label={option.name}
-      isSelected={this.state.radios[option.name]}
-      onRadioChange={this.onChange}
-      key={option.name}
-    />
-  );
-
-  createRadios = () => this.props.data.map(this.createRadio);
-
   render() {
-    return this.createRadios();
+    return (
+        <div>
+            {this.props.data.map((option) => {
+                return <Radio
+                    nameField={this.props.nameField}
+                    label={option.name}
+                    isSelected={this.state.radios[option.name]}
+                    onRadioChange={this.onChange}
+                    key={option.name}
+                />
+            })}
+        </div>
+    )
   }
 }
 

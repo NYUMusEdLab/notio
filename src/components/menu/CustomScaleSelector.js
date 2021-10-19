@@ -48,7 +48,7 @@ class CustomScaleSelector extends Component {
     let sortedNumbers = this.state.numbers
     sortedNumbers.sort(this.scaleNumberSort)
     const scaleSteps = sortedNumbers.map(this.scalenumberToStep)
-    alert("A new custom scale was submitted: " + this.state.name + sortedNumbers);
+    // alert("A new custom scale was submitted: " + this.state.name + sortedNumbers);
     this.props.handleChange(this.state.name, scaleSteps, sortedNumbers);
     event.preventDefault();
   }
