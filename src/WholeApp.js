@@ -93,24 +93,30 @@ class WholeApp extends Component {
     this.setState({ notation: selectedNotation });
   };
 
-  handleChangeCustomScale = (customScaleName, customsteps, customNumbers) => {
+  handleChangeCustomScale = (customScaleName, customsteps, customNumbers,firstRun=false) => {
     // console.log(customScaleName + "Custom Scale Created");
-    alert("Custom Scale Created " + customScaleName + customNumbers);
     // this.state.scaleList.Add({name: customScaleName,
     //   steps: customsteps,
     //   numbers: customNumbers,})
-    this.setState({
-      scaleList : [...this.state.scaleList,{name: customScaleName,
-        steps: customsteps,
-        numbers: customNumbers,}],
-      scale: customScaleName,
-      scaleObject: {
-        name: customScaleName,
-        steps: customsteps,
-        numbers: customNumbers,
-      },
-      
-    });
+    if (!this.state.scaleList.map(element => element.name === customScaleName).includes(true)) 
+      {
+      this.setState({
+        scaleList : [...this.state.scaleList,{name: customScaleName,
+          steps: customsteps,
+          numbers: customNumbers,}],
+        scale: customScaleName,
+        scaleObject: {
+          name: customScaleName,
+          steps: customsteps,
+          numbers: customNumbers,
+        },
+        
+      });
+      alert("Custom Scale Created " + customScaleName + customNumbers);
+  }
+  else if (!firstRun){
+    alert("A scale of that name already exists: " + customScaleName + customNumbers);
+  }
 
   };
 
@@ -194,7 +200,7 @@ class WholeApp extends Component {
     ref.get().then((doc) => {
       if (doc.exists) {
         const result = doc.data();
-        this.handleChangeCustomScale(result.scaleObject.name, result.scaleObject.steps, result.scaleObject.numbers)
+        this.handleChangeCustomScale(result.scaleObject.name, result.scaleObject.steps, result.scaleObject.numbers, true)//true denotes that this is a firstRun
         // console.log("********* result", result);
         this.setState({
           octave: result.octave,
