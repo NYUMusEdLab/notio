@@ -112,7 +112,10 @@ class WholeApp extends Component {
         },
         
       });
-      alert("Custom Scale Created " + customScaleName + customNumbers);
+
+       if (!firstRun){
+          alert("Custom Scale Created " + customScaleName + customNumbers);
+        }
   }
   else if (!firstRun){
     alert("A scale of that name already exists: " + customScaleName + customNumbers);
