@@ -194,6 +194,7 @@ class WholeApp extends Component {
     ref.get().then((doc) => {
       if (doc.exists) {
         const result = doc.data();
+        this.handleChangeCustomScale(result.scaleObject.name, result.scaleObject.steps, result.scaleObject.numbers)
         // console.log("********* result", result);
         this.setState({
           octave: result.octave,
