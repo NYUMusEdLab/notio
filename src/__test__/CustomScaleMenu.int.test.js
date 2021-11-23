@@ -32,7 +32,7 @@ describe("When displaying the customScale creater menu", () => {
         // expect(Customscale.length).toBe(1)
     })
 
-    test("that is displays a custom scale menu popup when clicked", () => {
+    test("that it displays a custom scale menu popup when clicked", () => {
         render(
             <MemoryRouter>
                 <Route exact path="/" component={WholeApp}></Route>;
