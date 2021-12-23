@@ -77,12 +77,12 @@ class VideoTutorial extends Component {
           content={
             <div className="tabs-wrapper">
               <Tabs defaultActiveKey="playlist" activeKey={activeTab} onSelect={this.handleSelect} id="uncontrolled-tab-example">
-                <Tab eventKey="playlist" title="Playlist">
+              <Tab eventKey="playlist" title="Playlist">
                   <ReactPlayer
                     ref={this.ref}
                     className="react-player"
                     playing={playing}
-                    width="100%"
+                    width="200%"
                     height="100%"
                     url={this.props.videoUrl}
                     onReady={this.playerOnReady}

@@ -24,7 +24,7 @@ class Popup extends Component {
       Draggable.create(".notio-popup", {
         type: "x,y",
         edgeResistance: 0.65,
-        bounds: ".Piano",
+        //bounds: ".Piano", // Sets the bounds of the Popup to only be inside the KeyBoard Component
         inertia: true,
         trigger: ".nav-tabs"
       });

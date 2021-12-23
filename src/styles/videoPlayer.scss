@@ -12,7 +12,8 @@
   .tabs-wrapper {
     position: absolute;
     top     : 0.5vw;
-    width   : 97%;
+    width   : auto;
+    height  : auto;
 
     .nav-tabs {
 
@@ -43,6 +44,8 @@
   }
 
   .react-player {
+    padding-top        : 56,25%;
+    position           : relative;
     background-image   : url(./img/loader.gif);
     background-repeat  : no-repeat;
     background-position: center center;
