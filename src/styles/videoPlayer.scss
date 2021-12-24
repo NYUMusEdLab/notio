@@ -12,8 +12,8 @@
   .tabs-wrapper {
     position: absolute;
     top     : 0.5vw;
-    width   : auto;
-    height  : auto;
+    width   : 100%;
+    height  : 100%;
 
     .nav-tabs {
 
@@ -23,10 +23,7 @@
         font-size: 0.8vw;
         padding  : 0.5vw 0.3vw;
       }
-
-
     }
-
 
     .form-control {
       font-size: 0.7vw;

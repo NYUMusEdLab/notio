@@ -82,7 +82,7 @@ class VideoTutorial extends Component {
                     ref={this.ref}
                     className="react-player"
                     playing={playing}
-                    width="200%"
+                    width="100%"
                     height="100%"
                     url={this.props.videoUrl}
                     onReady={this.playerOnReady}

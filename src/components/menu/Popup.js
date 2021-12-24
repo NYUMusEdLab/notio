@@ -29,21 +29,6 @@ class Popup extends Component {
         trigger: ".nav-tabs"
       });
     }
-
-    // $('.notio-popup').each(function() {
-    //   gsap.set('.resize-handle', { top: drag.width(), left: drag.height() });
-    // }
-    // gsap.set(".resize-handle", { top: $('.notio-popup').width(), left: $('.notio-popup').height() });
-
-    // Draggable.create(".resize-handle", {
-    //   type:"bottom,right",
-    //   onPress: function(e) {
-    //     e.stopPropagation(); // cancel drag
-    //   },
-    //   onDrag: function(e) {
-    //     gsap.set(this.target.parentNode, { width: this.x, height: this.y });
-    //   }
-    // });
   }
 
   handleShow = () => {
