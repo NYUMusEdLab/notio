@@ -21,6 +21,8 @@ import NotationImg from "../../assets/img/Notation";
 import clefs from "../../data/clefs";
 // import CustomScaleSelector from "./CustomScaleSelector";
 import { DropdownCustomScaleMenu } from "./DropdownCustomScaleMenu";
+import VideoButton from "./VideoButton";
+import ShareButton from "./ShareButton";
 
 const sounds = [{ name: "piano" }, { name: "xylo" }];
 
@@ -215,22 +217,28 @@ class TopMenu extends Component {
 
           {/* Video */}
           <div className="navbar-item menu-video">
-            <VideoTutorial
-              active = {this.props.videoActive}
-              title="Video Player"
-              label="video"
+            <VideoButton 
+            title="Video Player"
+            label="video"
+            handleChangeVideoVisibility = {this.props.handleChangeVideoVisibility}
+            active = {this.props.videoActive}
+            handleChangeVideoUrl={this.props.handleChangeVideoUrl}
+            videoUrl={this.props.state.videoUrl}
+            resetVideoUrl={this.props.resetVideoUrl}
+            />
+            
+            {/* <VideoTutorial
               handleChangeVideoUrl={this.props.handleChangeVideoUrl}
-              handleChangeVideoVisibility = {this.props.handleChangeVideoVisibility}
               videoUrl={this.props.state.videoUrl}
               resetVideoUrl={this.props.resetVideoUrl}
-            />
+            /> */}
           </div>
 
           {/* Share */}
           <div className="navbar-item menu-share">
-            <Share
+            <ShareButton
               title="Share this setup"
-              label="Share"
+              label="share"
               saveSessionToDB={this.props.saveSessionToDB}
               sessionID={this.props.sessionID}
             />

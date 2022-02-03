@@ -58,7 +58,7 @@ class Popup extends Component {
     // console.log("this.props.hasMinize", this.props.hasMinize);
     return (
       <div>
-        <div className="button">
+        {/* <div className="button">
           <div
             className="circledButton"
             onClick={(e) => {
@@ -72,7 +72,7 @@ class Popup extends Component {
             <span className="title" title={this.props.title}>{this.props.title}</span>
           </div>
 
-        </div>
+        </div> */}
 
         {this.props.hasBG ? (
           <div className={`notio-popup--bg ${this.state.show ? "show" : ""}`}></div>

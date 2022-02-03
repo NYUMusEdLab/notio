@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Form, Button } from 'react-bootstrap';
-import VideoSVG from "../../assets/img/Video";
+// import VideoSVG from "../../assets/img/Video";
 import Popup from "./Popup";
+import Overlay from "./Overlay"
 
 
-const components = {
-  video: <VideoSVG />,
-};
+// const components = {
+//   video: <VideoSVG />,
+// };
 
 
 class VideoTutorial extends Component {
@@ -63,14 +64,14 @@ class VideoTutorial extends Component {
     const { playing, activeTab } = this.state;
 
     return (
-      <div>
+      <Overlay>
         <Popup
           active = {this.props.active}
 
           className="popup-video"
-          title={this.props.title}
+          // title={this.props.title}
           draggable={true}
-          picto={components[this.props.label]}
+          // picto={components[this.props.label]}
           onClickMenuHandler={this.handlePlayPause}
           onClickCloseHandler={this.handlePlayPause}
           hasMinize={true}
@@ -109,7 +110,7 @@ class VideoTutorial extends Component {
             </div>
           }
         />
-      </div>
+      </Overlay>
     );
   }
 }
