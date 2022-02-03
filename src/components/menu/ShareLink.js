@@ -33,7 +33,7 @@ const ShareLink = (props) => {
       </div>
     );
   } else {
-    return "<div>Could not generate url</div>";
+    return <div>Could not generate url</div>;
   }
 };
 
