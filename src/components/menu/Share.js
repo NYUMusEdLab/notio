@@ -17,15 +17,24 @@ class Share extends Component {
   render() {
     // const { url, playing } = this.state;
     return (
-      <div>
+      <React.Fragment>
         <Popup
+          title={this.props.title}
+          className="popup-menu popup-share"
+          draggable={false}
+          picto={<ShareSVG />}
+          onClickMenuHandler={this.props.saveSessionToDB}
+          hasBG={true}
+          content={<ShareLink sessionID={this.props.sessionID} />}
+        />
+        {/* <Popup
           className="popup-menu popup-share"
           draggable={false}
           onClickMenuHandler={this.props.saveSessionToDB}
           hasBG={true}
           content={<ShareLink sessionID={this.props.sessionID} />}
-        />
-      </div>
+        /> */}
+      </React.Fragment>
     );
   }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactPlayer from 'react-player';
 import VideoSVG from "../../assets/img/Video";
 import Overlay from './Overlay';
 import VideoTutorial from './VideoTutorial';
@@ -42,13 +43,18 @@ export default class VideoButton extends Component {
             </span>
           </div>
         </div>
-        {this.state.show && <Overlay 
-              content={<VideoTutorial
-              handleChangeVideoUrl={this.props.handleChangeVideoUrl}
-              videoUrl={this.props.state.videoUrl}
-              resetVideoUrl={this.props.resetVideoUrl}
-                />}  
-        /> }
+        {this.state.show && <Overlay>
+          <ReactPlayer
+                    ref={this.ref}
+                    className="react-player"
+                    playing={true}
+                    width="100%"
+                    height="100%"
+                    url={this.props.videoUrl}
+                    // onReady={this.playerOnReady}
+                    /> 
+                    </Overlay>}
+        
       </React.Fragment>
     );
   }

@@ -1,33 +1,32 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import ShareSVG from "../../assets/img/Share";
-import Overlay from './Overlay';
-import Share from './Share';
-import VideoTutorial from './VideoTutorial';
+import Overlay from "./Overlay";
+import Share from "./Share";
+import VideoTutorial from "./VideoTutorial";
 const components = {
-    share: <ShareSVG />,
-  };
-
+  share: <ShareSVG />,
+};
 
 export default class ShareButton extends Component {
-    static defaultProps = {
-        onClickMenuHandler: () => { },
-        onClickCloseHandler: () => { },
-        hasBG: false,
-        hasMinize: false,
-        draggable: false,
-      };
-      state = {
-        minimized: false,
-        show: this.props.active ? true : false,
-      };
+  static defaultProps = {
+    onClickMenuHandler: () => {},
+    onClickCloseHandler: () => {},
+    hasBG: false,
+    hasMinize: false,
+    draggable: false,
+  };
+  state = {
+    minimized: false,
+    show: this.props.active ? true : false,
+  };
 
-    handleShow = () => {
-        this.setState({ show: !this.state.show });
-      };
+  handleShow = () => {
+    this.setState({ show: !this.state.show });
+  };
 
   render() {
     return (
-      <React.Fragment>
+      <div>
         <div className="button">
           <div
             className="circledButton"
@@ -43,13 +42,12 @@ export default class ShareButton extends Component {
             </span>
           </div>
         </div>
-        {this.state.show && <Overlay 
-                                    content={<Share
-                                    saveSessionToDB={this.props.saveSessionToDB}
-                                    sessionID={this.props.sessionID}
-                                        />}  
-        /> }
-      </React.Fragment>
+        {this.state.show && (
+          <Overlay>
+            <Share saveSessionToDB={this.props.saveSessionToDB} sessionID={this.props.sessionID} />
+          </Overlay>
+        )}
+      </div>
     );
   }
 }

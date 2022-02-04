@@ -32,8 +32,19 @@ const ShareLink = (props) => {
         </span>
       </div>
     );
-  } else {
-    return <div>Could not generate url</div>;
+  }
+  else {
+    return (<div className="share-link">
+    <h2>Share</h2>
+    <p>Share your current setup:</p>
+    <a target="_blank" rel="noopener noreferrer">
+    Could not generate url
+    </a>
+    <span className={`message ${hasCopied ? "show" : ""}`}>
+      The link has been copied
+    </span>
+  </div>)
+    // return <div>Could not generate url</div>;
   }
 };
 
