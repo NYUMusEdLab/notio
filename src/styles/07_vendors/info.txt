@@ -1,0 +1,1 @@
+the vendors folder contains all 3.rd party css

@@ -1,0 +1,1 @@
+the pages folder contains styles for specific pages of the project
