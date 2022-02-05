@@ -3,6 +3,8 @@ import ShareSVG from "../../assets/img/Share";
 import Overlay from "./Overlay";
 import Share from "./Share";
 import VideoTutorial from "./VideoTutorial";
+import { Tabs, Tab, Form, Button } from "react-bootstrap";
+
 const components = {
   share: <ShareSVG />,
 };
@@ -18,12 +20,31 @@ export default class ShareButton extends Component {
   state = {
     minimized: false,
     show: this.props.active ? true : false,
+    activeTab: "share",
+
   };
 
   handleShow = () => {
     this.setState({ show: !this.state.show });
   };
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    // set video url
+    this.props.handleChangeVideoUrl(event.target.elements[0].value);
+  
+    this.setState({
+      activeTab: "share"
+    });
+  };
+  
+  handleSelect = (key) => {
+    // A bit dummy but need to control tabs after submit (cf handleSumbit())
+    if (key === 'share')
+      this.setState({ activeTab: "share" })
+    if (key === 'change_video')
+      this.setState({ activeTab: "change_video" })
+  }
   render() {
     return (
       <div>
@@ -44,7 +65,20 @@ export default class ShareButton extends Component {
         </div>
         {this.state.show && (
           <Overlay>
-            <Share saveSessionToDB={this.props.saveSessionToDB} sessionID={this.props.sessionID} />
+            <div className="tabs-wrapper">
+              <Tabs
+                defaultActiveKey="share"
+                activeKey={this.state.activeTab}
+                onSelect={this.handleSelect}
+                id="uncontrolled-tab-example">
+                <Tab eventKey="share" title="Share">
+                  <Share
+                    saveSessionToDB={this.props.saveSessionToDB}
+                    sessionID={this.props.sessionID}
+                  />
+                </Tab>
+              </Tabs>
+            </div>
           </Overlay>
         )}
       </div>
