@@ -64,7 +64,7 @@ class VideoTutorial extends Component {
     const { playing, activeTab } = this.state;
 
     return (
-      <Overlay>
+      <React.Fragment>
         <Popup
           active = {this.props.active}
 
@@ -110,7 +110,7 @@ class VideoTutorial extends Component {
             </div>
           }
         />
-      </Overlay>
+      </React.Fragment>
     );
   }
 }

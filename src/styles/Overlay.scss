@@ -10,44 +10,96 @@
 .overlay {
     resize: both !important;
     overflow: hidden;
-
-    flex: 1;
+    flex: 1 1;
     display: flex;
-
-    justify-content: center;
-    align-items: stretch;
     background-color: rgba(118, 121, 121, 0.9);
-    position        : absolute;
-    transform : scale(80%,80%);
+    position: absolute;
+    transform: scale(80%, 80%);
     padding: 50px;
-    width           : 100vw;
-    z-index         : 30;
-    height          : 100vh;
-    left            : 0;
-    visibility      : visible;
-    top             : 0;
+    width: 100vw;
+    z-index: 30;
+    height: 100vh;
+    left: 0;
+    visibility: visible;
+    top: 0;
+    flex-direction: row;
+
   
     &.show {
       visibility: visible;
     }
     .content{
         // resize:both;
-        flex:1;
-        flex-basis:auto ;
+        flex: 1 1;
+        flex-basis: auto;
         align-self: stretch;
         height: 100%;
         width: 100%;
 
     }
+    .tabs-wrapper{
+        display: flex;
+        height: 100%;
+        width: 100%;
+        flex-direction: column;
+    }
+    .tab-content{
+        display: flex;
+        flex: 1 1;
+        z-index: 300;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .tab-content>.active {
+        display: block;
+        flex: 1;
+        height: 100%;
+    }
     
-}
+    nav {
+        // display: -ms-flexbox;
+        display: flex;
+        // -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+    .nav-link.active {
+        color: #495057;
+        background-color: #fff;
+        border-color: #dee2e6 #dee2e6 #fff;
+    }
+    .nav-tabs .nav-link {
+        margin-bottom: -1px;
+        border: 1px solid transparent;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 0.5rem 1rem;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+        background-color: transparent;
+    }
+
+
 .react-player{
     flex:1;
 }
 iframe {
     flex:1;
 }
-  
+}
   .notio-popup {
     flex: 1;
     visibility      : hidden;
@@ -135,4 +187,8 @@ iframe {
       right       : 0;
       visibility: visible;
     }
+
+
+
+    
   }
