@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Keyboard from "./components/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
 import LoadingScreen from "./components/LoadingScreen";
-import "./style.scss";
+import "./styles/style.scss";
 import db from "./Firebase";
 import { notio_tutorial } from "./data/config";
 import scales from "./data/scalesObj";
