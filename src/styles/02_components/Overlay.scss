@@ -3,6 +3,8 @@
     display: flex;
     background-color: rgba(248, 244, 244, 1.0);
     z-index         : 30;
+    position:absolute;
+
 
 
 }
@@ -12,18 +14,28 @@
     overflow: hidden;
     flex: 1 1;
     display: flex;
-    background-color: rgba(118, 121, 121, 0.9);
+    background-color: rgba(225, 236, 236, 1);
     position: absolute;
     transform: scale(80%, 80%);
     padding: 50px;
-    width: 100vw;
+    width: 33.2vw;
+    height: 23.6vw;
     z-index: 30;
-    height: 100vh;
     left: 0;
     visibility: visible;
     top: 0;
     flex-direction: row;
+    border-radius: 10px;
+    transform    : translate(50vw, 12vh);
 
+    
+    &:hover{
+      border-radius: 20px;
+    }
+    &:active{
+      border-radius: 100vw;
+      transform    : translate(var(--x), var(--y));
+    }
   
     &.show {
       visibility: visible;
