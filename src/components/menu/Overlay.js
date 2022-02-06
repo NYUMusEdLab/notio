@@ -23,7 +23,7 @@ export default class Overlay extends Component {
   
   
     render() {
-      const { classname } = this.state;
+      // const { classname } = this.state;
       // return ReactDOM.createPortal(<Draggable handle={'.drag'}><Button onClick={this.handleClick} className={this.state.classname} title={this.state.classname}>{this.state.classname+this.state.draggable}</Button></Draggable>, document.getElementById('overlay_root'))
 
       return ReactDOM.createPortal(<Draggable handle={'.drag'} >

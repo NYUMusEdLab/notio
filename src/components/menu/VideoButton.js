@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import ReactPlayer from 'react-player';
+// import ReactPlayer from 'react-player';
 import VideoSVG from "../../assets/img/Video";
-import Overlay from './Overlay';
-import VideoTutorial from './VideoTutorial';
-import { Tabs, Tab, Form, Button } from 'react-bootstrap';
+// import Overlay from './Overlay';
+// import VideoTutorial from './VideoTutorial';
+// import { Tabs, Tab, Form, Button } from 'react-bootstrap';
 import VideoTutorial2 from './VideoTutorial2';
 
 const components = {

@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import ShareSVG from "../../assets/img/Share";
 import Overlay from "./Overlay";
 import Share from "./Share";
-import VideoTutorial from "./VideoTutorial";
-import { Tabs, Tab, Form, Button } from "react-bootstrap";
+// import VideoTutorial from "./VideoTutorial";
+// import { Tabs, Tab, Form, Button } from "react-bootstrap";
+import { Tabs, Tab } from "react-bootstrap";
 
 const components = {
   share: <ShareSVG />,

@@ -3,7 +3,7 @@ import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Form, Button } from 'react-bootstrap';
 // import VideoSVG from "../../assets/img/Video";
 import Popup from "./Popup";
-import Overlay from "./Overlay"
+// import Overlay from "./Overlay"
 
 
 // const components = {

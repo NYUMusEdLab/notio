@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Form, Button } from "react-bootstrap";
 // import VideoSVG from "../../assets/img/Video";
-import Popup from "./Popup";
+// import Popup from "./Popup";
 import Overlay from "./Overlay";
 
 // const components = {
@@ -55,7 +55,7 @@ class VideoTutorial extends Component {
   };
 
   render() {
-    const { playing, activeTab } = this.state;
+    // const { playing, activeTab } = this.state;
 
     return (
       <React.Fragment>

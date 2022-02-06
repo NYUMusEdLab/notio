@@ -37,9 +37,9 @@ const ShareLink = (props) => {
     return (<div className="share-link">
     <h2>Share</h2>
     <p>Share your current setup:</p>
-    <a target="_blank" rel="noopener noreferrer">
+    <p>
     Could not generate url
-    </a>
+    </p>
     <span className={`message ${hasCopied ? "show" : ""}`}>
       The link has been copied
     </span>
