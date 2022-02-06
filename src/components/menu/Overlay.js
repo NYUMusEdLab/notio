@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Draggable from 'react-draggable'
+// import Draggable from 'react-draggable'
 export default class Overlay extends Component {
   
     constructor(props) {
