@@ -1,5 +1,4 @@
 .overlay_root{
-    // resize:both;
     display: flex;
     background-color: rgba(248, 244, 244, 1.0);
     z-index         : 30;
@@ -9,26 +8,48 @@
 
 }
 
+
 .overlay {
-    resize: both;
+    // resize: both;
     overflow: hidden;
-    // dragging: $--justdraggme;
     flex: 1 1;
-    display: flex;
     background-color: rgb(0, 0, 0);
     position: absolute;
-    transform: scale(80%, 80%);
-    padding: 50px;
-    width: 33.2vw;
-    height: 23.6vw;
+    transform: scale(96%,96%);
+    padding: 5px;
+    width: 100%;
+    height: 100%;
     z-index: 30;
     left: 0;
     visibility: visible;
     top: 0;
     flex-direction: row;
     border-radius: 10px;
+    
     // transform    : translate(calc(50% * var(--x)), calc(50% * var(--y)));
     
+     &.nodrag{
+      display: flex;
+      resize: both;
+      width: 33.2vw;
+      height: 23.6vw;
+      border-color: transparent;
+      background-color: rgba(255, 255, 255, 0.1);
+      &:hover{
+      background-color: rgba(228, 51, 51, 0.6);
+      }
+    }
+
+    &.drag{
+      resize: none;
+      width: 33.2vw;
+      height: 23.6vw;
+      &:hover{
+      cursor: move;
+      background-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+
     &:hover{
       border-radius: 30px;
     }
@@ -40,14 +61,16 @@
     &.show {
       visibility: visible;
     }
+
+
+
+    
     .content{
-        // resize:both;
         flex: 1 1;
         flex-basis: auto;
         align-self: stretch;
         height: 100%;
         width: 100%;
-        cursor: move;
 
     }
     .tabs-wrapper{

@@ -6,13 +6,13 @@ import Draggable from "react-draggable"
 export default class Overlay extends Component {
   
   state = {
-    classname : 'overlay',
-    draggable : true
+    classname : 'overlay nodrag',
+    draggable : false
   }
   
     handleClick = (event) => {
       const draggable = !this.state.draggable
-      const className = draggable ? 'overlay drag' : 'overlay'
+      const className = draggable ? 'overlay drag' : 'overlay nodrag'
   
       this.setState({draggable : draggable})
       this.setState({ classname: className})
