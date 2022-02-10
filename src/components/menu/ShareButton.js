@@ -5,6 +5,7 @@ import Share from "./Share";
 // import VideoTutorial from "./VideoTutorial";
 // import { Tabs, Tab, Form, Button } from "react-bootstrap";
 import { Tabs, Tab } from "react-bootstrap";
+import Share2 from "./Share2";
 
 const components = {
   share: <ShareSVG />,
@@ -39,16 +40,16 @@ export default class ShareButton extends Component {
     });
   };
   
-  handleSelect = (key) => {
-    // A bit dummy but need to control tabs after submit (cf handleSumbit())
-    if (key === 'share')
-      this.setState({ activeTab: "share" })
-    if (key === 'change_video')
-      this.setState({ activeTab: "change_video" })
-  }
+  // handleSelect = (key) => {
+  //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
+  //   if (key === 'share')
+  //     this.setState({ activeTab: "share" })
+  //   if (key === 'change_video')
+  //     this.setState({ activeTab: "change_video" })
+  // }
   render() {
     return (
-      <div>
+      <React.Fragment>
         <div className="button">
           <div
             className="circledButton"
@@ -65,24 +66,26 @@ export default class ShareButton extends Component {
           </div>
         </div>
         {this.state.show && (
-          <Overlay>
-            <div className="tabs-wrapper">
-              <Tabs
-                defaultActiveKey="share"
-                activeKey={this.state.activeTab}
-                onSelect={this.handleSelect}
-                id="uncontrolled-tab-example">
-                <Tab eventKey="share" title="Share">
-                  <Share
-                    saveSessionToDB={this.props.saveSessionToDB}
-                    sessionID={this.props.sessionID}
-                  />
-                </Tab>
-              </Tabs>
-            </div>
-          </Overlay>
+          <Share2 sessionID={this.props.sessionID}></Share2>
+
+          // <Overlay>
+          //   <div className="tabs-wrapper">
+          //     <Tabs
+          //       defaultActiveKey="share"
+          //       activeKey={this.state.activeTab}
+          //       onSelect={this.handleSelect}
+          //       id="uncontrolled-tab-example">
+          //       <Tab eventKey="share" title="Share">
+          //         <Share
+          //           saveSessionToDB={this.props.saveSessionToDB}
+          //           sessionID={this.props.sessionID}
+          //         />
+          //       </Tab>
+          //     </Tabs>
+          //   </div>
+          // </Overlay>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }
