@@ -82,27 +82,42 @@ class TopMenu extends Component {
     // console.log("topmenu scales", scales);
     return (
       <div>
-        <div className="navbar ">
+        <div className="navbar "
+            data-tip="custom" data-for="keyboardTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "keyboard")}
+            // The tooltip text for the keyboard is placed at the bottom of this div, due to how ReactTooltip works!
+        >
           {/* Toggle Piano */}
-          <div className="navbar-item toggle">
+          <div className="navbar-item toggle"
+            data-tip="custom" data-for="showKeyboardTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "showKeyboard")}
+          >
             <Toggle
               title="Show keyboard"
               onChange={this.props.togglePiano}
               checked={this.props.state.pianoOn}
             />
           </div>
+          <ReactTooltip id="showKeyboardTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
+                <p>Show Keyboard Tooltip</p>
+          </ReactTooltip>
 
           {/* Toggle Extended */}
-          <div className="navbar-item toggle">
+          <div className="navbar-item toggle"
+            data-tip="custom" data-for="extendedKeyboardTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "extendedKeyboard")}
+          >
             <Toggle
               title="Extended Keyboard"
               onChange={this.props.toggleExtendedKeyboard}
               checked={this.props.state.extendedKeyboard}
             />
           </div>
+          <ReactTooltip id="extendedKeyboardTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
+                <p>This is extended keyboard tooltip!</p>
+          </ReactTooltip>
 
           {/* Sounds */}
-          <div className="navbar-item menu-scale">
+          <div className="navbar-item menu-scale"
+            data-tip="custom" data-for="soundTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "sound")}
+          >
             <SubMenu
               title="Sound"
               selected={this.state.titleSound}
@@ -117,9 +132,14 @@ class TopMenu extends Component {
               }
             />
           </div>
+          <ReactTooltip id="soundTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
+                <p>This is Tooltip for sound</p>
+          </ReactTooltip>
 
           {/* Notation */}
-          <div className="navbar-item menu-notation">
+          <div className="navbar-item menu-notation"
+            data-tip="custom" data-for="notationTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "notation")}
+          >
             <SubMenu
               title="Notation"
               selected={""}
@@ -138,6 +158,9 @@ class TopMenu extends Component {
               }
             />
           </div>
+          <ReactTooltip id="notationTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
+                <p>This is Tooltip for notation</p>
+          </ReactTooltip>
 
           {/* CustomScaleSelector */}
           {/* <div className="navbar-item menu-custom-scale">
@@ -155,7 +178,9 @@ class TopMenu extends Component {
           </div> */}
               
           {/* Root */}
-          <div className="navbar-item menu-root">
+          <div className="navbar-item menu-root"
+            data-tip="custom" data-for="rootTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "root")}
+          >
             <SubMenu
               title="Root"
               selected={this.state.titleRoot}
@@ -175,9 +200,14 @@ class TopMenu extends Component {
             />
             {/* <div className="half-circle"></div> */}
           </div>
+          <ReactTooltip id="rootTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
+                <p>This is Tooltip content 2</p>
+          </ReactTooltip>
 
           {/* Scale */}
-          <div className="navbar-item menu-scale">
+          <div className="navbar-item menu-scale"
+            data-tip="custom" data-for="scaleTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "scale")}
+          >
             <SubMenu
               title="Scale"
               selected={this.state.titleNotation}
@@ -200,9 +230,14 @@ class TopMenu extends Component {
               }
             />
           </div>
+          <ReactTooltip id="scaleTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
+                <p>This is scale tooltip</p>
+          </ReactTooltip>
 
           {/* Clef */}
-          <div className="navbar-item menu-clef">
+          <div className="navbar-item menu-clef"
+            data-tip="custom" data-for="clefsTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "clefs")}
+          >
             <SubMenu
               title="Clefs"
               selected={this.state.clefTitle}
@@ -220,9 +255,14 @@ class TopMenu extends Component {
               }
             />
           </div>
+          <ReactTooltip id="clefsTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
+                <p>This is Tooltip content for clefs</p>
+          </ReactTooltip>
 
           {/* Video */}
-          <div className="navbar-item menu-video">
+          <div className="navbar-item menu-video"
+            data-tip="custom" data-for="videoPlayerTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "videoPlayer")}
+          >
             <VideoTutorial
               active = {this.props.videoActive}
               title="Video Player"
@@ -233,9 +273,14 @@ class TopMenu extends Component {
               resetVideoUrl={this.props.resetVideoUrl}
             />
           </div>
+          <ReactTooltip id="videoPlayerTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
+                <p>This is Tooltip content for video player</p>
+          </ReactTooltip>
 
           {/* Share */}
-          <div className="navbar-item menu-share">
+          <div className="navbar-item menu-share"
+            data-tip="custom" data-for="shareThisSetupTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "shareThisSetup")}
+          >
             <Share
               title="Share this setup"
               label="Share"
@@ -243,6 +288,9 @@ class TopMenu extends Component {
               sessionID={this.props.sessionID}
             />
           </div>
+          <ReactTooltip id="shareThisSetupTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
+                <p>This is Tooltip content for sharing the current setup</p>
+          </ReactTooltip>
 
           {/* Settings */}
           {/* <div className="navbar-item menu-settings">
@@ -252,11 +300,20 @@ class TopMenu extends Component {
         <div className="side-menu">
           <div className="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
           <div className="Area2 area">
-              <img src={require('../../img/question_mark.png')} alt="help" id="help" data-tip="Some Help text"/>
+              <img src={require('../../img/question_mark.png')} alt="help"
+              data-tip="custom" data-for="helpTooltip" data-event="null" ref={(ref) => this.props.setRef(ref, "help")}
+              onClick={() => this.props.handleChangeTooltip()}
+              />
         </div>
-          <div className="Area3 area"><img src={require('../../img/home.png')} alt="home"/></div>
+        <ReactTooltip id="helpTooltip" place="left" effect="solid" scrollHide={false} resizeHide={false} type="success">
+            <p>This is Tooltip content for help text</p>
+        </ReactTooltip>
+
+        <div className="Area3 area"><img src={require('../../img/home.png')} alt="home"/></div>
         </div>
-        <ReactTooltip place="bottom" effect="solid" scrollHide={false} resizeHide={false}/>
+        <ReactTooltip id="keyboardTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
+                <p>This is Tooltip content for the whole keyboard</p>
+          </ReactTooltip>
       </div>
     );
   }
