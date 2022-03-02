@@ -32,7 +32,8 @@ class WholeApp extends Component {
     loading: true,
     // videoUrl: 'https://www.youtube.com/watch?v=g4mHPeMGTJM', // silence test video for coding
     videoUrl: notio_tutorial,
-    videoActive : false
+    videoActive : false,
+    showTooltip : true,
   };
 
   constructor(props) {
@@ -43,6 +44,7 @@ class WholeApp extends Component {
     this.handleSelectScale = this.handleSelectScale.bind(this);
     this.handleSelectClef = this.handleSelectClef.bind(this);
     this.handleChangeVideoVisibility = this.handleChangeVideoVisibility.bind(this);
+    this.handleChangeTooltip = this.handleChangeTooltip.bind(this);
   }
 
   handleChangeSound = (sound) => {};
@@ -148,7 +150,15 @@ class WholeApp extends Component {
   handleChangeVideoVisibility = () => {
     const isActive = !this.state.videoActive
     this.setState({ 
-      videoActive : isActive });  };
+      videoActive : isActive });  
+  };
+
+  handleChangeTooltip = () => {
+      const tooltip = !this.state.showTooltip;
+      this.setState({
+        showTooltip : tooltip
+      })
+  }
 
   // TODO: make generic handleSelect
   // handleSelect = (selectedElement, selectedValue) => {
@@ -303,6 +313,7 @@ class WholeApp extends Component {
           handleChangeVideoUrl={this.handleChangeVideoUrl}
           handleChangeVideoVisibility = {this.handleChangeVideoVisibility}
           handleChangeSound={this.handleChangeSound}
+          handleChangeTooltip={this.handleChangeTooltip}
           resetVideoUrl={this.resetVideoUrl}
           videoActive = {this.state.videoActive}
           saveSessionToDB={this.saveSessionToDB}

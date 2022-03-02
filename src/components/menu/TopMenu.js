@@ -1,6 +1,7 @@
 /* eslint-disable no-fallthrough */
 
 import React, { Component } from "react";
+import ReactTooltip from "react-tooltip";
 import _ from "lodash";
 import Toggle from "./Toggle";
 import SubMenu from "./SubMenu";
@@ -21,6 +22,7 @@ import NotationImg from "../../assets/img/Notation";
 import clefs from "../../data/clefs";
 // import CustomScaleSelector from "./CustomScaleSelector";
 import { DropdownCustomScaleMenu } from "./DropdownCustomScaleMenu";
+
 
 const sounds = [{ name: "piano" }, { name: "xylo" }];
 
@@ -249,9 +251,12 @@ class TopMenu extends Component {
         </div>
         <div className="side-menu">
           <div className="area1 area"><img src={require('../../img/info.png')} alt="about" /></div>
-          <div className="Area2 area"><img src={require('../../img/question_mark.png')} alt="help" /></div>
-          <div className="Area3 area"><img src={require('../../img/home.png')} alt="home" /></div>
+          <div className="Area2 area">
+              <img src={require('../../img/question_mark.png')} alt="help" id="help" data-tip="Some Help text"/>
         </div>
+          <div className="Area3 area"><img src={require('../../img/home.png')} alt="home"/></div>
+        </div>
+        <ReactTooltip place="bottom" effect="solid" scrollHide={false} resizeHide={false}/>
       </div>
     );
   }

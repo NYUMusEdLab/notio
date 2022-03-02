@@ -21,6 +21,7 @@
     "react-dom": "^16.9.0",
     "react-player": "^2.9.0",
     "react-router-dom": "^5.2.0",
+    "react-tooltip": "^4.2.21",
     "reactjs-popup": "^2.0.4",
     "tone": "^14.7.77",
     "vexflow": "^3.0.9",
