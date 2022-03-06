@@ -50,10 +50,14 @@ class WholeApp extends Component {
   handleClickOctave = (action) => {
     switch (action) {
       case "minus":
-        this.setState({ octave: this.state.octave - 1 });
+        if(this.state.octave > 1){
+            this.setState({ octave: this.state.octave - 1 });
+        }
         break;
       case "plus":
-        this.setState({ octave: this.state.octave + 1 });
+        if(this.state.octave < 8){
+            this.setState({ octave: this.state.octave + 1 });
+        }
         break;
       default:
         this.setState({ octave: 3 });
