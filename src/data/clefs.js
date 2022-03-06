@@ -17,7 +17,7 @@ const clefs = [
     svg: 'TenorClef',
   },
   {
-      name: "no staff",
+      name: "hide notes",
       svg: "NoNoteClef",
   }
 ];

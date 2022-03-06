@@ -96,8 +96,13 @@ class TopMenu extends Component {
               checked={this.props.state.pianoOn}
             />
           </div>
-          <ReactTooltip id="showKeyboardTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
-                <p>Show Keyboard Tooltip</p>
+          <ReactTooltip id="showKeyboardTooltip" place="right" effect="solid" scrollHide={false} resizeHide={false}
+            overridePosition={() => { return {top:120, left:-10}; }} className="tooltip-topmenu"
+          >
+                <p>
+                    Show Keyboard<br/>
+                    Toggles the keyboard on/off at the bottom of the screen
+                </p>
           </ReactTooltip>
 
           {/* Toggle Extended */}
@@ -110,8 +115,14 @@ class TopMenu extends Component {
               checked={this.props.state.extendedKeyboard}
             />
           </div>
-          <ReactTooltip id="extendedKeyboardTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
-                <p>This is extended keyboard tooltip!</p>
+          <ReactTooltip id="extendedKeyboardTooltip" place="right" effect="solid" scrollHide={false} resizeHide={false}
+            overridePosition={() => { return {top:220, left:-10}; }} className="tooltip-topmenu"
+          >
+                <p>
+                    Extend Keyboard<br/>
+                    Toggles the keyboard between only showing 1 octave 
+                    and the 3 extra notes surrounding the octave on top and bottom
+                </p>
           </ReactTooltip>
 
           {/* Sounds */}
@@ -132,8 +143,14 @@ class TopMenu extends Component {
               }
             />
           </div>
-          <ReactTooltip id="soundTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
-                <p>This is Tooltip for sound</p>
+          <ReactTooltip id="soundTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}
+            offset={{'bottom':60}} className="tooltip-topmenu"
+          >
+                <p>
+                    Sound<br/>
+                    Chooses what sound the keyboard should make<br/>
+                    Presently only supports a piano sound
+                </p>
           </ReactTooltip>
 
           {/* Notation */}
@@ -149,17 +166,17 @@ class TopMenu extends Component {
                 <Notation
                   initOptions={this.props.state.notation}
                   handleChange={this.props.handleChangeNotation} />
-               <p className="label-wrapper">{"hide staff"}</p>
-               <Toggle
-              onChange={this.props.handleHideStaff}
-              checked={this.props.state.hideCleff}
-            />
-           </>
+                </>
               }
             />
           </div>
-          <ReactTooltip id="notationTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
-                <p>This is Tooltip for notation</p>
+          <ReactTooltip id="notationTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}
+            offset={{'bottom':60}} className="tooltip-topmenu"
+          >
+                <p>
+                    Notation<br/>
+                    Chooses the type of notations you want to be shown
+                </p>
           </ReactTooltip>
 
           {/* CustomScaleSelector */}
@@ -200,8 +217,13 @@ class TopMenu extends Component {
             />
             {/* <div className="half-circle"></div> */}
           </div>
-          <ReactTooltip id="rootTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
-                <p>This is Tooltip content 2</p>
+          <ReactTooltip id="rootTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}
+            offset={{'bottom':40}} className="tooltip-topmenu"
+          >
+                <p>
+                    Root<br/>
+                    Chooses what the root note is, and what octave it is in<br/>
+                </p>
           </ReactTooltip>
 
           {/* Scale */}
@@ -230,8 +252,15 @@ class TopMenu extends Component {
               }
             />
           </div>
-          <ReactTooltip id="scaleTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
-                <p>This is scale tooltip</p>
+          <ReactTooltip id="scaleTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false} 
+            offset={{'bottom':60}} className="tooltip-topmenu"
+          >
+                <p>
+                    Scale<br/>
+                    Chooses the scale being used on the keyboard<br/>
+                    Only notes in the scale are possible to play on<br/>
+                    It is possible to create a custom scale<br/>
+                </p>
           </ReactTooltip>
 
           {/* Clef */}
@@ -255,8 +284,14 @@ class TopMenu extends Component {
               }
             />
           </div>
-          <ReactTooltip id="clefsTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
-                <p>This is Tooltip content for clefs</p>
+          <ReactTooltip id="clefsTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}
+            offset={{'bottom':60}} className="tooltip-topmenu"
+          >
+                <p>
+                    Clefs<br/>
+                    Chooses what clef will be used when showing the notes<br/>
+                    It is also possible to turn off showing the notes
+                </p>
           </ReactTooltip>
 
           {/* Video */}
@@ -273,8 +308,15 @@ class TopMenu extends Component {
               resetVideoUrl={this.props.resetVideoUrl}
             />
           </div>
-          <ReactTooltip id="videoPlayerTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
-                <p>This is Tooltip content for video player</p>
+          <ReactTooltip id="videoPlayerTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}
+            overridePosition={() => { return {top:280, left:1370}; }} className="tooltip-topmenu"
+          >
+                <p>
+                    Video Player<br/>
+                    Shows a popup with a Youtube Video Player<br/>
+                    You can play any video by copy-pasting the url into the Customize tab<br/>
+                    The popup can also be moved and resized by dragging it
+                </p>
           </ReactTooltip>
 
           {/* Share */}
@@ -288,8 +330,13 @@ class TopMenu extends Component {
               sessionID={this.props.sessionID}
             />
           </div>
-          <ReactTooltip id="shareThisSetupTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
-                <p>This is Tooltip content for sharing the current setup</p>
+          <ReactTooltip id="shareThisSetupTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false} 
+            overridePosition={() => { return {top:120, left:1370}; }} className="tooltip-topmenu"// Needs manual overriding, since it doesn't work like the rest (for some reason)
+          >
+                <p>
+                    Share This Setup<br/>
+                    Crates a url you can share, so that others receive an identical setup to the one you currently have 
+                </p>
           </ReactTooltip>
 
           {/* Settings */}
@@ -305,14 +352,25 @@ class TopMenu extends Component {
               onClick={() => this.props.handleChangeTooltip()}
               />
         </div>
-        <ReactTooltip id="helpTooltip" place="left" effect="solid" scrollHide={false} resizeHide={false} type="success">
-            <p>This is Tooltip content for help text</p>
+        <ReactTooltip id="helpTooltip" place="left" effect="solid" scrollHide={false} resizeHide={false} type="info" className="tooltip-topmenu">
+            <p>
+                ? Button<br/>
+                Toggles these tooltips on and off
+            </p>
         </ReactTooltip>
 
         <div className="Area3 area"><img src={require('../../img/home.png')} alt="home"/></div>
         </div>
-        <ReactTooltip id="keyboardTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}>
-                <p>This is Tooltip content for the whole keyboard</p>
+        <ReactTooltip id="keyboardTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}
+            offset={{'bottom':250}} className="tooltip-keyboard"
+        >
+                <p>
+                    Keyboard<br/>
+                    The Keyboard can be played by using the mouse<br/>
+                    The Keyboard can also be played by using the middle of the keyboard (ASDFGHJKL) where F is the root note<br/>
+                    ZXC also plays the three notes below the root note<br/>
+                    The colouring of the keyboard can be changed on 1-5
+                </p>
           </ReactTooltip>
       </div>
     );

@@ -10,7 +10,7 @@ const components = {
   'bass': <BassClef />,
   'tenor': <TenorClef />,
   'alto': <AltoClef />,
-  'no staff': <NoNoteClef />,
+  'hide notes': <NoNoteClef />,
 };
 
 class Radio extends React.Component{

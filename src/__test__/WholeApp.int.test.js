@@ -23,11 +23,12 @@ beforeEach(() => {
     SoundMaker.mockClear();
 })
 
-describe("Root menu in the TopMenu to", () =>{
+describe("Root menu in the TopMenu", () =>{
     test.each([
         ["C", 4, ["/"]],
         ["B", 3, ["/shared/INyllzBj7efsVe54qtFl"]]
     ])("Octave plus button should increase octave", async (root_note, octave, url) => {
+        // Arrange the server and wait for the page to be loaded / skip the loading screen
         expect(SoundMaker).not.toHaveBeenCalled();
         render(
             <MemoryRouter initialEntries ={url}>
@@ -36,16 +37,19 @@ describe("Root menu in the TopMenu to", () =>{
             </MemoryRouter>
         );
         await waitFor(() => screen.getAllByText("Root"));
+        // Arrange the SoundMaker class is initialized, and the octave is set as expected
         expect(SoundMaker).toHaveBeenCalledTimes(1);
         const octave_in_menu = screen.getByText("Octave:",{exact:false});
         expect(octave_in_menu.textContent).toBe("Octave: "+octave);
-    
+        // Act the plus button
         const plus_button = screen.getByText("+");
         userEvent.click(plus_button);
-
+        // Assert the text showing the octave in the Root menu is 1 higher
         expect(octave_in_menu.textContent).toBe("Octave: "+(octave+1));
+        // Act by pressing a key on the keyboard
         const root_key = screen.getByTestId("ColorKey:"+root_note+(octave+1));
         userEvent.click(root_key);
+        // Assert that the SoundMaker actually starts and stops the sound by a single click
         expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith(root_note+(octave+1));
         expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith(root_note+(octave+1));
     })
@@ -54,6 +58,7 @@ describe("Root menu in the TopMenu to", () =>{
         ["C", 4, ["/"]],
         ["B", 3, ["/shared/INyllzBj7efsVe54qtFl"]]
     ])("Octave minus button should decrease octave", async (root_note, octave, url) => {
+        // Arrange the server and wait for the page to be loaded / skip the loading screen
         expect(SoundMaker).not.toHaveBeenCalled();
         render(
             <MemoryRouter initialEntries ={url}>
@@ -62,17 +67,32 @@ describe("Root menu in the TopMenu to", () =>{
             </MemoryRouter>
         );
         await waitFor(() => screen.getAllByText("Root"));
+        // Arrange the SoundMaker class is initialized, and the octave is set as expected
         expect(SoundMaker).toHaveBeenCalledTimes(1);
         const octave_in_menu = screen.getByText("Octave:",{exact:false});
         expect(octave_in_menu.textContent).toBe("Octave: "+octave);
-    
+        // Act the minus button
         const minus_button = screen.getByText("-");
         userEvent.click(minus_button);
-
+        // Assert the text showing the octave in the Root menu is 1 lower
         expect(octave_in_menu.textContent).toBe("Octave: "+(octave-1));
+        // Act by pressing a key on the keyboard
         const root_key = screen.getByTestId("ColorKey:"+root_note+(octave-1));
         userEvent.click(root_key);
+        // Assert that the SoundMaker actually starts and stops the sound by a single click
         expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith(root_note+(octave-1));
         expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith(root_note+(octave-1));
+    })
+})
+
+describe("Tooltips in the TopMenu", () =>{
+    test("Tooltips should be shown on load screen", async () => {
+
+    })
+    test("Pressing the help button should hide tooltips", async () => {
+
+    })
+    test("Pressing the help button twice should show tooltips again", async () => {
+
     })
 })

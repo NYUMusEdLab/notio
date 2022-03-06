@@ -123,7 +123,7 @@ class WholeApp extends Component {
 
   handleSelectClef = (selectedClef) => {
     // console.log(selectedClef + " clef selected");
-    const staff_on = selectedClef === "no staff" ? false : true;
+    const staff_on = selectedClef === "hide notes" ? false : true;
     this.setState({ trebleStaffOn: staff_on });
   };
 
@@ -206,8 +206,9 @@ class WholeApp extends Component {
       const tooltip = !this.state.showTooltip;
       this.setState({
         showTooltip : tooltip
-      })
+      });
       if (tooltip === true){
+        console.log("GOTTA SHOW!");
         ReactTooltip.show(this.state.keyboardTooltipRef);
         ReactTooltip.show(this.state.showKeyboardTooltipRef);
         ReactTooltip.show(this.state.extendedKeyboardTooltipRef);
@@ -339,6 +340,16 @@ class WholeApp extends Component {
         loading: false,
       });
     }
+
+    //Initialze the tooltip
+    new Promise(r => setTimeout(r, 2000)).then((resolve, reject) => {
+        const tooltip = !this.state.showTooltip;
+        this.setState({
+            showTooltip: tooltip
+        })
+        this.handleChangeTooltip();
+    })
+    
   }
 
   toggleMenu = () => {
