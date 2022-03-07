@@ -55,7 +55,7 @@ describe("Root menu in the TopMenu", () =>{
     })
 
     test.each([
-        ["B", 8, ["/shared/TfmoRPcEGNfQ1JS2L43a]]
+        ["B", 8, ["/shared/dhRpK0pk4jsnNr66lP4d"]]
     ])("Octave minus button should not increase octave, if octave is 8", async (root_note, octave, url) => {
         // Arrange the server and wait for the page to be loaded / skip the loading screen
         expect(SoundMaker).not.toHaveBeenCalled();
@@ -114,7 +114,7 @@ describe("Root menu in the TopMenu", () =>{
     })
 
     test.each([
-        ["B", 1, ["/shared/INyllzBj7efsVe54qtFl"]]
+        ["B", 1, ["/shared/LjPDM0B9vcyw7tiEUrQA"]]
     ])("Octave minus button should not decrease octave, if octave is 1", async (root_note, octave, url) => {
         // Arrange the server and wait for the page to be loaded / skip the loading screen
         expect(SoundMaker).not.toHaveBeenCalled();
