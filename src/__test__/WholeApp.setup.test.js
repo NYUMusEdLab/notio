@@ -25,11 +25,11 @@ beforeEach(() => {
     SoundMaker.mockClear();
 })
 
-describe("Root menu in the TopMenu", () =>{
+describe("THIS IS THE FEATURE BEING TESTED", () =>{
     test.each([
         [["/"]],
         [["/shared/INyllzBj7efsVe54qtFl"]]
-    ])("Octave plus button should increase octave", async (url) => {
+    ])("THIS IS A SPECIFIC USE OF THE FEATURE TESTED IN DIFFERENT CONFIGURATIONS (url)", async (url) => {
         // Arrange the server, wait for the page to be loaded and make sure the SoundMaker module is working
         expect(SoundMaker).not.toHaveBeenCalled();
         render(
@@ -47,4 +47,4 @@ describe("Root menu in the TopMenu", () =>{
 
         // Assert
     })
-}
+})
