@@ -342,7 +342,7 @@ class WholeApp extends Component {
     }
 
     //Initialze the tooltip
-    new Promise(r => setTimeout(r, 2000)).then((resolve, reject) => {
+    new Promise(r => setTimeout(r, 1500)).then((resolve, reject) => {
         const tooltip = !this.state.showTooltip;
         this.setState({
             showTooltip: tooltip
