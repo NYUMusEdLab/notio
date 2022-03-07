@@ -35,6 +35,7 @@ class TopMenu extends Component {
       clefTitle: "",
       clefImage: "",
       titleRoot: this.props.state.baseNote,
+      windowWidth: Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     };
   }
 
@@ -284,7 +285,7 @@ class TopMenu extends Component {
             />
           </div>
           <ReactTooltip id="videoPlayerTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false}
-            overridePosition={() => { return {top:280, left:1370}; }} className="tooltip-topmenu" html={true}
+            overridePosition={() => { return {top:280, left:this.state.windowWidth-170}; }} className="tooltip-topmenu" html={true}
           >
                 {tooltipText["videoPlayer"]}
           </ReactTooltip>
@@ -301,7 +302,7 @@ class TopMenu extends Component {
             />
           </div>
           <ReactTooltip id="shareThisSetupTooltip" place="bottom" effect="solid" scrollHide={false} resizeHide={false} 
-            overridePosition={() => { return {top:120, left:1370}; }} className="tooltip-topmenu" html={true}
+            overridePosition={() => { return {top:120, left:this.state.windowWidth-170}; }} className="tooltip-topmenu" html={true}
           >
                 {tooltipText["shareThisSetup"]}
           </ReactTooltip>
