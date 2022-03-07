@@ -6,9 +6,7 @@ import SoundMaker from "../components/SoundMaker";
 import WholeApp from "../WholeApp";
 
 /*
-    File containing all integration tests of the WholeApp module.
-    Primarily tests that interactions with the TopMenu is integrated correctly with the KeyBoard.
-    (And later on tests integration between plugins and the TopMenu and/or KeyBoard)
+    File containing all tests for the Octaves functionality
 */
 
 // This is necessary to make waitFor works, which makes sure Notio renders /shared/urls, otherwise its a loading screen.
