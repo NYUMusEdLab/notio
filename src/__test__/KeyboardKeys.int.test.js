@@ -102,7 +102,8 @@ describe("ComputerKeyboard pressing key to", () =>{
         }
         expect(octave_in_menu.textContent).toBe("Octave: "+(octave+keypressCount));
         
-        await userEvent.keyboard(keypress)
+        const pressKeyDownAndUp = "{d>}{/d}";
+        await userEvent.keyboard(pressKeyDownAndUp);
 
         expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith(expected_tone);
         expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith(expected_tone);

@@ -67,7 +67,6 @@ class Keyboard extends Component {
       scales: this.props.scaleList,
       activeScale: activeScale,
       octave: this.props.octave,
-      octaveDist:0,
       colorname: "bright" 
     };
 
@@ -90,8 +89,8 @@ class Keyboard extends Component {
      */
     //e.preventDefault();
 
-    const { extendedKeyboard,octave } = this.props;
-    const{activeScale,octaveDist} = this.state
+    const { extendedKeyboard,octave,octaveDist } = this.props;
+    const{activeScale} = this.state
 
     if (this.synth.getState() !== "running") {
         this.synth.resumeSound();
@@ -144,10 +143,10 @@ class Keyboard extends Component {
     } else if (!extendedKeyboard) {
       
       if (e.code === "ArrowDown") {
-        this.setState({octaveDist: octaveDist-1})
+        this.props.handleClickOctave(e.code);
       }
       if (e.code === "ArrowUp") {
-        this.setState({octaveDist: octaveDist+1})
+        this.props.handleClickOctave(e.code);
       }
       if (e.code === "KeyE") {
         const StepsAboveRoot = 2;//root==0, 2 selects the third tone in the scale
@@ -202,8 +201,8 @@ class Keyboard extends Component {
   handleKeyUp = (e) => {
     //e.preventDefault();
 
-    const { extendedKeyboard,octave} = this.props;
-    const{activeScale, octaveDist} = this.state
+    const { extendedKeyboard,octave, octaveDist} = this.props;
+    const{activeScale} = this.state
 
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
     const mapKeyUp = activeKeyCodes.indexOf(e.code);
@@ -484,7 +483,7 @@ class Keyboard extends Component {
       "Bb",
       "B",
     ];
-    let octave = toneName.at(-1);
+    let octave = toneName.slice(-1, -2);
     toneName = toneName.slice(0, -1)
     let result = "";
     const regexFlat = /[b]/gi;
