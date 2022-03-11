@@ -12,6 +12,7 @@ import scales from "./data/scalesObj";
 class WholeApp extends Component {
   state = {
     octave: 4,
+    octaveDist: 0,
     scale: "Major (Ionian)",
     scaleObject: {
       name: "Major (Ionian)",
@@ -99,12 +100,28 @@ class WholeApp extends Component {
   handleChangeSound = (sound) => {};
 
   handleClickOctave = (action) => {
+    const {octave, octaveDist} = this.state;
+
     switch (action) {
       case "minus":
-        this.setState({ octave: this.state.octave - 1 });
+        if(octave > 1){
+            this.setState({ octave: octave - 1 });
+        }
         break;
       case "plus":
-        this.setState({ octave: this.state.octave + 1 });
+        if(octave < 8){
+            this.setState({ octave: octave + 1 });
+        }
+        break;
+      case "ArrowDown":
+        if(octave+octaveDist > 1){
+            this.setState({octaveDist: octaveDist - 1});
+        }
+        break;
+      case "ArrowUp":
+        if(octave+octaveDist < 8){
+            this.setState({octaveDist: octaveDist + 1});
+        }
         break;
       default:
         this.setState({ octave: 3 });
@@ -402,6 +419,8 @@ class WholeApp extends Component {
 
           <Keyboard
             octave={this.state.octave}
+            octaveDist={this.state.octaveDist}
+            handleClickOctave={this.handleClickOctave}
             scale={this.state.scale}
             scaleObject = {this.state.scaleObject}
             scaleList = {this.state.scaleList}
