@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactTooltip from "react-tooltip";
 import Keyboard from "./components/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
 import LoadingScreen from "./components/LoadingScreen";
@@ -33,7 +34,19 @@ class WholeApp extends Component {
     loading: true,
     // videoUrl: 'https://www.youtube.com/watch?v=g4mHPeMGTJM', // silence test video for coding
     videoUrl: notio_tutorial,
-    videoActive : false
+    videoActive : false,
+    showTooltip : true,
+    keyboardTooltipRef : null,
+    showKeyboardTooltipRef : null,
+    extendedKeyboardTooltipRef : null,
+    soundTooltipRef : null,
+    notationTooltipRef : null,
+    rootTooltipRef : null,
+    scaleTooltipRef : null,
+    clefsTooltipRef : null,
+    videoPlayerTooltipRef : null,
+    shareThisSetupTooltipRef : null,
+    helpTooltipRef : null,
   };
 
   constructor(props) {
@@ -44,6 +57,44 @@ class WholeApp extends Component {
     this.handleSelectScale = this.handleSelectScale.bind(this);
     this.handleSelectClef = this.handleSelectClef.bind(this);
     this.handleChangeVideoVisibility = this.handleChangeVideoVisibility.bind(this);
+    this.handleChangeTooltip = this.handleChangeTooltip.bind(this);
+    this.setRef = this.setRef.bind(this);
+  }
+
+  setRef = (ref, menu) => {
+    if (menu === "keyboard" && this.state.keyboardTooltipRef === null){
+        this.setState({keyboardTooltipRef: ref});
+    }
+    else if(menu === "showKeyboard" && this.state.showKeyboardTooltipRef === null){
+        this.setState({showKeyboardTooltipRef: ref});
+    }
+    else if(menu === "extendedKeyboard" && this.state.extendedKeyboardTooltipRef === null){
+        this.setState({extendedKeyboardTooltipRef: ref});
+    }
+    else if(menu === "sound" && this.state.soundTooltipRef === null){
+        this.setState({soundTooltipRef: ref});
+    }
+    else if(menu === "notation" && this.state.notationTooltipRef === null){
+        this.setState({notationTooltipRef: ref});
+    }
+    else if(menu === "root" && this.state.rootTooltipRef === null){
+        this.setState({rootTooltipRef: ref});
+    }
+    else if(menu === "scale" && this.state.scaleTooltipRef === null){
+        this.setState({scaleTooltipRef: ref});
+    }
+    else if(menu === "clefs" && this.state.clefsTooltipRef === null){
+        this.setState({clefsTooltipRef: ref});
+    }
+    else if(menu === "videoPlayer" && this.state.videoPlayerTooltipRef === null){
+        this.setState({videoPlayerTooltipRef: ref});
+    }
+    else if(menu === "shareThisSetup" && this.state.shareThisSetupTooltipRef === null){
+        this.setState({shareThisSetupTooltipRef: ref});
+    }
+    else if(menu === "help" && this.state.helpTooltipRef === null){
+        this.setState({helpTooltipRef: ref});
+    }
   }
 
   handleChangeSound = (sound) => {};
@@ -89,7 +140,7 @@ class WholeApp extends Component {
 
   handleSelectClef = (selectedClef) => {
     // console.log(selectedClef + " clef selected");
-    const staff_on = selectedClef === "no staff" ? false : true;
+    const staff_on = selectedClef === "hide notes" ? false : true;
     this.setState({ trebleStaffOn: staff_on });
   };
 
@@ -165,7 +216,32 @@ class WholeApp extends Component {
   handleChangeVideoVisibility = () => {
     const isActive = !this.state.videoActive
     this.setState({ 
-      videoActive : isActive });  };
+      videoActive : isActive });  
+  };
+
+  handleChangeTooltip = () => {
+      const tooltip = !this.state.showTooltip;
+      this.setState({
+        showTooltip : tooltip
+      });
+      if (tooltip === true){
+        console.log("GOTTA SHOW!");
+        ReactTooltip.show(this.state.keyboardTooltipRef);
+        ReactTooltip.show(this.state.showKeyboardTooltipRef);
+        ReactTooltip.show(this.state.extendedKeyboardTooltipRef);
+        ReactTooltip.show(this.state.soundTooltipRef);
+        ReactTooltip.show(this.state.notationTooltipRef);
+        ReactTooltip.show(this.state.rootTooltipRef);
+        ReactTooltip.show(this.state.scaleTooltipRef);
+        ReactTooltip.show(this.state.clefsTooltipRef);
+        ReactTooltip.show(this.state.videoPlayerTooltipRef);
+        ReactTooltip.show(this.state.shareThisSetupTooltipRef);
+        ReactTooltip.show(this.state.helpTooltipRef);
+      }
+      else{
+          ReactTooltip.hide();
+      }
+  }
 
   // TODO: make generic handleSelect
   // handleSelect = (selectedElement, selectedValue) => {
@@ -281,6 +357,16 @@ class WholeApp extends Component {
         loading: false,
       });
     }
+
+    //Initialze the tooltip
+    new Promise(r => setTimeout(r, 1500)).then((resolve, reject) => {
+        const tooltip = !this.state.showTooltip;
+        this.setState({
+            showTooltip: tooltip
+        })
+        this.handleChangeTooltip();
+    })
+    
   }
 
   toggleMenu = () => {
@@ -320,11 +406,13 @@ class WholeApp extends Component {
           handleChangeVideoUrl={this.handleChangeVideoUrl}
           handleChangeVideoVisibility = {this.handleChangeVideoVisibility}
           handleChangeSound={this.handleChangeSound}
+          handleChangeTooltip={this.handleChangeTooltip}
           resetVideoUrl={this.resetVideoUrl}
           videoActive = {this.state.videoActive}
           saveSessionToDB={this.saveSessionToDB}
           sessionID={this.state.sessionID}
           state={this.state}
+          setRef={this.setRef}
         />
 
         <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
