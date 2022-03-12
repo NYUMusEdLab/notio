@@ -7,7 +7,6 @@ import db from "./Firebase";
 import { notio_tutorial } from "./data/config";
 import scales from "./data/scalesObj";
 
-
 class WholeApp extends Component {
   state = {
     octave: 4,
@@ -17,7 +16,7 @@ class WholeApp extends Component {
       steps: [0, 2, 4, 5, 7, 9, 11],
       numbers: ["1", "2", "3", "4", "5", "6", "△7"],
     },
-    scaleList: [...scales],//new ScaleStore(),
+    scaleList: [...scales], //new ScaleStore(),
     clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
@@ -30,9 +29,9 @@ class WholeApp extends Component {
     sessionID: null,
     sessionError: null,
     loading: true,
-    // videoUrl: 'https://www.youtube.com/watch?v=g4mHPeMGTJM', // silence test video for coding
+    // videoUrl: "https://www.youtube.com/watch?v=g4mHPeMGTJM", // silence test video for coding
     videoUrl: notio_tutorial,
-    videoActive : false
+    videoActive: false,
   };
 
   constructor(props) {
@@ -100,18 +99,17 @@ class WholeApp extends Component {
     //   steps: customsteps,
     //   numbers: customNumbers,})
     this.setState({
-      scaleList : [...this.state.scaleList,{name: customScaleName,
-        steps: customsteps,
-        numbers: customNumbers,}],
+      scaleList: [
+        ...this.state.scaleList,
+        { name: customScaleName, steps: customsteps, numbers: customNumbers },
+      ],
       scale: customScaleName,
       scaleObject: {
         name: customScaleName,
         steps: customsteps,
         numbers: customNumbers,
       },
-      
     });
-
   };
 
   handleSelectTheme = (selectedTheme) => {
@@ -121,23 +119,31 @@ class WholeApp extends Component {
 
   handleChangeRoot = (selectedRoot) => {
     // console.log(selectedRoot + " Root selected");
-    const convertedRoot = selectedRoot === 'HB' ? 'Bb': selectedRoot === 'Hb' ? 'Bb':selectedRoot  === 'H' ? 'B' : selectedRoot;
+    const convertedRoot =
+      selectedRoot === "HB"
+        ? "Bb"
+        : selectedRoot === "Hb"
+        ? "Bb"
+        : selectedRoot === "H"
+        ? "B"
+        : selectedRoot;
     this.setState({ baseNote: convertedRoot });
   };
 
   handleChangeVideoUrl = (url) => {
-    this.setState({ videoUrl: url,
-    videoActive : true });
+    this.setState({ videoUrl: url, videoActive: true });
   };
 
   resetVideoUrl = () => {
     this.setState({ videoUrl: notio_tutorial });
   };
-  
+
   handleChangeVideoVisibility = () => {
-    const isActive = !this.state.videoActive
-    this.setState({ 
-      videoActive : isActive });  };
+    const isActive = !this.state.videoActive;
+    this.setState({
+      videoActive: isActive,
+    });
+  };
 
   // TODO: make generic handleSelect
   // handleSelect = (selectedElement, selectedValue) => {
@@ -176,7 +182,7 @@ class WholeApp extends Component {
         showOffNotes: showOffNotes,
         clef: clef,
         videoUrl: videoUrl,
-        videoActive:videoActive,
+        videoActive: videoActive,
       })
       .then((docRef) => {
         // console.log("Session written with ID: ", docRef.id);
@@ -271,8 +277,7 @@ class WholeApp extends Component {
   };
 
   render() {
-
-    const { loading, showOffNotes}=this.state;
+    const { loading, showOffNotes } = this.state;
     // console.log("whole app", this.state.notation);
     return loading ? (
       <LoadingScreen />
@@ -288,22 +293,22 @@ class WholeApp extends Component {
           handleClickOctave={this.handleClickOctave}
           handleChangeRoot={this.handleChangeRoot}
           handleChangeVideoUrl={this.handleChangeVideoUrl}
-          handleChangeVideoVisibility = {this.handleChangeVideoVisibility}
+          handleChangeVideoVisibility={this.handleChangeVideoVisibility}
           handleChangeSound={this.handleChangeSound}
           resetVideoUrl={this.resetVideoUrl}
-          videoActive = {this.state.videoActive}
+          videoActive={this.state.videoActive}
+          videoUrl={this.state.videoUrl}
           saveSessionToDB={this.saveSessionToDB}
           sessionID={this.state.sessionID}
           state={this.state}
         />
 
         <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
-
           <Keyboard
             octave={this.state.octave}
             scale={this.state.scale}
-            scaleObject = {this.state.scaleObject}
-            scaleList = {this.state.scaleList}
+            scaleObject={this.state.scaleObject}
+            scaleList={this.state.scaleList}
             baseNote={this.state.baseNote}
             notation={this.state.notation}
             pianoOn={this.state.pianoOn}

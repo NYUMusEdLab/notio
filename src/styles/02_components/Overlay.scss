@@ -101,6 +101,10 @@
     height: 4%;
     justify-content: flex-end;
     align-items: center;
+
+    &:hover {
+      cursor: move;
+    }
   }
 
   &-item {

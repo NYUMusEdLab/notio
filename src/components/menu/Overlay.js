@@ -33,7 +33,7 @@ export default class Overlay extends Component {
 
   topBar() {
     return (
-      <div className="navbar clearfix">
+      <div className="navbar clearfix drag">
         {/* Toggle Piano */}
         {/* <Toggle
           className="navbar-item__toggle"
@@ -86,7 +86,7 @@ export default class Overlay extends Component {
           {this.content}
         </div>
       </Draggable>,
-      document.getElementById("overlay_root")
+      document.getElementById("plugin_root")
     );
   }
 }
