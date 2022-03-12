@@ -17,7 +17,7 @@ class VideoTutorial extends Component {
     duration: 0,
     minimized: false,
     show: this.props.vissible ? true : false,
-    activeTab: "change_video",
+    activeTab: "playlist",
     playerIsReady: false,
   };
 
@@ -29,6 +29,7 @@ class VideoTutorial extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     // set video url
+    console.log(event.target.elements[0].value);
     this.props.handleChangeVideoUrl(event.target.elements[0].value);
 
     this.setState({
@@ -59,12 +60,16 @@ class VideoTutorial extends Component {
 
     return (
       <React.Fragment>
-        <Overlay visible={this.props.vissible} >
+        <Overlay visible={this.props.vissible}>
           <div className="tabs-wrapper">
             {/* <Tabs defaultActiveKey="playlist" activeKey={this.state.activeTab} onSelect={this.handleSelect}  id="controlled-tab-example"> */}
-            <Tabs defaultActiveKey="playlist" activeTab={this.state.activeTab} id="controlled-tab-example">
+            <Tabs
+              defaultActiveKey="playlist"
+              activeTab={this.state.activeTab}
+              id="controlled-tab-example">
               <Tab eventKey="playlist" title="Playlist">
                 <ReactPlayer
+                  key={"https://www.youtube.com/watch?v=" + this.props.videoUrl}
                   ref={this.ref}
                   className="react-player"
                   playing={this.state.playing}
@@ -72,7 +77,7 @@ class VideoTutorial extends Component {
                   height="100%"
                   url={this.props.videoUrl}
                   controls={true}
-                  // onReady={this.playerOnReady}
+                  onReady={this.playerOnReady}
                 />
               </Tab>
               <Tab eventKey="change_video" title="Customize">

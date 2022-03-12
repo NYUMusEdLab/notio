@@ -23,7 +23,6 @@ export default class ShareButton extends Component {
     minimized: false,
     show: this.props.active ? true : false,
     activeTab: "share",
-
   };
 
   handleShow = () => {
@@ -34,12 +33,12 @@ export default class ShareButton extends Component {
     event.preventDefault();
     // set video url
     this.props.handleChangeVideoUrl(event.target.elements[0].value);
-  
+
     this.setState({
-      activeTab: "share"
+      activeTab: "share",
     });
   };
-  
+
   // handleSelect = (key) => {
   //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
   //   if (key === 'share')
@@ -66,7 +65,9 @@ export default class ShareButton extends Component {
           </div>
         </div>
         {this.state.show && (
-          <Share2 sessionID={this.props.sessionID}></Share2>
+          <Share2
+            saveSessionToDB={this.props.saveSessionToDB}
+            sessionID={this.props.sessionID}></Share2>
 
           // <Overlay>
           //   <div className="tabs-wrapper">
@@ -76,10 +77,7 @@ export default class ShareButton extends Component {
           //       onSelect={this.handleSelect}
           //       id="uncontrolled-tab-example">
           //       <Tab eventKey="share" title="Share">
-          //         <Share
-          //           saveSessionToDB={this.props.saveSessionToDB}
-          //           sessionID={this.props.sessionID}
-          //         />
+          // <Share saveSessionToDB={this.props.saveSessionToDB} sessionID={this.props.sessionID} />
           //       </Tab>
           //     </Tabs>
           //   </div>
