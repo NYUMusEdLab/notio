@@ -228,6 +228,7 @@ class TopMenu extends Component {
               handleChangeVideoUrl={this.props.handleChangeVideoUrl}
               videoUrl={this.props.state.videoUrl}
               resetVideoUrl={this.props.resetVideoUrl}
+              handleResetVideoUrl={this.props.handleResetVideoUrl}
             />
 
             {/* <VideoTutorial

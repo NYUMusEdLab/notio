@@ -134,7 +134,7 @@ class WholeApp extends Component {
     this.setState({ videoUrl: url, videoActive: true });
   };
 
-  resetVideoUrl = () => {
+  handleResetVideoUrl = () => {
     this.setState({ videoUrl: notio_tutorial });
   };
 
@@ -295,7 +295,8 @@ class WholeApp extends Component {
           handleChangeVideoUrl={this.handleChangeVideoUrl}
           handleChangeVideoVisibility={this.handleChangeVideoVisibility}
           handleChangeSound={this.handleChangeSound}
-          resetVideoUrl={this.resetVideoUrl}
+          handleResetVideoUrl={this.handleResetVideoUrl}
+          resetVideoUrl={notio_tutorial}
           videoActive={this.state.videoActive}
           videoUrl={this.state.videoUrl}
           saveSessionToDB={this.saveSessionToDB}

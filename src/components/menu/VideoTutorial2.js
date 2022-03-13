@@ -51,22 +51,16 @@ const VideoTutorial = (props) => {
   const playerOnReady = (event) => {
     // A bit dummy but need to control tabs after submit (cf handleSumbit())
     setPlayerIsReady(false);
-    setPlaying(false);
-    setPlayerIsReady(true);
-
-    // this.setState({ playerIsReady: true });
+    setPlaying(true);
+    // setPlayerIsReady(true);
   };
 
   const resetVideoUrl = (event) => {
-    props.resetVideoUrl();
-    setVideoUrl(props.videoUrl);
+    setVideoUrl(props.resetVideoUrl);
     setActiveTab("playlist");
-    // setState({
-    //   activeTab: "playlist",
-    // });
+    props.handleResetVideoUrl();
   };
 
-  // const { playing, activeTab } = state;
   return (
     <React.Fragment>
       <Overlay visible={show} key={videoUrl}>
@@ -89,11 +83,11 @@ const VideoTutorial = (props) => {
                 <Form onSubmit={handleSubmit}>
                   <Form.Group controlId="formYoutubeUrl">
                     <Form.Label>Video url</Form.Label>
-                    <Form.Control type="text" placeholder={videoUrl} ref={urlInputRef} />
+                    <Form.Control type="text" placeholder="Enter url" ref={urlInputRef} />
                     <Form.Text className="text-muted">
-                      Enter the url for any video that you want to use with the app
-                      {videoUrl}
+                      Enter the url for any video that you want to use with the app.
                     </Form.Text>
+                    <Form.Text className="text-muted">Current url: {videoUrl}</Form.Text>
 
                     <Button variant="primary" type="submit">
                       Use this video
