@@ -25,7 +25,8 @@ export default class Overlay extends Component {
 
   topBar() {
     return (
-      <div className="overlay navbar clearfix drag ">
+      <div>
+        {/* <div className="overlay navbar clearfix drag "> */}
         {/* <Button
           className="navbar-item__close"
           onClick={(e) => {
@@ -33,16 +34,16 @@ export default class Overlay extends Component {
             this.handleShow();
           }}>
           <CrossSVG />
-        </Button>
+        </Button> */}
 
         <Button
-          className="navbar-item__minimize"
+          className="overlay navbar--button__minimize"
           onClick={(e) => {
             // this.props.onClickCloseHandler();
             this.handleMinimize();
           }}>
           <UnderscoreSVG />
-        </Button> */}
+        </Button>
         {/* </div> */}
       </div>
     );
@@ -65,23 +66,12 @@ export default class Overlay extends Component {
           // onClick={this.handleClick}
           className={this.state.classname}
           title={this.state.classname}>
-          {this.topBar()}
-
+          {/* {this.topBar()} */}
           <aside className={`overlay${this.state.minimized ? "__minimized" : ""}`}>
-            <Button
-              className="overlay navbar--button__minimize"
-              onClick={(e) => {
-                // this.props.onClickCloseHandler();
-                this.handleMinimize();
-              }}>
-              <UnderscoreSVG />
-            </Button>
-
-            {
-              <div className={`content${this.state.minimized ? "__minimized" : ""}`}>
-                {this.props.children}
-              </div>
-            }
+            {this.topBar()}
+            <div className={`content${this.state.minimized ? "__minimized" : ""}`}>
+              {this.props.children}
+            </div>
           </aside>
           {/* {this.topBar()}
           {this.content} */}
