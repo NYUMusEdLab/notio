@@ -106,7 +106,7 @@
   // }
 
   .navbar {
-    // display: flexbox;
+    display: flexbox;
     position: absolute;
     z-index: inherit;
     background-color: transparent;
@@ -117,6 +117,12 @@
 
     &:hover {
       cursor: move;
+    }
+
+    &__grabbar {
+      position: absolute;
+      top: -20px;
+      background-color: transparent;
     }
 
     &--button {
@@ -137,38 +143,17 @@
         }
       }
     }
-  }
 
-  nav {
-    display: -ms-flexbox;
-    display: flex;
-    // -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-  }
-  .nav-link.active {
-    color: #495057;
-    background-color: #fff;
-    border-color: #dee2e6 #dee2e6 #fff;
-  }
-  .nav-tabs .nav-link {
-    margin-bottom: -1px;
-    border: 1px solid solid;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-  }
+    .nav-link {
+      display: block;
+      padding: 0.5rem 1rem;
+    }
 
-  .nav-link {
-    display: block;
-    padding: 0.5rem 1rem;
-  }
-
-  a {
-    color: #007bff;
-    text-decoration: none;
-    background-color: transparent;
+    a {
+      color: #007bff;
+      text-decoration: none;
+      background-color: transparent;
+    }
   }
 
   .react-player {

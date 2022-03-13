@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Button } from "react-bootstrap";
 import ReactDOM from "react-dom";
 import Draggable from "react-draggable";
@@ -15,7 +15,7 @@ export default class Overlay extends Component {
   content = (
     <aside className="overlay">
       {
-        <div className="content">
+        <div className="content drag">
           {/* {this.topBar()} */}
           {this.props.children}
         </div>
@@ -23,10 +23,33 @@ export default class Overlay extends Component {
     </aside>
   );
 
-  topBar() {
+  grabBar() {
     return (
-      <div>
-        {/* <div className="overlay navbar clearfix drag "> */}
+      <div className="overlay navbar__grabbar clearfix drag ">
+        {/* <Button
+          className="navbar-item__close"
+          onClick={(e) => {
+            // this.props.onClickCloseHandler();
+            this.handleShow();
+          }}>
+          <CrossSVG />
+        </Button> */}
+
+        {/* <Button
+          className="overlay navbar--button__minimize"
+          onClick={(e) => {
+            // this.props.onClickCloseHandler();
+            this.handleMinimize();
+          }}>
+          <UnderscoreSVG />
+        </Button> */}
+        {/* </div> */}
+      </div>
+    );
+  }
+  navBarButtons() {
+    return (
+      <Fragment>
         {/* <Button
           className="navbar-item__close"
           onClick={(e) => {
@@ -44,8 +67,7 @@ export default class Overlay extends Component {
           }}>
           <UnderscoreSVG />
         </Button>
-        {/* </div> */}
-      </div>
+      </Fragment>
     );
   }
 
@@ -66,9 +88,9 @@ export default class Overlay extends Component {
           // onClick={this.handleClick}
           className={this.state.classname}
           title={this.state.classname}>
-          {/* {this.topBar()} */}
+          {this.grabBar()}
           <aside className={`overlay${this.state.minimized ? "__minimized" : ""}`}>
-            {this.topBar()}
+            {this.navBarButtons()}
             <div className={`content${this.state.minimized ? "__minimized" : ""}`}>
               {this.props.children}
             </div>
