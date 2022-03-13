@@ -1,21 +1,15 @@
 import React, { Component, useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Form, Button } from "react-bootstrap";
-// import VideoSVG from "../../assets/img/Video";
-// import Popup from "./Popup";
 import Overlay from "./Overlay";
-
-// const components = {
-//   video: <VideoSVG />,
-// };
 
 const VideoTutorial = (props) => {
   const urlInputRef = useRef();
 
   const [playing, setPlaying] = useState(false);
-  const [played, setPlayed] = useState(0);
-  const [loaded, setLoaded] = useState(0);
-  const [duration, setDuration] = useState(0);
+  // const [played, setPlayed] = useState(0);
+  // const [loaded, setLoaded] = useState(0);
+  // const [duration, setDuration] = useState(0);
   const [minimized, setMinimized] = useState(false);
   const [show, setShow] = useState(props.vissible);
   const [activeTab, setActiveTab] = useState("playlist");
@@ -24,7 +18,6 @@ const VideoTutorial = (props) => {
 
   const handlePlayPause = () => {
     setPlaying(!playing);
-    // this.setState({ playing: !this.state.playing });
     props.handleChangeVideoVisibility();
   };
 
@@ -52,7 +45,6 @@ const VideoTutorial = (props) => {
     // A bit dummy but need to control tabs after submit (cf handleSumbit())
     setPlayerIsReady(false);
     setPlaying(true);
-    // setPlayerIsReady(true);
   };
 
   const resetVideoUrl = (event) => {
