@@ -12,62 +12,36 @@ export default class Overlay extends Component {
     minimized: false,
   };
 
-  content = (
-    <aside className="overlay">
-      {
-        <div className="content drag">
-          {/* {this.topBar()} */}
-          {this.props.children}
-        </div>
-      }
-    </aside>
-  );
+  content = (<Fragment>{this.props.children}</Fragment>);
 
   grabBar() {
     return (
-      <div className="overlay navbar__grabbar clearfix drag ">
-        {/* <Button
-          className="navbar-item__close"
-          onClick={(e) => {
-            // this.props.onClickCloseHandler();
-            this.handleShow();
-          }}>
-          <CrossSVG />
-        </Button> */}
-
-        {/* <Button
-          className="overlay navbar--button__minimize"
-          onClick={(e) => {
-            // this.props.onClickCloseHandler();
-            this.handleMinimize();
-          }}>
-          <UnderscoreSVG />
-        </Button> */}
-        {/* </div> */}
-      </div>
+      // <div className="overlay__grabbar clearfix drag ">
+      <div className="overlay__grabbar drag "></div>
     );
   }
+
   navBarButtons() {
     return (
-      <Fragment>
-        {/* <Button
-          className="navbar-item__close"
-          onClick={(e) => {
-            // this.props.onClickCloseHandler();
-            this.handleShow();
-          }}>
-          <CrossSVG />
-        </Button> */}
-
+      <div className="overlay__header__buttonContainer">
         <Button
-          className="overlay navbar--button__minimize"
+          className="overlay__header__buttonContainer__button--minimize"
           onClick={(e) => {
             // this.props.onClickCloseHandler();
             this.handleMinimize();
           }}>
           <UnderscoreSVG />
         </Button>
-      </Fragment>
+
+        <Button
+          className="overlay__header__buttonContainer__button--close"
+          onClick={(e) => {
+            // this.props.onClickCloseHandler();
+            this.handleShow();
+          }}>
+          <CrossSVG />
+        </Button>
+      </div>
     );
   }
 
@@ -85,16 +59,20 @@ export default class Overlay extends Component {
     return ReactDOM.createPortal(
       <Draggable handle={".drag"}>
         <div
-          // onClick={this.handleClick}
-          className={this.state.classname}
-          title={this.state.classname}>
-          {this.grabBar()}
-          <aside className={`overlay${this.state.minimized ? "__minimized" : ""}`}>
+          className={`overlay${this.state.minimized ? " minimized" : ""}`}
+          // title={"overlay nodrag"}
+        >
+          <header className="overlay__header">
+            {this.grabBar()}
             {this.navBarButtons()}
-            <div className={`content${this.state.minimized ? "__minimized" : ""}`}>
+          </header>
+          <div className="content">{this.content}</div>
+          {/* <aside className={`overlay${this.state.minimized ? "--minimized" : "--maximized"}`}>
+            {this.navBarButtons()}
+            <div className={`content${this.state.minimized ? "--minimized" : "--maxiized"}`}>
               {this.props.children}
             </div>
-          </aside>
+          </aside> */}
           {/* {this.topBar()}
           {this.content} */}
         </div>
