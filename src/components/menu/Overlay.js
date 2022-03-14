@@ -7,9 +7,10 @@ import CrossSVG from "../../assets/img/Cross";
 
 export default class Overlay extends Component {
   state = {
-    classname: "overlay nodrag",
+    // classname: "overlay nodrag",
     draggable: false,
     minimized: false,
+    hidden: false,
   };
 
   content = (<Fragment>{this.props.children}</Fragment>);
@@ -46,20 +47,21 @@ export default class Overlay extends Component {
   }
 
   handleShow = () => {
-    this.setState({ minimized: !this.state.minimized });
-    console.log("Minimize Not Implemented");
+    this.setState({ hidden: !this.state.hidden });
+    console.log("hide Not Implemented");
   };
 
   handleMinimize = () => {
     this.setState({ minimized: !this.state.minimized });
-    console.log("Minimize Not Implemented");
   };
 
   render() {
     return ReactDOM.createPortal(
       <Draggable handle={".drag"}>
         <div
-          className={`overlay${this.state.minimized ? " minimized" : ""}`}
+          className={`overlay${this.state.minimized ? " minimized" : ""}${
+            this.state.hidden ? " hide" : ""
+          }`}
           // title={"overlay nodrag"}
         >
           <header className="overlay__header">
