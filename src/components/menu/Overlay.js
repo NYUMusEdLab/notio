@@ -7,8 +7,6 @@ import CrossSVG from "../../assets/img/Cross";
 
 export default class Overlay extends Component {
   state = {
-    // classname: "overlay nodrag",
-    draggable: false,
     minimized: false,
     hidden: false,
   };
@@ -16,10 +14,7 @@ export default class Overlay extends Component {
   content = (<Fragment>{this.props.children}</Fragment>);
 
   grabBar() {
-    return (
-      // <div className="overlay__grabbar clearfix drag ">
-      <div className="overlay__grabbar drag "></div>
-    );
+    return <div className="overlay__grabbar drag "></div>;
   }
 
   navBarButtons() {
@@ -28,7 +23,6 @@ export default class Overlay extends Component {
         <Button
           className="overlay__header__buttonContainer__button--minimize"
           onClick={(e) => {
-            // this.props.onClickCloseHandler();
             this.handleMinimize();
           }}>
           <UnderscoreSVG />
@@ -37,8 +31,8 @@ export default class Overlay extends Component {
         <Button
           className="overlay__header__buttonContainer__button--close"
           onClick={(e) => {
-            // this.props.onClickCloseHandler();
             this.handleShow();
+            // this.props.onClickCloseHandler(e);
           }}>
           <CrossSVG />
         </Button>
@@ -61,22 +55,12 @@ export default class Overlay extends Component {
         <div
           className={`overlay${this.state.minimized ? " minimized" : ""}${
             this.state.hidden ? " hide" : ""
-          }`}
-          // title={"overlay nodrag"}
-        >
+          }`}>
           <header className="overlay__header">
             {this.grabBar()}
             {this.navBarButtons()}
           </header>
           <div className="content">{this.content}</div>
-          {/* <aside className={`overlay${this.state.minimized ? "--minimized" : "--maximized"}`}>
-            {this.navBarButtons()}
-            <div className={`content${this.state.minimized ? "--minimized" : "--maxiized"}`}>
-              {this.props.children}
-            </div>
-          </aside> */}
-          {/* {this.topBar()}
-          {this.content} */}
         </div>
       </Draggable>,
       document.getElementById("plugin_root")

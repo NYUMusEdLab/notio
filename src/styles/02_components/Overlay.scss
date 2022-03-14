@@ -18,14 +18,13 @@
   padding: 5px;
   width: 80%;
   max-width: 90%;
-  height: 40%;
+  height: 60%;
   max-height: 90%;
   z-index: 30;
   left: 0;
   // visibility: visible;
   top: 3%;
   left: 5%;
-  // flex-direction: row;
   border-radius: 10px;
   box-shadow: 0.5vw 1.3vw 2vw #555;
   visibility: show;
@@ -38,7 +37,6 @@
     height: 4% !important;
     resize: none;
     transition: all 0.3s ease;
-    // transform: scale(9%, 9%);
   }
 
   svg {
@@ -49,7 +47,6 @@
     width: 100%;
     height: 50%;
     top: -40%;
-    // z-index: 100;
     // background-color: rgb(241, 111, 11);
     &:hover {
       background-color: white;
@@ -67,16 +64,13 @@
     &__buttonContainer {
       display: flex;
       height: 50%;
-      // min-height: 2rem;
       // background-color: rgb(241, 111, 255);
       align-items: flex-start;
-      // align-self: strech;
 
       &__button {
         border: none;
         display: flex;
         align-items: flex-end;
-        // padding: 0.5rem;
 
         &--minimize {
           border: none;
@@ -114,8 +108,6 @@
     margin-top: -6rem;
     height: 96%;
     width: 100%;
-    // align-items: stretch;
-    // align-self: stretch;
     .tabs-wrapper {
       flex: 1;
 
@@ -127,12 +119,11 @@
       // background-color: rgba(95, 255, 21, 0.829);
     }
   }
+
   &.react-player {
     display: flex;
-    // flex: 1;
-    // height: 100%;
-    // align-items: stretch;
   }
+
   iframe {
     display: flex;
     flex: 1;

@@ -53,7 +53,8 @@ export default class VideoButton extends Component {
               handleChangeVideoVisibility={this.props.handleChangeVideoVisibility}
               handleChangeVideoUrl={this.props.handleChangeVideoUrl}
               resetVideoUrl={this.props.resetVideoUrl}
-              handleResetVideoUrl={this.props.handleResetVideoUrl}></VideoTutorial2>
+              handleResetVideoUrl={this.props.handleResetVideoUrl}
+              onClickCloseHandler={this.handleShow}></VideoTutorial2>
           )
           // <Overlay>
 
