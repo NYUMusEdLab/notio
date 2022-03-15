@@ -25,10 +25,9 @@ class Share extends Component {
           picto={<ShareSVG />}
           onClickMenuHandler={this.props.saveSessionToDB}
           hasBG={true}>
-            
-        <ShareLink sessionID={this.props.sessionID} />
-          </Popup>
-        
+          <ShareLink sessionID={this.props.sessionID} />
+        </Popup>
+
         {/* <Popup
           className="popup-menu popup-share"
           draggable={false}

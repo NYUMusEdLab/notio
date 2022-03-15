@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import ShareSVG from "../../assets/img/Share";
-import Overlay from "./Overlay";
-import Share from "./Share";
+// import Overlay from "./Overlay";
+// import Share from "./Share";
 // import VideoTutorial from "./VideoTutorial";
 // import { Tabs, Tab, Form, Button } from "react-bootstrap";
-import { Tabs, Tab } from "react-bootstrap";
+// import { Tabs, Tab } from "react-bootstrap";
 import Share2 from "./Share2";
 
 const components = {
@@ -23,7 +23,6 @@ export default class ShareButton extends Component {
     minimized: false,
     show: this.props.active ? true : false,
     activeTab: "share",
-
   };
 
   handleShow = () => {
@@ -34,12 +33,12 @@ export default class ShareButton extends Component {
     event.preventDefault();
     // set video url
     this.props.handleChangeVideoUrl(event.target.elements[0].value);
-  
+
     this.setState({
-      activeTab: "share"
+      activeTab: "share",
     });
   };
-  
+
   // handleSelect = (key) => {
   //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
   //   if (key === 'share')

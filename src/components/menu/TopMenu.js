@@ -230,15 +230,10 @@ class TopMenu extends Component {
               resetVideoUrl={this.props.resetVideoUrl}
               handleResetVideoUrl={this.props.handleResetVideoUrl}
             />
-
-            {/* <VideoTutorial
-              handleChangeVideoUrl={this.props.handleChangeVideoUrl}
-              videoUrl={this.props.state.videoUrl}
-              resetVideoUrl={this.props.resetVideoUrl}
-            /> */}
           </div>
 
           {/* Share */}
+
           <div className="navbar-item menu-share">
             <ShareButton
               title="Share this setup"

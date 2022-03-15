@@ -3,8 +3,7 @@ import ShareSVG from "../../assets/img/Share";
 import ShareLink from "./ShareLink";
 import Popup from "./Popup";
 import Overlay from "./Overlay";
-import { Tabs, Tab, Form, Button } from "react-bootstrap";
-
+import { Tabs, Tab, Button } from "react-bootstrap";
 
 class Share2 extends Component {
   state = {
@@ -26,30 +25,33 @@ class Share2 extends Component {
     // const { url, playing } = this.state;
     return (
       <React.Fragment>
-
-          <Overlay>
-            <div className="tabs-wrapper">
-            <Tabs defaultActiveKey="share" activeTab={this.state.activeTab} id="controlled-tab-example">
-                <Tab eventKey="share" title="Share">
+        <Overlay>
+          <div className="tabs-wrapper">
+            <Tabs
+              defaultActiveKey="share"
+              activeTab={this.state.activeTab}
+              id="controlled-tab-example">
+              <Tab eventKey="share" title="Share">
                 <Popup
-          title={this.props.title}
-          className="popup-menu popup-share"
-          draggable={false}
-          picto={<ShareSVG />}
-          onClickMenuHandler={this.props.saveSessionToDB}
-          hasBG={true}/>
-                  <ShareLink sessionID={this.props.sessionID} />
-                  <Button onClick={this.props.saveSessionToDB}></Button>
+                  title={this.props.title}
+                  className="popup-menu popup-share"
+                  draggable={false}
+                  picto={<ShareSVG />}
+                  onClickMenuHandler={this.props.saveSessionToDB}
+                  hasBG={true}
+                />
+                <ShareLink sessionID={this.props.sessionID} />
+                <Button onClick={this.props.saveSessionToDB}></Button>
 
-                  {/* <Share
+                {/* <Share
                     saveSessionToDB={this.props.saveSessionToDB}
                     sessionID={this.props.sessionID}
                   /> */}
-                </Tab>
-              </Tabs>
-            </div>
-          </Overlay>
-{/*         
+              </Tab>
+            </Tabs>
+          </div>
+        </Overlay>
+        {/*         
   <Popup
     title={this.props.title}
     className="popup-menu popup-share"
@@ -60,8 +62,6 @@ class Share2 extends Component {
       
   <ShareLink sessionID={this.props.sessionID} />
     </Popup> */}
-        
-        
       </React.Fragment>
     );
   }

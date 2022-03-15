@@ -1,4 +1,4 @@
-import React, { Component, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Form, Button } from "react-bootstrap";
 import Overlay from "./Overlay";
@@ -10,16 +10,17 @@ const VideoTutorial = (props) => {
   // const [played, setPlayed] = useState(0);
   // const [loaded, setLoaded] = useState(0);
   // const [duration, setDuration] = useState(0);
-  const [minimized, setMinimized] = useState(false);
-  const [show, setShow] = useState(props.vissible);
+  // const [minimized, setMinimized] = useState(false);
+  // const [show, setShow] = useState(props.vissible);
   const [activeTab, setActiveTab] = useState("playlist");
-  const [playerIsReady, setPlayerIsReady] = useState(false);
+  // const [playerIsReady, setPlayerIsReady] = useState(false);
   const [videoUrl, setVideoUrl] = useState(props.videoUrl);
 
-  const handlePlayPause = () => {
-    setPlaying(!playing);
-    props.handleChangeVideoVisibility();
-  };
+  //TODO: Remove
+  // const handlePlayPause = () => {
+  //   setPlaying(!playing);
+  //   props.handleChangeVideoVisibility();
+  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,22 +29,23 @@ const VideoTutorial = (props) => {
     setActiveTab("playlist");
   };
 
-  const handleSelect = (key) => {
-    // A bit dummy but need to control tabs after submit (cf handleSumbit())
+  // //this can be used if we make the tabs controlled
+  // const handleSelect = (key) => {
+  //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
 
-    if (key === "playlist") {
-      setActiveTab("playlist");
-      // this.setState({ activeTab: "playlist" });
-    }
-    if (key === "change_video") {
-      setActiveTab("change_video");
-      //   this.setState({ activeTab: "change_video" });
-    }
-  };
+  //   if (key === "playlist") {
+  //     setActiveTab("playlist");
+  //     // this.setState({ activeTab: "playlist" });
+  //   }
+  //   if (key === "change_video") {
+  //     setActiveTab("change_video");
+  //     //   this.setState({ activeTab: "change_video" });
+  //   }
+  // };
 
   const playerOnReady = (event) => {
     // A bit dummy but need to control tabs after submit (cf handleSumbit())
-    setPlayerIsReady(false);
+    // setPlayerIsReady(false);
     setPlaying(true);
   };
 
@@ -55,7 +57,8 @@ const VideoTutorial = (props) => {
 
   return (
     <React.Fragment>
-      <Overlay visible={show} key={videoUrl}>
+      {/* <Overlay visible={show} key={videoUrl}> */}
+      <Overlay visible={true} key={videoUrl}>
         <div className="tabs-wrapper">
           {/* <Tabs defaultActiveKey="playlist" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
           <Tabs defaultActiveKey="playlist" activeTab={activeTab} id="controlled-tab-example">
