@@ -359,6 +359,7 @@ class WholeApp extends Component {
     }
 
     //Initialze the tooltip
+    /* TODO: MOMENTARILY TURNED OFF DUE TO REQUEST BY CECILIA
     new Promise(r => setTimeout(r, 1500)).then((resolve, reject) => {
         const tooltip = !this.state.showTooltip;
         this.setState({
@@ -366,7 +367,7 @@ class WholeApp extends Component {
         })
         this.handleChangeTooltip();
     })
-    
+    */
   }
 
   toggleMenu = () => {
