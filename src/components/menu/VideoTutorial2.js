@@ -16,12 +16,6 @@ const VideoTutorial = (props) => {
   // const [playerIsReady, setPlayerIsReady] = useState(false);
   const [videoUrl, setVideoUrl] = useState(props.videoUrl);
 
-  //TODO: Remove
-  // const handlePlayPause = () => {
-  //   setPlaying(!playing);
-  //   props.handleChangeVideoVisibility();
-  // };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     setVideoUrl(event.target.elements[0].value);

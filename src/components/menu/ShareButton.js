@@ -23,6 +23,7 @@ export default class ShareButton extends Component {
     minimized: false,
     show: this.props.active ? true : false,
     activeTab: "share",
+    sessionID: this.props.sessionID,
   };
 
   handleShow = () => {
@@ -32,7 +33,7 @@ export default class ShareButton extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     // set video url
-    this.props.handleChangeVideoUrl(event.target.elements[0].value);
+    this.props.saveSessionToDB();
 
     this.setState({
       activeTab: "share",
@@ -47,6 +48,9 @@ export default class ShareButton extends Component {
   //     this.setState({ activeTab: "change_video" })
   // }
   render() {
+    console.log("shareButton");
+    console.log(this.props.sessionID);
+
     return (
       <React.Fragment>
         <div className="button">
@@ -65,24 +69,9 @@ export default class ShareButton extends Component {
           </div>
         </div>
         {this.state.show && (
-          <Share2 sessionID={this.props.sessionID}></Share2>
-
-          // <Overlay>
-          //   <div className="tabs-wrapper">
-          //     <Tabs
-          //       defaultActiveKey="share"
-          //       activeKey={this.state.activeTab}
-          //       onSelect={this.handleSelect}
-          //       id="uncontrolled-tab-example">
-          //       <Tab eventKey="share" title="Share">
-          //         <Share
-          //           saveSessionToDB={this.props.saveSessionToDB}
-          //           sessionID={this.props.sessionID}
-          //         />
-          //       </Tab>
-          //     </Tabs>
-          //   </div>
-          // </Overlay>
+          <Share2
+            saveSessionToDB={this.props.saveSessionToDB}
+            sessionID={this.props.sessionID}></Share2>
         )}
       </React.Fragment>
     );

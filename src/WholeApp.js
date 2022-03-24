@@ -152,7 +152,7 @@ class WholeApp extends Component {
   // }
 
   saveSessionToDB = () => {
-    // console.log("saveSessionToDB");
+    console.log("saveSessionToDB");
     const {
       octave,
       scale,
@@ -185,17 +185,17 @@ class WholeApp extends Component {
         videoActive: videoActive,
       })
       .then((docRef) => {
-        // console.log("Session written with ID: ", docRef.id);
+        console.log("Session written with ID: ", docRef.id);
         this.setState({ sessionID: docRef.id });
       })
       .catch((error) => {
-        // console.error("Error adding document: ", error);
+        console.error("Error adding document: ", error);
         this.setState({ sessionError: error });
       });
   };
 
   openSavedSession = (sessionId) => {
-    // console.log("*********** openSaved session:", sessionId);
+    console.log("*********** openSaved session:", sessionId);
     const ref = db.collection("sessions").doc(sessionId);
     ref.get().then((doc) => {
       if (doc.exists) {
