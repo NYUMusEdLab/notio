@@ -28,7 +28,7 @@ const ShareLink = (props) => {
           }}>
           copy
         </button>
-        <button onClick={props.saveSessionToDB}>save current setup</button>
+        <button onClick={props.saveSessionToDB}>save new setup</button>
         <span className={`message ${hasCopied ? "show" : ""}`}>The link has been copied</span>
       </div>
     );
