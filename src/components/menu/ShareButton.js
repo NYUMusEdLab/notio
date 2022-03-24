@@ -5,7 +5,7 @@ import ShareSVG from "../../assets/img/Share";
 // import VideoTutorial from "./VideoTutorial";
 // import { Tabs, Tab, Form, Button } from "react-bootstrap";
 // import { Tabs, Tab } from "react-bootstrap";
-import Share2 from "./Share2";
+import Share from "./Share";
 
 const components = {
   share: <ShareSVG />,
@@ -69,9 +69,9 @@ export default class ShareButton extends Component {
           </div>
         </div>
         {this.state.show && (
-          <Share2
+          <Share
             saveSessionToDB={this.props.saveSessionToDB}
-            sessionID={this.props.sessionID}></Share2>
+            sessionID={this.props.sessionID}></Share>
         )}
       </React.Fragment>
     );

@@ -41,12 +41,17 @@ export default class Overlay extends Component {
   }
 
   handleShow = () => {
-    this.setState({ hidden: !this.state.hidden });
-    console.log("hide Not Implemented");
+    this.setState((prevState) => ({
+      hidden: !prevState.hidden,
+      minimized: !prevState.hidden,
+    }));
   };
 
   handleMinimize = () => {
-    this.setState({ minimized: !this.state.minimized });
+    this.setState((prevState) => ({
+      minimized: !prevState.minimized || prevState.hidden,
+      hidden: false,
+    }));
   };
 
   render() {

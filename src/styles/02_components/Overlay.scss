@@ -16,14 +16,14 @@
   position: absolute;
   transform: scale(96%, 96%);
   padding: 5px;
-  width: 40%;
+  width: 40rem;
   max-width: 90%;
-  height: 40%;
+  height: 25rem;
   max-height: 90%;
   z-index: 30;
   left: 0;
   // visibility: visible;
-  top: 3%;
+  top: 7%;
   left: 5%;
   border-radius: 10px;
   box-shadow: 0.5vw 1.3vw 2vw #555;
@@ -31,10 +31,12 @@
 
   &.hide {
     visibility: hidden;
+    height: 6% !important;
+    transition: all 0.3s ease;
   }
   &.minimized {
     background-color: transparent;
-    height: 4% !important;
+    height: 10% !important;
     resize: none;
     transition: all 0.3s ease;
   }
@@ -49,7 +51,6 @@
     top: -40%;
     // background-color: rgb(241, 111, 11);
     &:hover {
-      background-color: white;
       cursor: move;
     }
   }
@@ -66,6 +67,7 @@
       height: 50%;
       // background-color: rgb(241, 111, 255);
       align-items: flex-start;
+      visibility: visible;
 
       &__button {
         border: none;
@@ -92,6 +94,7 @@
           height: 100%;
           width: 100%;
           background-color: transparent;
+
           &:hover {
             cursor: pointer !important;
             background-color: white;
