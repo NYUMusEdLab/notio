@@ -134,21 +134,6 @@ class TopMenu extends Component {
             />
           </div>
 
-          {/* CustomScaleSelector */}
-          {/* <div className="navbar-item menu-custom-scale">
-            <SubMenu
-              title="CustomScale"
-              selected={this.props.state.scaleObject.name}
-              selectedImg=< CustomScaleImg />
-              content={
-                <CustomScaleSelector //TODO: add initoptions for custom scale, matching current scale, add function handleCustomScale
-                  initOptions={this.props.state.scaleObject} //TODO: fix to customscale creation
-                  handleChange={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
-                />
-              }
-            />
-          </div> */}
-
           {/* Root */}
           <div className="navbar-item menu-root">
             <SubMenu

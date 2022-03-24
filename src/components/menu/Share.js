@@ -37,9 +37,6 @@ const Share = (props) => {
             <Tab eventKey="share" title="Share">
               <div>
                 <ShareLink sessionID={props.sessionID} saveSessionToDB={props.saveSessionToDB} />
-                {/* <Button variant="primary" onClick={props.saveSessionToDB}> 
-                  create share link
-  </Button>*/}
               </div>
             </Tab>
           </Tabs>
