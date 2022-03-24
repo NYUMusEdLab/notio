@@ -1,6 +1,7 @@
 /* eslint-disable no-fallthrough */
 
 import React, { Component } from "react";
+import ReactTooltip from "react-tooltip";
 import _ from "lodash";
 import Toggle from "./Toggle";
 import SubMenu from "./SubMenu";
@@ -19,6 +20,7 @@ import NotationImg from "../../assets/img/Notation";
 // import CustomScaleImg from "../../assets/img/CustomScale";
 
 import clefs from "../../data/clefs";
+import tooltipText from "../../data/tooltipText";
 // import CustomScaleSelector from "./CustomScaleSelector";
 import { DropdownCustomScaleMenu } from "./DropdownCustomScaleMenu";
 import VideoButton from "./VideoButton";
@@ -34,6 +36,7 @@ class TopMenu extends Component {
       clefTitle: "",
       clefImage: "",
       titleRoot: this.props.state.baseNote,
+      windowWidth: Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0),
     };
   }
 
@@ -83,27 +86,75 @@ class TopMenu extends Component {
     // console.log("topmenu scales", scales);
     return (
       <div>
-        <div className="navbar ">
+        <div
+          className="navbar "
+          data-tip="custom"
+          data-for="keyboardTooltip"
+          data-event="null"
+          ref={(ref) => this.props.setRef(ref, "keyboard")}
+          // The tooltip text for the keyboard is placed at the bottom of this div, due to how ReactTooltip works!
+        >
           {/* Toggle Piano */}
-          <div className="navbar-item toggle">
+          <div
+            className="navbar-item toggle"
+            data-tip="custom"
+            data-for="showKeyboardTooltip"
+            data-event="null"
+            ref={(ref) => this.props.setRef(ref, "showKeyboard")}>
             <Toggle
               title="Show keyboard"
               onChange={this.props.togglePiano}
               checked={this.props.state.pianoOn}
             />
           </div>
+          <ReactTooltip
+            id="showKeyboardTooltip"
+            place="right"
+            effect="solid"
+            scrollHide={false}
+            resizeHide={false}
+            overridePosition={() => {
+              return { top: 120, left: -10 };
+            }}
+            className="tooltip-topmenu"
+            html={true}>
+            {tooltipText["showKeyboard"]}
+          </ReactTooltip>
 
           {/* Toggle Extended */}
-          <div className="navbar-item toggle">
+          <div
+            className="navbar-item toggle"
+            data-tip="custom"
+            data-for="extendedKeyboardTooltip"
+            data-event="null"
+            ref={(ref) => this.props.setRef(ref, "extendedKeyboard")}>
             <Toggle
               title="Extended Keyboard"
               onChange={this.props.toggleExtendedKeyboard}
               checked={this.props.state.extendedKeyboard}
             />
           </div>
+          <ReactTooltip
+            id="extendedKeyboardTooltip"
+            place="right"
+            effect="solid"
+            scrollHide={false}
+            resizeHide={false}
+            overridePosition={() => {
+              return { top: 220, left: -10 };
+            }}
+            className="tooltip-topmenu"
+            html={true}>
+            {tooltipText["extendKeyboard"]}
+          </ReactTooltip>
 
           {/* Sounds */}
-          <div className="navbar-item menu-scale">
+          <div
+            className="navbar-item menu-scale"
+            data-tip="custom"
+            data-for="soundTooltip"
+            data-event="null"
+            ref={(ref) => this.props.setRef(ref, "sound")}>
             <SubMenu
               title="Sound"
               selected={this.state.titleSound}
@@ -118,24 +169,58 @@ class TopMenu extends Component {
               }
             />
           </div>
+          <ReactTooltip
+            id="soundTooltip"
+            place="bottom"
+            effect="solid"
+            scrollHide={false}
+            resizeHide={false}
+            offset={{ bottom: 60 }}
+            className="tooltip-topmenu"
+            html={true}>
+            {tooltipText["sound"]}
+          </ReactTooltip>
 
           {/* Notation */}
-          <div className="navbar-item menu-notation">
+          <div
+            className="navbar-item menu-notation"
+            data-tip="custom"
+            data-for="notationTooltip"
+            data-event="null"
+            ref={(ref) => this.props.setRef(ref, "notation")}>
             <SubMenu
               title="Notation"
               selected={""}
               selectedImg={<NotationImg />}
               content={
-                <Notation
-                  initOptions={this.props.state.notation}
-                  handleChange={this.props.handleChangeNotation}
-                />
+                <>
+                  <Notation
+                    initOptions={this.props.state.notation}
+                    handleChange={this.props.handleChangeNotation}
+                  />
+                </>
               }
             />
           </div>
+          <ReactTooltip
+            id="notationTooltip"
+            place="bottom"
+            effect="solid"
+            scrollHide={false}
+            resizeHide={false}
+            offset={{ bottom: 60 }}
+            className="tooltip-topmenu"
+            html={true}>
+            {tooltipText["notation"]}
+          </ReactTooltip>
 
           {/* Root */}
-          <div className="navbar-item menu-root">
+          <div
+            className="navbar-item menu-root"
+            data-tip="custom"
+            data-for="rootTooltip"
+            data-event="null"
+            ref={(ref) => this.props.setRef(ref, "root")}>
             <SubMenu
               title="Root"
               selected={this.state.titleRoot}
@@ -158,9 +243,25 @@ class TopMenu extends Component {
             />
             {/* <div className="half-circle"></div> */}
           </div>
+          <ReactTooltip
+            id="rootTooltip"
+            place="bottom"
+            effect="solid"
+            scrollHide={false}
+            resizeHide={false}
+            offset={{ bottom: 40 }}
+            className="tooltip-topmenu"
+            html={true}>
+            {tooltipText["root"]}
+          </ReactTooltip>
 
           {/* Scale */}
-          <div className="navbar-item menu-scale">
+          <div
+            className="navbar-item menu-scale"
+            data-tip="custom"
+            data-for="scaleTooltip"
+            data-event="null"
+            ref={(ref) => this.props.setRef(ref, "scale")}>
             <SubMenu
               title="Scale"
               selected={this.state.titleNotation}
@@ -183,9 +284,25 @@ class TopMenu extends Component {
               }
             />
           </div>
+          <ReactTooltip
+            id="scaleTooltip"
+            place="bottom"
+            effect="solid"
+            scrollHide={false}
+            resizeHide={false}
+            offset={{ bottom: 60 }}
+            className="tooltip-topmenu"
+            html={true}>
+            {tooltipText["scale"]}
+          </ReactTooltip>
 
           {/* Clef */}
-          <div className="navbar-item menu-clef">
+          <div
+            className="navbar-item menu-clef"
+            data-tip="custom"
+            data-for="clefsTooltip"
+            data-event="null"
+            ref={(ref) => this.props.setRef(ref, "clefs")}>
             <SubMenu
               title="Clefs"
               selected={this.state.clefTitle}
@@ -203,9 +320,25 @@ class TopMenu extends Component {
               }
             />
           </div>
+          <ReactTooltip
+            id="clefsTooltip"
+            place="bottom"
+            effect="solid"
+            scrollHide={false}
+            resizeHide={false}
+            offset={{ bottom: 60 }}
+            className="tooltip-topmenu"
+            html={true}>
+            {tooltipText["clefs"]}
+          </ReactTooltip>
 
           {/* Video */}
-          <div className="navbar-item menu-video">
+          <div
+            className="navbar-item menu-video"
+            data-tip="custom"
+            data-for="videoPlayerTooltip"
+            data-event="null"
+            ref={(ref) => this.props.setRef(ref, "videoPlayer")}>
             <VideoButton
               title="Video Player"
               label="video"
@@ -217,10 +350,27 @@ class TopMenu extends Component {
               handleResetVideoUrl={this.props.handleResetVideoUrl}
             />
           </div>
+          <ReactTooltip
+            id="videoPlayerTooltip"
+            place="bottom"
+            effect="solid"
+            scrollHide={false}
+            resizeHide={false}
+            overridePosition={() => {
+              return { top: 280, left: this.state.windowWidth - 170 };
+            }}
+            className="tooltip-topmenu"
+            html={true}>
+            {tooltipText["videoPlayer"]}
+          </ReactTooltip>
 
           {/* Share */}
-
-          <div className="navbar-item menu-share">
+          <div
+            className="navbar-item menu-share"
+            data-tip="custom"
+            data-for="shareThisSetupTooltip"
+            data-event="null"
+            ref={(ref) => this.props.setRef(ref, "shareThisSetup")}>
             <ShareButton
               title="Share this setup"
               label="share"
@@ -228,6 +378,19 @@ class TopMenu extends Component {
               sessionID={this.props.sessionID}
             />
           </div>
+          <ReactTooltip
+            id="shareThisSetupTooltip"
+            place="bottom"
+            effect="solid"
+            scrollHide={false}
+            resizeHide={false}
+            overridePosition={() => {
+              return { top: 120, left: this.state.windowWidth - 170 };
+            }}
+            className="tooltip-topmenu"
+            html={true}>
+            {tooltipText["shareThisSetup"]}
+          </ReactTooltip>
 
           {/* Settings */}
           {/* <div className="navbar-item menu-settings">
@@ -239,12 +402,44 @@ class TopMenu extends Component {
             <img src={require("../../img/info.png")} alt="about" />
           </div>
           <div className="Area2 area">
-            <img src={require("../../img/question_mark.png")} alt="help" />
+            <img
+              src={require("../../img/question_mark.png")}
+              alt="help"
+              data-tip="custom"
+              data-for="helpTooltip"
+              data-event="null"
+              ref={(ref) => this.props.setRef(ref, "help")}
+              onClick={() => this.props.handleChangeTooltip()}
+            />
           </div>
+          <ReactTooltip
+            id="helpTooltip"
+            place="left"
+            effect="solid"
+            scrollHide={false}
+            resizeHide={false}
+            type="info"
+            className="tooltip-topmenu"
+            html={true}>
+            {tooltipText["help"]}
+          </ReactTooltip>
+
           <div className="Area3 area">
             <img src={require("../../img/home.png")} alt="home" />
           </div>
         </div>
+
+        <ReactTooltip
+          id="keyboardTooltip"
+          place="bottom"
+          effect="solid"
+          scrollHide={false}
+          resizeHide={false}
+          offset={{ bottom: 250 }}
+          className="tooltip-keyboard"
+          html={true}>
+          {tooltipText["keyboard"]}
+        </ReactTooltip>
       </div>
     );
   }

@@ -10,8 +10,8 @@ import WholeApp from "../WholeApp";
 import { Time } from 'tone';
 
 /*
-    "File containing all integration tests of the Keyboard Component
-Primarily tests the interaction between the Keyboard and different types of input (click, keyboard press, midi, and audio inputgit gi)"
+    File containing all integration tests of the Keyboard Functionality
+    Primarily tests the interaction between the Keyboard and different types of input (click, keyboard press, midi, and audio inputgit gi)"
 */
 
 // This is necessary to make waitFor works, which makes sure Notio renders /shared/urls, otherwise its a loading screen.
@@ -102,7 +102,8 @@ describe("ComputerKeyboard pressing key to", () =>{
         }
         expect(octave_in_menu.textContent).toBe("Octave: "+(octave+keypressCount));
         
-        await userEvent.keyboard(keypress)
+        const pressKeyDownAndUp = "{d>}{/d}";
+        await userEvent.keyboard(pressKeyDownAndUp);
 
         expect(SoundMaker.mock.instances[0].startSound).toHaveBeenCalledWith(expected_tone);
         expect(SoundMaker.mock.instances[0].stopSound).toHaveBeenCalledWith(expected_tone);

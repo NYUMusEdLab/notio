@@ -54,7 +54,7 @@ class SubMenu extends Component {
       case "alto":
         ClefComponent = AltoClef;
         break;
-      case "no staff":
+      case "hide notes":
         ClefComponent = NoNoteClef;
         break;
       default:
