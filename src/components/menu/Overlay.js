@@ -32,7 +32,6 @@ export default class Overlay extends Component {
           className="overlay__header__buttonContainer__button--close"
           onClick={(e) => {
             this.handleShow();
-            // this.props.onClickCloseHandler(e);
           }}>
           <CrossSVG />
         </Button>

@@ -1,13 +1,11 @@
-import React, { Component, useEffect, useRef, useState } from "react";
-import ShareSVG from "../../assets/img/Share";
+import React, { useEffect, useState } from "react";
 import ShareLink from "./ShareLink";
-import Popup from "./Popup";
 import Overlay from "./Overlay";
-import { Tabs, Tab, Button, Form, FormLabel } from "react-bootstrap";
+import { Tabs, Tab } from "react-bootstrap";
 
 const Share = (props) => {
-  const urlInputRef = useRef();
-  const [activeTab, setActiveTab] = useState("playlist");
+  // const [activeTab, setActiveTab] = useState("playlist");
+  const activeTab = "share";
   const [sessionId, setSessionId] = useState(props.sessionID);
 
   useEffect(() => {
@@ -15,11 +13,6 @@ const Share = (props) => {
       setSessionId(props.sessionID);
     }
   }, [props.sessionID]);
-
-  if (props.sessionID) {
-    const url = "/shared/" + props.sessionID;
-    const fullUrl = window.location.host + url;
-  }
 
   // handleSelectTab = (key) => {
   //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
