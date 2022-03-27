@@ -48,8 +48,8 @@ export default class ShareButton extends Component {
   //     this.setState({ activeTab: "change_video" })
   // }
   render() {
-    console.log("shareButton");
-    console.log(this.props.sessionID);
+    // console.log("shareButton");
+    // console.log(this.props.sessionID);
 
     return (
       <React.Fragment>

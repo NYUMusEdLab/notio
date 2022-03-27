@@ -216,7 +216,7 @@ class WholeApp extends Component {
       showTooltip: tooltip,
     });
     if (tooltip === true) {
-      console.log("GOTTA SHOW!");
+      // console.log("GOTTA SHOW!");
       ReactTooltip.show(this.state.keyboardTooltipRef);
       ReactTooltip.show(this.state.showKeyboardTooltipRef);
       ReactTooltip.show(this.state.extendedKeyboardTooltipRef);
@@ -240,7 +240,7 @@ class WholeApp extends Component {
   // }
 
   saveSessionToDB = () => {
-    console.log("saveSessionToDB");
+    // console.log("saveSessionToDB");
     const {
       octave,
       scale,
@@ -273,7 +273,7 @@ class WholeApp extends Component {
         videoActive: videoActive,
       })
       .then((docRef) => {
-        console.log("Session written with ID: ", docRef.id);
+        // console.log("Session written with ID: ", docRef.id);
         this.setState({ sessionID: docRef.id });
       })
       .catch((error) => {
@@ -283,7 +283,7 @@ class WholeApp extends Component {
   };
 
   openSavedSession = (sessionId) => {
-    console.log("*********** openSaved session:", sessionId);
+    // console.log("*********** openSaved session:", sessionId);
     const ref = db.collection("sessions").doc(sessionId);
     ref.get().then((doc) => {
       if (doc.exists) {

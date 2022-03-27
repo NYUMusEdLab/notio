@@ -5,7 +5,7 @@ import { Tabs, Tab } from "react-bootstrap";
 
 const Share = (props) => {
   // const [activeTab, setActiveTab] = useState("playlist");
-  const activeTab = "share";
+  // const activeTab = "share";
   const [sessionId, setSessionId] = useState(props.sessionID);
 
   useEffect(() => {
@@ -19,14 +19,15 @@ const Share = (props) => {
   //   if (key === "share") this.setState({ activeTab: "share" });
   // };
 
-  console.log("Share");
-  console.log(sessionId);
+  // console.log("Share");
+  // console.log(sessionId);
   // const { url, playing } = this.state;
   return (
     <React.Fragment>
       <Overlay key={props.sessionID}>
         <div className="tabs-wrapper">
-          <Tabs defaultActiveKey="share" activeTab={activeTab} id="controlled-tab-example">
+          {/* <Tabs defaultActiveKey="share" activeTab={activeTab} id="controlled-tab-example"> */}
+          <Tabs defaultActiveKey="share" id="controlled-tab-example">
             <Tab eventKey="share" title="Share">
               <div>
                 <ShareLink sessionID={props.sessionID} saveSessionToDB={props.saveSessionToDB} />

@@ -12,7 +12,7 @@ const VideoTutorial = (props) => {
   // const [duration, setDuration] = useState(0);
   // const [minimized, setMinimized] = useState(false);
   // const [show, setShow] = useState(props.vissible);
-  const [activeTab, setActiveTab] = useState("playlist");
+  // const [activeTab, setActiveTab] = useState("playlist");
   // const [playerIsReady, setPlayerIsReady] = useState(false);
   const [videoUrl, setVideoUrl] = useState(props.videoUrl);
 
@@ -20,7 +20,7 @@ const VideoTutorial = (props) => {
     event.preventDefault();
     setVideoUrl(event.target.elements[0].value);
     props.handleChangeVideoUrl(event.target.elements[0].value);
-    setActiveTab("playlist");
+    // setActiveTab("playlist");
   };
 
   // //this can be used if we make the tabs controlled
@@ -45,7 +45,7 @@ const VideoTutorial = (props) => {
 
   const resetVideoUrl = (event) => {
     setVideoUrl(props.resetVideoUrl);
-    setActiveTab("playlist");
+    // setActiveTab("playlist");
     props.handleResetVideoUrl();
   };
 
@@ -55,7 +55,8 @@ const VideoTutorial = (props) => {
       <Overlay visible={true} key={videoUrl}>
         <div className="tabs-wrapper">
           {/* <Tabs defaultActiveKey="playlist" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
-          <Tabs defaultActiveKey="playlist" activeTab={activeTab} id="controlled-tab-example">
+          {/* <Tabs defaultActiveKey="playlist" activeTab={activeTab} id="controlled-tab-example"> */}
+          <Tabs defaultActiveKey="playlist" id="controlled-tab-example">
             <Tab eventKey="playlist" title="Playlist">
               <ReactPlayer
                 className="react-player"
