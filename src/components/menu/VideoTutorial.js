@@ -1,118 +1,98 @@
-import React, { Component } from "react";
+import React, { useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
-import { Tabs, Tab, Form, Button } from 'react-bootstrap';
-// import VideoSVG from "../../assets/img/Video";
-import Popup from "./Popup";
-// import Overlay from "./Overlay"
+import { Tabs, Tab, Form, Button } from "react-bootstrap";
+import Overlay from "./Overlay";
 
+const VideoTutorial = (props) => {
+  const urlInputRef = useRef();
 
-// const components = {
-//   video: <VideoSVG />,
-// };
+  const [playing, setPlaying] = useState(false);
+  // const [played, setPlayed] = useState(0);
+  // const [loaded, setLoaded] = useState(0);
+  // const [duration, setDuration] = useState(0);
+  // const [minimized, setMinimized] = useState(false);
+  // const [show, setShow] = useState(props.vissible);
+  const [activeTab, setActiveTab] = useState("playlist");
+  // const [playerIsReady, setPlayerIsReady] = useState(false);
+  const [videoUrl, setVideoUrl] = useState(props.videoUrl);
 
-
-class VideoTutorial extends Component {
-  state = {
-    playing: false,
-    played: 0,
-    loaded: 0,
-    duration: 0,
-    minimized: false,
-    show: false,
-    activeTab: "playlist",
-    playerIsReady: false
-  };
-
-  handlePlayPause = () => {
-    this.setState({ playing: !this.state.playing });
-    this.props.handleChangeVideoVisibility()
-  };
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    // set video url
-    this.props.handleChangeVideoUrl(event.target.elements[0].value);
-
-    this.setState({
-      activeTab: "playlist"
-    });
+    setVideoUrl(event.target.elements[0].value);
+    props.handleChangeVideoUrl(event.target.elements[0].value);
+    setActiveTab("playlist");
   };
 
-  handleSelect = (key) => {
+  // //this can be used if we make the tabs controlled
+  // const handleSelect = (key) => {
+  //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
+
+  //   if (key === "playlist") {
+  //     setActiveTab("playlist");
+  //     // this.setState({ activeTab: "playlist" });
+  //   }
+  //   if (key === "change_video") {
+  //     setActiveTab("change_video");
+  //     //   this.setState({ activeTab: "change_video" });
+  //   }
+  // };
+
+  const playerOnReady = (event) => {
     // A bit dummy but need to control tabs after submit (cf handleSumbit())
-    if (key === 'playlist')
-      this.setState({ activeTab: "playlist" })
-    if (key === 'change_video')
-      this.setState({ activeTab: "change_video" })
-  }
+    // setPlayerIsReady(false);
+    setPlaying(true);
+  };
 
-  playerOnReady = (event) => {
-    // A bit dummy but need to control tabs after submit (cf handleSumbit())
-    this.setState({ playerIsReady: true })
-  }
+  const resetVideoUrl = (event) => {
+    setVideoUrl(props.resetVideoUrl);
+    setActiveTab("playlist");
+    props.handleResetVideoUrl();
+  };
 
+  return (
+    <React.Fragment>
+      {/* <Overlay visible={show} key={videoUrl}> */}
+      <Overlay visible={true} key={videoUrl}>
+        <div className="tabs-wrapper">
+          {/* <Tabs defaultActiveKey="playlist" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
+          <Tabs defaultActiveKey="playlist" activeTab={activeTab} id="controlled-tab-example">
+            <Tab eventKey="playlist" title="Playlist">
+              <ReactPlayer
+                className="react-player"
+                playing={playing}
+                width="100%"
+                height="100%"
+                url={videoUrl}
+                controls={true}
+                onReady={playerOnReady}
+              />
+            </Tab>
+            <Tab eventKey="change_video" title="Customize">
+              <div>
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group controlId="formYoutubeUrl">
+                    <Form.Label>Video url</Form.Label>
+                    <Form.Control type="text" placeholder="Enter url" ref={urlInputRef} />
+                    <Form.Text className="text-muted">
+                      Enter the url for any video that you want to use with the app.
+                    </Form.Text>
+                    <Form.Text className="text-muted">Current url: {videoUrl}</Form.Text>
 
-  resetVideoUrl = (event) => {
-    this.props.resetVideoUrl();
-    this.setState({
-      activeTab: "playlist"
-    })
-  }
-
-
-  render() {
-    const { playing, activeTab } = this.state;
-
-    return (
-      <React.Fragment>
-        <Popup
-          active = {this.props.active}
-
-          className="popup-video"
-          // title={this.props.title}
-          draggable={true}
-          // picto={components[this.props.label]}
-          onClickMenuHandler={this.handlePlayPause}
-          onClickCloseHandler={this.handlePlayPause}
-          hasMinize={true}
-          content={
-            <div className="tabs-wrapper">
-              <Tabs defaultActiveKey="playlist" activeKey={activeTab} onSelect={this.handleSelect} id="uncontrolled-tab-example">
-                <Tab eventKey="playlist" title="Playlist">
-                  <ReactPlayer
-                    ref={this.ref}
-                    className="react-player"
-                    playing={playing}
-                    width="100%"
-                    height="100%"
-                    url={this.props.videoUrl}
-                    onReady={this.playerOnReady}
-                  />
-                </Tab>
-                <Tab eventKey="change_video" title="Customize">
-                  <div>
-                    <Form onSubmit={this.handleSubmit}>
-                      <Form.Group controlId="formYoutubeUrl">
-                        <Form.Label>Video url</Form.Label>
-                        <Form.Control type="text" placeholder="Enter url" />
-                        <Form.Text className="text-muted">
-                          Enter the url for any video that you want to use with the app</Form.Text>
-
-                        <Button variant="primary" type="submit">
-                          Use this video
-                        </Button>
-                        <Button variant="outline-danger" onClick={this.resetVideoUrl}>Reset to Notio Tutorial</Button>
-                      </Form.Group>
-                    </Form>
-                  </div>
-                </Tab>
-              </Tabs>
-            </div>
-          }
-        />
-      </React.Fragment>
-    );
-  }
-}
+                    <Button variant="primary" type="submit">
+                      Use this video
+                    </Button>
+                    <Button variant="outline-danger" onClick={resetVideoUrl}>
+                      Reset to Notio Tutorial
+                    </Button>
+                  </Form.Group>
+                </Form>
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
+      </Overlay>
+    </React.Fragment>
+  );
+};
 
 export default VideoTutorial;

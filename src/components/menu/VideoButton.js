@@ -4,7 +4,7 @@ import VideoSVG from "../../assets/img/Video";
 // import Overlay from './Overlay';
 // import VideoTutorial from './VideoTutorial';
 // import { Tabs, Tab, Form, Button } from 'react-bootstrap';
-import VideoTutorial2 from "./VideoTutorial2";
+import VideoTutorial from "./VideoTutorial";
 
 const components = {
   video: <VideoSVG />,
@@ -47,14 +47,14 @@ export default class VideoButton extends Component {
         </div>
         {
           this.state.show && (
-            <VideoTutorial2
+            <VideoTutorial
               vissible={this.props.active}
               videoUrl={this.props.videoUrl}
               handleChangeVideoVisibility={this.props.handleChangeVideoVisibility}
               handleChangeVideoUrl={this.props.handleChangeVideoUrl}
               resetVideoUrl={this.props.resetVideoUrl}
               handleResetVideoUrl={this.props.handleResetVideoUrl}
-              onClickCloseHandler={this.handleShow}></VideoTutorial2>
+              onClickCloseHandler={this.handleShow}></VideoTutorial>
           )
           // <Overlay>
 
