@@ -6,8 +6,8 @@ import CrossSVG from "../../assets/img/Cross";
 
 class Popup extends Component {
   static defaultProps = {
-    onClickMenuHandler: () => { },
-    onClickCloseHandler: () => { },
+    onClickMenuHandler: () => {},
+    onClickCloseHandler: () => {},
     hasBG: false,
     hasMinize: false,
     draggable: false,
@@ -26,24 +26,11 @@ class Popup extends Component {
         edgeResistance: 0.65,
         bounds: ".Piano",
         inertia: true,
-        trigger: ".nav-tabs"
+        trigger: ".nav-tabs",
       });
     }
 
-    // $('.notio-popup').each(function() {
-    //   gsap.set('.resize-handle', { top: drag.width(), left: drag.height() });
-    // }
-    // gsap.set(".resize-handle", { top: $('.notio-popup').width(), left: $('.notio-popup').height() });
-
-    // Draggable.create(".resize-handle", {
-    //   type:"bottom,right",
-    //   onPress: function(e) {
-    //     e.stopPropagation(); // cancel drag
-    //   },
-    //   onDrag: function(e) {
-    //     gsap.set(this.target.parentNode, { width: this.x, height: this.y });
-    //   }
-    // });
+   
   }
 
   handleShow = () => {
@@ -57,58 +44,35 @@ class Popup extends Component {
   render() {
     // console.log("this.props.hasMinize", this.props.hasMinize);
     return (
-      <div>
-        <div className="button">
-          <div
-            className="circledButton"
-            onClick={(e) => {
-              this.props.onClickMenuHandler();
-              this.handleShow();
-            }}
-          >
-            {this.props.picto}
-          </div>
-          <div className="title--wrapper">
-            <span className="title" title={this.props.title}>{this.props.title}</span>
-          </div>
-
-        </div>
-
-        {this.props.hasBG ? (
+      <React.Fragment>
+        
+        {this.props.hasBG && (
           <div className={`notio-popup--bg ${this.state.show ? "show" : ""}`}></div>
-        ) : (
-          ""
         )}
         <div
           className={
             this.props.className +
-            ` notio-popup ${this.state.minimized ? "minimized" : ""} ${this.state.show ? "show" : ""}`
-          }
-        >
+            ` notio-popup ${this.state.minimized ? "minimized" : ""} ${
+              this.state.show ? "show" : ""
+            }`
+          }>
           <div className="notio-popup--header clearfix">
-            <div
-              className="close notio-popup--button"
+            <div className="close notio-popup--button"
               onClick={(e) => {
                 this.props.onClickCloseHandler();
                 this.handleShow();
-              }}
-            >
+              }}>
               <CrossSVG />
             </div>
-            {this.props.hasMinize ? (
-            <div
-              className="minimize notio-popup--button"
-              onClick={this.handleMinimize}
-            >
-              <UnderscoreSVG />
-            </div>
-            ) : (
-              ""
+            {this.props.hasMinize && (
+              <div className="minimize notio-popup--button" onClick={this.handleMinimize}>
+                <UnderscoreSVG />
+              </div>
             )}
           </div>
           {this.props.content}
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

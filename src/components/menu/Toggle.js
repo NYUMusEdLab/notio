@@ -7,11 +7,7 @@ class Toggle extends Component {
       <div>
         <div className="widget-wrapper">
           <label className="switch">
-            <input
-              type="checkbox"
-              onChange={this.props.onChange}
-              checked={this.props.checked}
-            />
+            <input type="checkbox" onChange={this.props.onChange} checked={this.props.checked} />
             <span className="slider round"></span>
           </label>
         </div>

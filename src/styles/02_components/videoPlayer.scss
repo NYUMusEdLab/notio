@@ -43,7 +43,8 @@
   }
 
   .react-player {
-    background-image   : url(./img/loader.gif);
+    flex-grow: 1;
+    background-image   : url(../img/loader.gif);
     background-repeat  : no-repeat;
     background-position: center center;
     background-size    : 4vw;
