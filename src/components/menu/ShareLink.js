@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 const ShareLink = (props) => {
   const [hasCopied, setHasCopied] = useState(false);
-  console.log("ShareLink");
-  console.log(props.sessionID);
+  // console.log("ShareLink");
+  // console.log(props.sessionID);
 
   if (props.sessionID) {
     const url = "/shared/" + props.sessionID;

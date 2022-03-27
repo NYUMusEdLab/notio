@@ -82,7 +82,7 @@ class TopMenu extends Component {
   };
 
   render() {
-    console.log(this.props.sessionID);
+    // console.log(this.props.sessionID);
     // console.log("topmenu scales", scales);
     return (
       <div>
