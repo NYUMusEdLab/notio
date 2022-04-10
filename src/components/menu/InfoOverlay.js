@@ -1,16 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import ReactPlayer from "react-player/lazy";
-import {
-  Tabs,
-  Tab,
-  Form,
-  Button,
-  FormLabel,
-  Card,
-  ListGroup,
-  ListGroupItem,
-  CardGroup,
-} from "react-bootstrap";
+import { Tabs, Tab, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import Overlay from "./Overlay";
 // import ReactMarkdown from "react-markdown";
 // import aboutPath from "../../markdown/AboutNotio.md";
@@ -19,8 +9,8 @@ const InfoOverlay = (props) => {
   // const urlInputRef = useRef();
   // const [post, setPost] = useState(" ");
 
-  const [playing, setPlaying] = useState(false);
-  const [videoUrl, setVideoUrl] = useState(props.videoUrl);
+  // const [playing, setPlaying] = useState(false);
+  // const [videoUrl, setVideoUrl] = useState(props.videoUrl);
   //TODO: try to import the .md file to auto generate the layout of the infotabs
   // const myfile = require("AboutNotio.md");
 
@@ -88,7 +78,7 @@ const InfoOverlay = (props) => {
   return (
     <React.Fragment>
       {/* <Overlay visible={show} key={videoUrl}> */}
-      <Overlay visible={true} key={videoUrl}>
+      <Overlay visible={true}>
         <div className="tabs-wrapper">
           {/* <Tabs defaultActiveKey="playlist" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
           {/* <Tabs defaultActiveKey="playlist" activeTab={activeTab} id="controlled-tab-example"> */}
@@ -212,7 +202,7 @@ const InfoOverlay = (props) => {
                     <ListGroupItem>
                       <ReactPlayer
                         className="react-player"
-                        playing={playing}
+                        // playing={playing}
                         width="100%"
                         height="100%"
                         url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
@@ -223,7 +213,7 @@ const InfoOverlay = (props) => {
                     <ListGroupItem>
                       <ReactPlayer
                         className="react-player"
-                        playing={playing}
+                        // playing={playing}
                         width="100%"
                         height="100%"
                         url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
@@ -234,7 +224,7 @@ const InfoOverlay = (props) => {
                     <ListGroupItem>
                       <ReactPlayer
                         className="react-player"
-                        playing={playing}
+                        // playing={playing}
                         width="100%"
                         height="100%"
                         url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
@@ -245,7 +235,7 @@ const InfoOverlay = (props) => {
                     <ListGroupItem>
                       <ReactPlayer
                         className="react-player"
-                        playing={playing}
+                        // playing={playing}
                         width="100%"
                         height="100%"
                         url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}

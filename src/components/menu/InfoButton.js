@@ -1,16 +1,8 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-// import ReactPlayer from 'react-player';
-import VideoSVG from "../../assets/img/Video";
 import InfoOverlay from "./InfoOverlay";
-// import Overlay from './Overlay';
-// import VideoTutorial from './VideoTutorial';
-// import { Tabs, Tab, Form, Button } from 'react-bootstrap';
 
 //TODO: Setup the button that triggers the info window, then design the InfoWindow overlay. see VideoTutorial class
-const components = {
-  video: <VideoSVG />,
-};
 
 export default class VideoButton extends Component {
   static defaultProps = {
