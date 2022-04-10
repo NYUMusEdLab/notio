@@ -12,7 +12,7 @@ import {
   CardGroup,
 } from "react-bootstrap";
 import Overlay from "./Overlay";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 // import aboutPath from "../../markdown/AboutNotio.md";
 
 const InfoOverlay = (props) => {
