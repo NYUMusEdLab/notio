@@ -16,12 +16,13 @@ import ReactMarkdown from "react-markdown";
 // import aboutPath from "../../markdown/AboutNotio.md";
 
 const InfoOverlay = (props) => {
-  const urlInputRef = useRef();
-  const [post, setPost] = useState(" ");
+  // const urlInputRef = useRef();
+  // const [post, setPost] = useState(" ");
 
   const [playing, setPlaying] = useState(false);
   const [videoUrl, setVideoUrl] = useState(props.videoUrl);
-  const myfile = require("./AboutNotio.md");
+  //TODO: try to import the .md file to auto generate the layout of the infotabs
+  // const myfile = require("AboutNotio.md");
 
   // const file = new File(aboutPath);
 
@@ -37,26 +38,26 @@ const InfoOverlay = (props) => {
   //     .then((err) => console.error(err));
   // });
 
-  const handleFileRead = (e) => {
-    fetch(myfile)
-      .then((res) => res.text())
-      .then((post) => setPost(post));
-    aboutString = post;
-    console.log(aboutString);
-  };
-  let aboutString;
+  // const handleFileRead = (e) => {
+  //   fetch(myfile)
+  //     .then((res) => res.text())
+  //     .then((post) => setPost(post));
+  //   aboutString = post;
+  //   console.log(aboutString);
+  // };
+  // let aboutString;
   // reader.onloadend = handleFileRead;
   // reader.readAsText(about);
   // reader.readAsText('../../markdown/aboutNotio.md',"utf8",(err,contents)=>{
   //   aboutString = {content: contents ? contents : "no contents"}
   // })
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setVideoUrl(event.target.elements[0].value);
-    props.handleChangeVideoUrl(event.target.elements[0].value);
-    // setActiveTab("playlist");
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   setVideoUrl(event.target.elements[0].value);
+  //   props.handleChangeVideoUrl(event.target.elements[0].value);
+  //   // setActiveTab("playlist");
+  // };
 
   // //this can be used if we make the tabs controlled
   // const handleSelect = (key) => {
@@ -72,17 +73,17 @@ const InfoOverlay = (props) => {
   //   }
   // };
 
-  const playerOnReady = (event) => {
-    // A bit dummy but need to control tabs after submit (cf handleSumbit())
-    // setPlayerIsReady(false);
-    setPlaying(true);
-  };
+  // const playerOnReady = (event) => {
+  //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
+  //   // setPlayerIsReady(false);
+  //   setPlaying(true);
+  // };
 
-  const resetVideoUrl = (event) => {
-    setVideoUrl(props.resetVideoUrl);
-    // setActiveTab("playlist");
-    props.handleResetVideoUrl();
-  };
+  // const resetVideoUrl = (event) => {
+  //   setVideoUrl(props.resetVideoUrl);
+  //   // setActiveTab("playlist");
+  //   props.handleResetVideoUrl();
+  // };
 
   return (
     <React.Fragment>
@@ -98,8 +99,8 @@ const InfoOverlay = (props) => {
                   <Card.Body>
                     <Card.Title>How to use Notio</Card.Title>
                     <Card.Text>
-                      <Button onClick={handleFileRead} title="Read" />
-                      {<ReactMarkdown children={post} />}
+                      {/* <Button onClick={handleFileRead} title="Read" />
+                      {<ReactMarkdown children={post} />} */}
                       The menu: Notation:, Root, Scale, Clefs Videoplayer,
                     </Card.Text>
                     <ListGroup>
@@ -216,7 +217,7 @@ const InfoOverlay = (props) => {
                         height="100%"
                         url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
                         controls={true}
-                        onReady={playerOnReady}
+                        // onReady={playerOnReady}
                       />
                     </ListGroupItem>
                     <ListGroupItem>
@@ -227,7 +228,7 @@ const InfoOverlay = (props) => {
                         height="100%"
                         url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
                         controls={true}
-                        onReady={playerOnReady}
+                        // onReady={playerOnReady}
                       />
                     </ListGroupItem>
                     <ListGroupItem>
@@ -238,7 +239,7 @@ const InfoOverlay = (props) => {
                         height="100%"
                         url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
                         controls={true}
-                        onReady={playerOnReady}
+                        // onReady={playerOnReady}
                       />
                     </ListGroupItem>
                     <ListGroupItem>
@@ -249,7 +250,7 @@ const InfoOverlay = (props) => {
                         height="100%"
                         url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
                         controls={true}
-                        onReady={playerOnReady}
+                        // onReady={playerOnReady}
                       />
                     </ListGroupItem>
                   </ListGroup>
