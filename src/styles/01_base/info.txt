@@ -1,0 +1,1 @@
+the base folder contains the basic project defenitionss

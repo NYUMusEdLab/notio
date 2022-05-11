@@ -1,35 +1,43 @@
-import React, { Component } from "react";
-import ShareSVG from "../../assets/img/Share";
+import React, { useEffect, useState } from "react";
 import ShareLink from "./ShareLink";
-import Popup from "./Popup";
+import Overlay from "./Overlay";
+import { Tabs, Tab } from "react-bootstrap";
 
-class Share extends Component {
-  state = {
-    url: null,
-    playing: false,
-    played: 0,
-    loaded: 0,
-    duration: 0,
-    minimized: false,
-    show: false,
-  };
+const Share = (props) => {
+  // const [activeTab, setActiveTab] = useState("playlist");
+  // const activeTab = "share";
+  const [sessionId, setSessionId] = useState(props.sessionID);
 
-  render() {
-    // const { url, playing } = this.state;
-    return (
-      <div>
-        <Popup
-          title={this.props.title}
-          className="popup-menu popup-share"
-          draggable={false}
-          picto={<ShareSVG />}
-          onClickMenuHandler={this.props.saveSessionToDB}
-          hasBG={true}
-          content={<ShareLink sessionID={this.props.sessionID} />}
-        />
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    if (sessionId !== props.sessionID) {
+      setSessionId(props.sessionID);
+    }
+  }, [props.sessionID]);
+
+  // handleSelectTab = (key) => {
+  //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
+  //   if (key === "share") this.setState({ activeTab: "share" });
+  // };
+
+  // console.log("Share");
+  // console.log(sessionId);
+  // const { url, playing } = this.state;
+  return (
+    <React.Fragment>
+      <Overlay key={props.sessionID}>
+        <div className="tabs-wrapper">
+          {/* <Tabs defaultActiveKey="share" activeTab={activeTab} id="controlled-tab-example"> */}
+          <Tabs defaultActiveKey="share" id="controlled-tab-example">
+            <Tab eventKey="share" title="Share">
+              <div>
+                <ShareLink sessionID={props.sessionID} saveSessionToDB={props.saveSessionToDB} />
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
+      </Overlay>
+    </React.Fragment>
+  );
+};
 
 export default Share;
