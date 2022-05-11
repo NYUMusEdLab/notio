@@ -205,7 +205,19 @@ const InfoOverlay = (props) => {
                         // playing={playing}
                         width="100%"
                         height="100%"
-                        url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
+                        url={"https://youtu.be/dkIdl51TBXA"}
+                        controls={true}
+                        // onReady={playerOnReady}
+                      />
+                    </ListGroupItem>
+
+                    <ListGroupItem>
+                      <ReactPlayer
+                        className="react-player"
+                        // playing={playing}
+                        width="100%"
+                        height="100%"
+                        url={"https://youtu.be/0z88NcJy8MQ"}
                         controls={true}
                         // onReady={playerOnReady}
                       />
@@ -216,7 +228,7 @@ const InfoOverlay = (props) => {
                         // playing={playing}
                         width="100%"
                         height="100%"
-                        url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
+                        url={"https://youtu.be/RuBru-zqINU"}
                         controls={true}
                         // onReady={playerOnReady}
                       />
@@ -227,7 +239,7 @@ const InfoOverlay = (props) => {
                         // playing={playing}
                         width="100%"
                         height="100%"
-                        url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
+                        url={"https://youtu.be/Ykgavi2EjZQ"}
                         controls={true}
                         // onReady={playerOnReady}
                       />
@@ -238,7 +250,18 @@ const InfoOverlay = (props) => {
                         // playing={playing}
                         width="100%"
                         height="100%"
-                        url={"https://www.youtube.com/watch?v=jB-aRCR41xc"}
+                        url={"https://youtu.be/qoeHCq0N4I0"}
+                        controls={true}
+                        // onReady={playerOnReady}
+                      />
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      <ReactPlayer
+                        className="react-player"
+                        // playing={playing}
+                        width="100%"
+                        height="100%"
+                        url={"https://youtu.be/t-NUdl19sww"}
                         controls={true}
                         // onReady={playerOnReady}
                       />
