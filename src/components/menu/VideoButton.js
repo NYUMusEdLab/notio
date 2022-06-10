@@ -39,11 +39,11 @@ export default class VideoButton extends Component {
             }}>
             {components[this.props.label]}
           </div>
-          <div className="title--wrapper">
-            <span className="title" title={this.props.title}>
-              {this.props.title}
-            </span>
-          </div>
+        </div>
+        <div className="title-wrapper">
+          <span className="title" title={this.props.title}>
+            {this.props.title}
+          </span>
         </div>
         {
           this.state.show && (
