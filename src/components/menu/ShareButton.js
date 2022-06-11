@@ -53,15 +53,13 @@ export default class ShareButton extends Component {
 
     return (
       <React.Fragment>
-        <div className="button">
-          <div
-            className="circledButton"
-            onClick={(e) => {
-              this.props.onClickMenuHandler();
-              this.handleShow();
-            }}>
-            {components[this.props.label]}
-          </div>
+        <div
+          className="circledButton"
+          onClick={(e) => {
+            this.props.onClickMenuHandler();
+            this.handleShow();
+          }}>
+          {components[this.props.label]}
         </div>
         <div className="title-wrapper">
           <span className="title" title={this.props.title}>

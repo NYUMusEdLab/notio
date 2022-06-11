@@ -435,9 +435,9 @@ class TopMenu extends Component {
             {tooltipText["help"]}
           </ReactTooltip>
 
-          <div className="Area3 area">
+          {/* <div className="Area3 area">
             <img src={require("../../img/home.png")} alt="home" />
-          </div>
+          </div> */}
         </div>
 
         <ReactTooltip

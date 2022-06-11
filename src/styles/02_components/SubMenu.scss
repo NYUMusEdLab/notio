@@ -196,21 +196,36 @@
 }
 
 .circledButton {
+  // height: 3.5vw;
+  // width: 3.5vw;
+  // background-color: #fff;
+  // border-radius: 50%;
+  // display: inline-block;
+  // position: relative;
+  // // margin: 0em 1.5em 2em;
   height: 3.5vw;
   width: 3.5vw;
+  max-height: 8vh;
+  max-width: 8vh;
   background-color: #fff;
   border-radius: 50%;
-  display: inline-block;
-  position: relative;
-  // margin: 0em 1.5em 2em;
+  display: flex;
+  /* position: relative; */
+  flex: 0 0 auto;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
 }
 
 .VideoSVG {
-  width: 1.8vw;
-  transform: translate(0, 62%);
-
+  // width: 1.4vw;
+  margin: 30%;
+  flex: 0 0 auto;
+  // transform: translate(0, 62%);
   @media (min-width: 1537px) {
-    transform: translate(0, 68%);
+    // transform: translate(0, 68%);
   }
 }
 
