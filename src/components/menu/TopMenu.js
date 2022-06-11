@@ -25,6 +25,7 @@ import tooltipText from "../../data/tooltipText";
 import { DropdownCustomScaleMenu } from "./DropdownCustomScaleMenu";
 import VideoButton from "./VideoButton";
 import ShareButton from "./ShareButton";
+import InfoButton from "./InfoButton";
 
 const sounds = [{ name: "piano" }, { name: "xylo" }];
 
@@ -79,6 +80,10 @@ class TopMenu extends Component {
     this.setState({
       titleRoot: convertedNote,
     });
+  };
+
+  handleShow = () => {
+    console.log("Should Display an overlay with program info");
   };
 
   render() {
@@ -399,7 +404,13 @@ class TopMenu extends Component {
         </div>
         <div className="side-menu">
           <div className="area1 area">
-            <img src={require("../../img/info.png")} alt="about" />
+            <InfoButton
+              className="overlay__header__buttonContainer__button--close"
+              onClick={(e) => {
+                this.handleShow();
+              }}>
+              <img src={require("../../img/info.png")} alt="about" />
+            </InfoButton>
           </div>
           <div className="Area2 area">
             <img
