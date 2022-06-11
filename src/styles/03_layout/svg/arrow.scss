@@ -27,10 +27,11 @@
     left: 50%;
     top: 115%;
     -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 
-    .arrow-down-SVG {
-      //transform: translate(-45%, 50%) scaleX(1.1) scaleY(1.1); //scale3d(1, 1, 1);
-    }
+    // .arrow-down-SVG {
+    //   //transform: translate(-45%, 50%) scaleX(1.1) scaleY(1.1); //scale3d(1, 1, 1);
+    // }
   }
 }
 
