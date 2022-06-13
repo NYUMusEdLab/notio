@@ -25,7 +25,7 @@ export class DropdownCustomScaleMenu extends Component {
           arrow={false}>
           <div className="sub-menu">
             <div className="navbar-item menu-custom-scale">
-              <Overlay></Overlay>
+              {/* <Overlay></Overlay> TODO: implement the popup in this overlay instead*/}
               <SubMenu
                 className={this.props.menuTextClassName}
                 active={true}
