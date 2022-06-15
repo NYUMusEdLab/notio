@@ -12,7 +12,7 @@ export class DropdownCustomScaleMenu extends Component {
     return (
       <div className={this.props.menuTextClassName}>
         <Popup
-          trigger={<div className="label-wrapper">Customise</div>}
+          trigger={<div className="label-wrapper">Customize</div>}
           position="left top"
           on="hover"
           repositionOnResize={true}
