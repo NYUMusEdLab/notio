@@ -78,7 +78,7 @@ const InfoOverlay = (props) => {
   return (
     <React.Fragment>
       {/* <Overlay visible={show} key={videoUrl}> */}
-      <Overlay visible={true}>
+      <Overlay visible={true} close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
           {/* <Tabs defaultActiveKey="playlist" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
           {/* <Tabs defaultActiveKey="playlist" activeTab={activeTab} id="controlled-tab-example"> */}

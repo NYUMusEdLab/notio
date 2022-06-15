@@ -23,6 +23,7 @@ export default class Overlay extends Component {
         <Button
           className="overlay__header__buttonContainer__button--minimize"
           onClick={(e) => {
+            // this.handleMakeSmaller();
             this.handleMinimize();
           }}>
           <UnderscoreSVG />
@@ -31,7 +32,7 @@ export default class Overlay extends Component {
         <Button
           className="overlay__header__buttonContainer__button--close"
           onClick={(e) => {
-            this.handleShow();
+            this.props.close();
           }}>
           <CrossSVG />
         </Button>
@@ -39,14 +40,14 @@ export default class Overlay extends Component {
     );
   }
 
-  handleShow = () => {
+  handleMinimize = () => {
     this.setState((prevState) => ({
       hidden: !prevState.hidden,
       minimized: !prevState.hidden,
     }));
   };
 
-  handleMinimize = () => {
+  handleMakeSmaller = () => {
     this.setState((prevState) => ({
       minimized: !prevState.minimized || prevState.hidden,
       hidden: false,
