@@ -24,7 +24,7 @@ const Share = (props) => {
   // const { url, playing } = this.state;
   return (
     <React.Fragment>
-      <Overlay key={props.sessionID}>
+      <Overlay key={props.sessionID} close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
           {/* <Tabs defaultActiveKey="share" activeTab={activeTab} id="controlled-tab-example"> */}
           <Tabs defaultActiveKey="share" id="controlled-tab-example">
