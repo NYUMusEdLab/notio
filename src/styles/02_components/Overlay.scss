@@ -125,6 +125,7 @@
     .tab-content {
       flex: 1;
       height: 100%;
+      overflow: scroll;
       // background-color: rgba(95, 255, 21, 0.829);
     }
   }
