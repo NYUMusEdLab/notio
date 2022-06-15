@@ -11,17 +11,18 @@ export class DropdownCustomScaleMenu extends Component {
     return (
       <div className={this.props.menuTextClassName}>
         <Popup
+          className="popup-root"
           trigger={<div className="label-wrapper">Customize</div>}
           position="left top"
           on="hover"
           repositionOnResize={true}
-          offsetY={-300}
+          offsetY={-400}
           closeOnEscape={true}
           closeOnDocumentClick
           mouseLeaveDelay={300}
           mouseEnterDelay={0}
           contentStyle={{ padding: "2px", border: "none" }}
-          arrow={false}>
+          arrow={true}>
           <div className="sub-menu">
             <div className="navbar-item menu-custom-scale">
               <SubMenu

@@ -1,15 +1,13 @@
 import React, { Component } from "react";
-import { Col } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
+import { Col } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 import rootMenu from "../../data/rootMenu";
 
 const rootLabel = "root";
-const romanceLabel = "romance"
+const romanceLabel = "romance";
 const accidentalLabel = "accidental";
 
 class Root extends Component {
-
-
   // root is managed by classical behavior of radio button
   // accidentals can't be manage with classical of radio button
   // because we need them to be unselect, so we use additionnal states
@@ -23,33 +21,30 @@ class Root extends Component {
       accidentalChecked: false,
       accidentalDisabled: true,
       bgColor: "transparent",
-      rootState: this.setRootState(this.props.baseNote)
-    }
+      rootState: this.setRootState(this.props.baseNote),
+    };
     this.inputRefs = {};
-
   }
 
   setRootState(baseNote, value = true) {
     let rootState = {};
     rootMenu.map((root, index) => {
-
       if (!rootState[root.note]) {
-        rootState[root.note] = {}
+        rootState[root.note] = {};
       }
 
       // Set root - checked to false
-      rootState[root.note]['checked'] = false;
+      rootState[root.note]["checked"] = false;
 
       // init RomanceNotation
       if (!rootState[root.note][romanceLabel]) {
-        rootState[root.note][romanceLabel] = {}
+        rootState[root.note][romanceLabel] = {};
       }
       // Set romance - checked to false
-      rootState[root.note][romanceLabel]['checked'] = false;
+      rootState[root.note][romanceLabel]["checked"] = false;
 
       // add accidentals
       root.accidentals.forEach(function (acc) {
-
         // Init accidentals objects
         if (!rootState[root.note][accidentalLabel]) {
           rootState[root.note][accidentalLabel] = {};
@@ -60,18 +55,17 @@ class Root extends Component {
         }
 
         // Set accidentals - checked to false
-        rootState[root.note][accidentalLabel][acc]['checked'] = false;
+        rootState[root.note][accidentalLabel][acc]["checked"] = false;
 
         // If current root
         if (baseNote.charAt(0) === root.note) {
-
           // Set current root - checked to true
-          rootState[root.note]['checked'] = value;
+          rootState[root.note]["checked"] = value;
 
           if (baseNote.charAt(1)) {
             if (baseNote.charAt(1) === acc) {
               // Set current root - checked to true
-              rootState[root.note][accidentalLabel][acc]['checked'] = value;
+              rootState[root.note][accidentalLabel][acc]["checked"] = value;
             }
           }
         }
@@ -92,15 +86,13 @@ class Root extends Component {
     // uncheck them
     this.setState({
       accidental: "",
-      rootState: this.setRootState(this.state.root, false)
+      rootState: this.setRootState(this.state.root, false),
     });
   }
 
   // Set states of current root and accidental
   handleChange = (e) => {
-
     if (e.target.name === rootLabel) {
-
       // reinit accidentals if root not the same from previous
       if (e.target.value !== this.state.root) {
         this.disableAllAccidentals();
@@ -118,26 +110,25 @@ class Root extends Component {
     if (e.target.name === accidentalLabel) {
       this.setState({
         accidental: e.target.value,
-      })
+      });
     }
-  }
+  };
 
-  handleClickRoot = (e)=>{
+  handleClickRoot = (e) => {
     let root = e.target.value;
- 
-     if (this.state.root !== root) {
-       this.setState({
-         accidental: "",
-         rootState: this.setRootState(root, true)
-       });
-     } else {
-       this.setState({
-         accidental: "",
-         rootState: this.setRootState(root, false)
-       });
-     }
- 
-  }
+
+    if (this.state.root !== root) {
+      this.setState({
+        accidental: "",
+        rootState: this.setRootState(root, true),
+      });
+    } else {
+      this.setState({
+        accidental: "",
+        rootState: this.setRootState(root, false),
+      });
+    }
+  };
   // Handle (un)select of accidentals radio buttons
   handleClick = (e) => {
     let root = e.target.dataset.root;
@@ -146,15 +137,15 @@ class Root extends Component {
     if (this.state.accidental !== accidentalValue) {
       this.setState({
         accidental: e.target.value,
-        rootState: this.setRootState(root + accidentalValue, true)
+        rootState: this.setRootState(root + accidentalValue, true),
       });
     } else {
       this.setState({
         accidental: "",
-        rootState: this.setRootState(root, false)
+        rootState: this.setRootState(root, false),
       });
     }
-  }
+  };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state !== prevState) {
@@ -167,12 +158,14 @@ class Root extends Component {
     const { rootState } = this.state;
 
     return (
-      <div>
-        <Form>
+      <React.Fragment>
+        <Form className="rootform">
           {rootMenu.map((root, index) => (
             <div key={index}>
               {/* dynamic styles with dynamic colors */}
-              <style> {`
+              <style>
+                {" "}
+                {`
                 .${rootLabel}-label-${root.note}:hover,
                 .${rootLabel}-label-${root.note_romance}:hover {
                 background-color: ${rootMenu[0].color};
@@ -191,8 +184,7 @@ class Root extends Component {
 
               <Form.Row>
                 <Col lg={3}>
-                  <Form.Check
-                  >
+                  <Form.Check>
                     <Form.Check.Input
                       type="radio"
                       id={`${rootLabel}-` + root.note}
@@ -203,21 +195,18 @@ class Root extends Component {
                       value={root.note}
                       data-rootdisplayed={root.note}
                       checked={this.state.rootDisplayed === root.note ? true : false}
-
                     />
                     <Form.Check.Label
                       data-color={root.color}
                       className={`${rootLabel}-label-${root.note}`}
-                      htmlFor={`${rootLabel}-` + root.note}
-                    >
+                      htmlFor={`${rootLabel}-` + root.note}>
                       {root.note}
                     </Form.Check.Label>
                   </Form.Check>
                 </Col>
-                {root.note_romance ?
+                {root.note_romance ? (
                   <Col lg={3}>
-                    <Form.Check
-                    >
+                    <Form.Check>
                       <Form.Check.Input
                         type="radio"
                         id={`${rootLabel}-` + root.note_romance}
@@ -231,70 +220,84 @@ class Root extends Component {
                       <Form.Check.Label
                         data-color={root.color}
                         className={`${rootLabel}-label-${root.note_romance}`}
-                        htmlFor={`${rootLabel}-` + root.note_romance}
-                      >
+                        htmlFor={`${rootLabel}-` + root.note_romance}>
                         {root.note_romance}
                       </Form.Check.Label>
                     </Form.Check>
                   </Col>
-                  : ""}
+                ) : (
+                  ""
+                )}
                 <Col lg={3}>
-                  {root.accidentals[0] ?
+                  {root.accidentals[0] ? (
                     <Form.Check>
                       <Form.Check.Input
                         type="radio"
                         className={`${accidentalLabel}-input-${root.note}`}
-                        disabled={this.state.root.charAt(0) === root.note ? false : this.state.accidentalDisabled}
+                        disabled={
+                          this.state.root.charAt(0) === root.note
+                            ? false
+                            : this.state.accidentalDisabled
+                        }
                         id={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}
                         name={accidentalLabel}
                         onChange={this.handleChange}
                         onClick={this.handleClick}
                         value={root.accidentals[0]}
                         data-root={root.note}
-                        checked={rootState[root.note][accidentalLabel][root.accidentals[0]]['checked']}
+                        checked={
+                          rootState[root.note][accidentalLabel][root.accidentals[0]]["checked"]
+                        }
                       />
                       <Form.Check.Label
                         data-root={root.note}
                         className={`${accidentalLabel}-label-${root.note}`}
                         data-color={root.color}
-                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}
-                      >
+                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}>
                         {root.accidentals[0]}
                       </Form.Check.Label>
                     </Form.Check>
-                    : ''}
+                  ) : (
+                    ""
+                  )}
                 </Col>
                 <Col lg={3}>
-                  {root.accidentals[1] ?
+                  {root.accidentals[1] ? (
                     <Form.Check>
                       <Form.Check.Input
                         type="radio"
                         className={`${accidentalLabel}-input-${root.note}`}
-                        disabled={this.state.root.charAt(0) === root.note ? false : this.state.accidentalDisabled}
+                        disabled={
+                          this.state.root.charAt(0) === root.note
+                            ? false
+                            : this.state.accidentalDisabled
+                        }
                         id={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}
                         name={accidentalLabel}
                         onChange={this.handleChange}
                         onClick={this.handleClick}
                         value={root.accidentals[1]}
                         data-root={root.note}
-                        checked={rootState[root.note][accidentalLabel][root.accidentals[1]]['checked']}
+                        checked={
+                          rootState[root.note][accidentalLabel][root.accidentals[1]]["checked"]
+                        }
                       />
                       <Form.Check.Label
                         className={`${accidentalLabel}-label-${root.note}`}
                         data-color={root.color}
-                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}
-                      >
+                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}>
                         {root.accidentals[1]}
                       </Form.Check.Label>
                     </Form.Check>
-                    : ''}
+                  ) : (
+                    ""
+                  )}
                 </Col>
               </Form.Row>
             </div>
-          ))
-          }
+          ))}
         </Form>
-      </div >
+      </React.Fragment>
     );
   }
 }

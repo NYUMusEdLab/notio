@@ -232,7 +232,7 @@ class TopMenu extends Component {
               selectedImg={<RootMenu color={"#ff0000"} />}
               //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
               content={
-                <div>
+                <React.Fragment>
                   <Root
                     label="Root"
                     baseNote={this.props.state.baseNote}
@@ -243,7 +243,7 @@ class TopMenu extends Component {
                     octave={this.props.state.octave}
                     handleClick={this.props.handleClickOctave}
                   />
-                </div>
+                </React.Fragment>
               }
             />
             {/* <div className="half-circle"></div> */}
