@@ -12,6 +12,7 @@ export class DropdownCustomScaleMenu extends Component {
     return (
       <div className={this.props.menuTextClassName}>
         <Popup
+          className="popup-root"
           trigger={<div className="label-wrapper">Customize</div>}
           position="left top"
           on="hover"
@@ -22,7 +23,7 @@ export class DropdownCustomScaleMenu extends Component {
           mouseLeaveDelay={300}
           mouseEnterDelay={0}
           contentStyle={{ padding: "2px", border: "none" }}
-          arrow={false}>
+          arrow={true}>
           <div className="sub-menu">
             <div className="navbar-item menu-custom-scale">
               {/* <Overlay></Overlay> TODO: refactor the popup to use the Overlay class instead*/}
