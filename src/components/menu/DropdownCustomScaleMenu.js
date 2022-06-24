@@ -16,7 +16,7 @@ export class DropdownCustomScaleMenu extends Component {
           position="left top"
           on="hover"
           repositionOnResize={true}
-          offsetY={-600}
+          offsetY={-400}
           closeOnEscape={true}
           closeOnDocumentClick
           mouseLeaveDelay={300}
@@ -25,7 +25,8 @@ export class DropdownCustomScaleMenu extends Component {
           arrow={false}>
           <div className="sub-menu">
             <div className="navbar-item menu-custom-scale">
-              {/* <Overlay></Overlay> TODO: implement the popup in this overlay instead*/}
+              {/* <Overlay></Overlay> TODO: refactor the popup to use the Overlay class instead*/}
+
               <SubMenu
                 className={this.props.menuTextClassName}
                 active={true}

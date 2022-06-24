@@ -69,7 +69,8 @@ export default class ShareButton extends Component {
         {this.state.show && (
           <Share
             saveSessionToDB={this.props.saveSessionToDB}
-            sessionID={this.props.sessionID}></Share>
+            sessionID={this.props.sessionID}
+            onClickCloseHandler={this.handleShow}></Share>
         )}
       </React.Fragment>
     );
