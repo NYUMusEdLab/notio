@@ -161,7 +161,7 @@ class Root extends Component {
       <React.Fragment>
         <Form className="rootform">
           {rootMenu.map((root, index) => (
-            <div key={index}>
+            <div className="form-check" key={index}>
               {/* dynamic styles with dynamic colors */}
               <style>
                 {" "}
