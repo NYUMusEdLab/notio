@@ -130,7 +130,7 @@ class WholeApp extends Component {
   handleSelectClef = (selectedClef) => {
     // console.log(selectedClef + " clef selected");
     const staff_on = selectedClef === "hide notes" ? false : true;
-    this.setState({ trebleStaffOn: staff_on });
+    this.setState({ clef: selectedClef, trebleStaffOn: staff_on });
   };
 
   /** 
