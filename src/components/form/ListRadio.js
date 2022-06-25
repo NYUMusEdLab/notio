@@ -56,7 +56,7 @@ class ListRadio extends Component {
 
   render() {
     return (
-        <div>
+        <div className="form-check">
             {this.props.data.map((option) => {
                 return <Radio
                     nameField={this.props.nameField}
