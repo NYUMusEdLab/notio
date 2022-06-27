@@ -159,13 +159,15 @@
   // position: relative;
   display: flex;
   min-width: 9.4vw;
+  height: 60%;
   flex-direction: column;
   align-items: center;
 
   .button {
     flex: 1 1;
     height: 100%;
-    width: 8.7vw;
+    width: 100%;
+    // width: 8.7vw;
     background-color: white;
     border-radius: 3em;
     padding: 0.4em 0 0.4em 0;
