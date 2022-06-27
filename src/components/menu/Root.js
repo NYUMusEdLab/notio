@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import rootMenu from "../../data/rootMenu";
 
@@ -182,8 +182,8 @@ class Root extends Component {
                 }`}
               </style>
 
-              <Form.Row>
-                <Col lg={3}>
+              <Row >
+                <Col xs={3}>
                   <Form.Check>
                     <Form.Check.Input
                       type="radio"
@@ -205,7 +205,7 @@ class Root extends Component {
                   </Form.Check>
                 </Col>
                 {root.note_romance ? (
-                  <Col lg={3}>
+                  <Col xs={3}>
                     <Form.Check>
                       <Form.Check.Input
                         type="radio"
@@ -228,7 +228,7 @@ class Root extends Component {
                 ) : (
                   ""
                 )}
-                <Col lg={3}>
+                <Col xs={2}>
                   {root.accidentals[0] ? (
                     <Form.Check>
                       <Form.Check.Input
@@ -261,7 +261,7 @@ class Root extends Component {
                     ""
                   )}
                 </Col>
-                <Col lg={3}>
+                <Col xs={2}>
                   {root.accidentals[1] ? (
                     <Form.Check>
                       <Form.Check.Input
@@ -293,7 +293,7 @@ class Root extends Component {
                     ""
                   )}
                 </Col>
-              </Form.Row>
+              </Row>
             </div>
           ))}
         </Form>
