@@ -60,29 +60,29 @@ class SubMenu extends Component {
   }
 
   render() {
-    let isActive = this.state.active ? "selected" : null;
+    let isActive = this.state.active ? "--selected" : null;
     this.selectPictoClef();
     return (
       <React.Fragment>
         <div className="sub-menu">
-          <div className={`content ${isActive}`}>{this.props.content}</div>
-          <div className={`button ${isActive}`} onClick={this.toggleClass}>
-            <div>
+          <div className={`sub-menu__content${isActive?isActive:" null"}`}>{this.props.content}</div>
+          <div className={`sub-menu__button${isActive?isActive:" null"}`} onClick={this.toggleClass}>
+            <div className="sub-menu__button-title">
               {this.props.selectedImg}
 
               {this.props.displayClef ? <ClefComponent /> : ""}
               {this.props.displayClef ? (
-                <span className="sub-menu__item__selected">{this.props.selected}</span>
+                <span className="sub-menu__item--selected">{this.props.selected}</span>
               ) : (
-                <span className="sub-menu--title--selected">{this.props.selected}</span>
+                <span className="sub-menu__title--selected">{this.props.selected}</span>
               )}
             </div>
             <ArrowDown />
-            {/* <div className={`content ${isActive}`}>{this.props.content}</div> */}
+            {/* <div className={`content ${isActive?isActive:" null"}`}>{this.props.content}</div> */}
           </div>
         </div>
         <div className="title-wrapper">
-          <span className={`title ${isActive}`} title={this.props.title}>
+          <span className={`title${isActive?isActive:" null"}`} title={this.props.title}>
             {this.props.title}
           </span>
         </div>

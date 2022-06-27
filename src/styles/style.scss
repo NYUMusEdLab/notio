@@ -1,4 +1,4 @@
-@import "01_base/base";
+@import "01_base/_base";
 @import "01_base/animations";
 @import "01_base/typography";
 @import "01_base/utilities";
@@ -14,6 +14,7 @@
 @import "02_components/topMenu.scss";
 @import "02_components/SubMenu.scss";
 @import "02_components/sideMenu.scss";
+@import "03_layout/_layout.scss";
 @import "03_layout/svg/notation.scss";
 @import "03_layout/svg/customScale.scss";
 @import "03_layout/svg/arrow.scss";
@@ -28,31 +29,32 @@
 @import "02_components/Overlay.scss";
 @import "06_abstracts/generic.scss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  /* ? */
-}
-html{
-  font-size: 16px;
-}
+// moved to _base.scss 
+// * {
+//   margin: 0;
+//   padding: 0;
+//   box-sizing: border-box;
+//   /* ? */
+// }
+// html{
+//   font-size: 16px;
+// }
 
-body {
-  width: 100vw;
-  height: 100vh;
-  background-color: #f1f1da;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Quicksand", sans-serif;
-  overflow: hidden;
-}
+// body {
+//   width: 100vw;
+//   height: 100vh;
+//   background-color: #f1f1da;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   font-family: "Quicksand", sans-serif;
+//   overflow: hidden;
+// }
 
-h1,
-p {
-  font-family: Lato;
-}
+// h1,
+// p {
+//   font-family: Lato;
+// }
 
 #root,
 .Piano {
