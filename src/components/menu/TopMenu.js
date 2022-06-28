@@ -101,7 +101,7 @@ class TopMenu extends Component {
         >
           {/* Toggle Piano */}
           <div
-            className="navbar-item toggle"
+            className="navbar__item toggle"
             data-tip="custom"
             data-for="showKeyboardTooltip"
             data-event="null"
@@ -128,7 +128,7 @@ class TopMenu extends Component {
 
           {/* Toggle Extended */}
           <div
-            className="navbar-item toggle"
+            className="navbar__item toggle"
             data-tip="custom"
             data-for="extendedKeyboardTooltip"
             data-event="null"
@@ -155,7 +155,7 @@ class TopMenu extends Component {
 
           {/* Sounds */}
           <div
-            className="navbar-item menu-scale"
+            className="navbar__item menu-scale"
             data-tip="custom"
             data-for="soundTooltip"
             data-event="null"
@@ -188,7 +188,7 @@ class TopMenu extends Component {
 
           {/* Notation */}
           <div
-            className="navbar-item menu-notation"
+            className="navbar__item menu-notation"
             data-tip="custom"
             data-for="notationTooltip"
             data-event="null"
@@ -221,7 +221,7 @@ class TopMenu extends Component {
 
           {/* Root */}
           <div
-            className="navbar-item menu-root"
+            className="navbar__item menu-root"
             data-tip="custom"
             data-for="rootTooltip"
             data-event="null"
@@ -264,7 +264,7 @@ class TopMenu extends Component {
 
           {/* Scale */}
           <div
-            className="navbar-item menu-scale"
+            className="navbar__item menu-scale"
             data-tip="custom"
             data-for="scaleTooltip"
             data-event="null"
@@ -305,7 +305,7 @@ class TopMenu extends Component {
 
           {/* Clef */}
           <div
-            className="navbar-item menu-clef"
+            className="navbar__item menu-clef"
             data-tip="custom"
             data-for="clefsTooltip"
             data-event="null"
@@ -341,7 +341,7 @@ class TopMenu extends Component {
 
           {/* Video */}
           <div
-            className="navbar-item menu-video"
+            className="navbar__item menu-video"
             data-tip="custom"
             data-for="videoPlayerTooltip"
             data-event="null"
@@ -373,7 +373,7 @@ class TopMenu extends Component {
 
           {/* Share */}
           <div
-            className="navbar-item menu-share"
+            className="navbar__item menu-share"
             data-tip="custom"
             data-for="shareThisSetupTooltip"
             data-event="null"
@@ -400,7 +400,7 @@ class TopMenu extends Component {
           </ReactTooltip>
 
           {/* Settings */}
-          {/* <div className="navbar-item menu-settings">
+          {/* <div className="navbar__item menu-settings">
             <Settings title="Settings" label="Settings" />
           </div> */}
         </div>

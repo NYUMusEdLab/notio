@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: space-between;
 
-  &-item {
+  &__item {
     height: 100% !important;
 
     display: flex;
@@ -23,17 +23,28 @@
     row-gap:10px;
 
     .title-wrapper {
-      align-self: end;//position the title at the bottom of the navbar
+      background: orange;
+      align-self: center;//position the title at the bottom of the navbar
 
       display: flex;
       flex-direction: row;
       flex: 1 1 auto;
       align-items: flex-end;
+
+
     }
     .title {
       font-size: 0.9vw;
       font-weight: bold;
       width: 100%;
+
+      &.selected {
+        text-align: center;
+        z-index: 20;
+        color: black;
+        margin-bottom: 10;
+        align-self: flex-start;
+      }
     }
   }
 

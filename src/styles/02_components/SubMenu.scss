@@ -1,53 +1,16 @@
-.navbar-item {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  align-content: space-between;
-  flex-wrap: nowrap;
-  align-self: self-start;
-  // flex: 1 1;
 
-  // &.toggle {
-  //   padding-top: 0.8vw;
-  // }
 
-  .button {
+  .label-wrapper {
     text-align: center;
-    justify-content: space-between;
-  }
+    max-width: 6vw;
 
-  .title-wrapper {
-    // background: orange;
-    flex: 1 1;
-    align-self: center;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
+    .label {
+      font-size: 0.8rem;
+      font-weight: bold;
+      font-weight: 1vw;
+      display: inline-block;
+    }
   }
-
-  .title.selected {
-    // display: block;
-    text-align: center;
-    // position: absolute;
-    // bottom: 1vw;
-    // z-index: 10;
-    // // padding: 2vh 0 2vh 0;
-    // display: block;
-    // font-size: 0.9vw;
-    // font-weight: bold;
-
-    // &.selected {
-    z-index: 20;
-    color: black;
-    margin-bottom: 10;
-    // border-bottom: 1px solid black;
-    // padding-bottom: 1vw;
-    // bottom: 0;
-    // width: 7vw;
-    // }
-    align-self: flex-start;
-  }
-}
 
 .sub-menu {
   
