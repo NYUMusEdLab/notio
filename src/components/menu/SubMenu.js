@@ -65,16 +65,16 @@ class SubMenu extends Component {
     return (
       <React.Fragment>
         <div className="sub-menu">
-          <div className={`content ${isActive}`}>{this.props.content}</div>
+          <div className={`sub-menu__content ${isActive}`}>{this.props.content}</div>
           <div className={`button ${isActive}`} onClick={this.toggleClass}>
-            <div>
+            <div className="button-title">
               {this.props.selectedImg}
 
               {this.props.displayClef ? <ClefComponent /> : ""}
               {this.props.displayClef ? (
-                <span className="sub-menu__item__selected">{this.props.selected}</span>
+                <span className="sub-menu__item selected">{this.props.selected}</span>
               ) : (
-                <span className="sub-menu--title--selected">{this.props.selected}</span>
+                <span className="sub-menu__title selected">{this.props.selected}</span>
               )}
             </div>
             <ArrowDown />
