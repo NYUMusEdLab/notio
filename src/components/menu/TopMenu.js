@@ -239,10 +239,12 @@ class TopMenu extends Component {
                     handleChangeRoot={this.props.handleChangeRoot}
                     handleChangeTitle={this.handleChangeTitle}
                   />
+                  <div className="form-check">
                   <Octaves
                     octave={this.props.state.octave}
                     handleClick={this.props.handleClickOctave}
                   />
+                  </div>
                 </React.Fragment>
               }
             />
