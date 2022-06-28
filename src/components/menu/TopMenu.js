@@ -164,6 +164,7 @@ class TopMenu extends Component {
               title="Sound"
               selected={this.state.titleSound}
               content={
+                <div className="items-list">
                 <ListRadio
                   nameField="scale"
                   data={sounds}
@@ -171,6 +172,7 @@ class TopMenu extends Component {
                   setTitle={this.setSoundTitle}
                   initOption="piano"
                 />
+                </div>
               }
             />
           </div>
@@ -273,7 +275,7 @@ class TopMenu extends Component {
               title="Scale"
               selected={this.state.titleNotation}
               content={
-                <>
+                <div className="items-list">
                   <ListRadio
                     nameField="scale"
                     data={this.props.state.scaleList}
@@ -287,7 +289,7 @@ class TopMenu extends Component {
                     scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
                     handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
                   />
-                </>
+                </div>
               }
             />
           </div>
@@ -315,6 +317,7 @@ class TopMenu extends Component {
               selected={this.state.clefTitle}
               displayClef={true}
               content={
+                <div className="items-list">
                 <ListRadio
                   nameField="clef"
                   data={clefs}
@@ -324,6 +327,7 @@ class TopMenu extends Component {
                   initOption={this.props.state.clef}
                   displayPicto={true}
                 />
+                </div>
               }
             />
           </div>
