@@ -276,22 +276,26 @@
 
 
 .circledButton {
-  // height: 3.5vw;
-  // width: 3.5vw;
-  // background-color: #fff;
-  // border-radius: 50%;
+  text-align: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+display:flex;
   // display: inline-block;
   // position: relative;
-  // // margin: 0em 1.5em 2em;
-  height: 3.5vw;
-  width: 3.5vw;
-  max-height: 8vh;
-  max-width: 8vh;
+  height: 3.4vw;
+  width: 3.4vw;
+  max-height: 7vh;
+  max-width: 7vh;
   background-color: #fff;
-  border-radius: 50%;
-  display: flex;
-  /* position: relative; */
-  flex: 0 0 auto;
+  // border-radius: 50%;
+  // margin: 1vh auto;
+  // padding: 0.4em 0.4em 0.4em 0.4em;
+
+  // // display: flex;
+  // flex: 0 0 auto;
   align-items: center;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -300,13 +304,32 @@
 }
 
 .VideoSVG {
-  // width: 1.4vw;
-  margin: 30%;
-  flex: 0 0 auto;
+  width: 60%;
+  height:auto;
+  // position: relative;
+  // top:50%;
+  // transform: translate(0, -50%);
+
+  // margin: 30%;
+  // flex: 0 0 auto;
   // transform: translate(0, 62%);
-  @media (min-width: 1537px) {
-    // transform: translate(0, 68%);
-  }
+  // @media (min-width: 1537px) {
+  //   // transform: translate(0, 68%);
+  // }
+}
+.share-svg {
+  width: 50%;
+  height:auto;
+  // position: relative;
+  // top:50%;
+  // transform: translate(0, -50%);
+
+  // margin: 30%;
+  // flex: 0 0 auto;
+  // transform: translate(0, 62%);
+  // @media (min-width: 1537px) {
+  //   // transform: translate(0, 68%);
+  // }
 }
 
 .react-player {
