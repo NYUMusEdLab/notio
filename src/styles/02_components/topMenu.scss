@@ -28,14 +28,14 @@
       width: 100%;
     }
 
-    &--selected {
-      z-index: 20;
-      color: black;
-      border-bottom: 1px solid black;
-      padding-bottom: 1vw;
-      bottom: 0;
-      width: 7vw;
-    }
+    // &.selected {
+    //   z-index: 20;
+    //   color: black;
+    //   border-bottom: 1px solid black;
+    //   padding-bottom: 1vw;
+    //   bottom: 0;
+    //   width: 7vw;
+    // }
 
     .title-wrapper {
       flex: 1 1;
