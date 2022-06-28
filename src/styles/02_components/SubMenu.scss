@@ -92,7 +92,7 @@
       }
 
       & .clef {
-        height: min-content;
+        height: 5vh;
         fill: white;
 
         & .fil0,
@@ -240,6 +240,7 @@
 
     .label-wrapper {
       max-width: 100%;
+      font-size: 0.7vw;
     }
   }
 }
@@ -249,10 +250,12 @@
     .label-wrapper {
       text-align: left;
       max-width: 100%;
+      font-size: 0.7vw;
+
 
       .clef {
         // width: 1%;
-        // height: 1.3vw;
+        height: 5vh;
         vertical-align: middle;
         // margin-left: 2.2vw;
       }
