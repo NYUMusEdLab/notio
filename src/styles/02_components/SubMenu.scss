@@ -159,6 +159,7 @@
       visibility: visible;
     }
     .items-list{
+      background:blue;
       width:98%;
       padding-left: 0.5vw;
       padding-right: 0.5vw;
@@ -235,28 +236,15 @@
         color: black;
       }
     }
-    .content{
-      align-items: center;
-      // padding-left: 0;
-      // padding-right: 0;
-
-    display:flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content:space-around;
-    align-content: space-between;
-
-      // padding: 6vw 1vh 1vh 5vh;
-      // font-size:large;
-    }
+    
     .rootform{
-      margin-left: 0.1vw;
-      padding-left: 0.5vw;
-      padding-right: 0.5vw;
+      display:flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      flex: 1 1 auto;
     }
     .octave{
-      margin-left: 0.1vw;
-      padding-left: 0.7vw;
+      padding: 0.5vw;
     }
   }
 }

@@ -15,11 +15,13 @@ export const notations = [
 class Notation extends Component {
   render() {
     return (
+      <div className="items-list">
       <ListCheckbox
         options={notations}
         handleCheckboxChange={this.props.handleChange}
         initOptions={this.props.initOptions}
       />
+      </div>
     );
   }
 }
