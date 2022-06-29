@@ -159,7 +159,7 @@
       visibility: visible;
     }
     .items-list{
-      background:blue;
+      // background:blue;
       width:98%;
       padding-left: 0.5vw;
       padding-right: 0.5vw;
@@ -238,13 +238,25 @@
     }
     
     .rootform{
-      display:flex;
+     
+
+      display: flex;
+      /* grid-template-columns: 1fr; */
+      /* grid-template-rows: repeat(8, 1fr); */
       flex-direction: column;
       flex-wrap: nowrap;
-      flex: 1 1 auto;
+      align-items: flex-start;
+
+      // flex: 1 1 auto;
     }
     .octave{
+      transform: translate(20%,0);
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       padding: 0.5vw;
+      // width:1vw;
     }
   }
 }

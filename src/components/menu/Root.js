@@ -182,7 +182,7 @@ class Root extends Component {
                 }`}
               </style>
 
-              <Row >
+              <div className="row no-gutters">
                 <Col xs={3}>
                   <Form.Check>
                     <Form.Check.Input
@@ -228,7 +228,7 @@ class Root extends Component {
                 ) : (
                   ""
                 )}
-                <Col xs={2}>
+                <Col xs={3}>
                   {root.accidentals[0] ? (
                     <Form.Check>
                       <Form.Check.Input
@@ -261,7 +261,7 @@ class Root extends Component {
                     ""
                   )}
                 </Col>
-                <Col xs={2}>
+                <Col xs={3}>
                   {root.accidentals[1] ? (
                     <Form.Check>
                       <Form.Check.Input
@@ -293,7 +293,7 @@ class Root extends Component {
                     ""
                   )}
                 </Col>
-              </Row>
+              </div>
             </div>
           ))}
         </Form>
