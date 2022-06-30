@@ -33,6 +33,7 @@ class WholeApp extends Component {
     loading: true,
     // videoUrl: "https://www.youtube.com/watch?v=g4mHPeMGTJM", // silence test video for coding
     videoUrl: notio_tutorial,
+    resetVideoUrl:notio_tutorial,
     videoActive: false,
     showTooltip: true,
     keyboardTooltipRef: null,
@@ -200,7 +201,9 @@ class WholeApp extends Component {
   };
 
   handleResetVideoUrl = () => {
-    this.setState({ videoUrl: notio_tutorial });
+    // console.log("resetting video url")
+    // console.log(this.state.resetVideoUrl);
+    this.setState({ videoUrl: this.state.resetVideoUrl });
   };
 
   handleChangeVideoVisibility = () => {
@@ -310,6 +313,7 @@ class WholeApp extends Component {
           clef: result.clef,
           loading: false,
           videoUrl: result.videoUrl,
+          resetVideoUrl: result.videoUrl,
           videoActive: result.videoActive,
         });
       } else {
@@ -403,7 +407,7 @@ class WholeApp extends Component {
           handleChangeSound={this.handleChangeSound}
           handleChangeTooltip={this.handleChangeTooltip}
           handleResetVideoUrl={this.handleResetVideoUrl}
-          resetVideoUrl={notio_tutorial}
+          resetVideoUrl={this.state.resetVideoUrl}
           videoActive={this.state.videoActive}
           saveSessionToDB={this.saveSessionToDB}
           sessionID={this.state.sessionID}

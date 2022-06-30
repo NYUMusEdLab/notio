@@ -5,35 +5,29 @@ import Overlay from "./Overlay";
 
 const VideoTutorial = (props) => {
   const urlInputRef = useRef();
-
   const [playing, setPlaying] = useState(false);
-  // const [played, setPlayed] = useState(0);
-  // const [loaded, setLoaded] = useState(0);
-  // const [duration, setDuration] = useState(0);
-  // const [minimized, setMinimized] = useState(false);
-  // const [show, setShow] = useState(props.vissible);
-  // const [activeTab, setActiveTab] = useState("playlist");
-  // const [playerIsReady, setPlayerIsReady] = useState(false);
   const [videoUrl, setVideoUrl] = useState(props.videoUrl);
+  const [activeTab,setActiveTab] = useState(props.active_video_tab);
+  //  activeTab = props.active_video_tab ? props.active_video_tab : "Enter_url" ;
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setVideoUrl(event.target.elements[0].value);
     props.handleChangeVideoUrl(event.target.elements[0].value);
-    // setActiveTab("playlist");
+    // setActiveTab("Player");
   };
 
   // //this can be used if we make the tabs controlled
   // const handleSelect = (key) => {
   //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
 
-  //   if (key === "playlist") {
-  //     setActiveTab("playlist");
-  //     // this.setState({ activeTab: "playlist" });
+  //   if (key === "Player") {
+  //     setActiveTab("Player");
+  //     // this.setState({ activeTab: "Player" });
   //   }
-  //   if (key === "change_video") {
-  //     setActiveTab("change_video");
-  //     //   this.setState({ activeTab: "change_video" });
+  //   if (key === "Enter_url") {
+  //     setActiveTab("Enter_url");
+  //     //   this.setState({ activeTab: "Enter_url" });
   //   }
   // };
 
@@ -44,9 +38,10 @@ const VideoTutorial = (props) => {
   };
 
   const resetVideoUrl = (event) => {
+    console.log(props.resetVideoUrl);
     setVideoUrl(props.resetVideoUrl);
-    // setActiveTab("playlist");
     props.handleResetVideoUrl();
+    setActiveTab("Player");
   };
 
   return (
@@ -54,10 +49,10 @@ const VideoTutorial = (props) => {
       {/* <Overlay visible={show} key={videoUrl}> */}
       <Overlay visible={true} key={videoUrl} close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
-          {/* <Tabs defaultActiveKey="playlist" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
-          {/* <Tabs defaultActiveKey="playlist" activeTab={activeTab} id="controlled-tab-example"> */}
-          <Tabs defaultActiveKey="playlist" id="controlled-tab-example">
-            <Tab eventKey="playlist" title="Playlist">
+          {/* <Tabs defaultActiveKey="Player" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
+          {/* <Tabs defaultActiveKey="Player" activeTab={activeTab} id="controlled-tab-example"> */}
+          <Tabs defaultActiveKey={activeTab} id="controlled-tab-example">
+            <Tab eventKey="Player" title="Player">
               <ReactPlayer
                 className="react-player"
                 playing={playing}
@@ -68,7 +63,7 @@ const VideoTutorial = (props) => {
                 onReady={playerOnReady}
               />
             </Tab>
-            <Tab eventKey="change_video" title="Customize">
+            <Tab eventKey="Enter_url" title="Enter url">
               <div>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group controlId="formYoutubeUrl">

@@ -47,6 +47,7 @@ export default class VideoButton extends Component {
           this.state.show && (
             <VideoTutorial
               vissible={this.props.active}
+              active_video_tab={this.props.active_video_tab}
               videoUrl={this.props.videoUrl}
               handleChangeVideoVisibility={this.props.handleChangeVideoVisibility}
               handleChangeVideoUrl={this.props.handleChangeVideoUrl}
