@@ -1,73 +1,27 @@
-.navbar-item {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  align-content: space-between;
-  flex-wrap: nowrap;
-  align-self: self-start;
-  // flex: 1 1;
-
-  // &.toggle {
-  //   padding-top: 0.8vw;
-  // }
-
-  .button {
-    text-align: center;
-    justify-content: space-between;
-  }
-
-  .title-wrapper {
-    // background: orange;
-    flex: 1 1;
-    align-self: center;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-  }
-
-  .title.selected {
-    // display: block;
-    text-align: center;
-    // position: absolute;
-    // bottom: 1vw;
-    // z-index: 10;
-    // // padding: 2vh 0 2vh 0;
-    // display: block;
-    // font-size: 0.9vw;
-    // font-weight: bold;
-
-    // &.selected {
-    z-index: 20;
-    color: black;
-    margin-bottom: 10;
-    // border-bottom: 1px solid black;
-    // padding-bottom: 1vw;
-    // bottom: 0;
-    // width: 7vw;
-    // }
-    align-self: flex-start;
-  }
-}
-
 .sub-menu {
   
   // position: relative;
-  display: flex;
-  min-width: 9.4vw;
-  height: 60%;
-  flex-direction: column;
-  align-items: center;
+  // align-self: end;
+
+  // display: flex;
+  // min-width: 9.4vw;
+  // height: 60%;
+  // flex-direction: column;
+  // align-items: center;
   
 
 
   .button {
-    flex: 1 1;
-    height: 100%;
+    align-self: center;
+    flex: 1 1 auto;
+    // height: 100%;
+    max-height:4vh;
     width: 100%;
+    min-width:75px;
     // width: 8.7vw;
     background-color: white;
     border-radius: 3em;
-    padding: 0.4em 0 0.4em 0;
+    // padding: 0.5vh 1vw 1vh 1vw;
     margin: 0 auto;
     position: relative;
     z-index: 11;
@@ -75,13 +29,39 @@
     font-weight: bold;
     text-align: center;
     vertical-align: middle;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
     // font-size: 1.5em;
+    &-title{
+      flex:1 1 auto;
+      align-self: center;
+      justify-self: center;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+    
+  
 
     //This hides the white submenu button
     .menu-root & {
       background-color: transparent;
     }
 
+    & .clef {
+      max-height: 3.5vh;
+      // fill: white;
+
+      // & .fil0,
+      // & .fil1 {
+      //   stroke: white;
+      //   fill: white;
+      // }
+    }
+    
     &.selected {
       background: black;
       z-index: 20;
@@ -92,7 +72,6 @@
       }
 
       & .clef {
-        height: 5vh;
         fill: white;
 
         & .fil0,
@@ -102,7 +81,19 @@
         }
       }
     }
+
+    
   }
+
+  &__title{
+    // background:blue;
+    align-self: center;
+    justify-self: center;
+
+    display:flex;
+    // font-size: 100px;
+  }
+  
 
   // .clef {
   //   width: 1vw;
@@ -135,6 +126,7 @@
     visibility: hidden;
     transition: all 0.3s ease-out;
     width: 9.7vw;
+    min-width:75px;
     background-color: white;
     border-bottom-left-radius: 10% 5%;
     border-bottom-right-radius: 10% 5%;
@@ -145,13 +137,17 @@
     overflow: scroll;
     padding-left: 0;
     padding-right: 0;
-    padding-top:7vw; //positions the first row of the submenu items
+    padding-top:11vh; //positions the first row of the submenu items
     padding-bottom:2.7vw;
     // padding: 6vw 1vh 1vh 2.7vh;
     // padding-top: 9vw;
     box-shadow: 5px 3px 15px #666;
     font-weight: 700;
     font-size: 0.7vw;
+
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
 
     // .menu-root & {
     //   padding-top: 9.5vw;
@@ -162,21 +158,43 @@
       z-index: 15;
       visibility: visible;
     }
+    .items-list{
+      // background:blue;
+      width:98%;
+      padding-left: 0.5vw;
+      padding-right: 0.5vw;
+      padding-top: 1vw;
+    }
   }
-}
 
+  .label-wrapper {
+    // background:blue;
+    display:flex;
+    text-align: center;
+    // max-width: 6vw;
+    width:100%;
 
-
-.menu-notation {
-  .sub-menu {
-    // .content {
-    //   padding-top: 9vw;
-    // }
-    .button{
-      font-size:small;
+    .label {
+      font-size: 0.8rem;
+      font-weight: bold;
+      font-weight: 1vw;
+      display: inline-block;
     }
   }
 }
+
+
+
+// .menu-notation {
+//   .sub-menu {
+//     // .content {
+//     //   padding-top: 9vw;
+//     // }
+//     .button{
+//       font-size:small;
+//     }
+//   }
+// }
 
 .menu-root {
   .arrow-down {
@@ -218,28 +236,27 @@
         color: black;
       }
     }
-    .content{
-      align-items: center;
-      // padding-left: 0;
-      // padding-right: 0;
-
-    display:flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content:space-around;
-    align-content: space-between;
-
-      // padding: 6vw 1vh 1vh 5vh;
-      // font-size:large;
-    }
+    
     .rootform{
-      margin-left: 0.1vw;
-      padding-left: 0.5vw;
-      padding-right: 0.5vw;
+     
+
+      display: flex;
+      /* grid-template-columns: 1fr; */
+      /* grid-template-rows: repeat(8, 1fr); */
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+
+      // flex: 1 1 auto;
     }
     .octave{
-      margin-left: 0.1vw;
-      padding-left: 0.7vw;
+      transform: translate(20%,0);
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0.5vw;
+      // width:1vw;
     }
   }
 }
@@ -260,35 +277,6 @@
     }
   }
 }
-
-.menu-clef {
-  .sub-menu {
-    .label-wrapper {
-      text-align: left;
-      max-width: 100%;
-      font-size: 0.7vw;
-
-
-      .clef {
-        // width: 1%;
-        height: 5vh;
-        vertical-align: middle;
-        // margin-left: 2.2vw;
-      }
-    }
-
-    // .content {
-    //   padding: 17.7vh 1vw 1vh 1vw;
-
-    //   @media (min-height: 1537px) {
-    //     padding: 14.5vw 1vw 1vh 1vw;
-    //   }
-    // }
-  }
-}
-
-//padding: 1em 0;
-
 
 
 .circledButton {
@@ -322,13 +310,7 @@ display:flex;
 .VideoSVG {
   width: 60%;
   height:auto;
-  // position: relative;
-  // top:50%;
-  // transform: translate(0, -50%);
-
-  // margin: 30%;
-  // flex: 0 0 auto;
-  // transform: translate(0, 62%);
+  
   // @media (min-width: 1537px) {
   //   // transform: translate(0, 68%);
   // }
@@ -336,13 +318,7 @@ display:flex;
 .share-svg {
   width: 50%;
   height:auto;
-  // position: relative;
-  // top:50%;
-  // transform: translate(0, -50%);
-
-  // margin: 30%;
-  // flex: 0 0 auto;
-  // transform: translate(0, 62%);
+ 
   // @media (min-width: 1537px) {
   //   // transform: translate(0, 68%);
   // }

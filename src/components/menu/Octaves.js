@@ -7,8 +7,8 @@ export const Octaves = props => {
     <div className="octave">
         <h6>Octave: {props.octave}</h6>
         <Form>
-            <Form.Row>
-                <Col lg={3}>
+            <div className="row no-gutter">
+                <Col xs={3}>
                     <Form.Check>
                         <Form.Check.Input
                             type="radio"
@@ -28,7 +28,7 @@ export const Octaves = props => {
                         </Form.Check.Label>
                     </Form.Check>
                 </Col>
-                <Col lg={3}>
+                <Col xs={3}>
                     <Form.Check>
                         <Form.Check.Input
                             type="radio"
@@ -48,7 +48,7 @@ export const Octaves = props => {
                         </Form.Check.Label>
                     </Form.Check>
                 </Col>
-            </Form.Row>
+            </div>
         </Form>
     </div>
   );

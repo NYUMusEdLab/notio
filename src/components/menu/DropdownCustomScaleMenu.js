@@ -25,7 +25,7 @@ export class DropdownCustomScaleMenu extends Component {
           contentStyle={{ padding: "2px", border: "none" }}
           arrow={true}>
           <div className="sub-menu">
-            <div className="navbar-item menu-custom-scale">
+            <div className="navbar__item menu-custom-scale">
               {/* <Overlay></Overlay> TODO: refactor the popup to use the Overlay class instead*/}
 
               <SubMenu

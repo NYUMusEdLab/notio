@@ -2,18 +2,18 @@
 @import "01_base/animations";
 @import "01_base/typography";
 @import "01_base/utilities";
-@import "02_components/menu.scss";
-@import "02_components/circleOfFifths.scss";
+// @import "02_components/circleOfFifths.scss";
 @import "02_components/loadingScreen.scss";
 @import "02_components/toggle.scss";
-@import "02_components/notes.scss";
-@import "02_components/popup";
+// @import "02_components/notes.scss";
+// @import "02_components/popup";
 @import "02_components/musicalStaff.scss";
 @import "02_components/share.scss";
-@import "02_components/settings.scss";
+// @import "02_components/settings.scss";
 @import "02_components/topMenu.scss";
 @import "02_components/SubMenu.scss";
 @import "02_components/sideMenu.scss";
+@import "02_components/tooltip.scss";
 @import "03_layout/_layout.scss";
 @import "03_layout/svg/notation.scss";
 @import "03_layout/svg/customScale.scss";
@@ -28,33 +28,6 @@
 @import "02_components/videoPlayer.scss";
 @import "02_components/Overlay.scss";
 @import "06_abstracts/generic.scss";
-
-// moved to _base.scss 
-// * {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-//   /* ? */
-// }
-// html{
-//   font-size: 16px;
-// }
-
-// body {
-//   width: 100vw;
-//   height: 100vh;
-//   background-color: #f1f1da;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   font-family: "Quicksand", sans-serif;
-//   overflow: hidden;
-// }
-
-// h1,
-// p {
-//   font-family: Lato;
-// }
 
 #root,
 .Piano {

@@ -1,0 +1,107 @@
+// TODO: 29-07-2022 seams to be unused
+
+// .notio-popup--bg {
+//   flex: 1;
+//   background-color: rgba(220, 0, 10, 0.5);
+//   position        : absolute;
+//   width           : 100vw;
+//   z-index         : 31;
+//   height          : 100vh;
+//   left            : 0;
+//   visibility      : hidden;
+//   top             : 0;
+
+//   &.show {
+//     visibility: visible;
+//   }
+// }
+
+// .notio-popup {
+//   flex: 1;
+//   visibility      : hidden;
+//   position        : absolute;
+//   z-index         : 30;
+//   padding         : 0.3vw 1vw 1vw 1vw;
+//   background-color: #fff;
+
+//   box-shadow: 0.5vw 1.3vw 2vw #555;
+//   transition: all 0.3s ease-out;
+//   overflow  : hidden;
+//   opacity   : 0;
+
+//   .navbar & a {
+//     color           : black;
+//     background-color: #eee;
+//   }
+
+//   &.popup-video {
+//     flex: 1;
+//     top   : 15vh;
+//     right : 29.5vw;
+//     height: 21.8vw;
+//     width : 34.1vw;
+
+//     padding: 0.3vw 0.5vw 0.5vw 0.5vw;
+
+//   }
+
+//   &.popup-menu {
+//     flex: 1;
+//     top          : 50%;
+//     left         : 50%;
+//     transform    : translate(-50%, -50%);
+//     border-radius: 2vw;
+//     width        : 44vw;
+//     height       : 12vw;
+//   }
+
+//   .minimize,
+//   .close {
+//     float: right;
+//   }
+
+//   &--header {
+//     margin-bottom: 0.3vw;
+//   }
+
+//   &--button {
+//     padding   : 0.3vw 0.3vw 0.1vw 0.3vw;
+//     transition: all 0.1s ease-in;
+
+//     &:hover {
+//       background: #444;
+
+//       svg {
+//         fill: white;
+//       }
+//     }
+//   }
+
+//   &.minimized {
+//     height: 2.4vw;
+//   }
+
+//   &.show {
+//     visibility: visible;
+//     opacity   : 1;
+//   }
+
+//   iframe {
+//     width : 33.1vw;
+//     height: 18.6vw;
+//   }
+
+//   .resize-handle {
+//     position    : absolute;
+//     width       : 0px;
+//     height      : 0px;
+//     margin-top  : -17px;
+//     margin-left : -17px;
+//     border-style: solid;
+//     border-width: 0 0 16px 16px;
+//     border-color: transparent transparent #aaa transparent;
+//     cursor      : nw-resize !important;
+//     bottom      : 0;
+//     right       : 0;
+//   }
+// }
