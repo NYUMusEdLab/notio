@@ -1,0 +1,39 @@
+.video-url {
+
+    color: white;
+
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 6fr 1fr 1fr;
+    grid-template-areas:
+        "head   .   .   "
+        "url   url reset"
+        "text text submit";
+    grid-column-gap: 10px;
+    grid-row-gap: 1px;
+    align-items: end;
+    justify-items: start;
+
+        &__title{
+            grid-area: head;
+
+        }
+
+        &__btn{
+            &--reset{
+                grid-area: reset;
+            }
+            &--submit{
+                background:green;
+                grid-area: submit;
+            }
+        }
+
+        &__url-field{
+            grid-area: url;
+        }
+
+        &__explainer{
+            grid-area: text;
+        }
+}
