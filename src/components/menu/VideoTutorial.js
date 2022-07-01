@@ -92,6 +92,9 @@ const VideoTutorial = (props) => {
                 </Form>
               </div>
             </Tab>
+            <Tab eventKey="Tutorials" title="Tutorials">
+              
+            </Tab>
           </Tabs>
         </div>
       </Overlay>
