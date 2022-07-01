@@ -25,6 +25,8 @@ export default class VideoButton extends Component {
 
   handleShow = () => {
     this.setState({ show: !this.state.show });
+    this.props.handleChangeVideoVisibility();
+
   };
 
   render() {
@@ -35,6 +37,7 @@ export default class VideoButton extends Component {
           onClick={(e) => {
             this.props.onClickMenuHandler();
             this.handleShow();
+            this.props.handleChangeVideoVisibility();
           }}>
           {components[this.props.label]}
         </div>
@@ -47,8 +50,10 @@ export default class VideoButton extends Component {
           this.state.show && (
             <VideoTutorial
               vissible={this.props.active}
+              activeVideoTab={this.props.activeVideoTab}
               videoUrl={this.props.videoUrl}
               handleChangeVideoVisibility={this.props.handleChangeVideoVisibility}
+              handleChangeActiveVideoTab={this.props.handleChangeActiveVideoTab}
               handleChangeVideoUrl={this.props.handleChangeVideoUrl}
               resetVideoUrl={this.props.resetVideoUrl}
               handleResetVideoUrl={this.props.handleResetVideoUrl}

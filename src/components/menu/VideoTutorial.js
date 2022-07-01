@@ -5,37 +5,36 @@ import Overlay from "./Overlay";
 
 const VideoTutorial = (props) => {
   const urlInputRef = useRef();
-
   const [playing, setPlaying] = useState(false);
-  // const [played, setPlayed] = useState(0);
-  // const [loaded, setLoaded] = useState(0);
-  // const [duration, setDuration] = useState(0);
-  // const [minimized, setMinimized] = useState(false);
-  // const [show, setShow] = useState(props.vissible);
-  // const [activeTab, setActiveTab] = useState("playlist");
-  // const [playerIsReady, setPlayerIsReady] = useState(false);
   const [videoUrl, setVideoUrl] = useState(props.videoUrl);
+  const [activeTab,setActiveTab] = useState(props.activeVideoTab);
+  // TODO:use this : handleChangeActiveVideoTab={this.props.handleChangeActiveVideoTab}, when a tab is selected to persist the selection
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setVideoUrl(event.target.elements[0].value);
     props.handleChangeVideoUrl(event.target.elements[0].value);
-    // setActiveTab("playlist");
+    props.handleChangeActiveVideoTab("Player")
+    setActiveTab("Player");
   };
 
   // //this can be used if we make the tabs controlled
-  // const handleSelect = (key) => {
-  //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
+  const handleTabSelected = (key) => {
+    // A bit dummy but need to control tabs after submit (cf handleSumbit())
 
-  //   if (key === "playlist") {
-  //     setActiveTab("playlist");
-  //     // this.setState({ activeTab: "playlist" });
-  //   }
-  //   if (key === "change_video") {
-  //     setActiveTab("change_video");
-  //     //   this.setState({ activeTab: "change_video" });
-  //   }
-  // };
+    if (key === "Player") {
+      setActiveTab("Player");
+      props.handleChangeActiveVideoTab("Player")
+      // this.setState({ activeTab: "Player" });
+    }
+    if (key === "Enter_url") {
+      setActiveTab("Enter_url");
+      props.handleChangeActiveVideoTab("Enter_url")
+
+      //   this.setState({ activeTab: "Enter_url" });
+    }
+  };
 
   const playerOnReady = (event) => {
     // A bit dummy but need to control tabs after submit (cf handleSumbit())
@@ -44,9 +43,10 @@ const VideoTutorial = (props) => {
   };
 
   const resetVideoUrl = (event) => {
+    console.log(props.resetVideoUrl);
     setVideoUrl(props.resetVideoUrl);
-    // setActiveTab("playlist");
     props.handleResetVideoUrl();
+    setActiveTab("Player");
   };
 
   return (
@@ -54,10 +54,10 @@ const VideoTutorial = (props) => {
       {/* <Overlay visible={show} key={videoUrl}> */}
       <Overlay visible={true} key={videoUrl} close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
-          {/* <Tabs defaultActiveKey="playlist" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
-          {/* <Tabs defaultActiveKey="playlist" activeTab={activeTab} id="controlled-tab-example"> */}
-          <Tabs defaultActiveKey="playlist" id="controlled-tab-example">
-            <Tab eventKey="playlist" title="Playlist">
+          {/* <Tabs defaultActiveKey="Player" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
+          {/* <Tabs defaultActiveKey="Player" activeTab={activeTab} id="controlled-tab-example"> */}
+          <Tabs defaultActiveKey={activeTab} activeTab={activeTab} id="controlled-tab-example" onSelect={handleTabSelected}>
+            <Tab eventKey="Player" title="Player">
               <ReactPlayer
                 className="react-player"
                 playing={playing}
@@ -68,23 +68,26 @@ const VideoTutorial = (props) => {
                 onReady={playerOnReady}
               />
             </Tab>
-            <Tab eventKey="change_video" title="Customize">
-              <div>
+            <Tab eventKey="Enter_url" title="Enter url">
+              <div >
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group controlId="formYoutubeUrl">
-                    <Form.Label>Video url</Form.Label>
-                    <Form.Control type="text" placeholder="Enter url" ref={urlInputRef} />
-                    <Form.Text className="text-muted">
-                      Enter the url for any video that you want to use with the app.
-                    </Form.Text>
-                    <Form.Text className="text-muted">Current url: {videoUrl}</Form.Text>
+                  <Form.Group className="video-url" controlId="formYoutubeUrl">
+                    <Form.Label className="video-url__title">Video url</Form.Label>
+                    
+                    <Form.Control className="video-url__url-field" type="text" placeholder={props.videoUrl} ref={urlInputRef} >
+                    </Form.Control>
 
-                    <Button variant="primary" type="submit">
-                      Use this video
+                    <Form.Text className="video-url__explainer text-muted">
+                      Enter the url for any youtube video or playlist that you want to use with Notio and hit Enter.
+                    </Form.Text>
+                    {/* <Form.Text className="text-muted">Current url: {videoUrl}</Form.Text> */}
+                    <Button className="video-url__btn--reset" variant="outline-danger" onClick={resetVideoUrl}>
+                      Reset
                     </Button>
-                    <Button variant="outline-danger" onClick={resetVideoUrl}>
-                      Reset to Notio Tutorial
+                    <Button className="video-url__btn--submit" variant="primary" type="submit">
+                      Enter
                     </Button>
+                    
                   </Form.Group>
                 </Form>
               </div>

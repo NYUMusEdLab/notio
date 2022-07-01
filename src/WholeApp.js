@@ -33,7 +33,9 @@ class WholeApp extends Component {
     loading: true,
     // videoUrl: "https://www.youtube.com/watch?v=g4mHPeMGTJM", // silence test video for coding
     videoUrl: notio_tutorial,
+    resetVideoUrl:notio_tutorial,
     videoActive: false,
+    activeVideoTab:"Enter_url", //Player or Enter_url
     showTooltip: true,
     keyboardTooltipRef: null,
     showKeyboardTooltipRef: null,
@@ -200,13 +202,21 @@ class WholeApp extends Component {
   };
 
   handleResetVideoUrl = () => {
-    this.setState({ videoUrl: notio_tutorial });
+    // console.log("resetting video url")
+    // console.log(this.state.resetVideoUrl);
+    this.setState({ videoUrl: this.state.resetVideoUrl });
   };
 
   handleChangeVideoVisibility = () => {
     const isActive = !this.state.videoActive;
     this.setState({
       videoActive: isActive,
+    });
+  };
+
+  handleChangeActiveVideoTab = (tabTitle)=>{
+    this.setState({
+      activeVideoTab: tabTitle,
     });
   };
 
@@ -255,6 +265,7 @@ class WholeApp extends Component {
       clef,
       videoUrl,
       videoActive,
+      activeVideoTab,
     } = this.state;
     db.collection("sessions")
       .add({
@@ -271,6 +282,7 @@ class WholeApp extends Component {
         clef: clef,
         videoUrl: videoUrl,
         videoActive: videoActive,
+        activeVideoTab: activeVideoTab,
       })
       .then((docRef) => {
         // console.log("Session written with ID: ", docRef.id);
@@ -310,7 +322,9 @@ class WholeApp extends Component {
           clef: result.clef,
           loading: false,
           videoUrl: result.videoUrl,
+          resetVideoUrl: result.videoUrl,
           videoActive: result.videoActive,
+          activeVideoTab: result.activeVideoTab,
         });
       } else {
         this.setState({ loading: false });
@@ -400,11 +414,13 @@ class WholeApp extends Component {
           handleChangeRoot={this.handleChangeRoot}
           handleChangeVideoUrl={this.handleChangeVideoUrl}
           handleChangeVideoVisibility={this.handleChangeVideoVisibility}
+          handleChangeActiveVideoTab={this.handleChangeActiveVideoTab}
           handleChangeSound={this.handleChangeSound}
           handleChangeTooltip={this.handleChangeTooltip}
           handleResetVideoUrl={this.handleResetVideoUrl}
-          resetVideoUrl={notio_tutorial}
+          resetVideoUrl={this.state.resetVideoUrl}
           videoActive={this.state.videoActive}
+          activeVideoTab={this.state.activeVideoTab}
           saveSessionToDB={this.saveSessionToDB}
           sessionID={this.state.sessionID}
           state={this.state}
