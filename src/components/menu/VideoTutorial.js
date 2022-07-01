@@ -7,7 +7,7 @@ const VideoTutorial = (props) => {
   const urlInputRef = useRef();
   const [playing, setPlaying] = useState(false);
   const [videoUrl, setVideoUrl] = useState(props.videoUrl);
-  const [activeTab,setActiveTab] = useState(props.active_video_tab);
+  const [activeTab,setActiveTab] = useState(props.activeVideoTab);
   // TODO:use this : handleChangeActiveVideoTab={this.props.handleChangeActiveVideoTab}, when a tab is selected to persist the selection
 
 
@@ -19,18 +19,21 @@ const VideoTutorial = (props) => {
   };
 
   // //this can be used if we make the tabs controlled
-  // const handleSelect = (key) => {
-  //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
+  const handleTabSelected = (key) => {
+    // A bit dummy but need to control tabs after submit (cf handleSumbit())
 
-  //   if (key === "Player") {
-  //     setActiveTab("Player");
-  //     // this.setState({ activeTab: "Player" });
-  //   }
-  //   if (key === "Enter_url") {
-  //     setActiveTab("Enter_url");
-  //     //   this.setState({ activeTab: "Enter_url" });
-  //   }
-  // };
+    if (key === "Player") {
+      setActiveTab("Player");
+      props.handleChangeActiveVideoTab("Player")
+      // this.setState({ activeTab: "Player" });
+    }
+    if (key === "Enter_url") {
+      setActiveTab("Enter_url");
+      props.handleChangeActiveVideoTab("Enter_url")
+
+      //   this.setState({ activeTab: "Enter_url" });
+    }
+  };
 
   const playerOnReady = (event) => {
     // A bit dummy but need to control tabs after submit (cf handleSumbit())
@@ -52,7 +55,7 @@ const VideoTutorial = (props) => {
         <div className="tabs-wrapper">
           {/* <Tabs defaultActiveKey="Player" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
           {/* <Tabs defaultActiveKey="Player" activeTab={activeTab} id="controlled-tab-example"> */}
-          <Tabs defaultActiveKey={activeTab} id="controlled-tab-example">
+          <Tabs defaultActiveKey={activeTab} activeTab={activeTab} id="controlled-tab-example" onSelect={handleTabSelected}>
             <Tab eventKey="Player" title="Player">
               <ReactPlayer
                 className="react-player"

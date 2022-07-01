@@ -35,7 +35,7 @@ class WholeApp extends Component {
     videoUrl: notio_tutorial,
     resetVideoUrl:notio_tutorial,
     videoActive: false,
-    active_video_tab:"Enter_url", //Player or Enter_url
+    activeVideoTab:"Enter_url", //Player or Enter_url
     showTooltip: true,
     keyboardTooltipRef: null,
     showKeyboardTooltipRef: null,
@@ -420,7 +420,7 @@ class WholeApp extends Component {
           handleResetVideoUrl={this.handleResetVideoUrl}
           resetVideoUrl={this.state.resetVideoUrl}
           videoActive={this.state.videoActive}
-          active_video_tab="Enter_url"
+          activeVideoTab={this.state.activeVideoTab}
           saveSessionToDB={this.saveSessionToDB}
           sessionID={this.state.sessionID}
           state={this.state}

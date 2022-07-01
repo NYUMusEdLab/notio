@@ -355,7 +355,7 @@ class TopMenu extends Component {
               handleChangeVideoVisibility={this.props.handleChangeVideoVisibility}
               handleChangeActiveVideoTab={this.props.handleChangeActiveVideoTab}
               active={this.props.videoActive}
-              active_video_tab={this.props.active_video_tab}
+              activeVideoTab={this.props.activeVideoTab}
               handleChangeVideoUrl={this.props.handleChangeVideoUrl}
               videoUrl={this.props.state.videoUrl}
               resetVideoUrl={this.props.resetVideoUrl}
