@@ -15,6 +15,7 @@ const VideoTutorial = (props) => {
     event.preventDefault();
     setVideoUrl(event.target.elements[0].value);
     props.handleChangeVideoUrl(event.target.elements[0].value);
+    props.handleChangeActiveVideoTab("Player")
     setActiveTab("Player");
   };
 

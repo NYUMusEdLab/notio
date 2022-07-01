@@ -25,6 +25,8 @@ export default class VideoButton extends Component {
 
   handleShow = () => {
     this.setState({ show: !this.state.show });
+    this.props.handleChangeVideoVisibility();
+
   };
 
   render() {
