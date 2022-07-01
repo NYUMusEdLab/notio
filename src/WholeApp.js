@@ -35,6 +35,7 @@ class WholeApp extends Component {
     videoUrl: notio_tutorial,
     resetVideoUrl:notio_tutorial,
     videoActive: false,
+    active_video_tab:"Enter_url", //Player or Enter_url
     showTooltip: true,
     keyboardTooltipRef: null,
     showKeyboardTooltipRef: null,
@@ -213,6 +214,12 @@ class WholeApp extends Component {
     });
   };
 
+  handleChangeActiveVideoTab = (tabTitle)=>{
+    this.setState({
+      activeVideoTab: tabTitle,
+    });
+  };
+
   handleChangeTooltip = () => {
     const tooltip = !this.state.showTooltip;
     this.setState({
@@ -258,6 +265,7 @@ class WholeApp extends Component {
       clef,
       videoUrl,
       videoActive,
+      activeVideoTab,
     } = this.state;
     db.collection("sessions")
       .add({
@@ -274,6 +282,7 @@ class WholeApp extends Component {
         clef: clef,
         videoUrl: videoUrl,
         videoActive: videoActive,
+        activeVideoTab: activeVideoTab,
       })
       .then((docRef) => {
         // console.log("Session written with ID: ", docRef.id);
@@ -315,6 +324,7 @@ class WholeApp extends Component {
           videoUrl: result.videoUrl,
           resetVideoUrl: result.videoUrl,
           videoActive: result.videoActive,
+          activeVideoTab: result.activeVideoTab,
         });
       } else {
         this.setState({ loading: false });
@@ -404,11 +414,13 @@ class WholeApp extends Component {
           handleChangeRoot={this.handleChangeRoot}
           handleChangeVideoUrl={this.handleChangeVideoUrl}
           handleChangeVideoVisibility={this.handleChangeVideoVisibility}
+          handleChangeActiveVideoTab={this.handleChangeActiveVideoTab}
           handleChangeSound={this.handleChangeSound}
           handleChangeTooltip={this.handleChangeTooltip}
           handleResetVideoUrl={this.handleResetVideoUrl}
           resetVideoUrl={this.state.resetVideoUrl}
           videoActive={this.state.videoActive}
+          active_video_tab="Enter_url"
           saveSessionToDB={this.saveSessionToDB}
           sessionID={this.state.sessionID}
           state={this.state}

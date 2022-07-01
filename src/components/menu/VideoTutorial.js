@@ -8,7 +8,8 @@ const VideoTutorial = (props) => {
   const [playing, setPlaying] = useState(false);
   const [videoUrl, setVideoUrl] = useState(props.videoUrl);
   const [activeTab,setActiveTab] = useState(props.active_video_tab);
-  //  activeTab = props.active_video_tab ? props.active_video_tab : "Enter_url" ;
+  // TODO:use this : handleChangeActiveVideoTab={this.props.handleChangeActiveVideoTab}, when a tab is selected to persist the selection
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
