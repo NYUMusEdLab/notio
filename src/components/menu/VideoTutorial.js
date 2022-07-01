@@ -15,7 +15,7 @@ const VideoTutorial = (props) => {
     event.preventDefault();
     setVideoUrl(event.target.elements[0].value);
     props.handleChangeVideoUrl(event.target.elements[0].value);
-    // setActiveTab("Player");
+    setActiveTab("Player");
   };
 
   // //this can be used if we make the tabs controlled
@@ -72,9 +72,7 @@ const VideoTutorial = (props) => {
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="video-url" controlId="formYoutubeUrl">
                     <Form.Label className="video-url__title">Video url</Form.Label>
-                    <Button className="video-url__btn--reset" variant="outline-danger" onClick={resetVideoUrl}>
-                      Reset
-                    </Button>
+                    
                     <Form.Control className="video-url__url-field" type="text" placeholder={props.videoUrl} ref={urlInputRef} >
                     </Form.Control>
 
@@ -82,7 +80,9 @@ const VideoTutorial = (props) => {
                       Enter the url for any youtube video or playlist that you want to use with Notio and hit Enter.
                     </Form.Text>
                     {/* <Form.Text className="text-muted">Current url: {videoUrl}</Form.Text> */}
-
+                    <Button className="video-url__btn--reset" variant="outline-danger" onClick={resetVideoUrl}>
+                      Reset
+                    </Button>
                     <Button className="video-url__btn--submit" variant="primary" type="submit">
                       Enter
                     </Button>
