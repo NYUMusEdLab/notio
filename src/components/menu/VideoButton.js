@@ -35,6 +35,7 @@ export default class VideoButton extends Component {
           onClick={(e) => {
             this.props.onClickMenuHandler();
             this.handleShow();
+            this.props.handleChangeVideoVisibility();
           }}>
           {components[this.props.label]}
         </div>
