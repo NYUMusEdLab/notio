@@ -23,7 +23,7 @@ const DropdownCustomScaleMenu = (props) => {
           onClick={(e) => {
             handleShow();
           }}>
-          customize
+          Customize
         </div>
       </div>
 
