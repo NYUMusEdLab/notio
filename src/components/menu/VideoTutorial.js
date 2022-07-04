@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
-import { Tabs, Tab, Form, Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Tabs, Tab, Form, Button } from "react-bootstrap";
 import Overlay from "./Overlay";
 
 const VideoTutorial = (props) => {
