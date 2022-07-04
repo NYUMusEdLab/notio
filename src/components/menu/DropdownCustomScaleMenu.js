@@ -5,13 +5,14 @@ import Popup from "reactjs-popup";
 import CustomScaleSelector from "./CustomScaleSelector";
 import SubMenu from "./SubMenu";
 import CustomScaleImg from "../../assets/img/CustomScale";
+import Overlay from "./Overlay";
 // import Overlay from "./Overlay";
 
 export class DropdownCustomScaleMenu extends Component {
   render() {
     return (
       <div className={this.props.menuTextClassName}>
-        <Popup
+        {/* <Popup
           className="popup-root"
           trigger={<div className="label-wrapper">Customize</div>}
           position="left top"
@@ -23,7 +24,8 @@ export class DropdownCustomScaleMenu extends Component {
           mouseLeaveDelay={300}
           mouseEnterDelay={0}
           contentStyle={{ padding: "2px", border: "none" }}
-          arrow={true}>
+          arrow={true}> */}
+        <Overlay visible={true} key={videoUrl} close={props.onClickCloseHandler}>
           <div className="sub-menu">
             <div className="navbar__item menu-custom-scale">
               {/* <Overlay></Overlay> TODO: refactor the popup to use the Overlay class instead*/}
@@ -43,7 +45,8 @@ export class DropdownCustomScaleMenu extends Component {
               />
             </div>
           </div>
-        </Popup>
+        </Overlay>
+        {/* </Popup> */}
       </div>
     );
   }
