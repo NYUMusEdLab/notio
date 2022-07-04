@@ -1,13 +1,13 @@
-import React, { useRef, useState } from "react";
-import { Tabs, Tab, Form, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Tabs, Tab } from "react-bootstrap";
 import Overlay from "./Overlay";
 
 import CustomScaleSelector from "./CustomScaleSelector";
-import CustomScaleImg from "../../assets/img/CustomScale";
+// import CustomScaleImg from "../../assets/img/CustomScale";
 
 const DropdownCustomScaleMenu = (props) => {
-  const { onClickMenuHandler = () => {} } = props;
-  const { onClickCloseHandler = () => {} } = props;
+  // const { onClickMenuHandler = () => {} } = props;
+  // const { onClickCloseHandler = () => {} } = props;
   const [show, setShow] = useState(false);
 
   const handleShow = () => {
