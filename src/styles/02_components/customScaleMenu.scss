@@ -1,0 +1,95 @@
+.menu__custom-scale {
+  &__tone-list {
+    background: yellow;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: (fr1 fr1 fr1 fr1);
+    grid-template-areas:
+      "tone_1 tone_b2 tone_2 tone_b3 tone_3 tone_4 tone_b5 tone_5 tone_b6 tone_6 tone_7 tone_Maj"
+      " .        .      .    tone_sh2    .      .   tone_sh4    .   tone_sh5    .      .       .     "
+      " .       .       .      .       .      .      .       .       .      .     .       .     "
+      " name   name    input  input   input  input   .       .   submit  submit submit    .     ";
+
+    & > * {
+      height: 100%;
+    }
+    & .form-check.item {
+      &--1 {
+        background: blue;
+        grid-area: tone_1;
+      }
+      &--b2 {
+        background: blue;
+        grid-area: tone_b2;
+      }
+      &--2 {
+        background: blue;
+        grid-area: tone_2;
+      }
+      &--b3 {
+        background: blue;
+        grid-area: tone_b3;
+      }
+      &--sh2 {
+        background: blue;
+        grid-area: tone_sh2;
+      }
+      &--3 {
+        background: blue;
+        grid-area: tone_3;
+      }
+      &--4 {
+        background: blue;
+        grid-area: tone_4;
+      }
+      &--b5 {
+        background: blue;
+        grid-area: tone_b5;
+      }
+      &--sh4 {
+        background: blue;
+        grid-area: tone_sh4;
+      }
+      &--5 {
+        background: blue;
+        grid-area: tone_5;
+      }
+      &--b6 {
+        background: blue;
+        grid-area: tone_b6;
+      }
+      &--sh5 {
+        background: blue;
+        grid-area: tone_sh5;
+      }
+      &--6 {
+        background: blue;
+        grid-area: tone_6;
+      }
+      &--7 {
+        background: blue;
+        grid-area: tone_7;
+      }
+      &--△7 {
+        background: blue;
+        grid-area: tone_Maj;
+      }
+    }
+    &__form {
+      grid-area: input;
+
+      &__name {
+        background: orange;
+        grid-area: input;
+      }
+
+      &__input {
+        grid-area: input;
+      }
+
+      &__button {
+        grid-area: submit;
+      }
+    }
+  }
+}
