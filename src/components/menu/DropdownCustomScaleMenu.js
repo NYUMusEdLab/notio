@@ -8,7 +8,7 @@ import CustomScaleImg from "../../assets/img/CustomScale";
 const DropdownCustomScaleMenu = (props) => {
   const { onClickMenuHandler = () => {} } = props;
   const { onClickCloseHandler = () => {} } = props;
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   const handleShow = () => {
     const tempshow = !show;
