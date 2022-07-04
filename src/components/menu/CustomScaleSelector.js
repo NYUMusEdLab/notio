@@ -113,7 +113,8 @@ class CustomScaleSelector extends Component {
           handleCheckboxChange={this.handleAddScaleSteps}
           initOptions={this.props.initOptions.numbers}
         />
-        {/* <form className="menu__custom-scale__tone-list__form" onSubmit={this.handleSubmit}>
+        <div className="menu__custom-scale__tone-list__colors">colors</div>
+        <form className="menu__custom-scale__tone-list__form" onSubmit={this.handleSubmit}>
           <label className="menu__custom-scale__tone-list__form__name">
             Name:
             <input
@@ -128,7 +129,7 @@ class CustomScaleSelector extends Component {
             type="submit"
             value="Submit"
           />
-        </form> */}
+        </form>
       </div>
     );
   }
