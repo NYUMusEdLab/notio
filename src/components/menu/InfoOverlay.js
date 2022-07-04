@@ -1,5 +1,5 @@
 import React from "react";
-import ReactPlayer from "react-player/lazy";
+// import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import Overlay from "./Overlay";
 // import ReactMarkdown from "react-markdown";
@@ -195,7 +195,7 @@ const InfoOverlay = (props) => {
                 </Card>
               </div>
             </Tab>
-            <Tab eventKey="InstructVideo" title="Instruction Videos">
+            {/* <Tab eventKey="InstructVideo" title="Instruction Videos">
               <Card>
                 <Card.Body>
                   <ListGroup>
@@ -269,7 +269,7 @@ const InfoOverlay = (props) => {
                   </ListGroup>
                 </Card.Body>
               </Card>
-            </Tab>
+            </Tab> */}
           </Tabs>
         </div>
       </Overlay>
