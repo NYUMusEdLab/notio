@@ -2,9 +2,9 @@
 
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
-import CustomScaleSelector from "./CustomScaleSelector";
-import SubMenu from "./SubMenu";
-import CustomScaleImg from "../../assets/img/CustomScale";
+import CustomScaleSelector from "../src/components/menu/CustomScaleSelector";
+import SubMenu from "../src/components/menu/SubMenu";
+import CustomScaleImg from "../src/assets/img/CustomScale";
 // import Overlay from "./Overlay";
 
 export class DropdownCustomScaleMenu_old extends Component {
