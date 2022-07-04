@@ -1,0 +1,94 @@
+.menu__custom-scale {
+  &__tone-list {
+    width: 90%;
+    min-height: 80%;
+    margin: 5%;
+    background: white;
+    display: grid;
+    grid-template-columns: repeat(12, 2.4vw);
+    grid-template-rows: (1fr 1fr 2fr 2fr);
+    grid-template-areas:
+      "tone_1  tone_b2  tone_2   tone_b3  tone_3   tone_4  tone_b5  tone_5  tone_b6   tone_6  tone_7  tone_Maj"
+      " .        .       .       tone_sh2    .      .      tone_sh4  .      tone_sh5    .      .       .     "
+      "color_1 color_b2 color_2  color_b3 color_3  color_4 color_b5 color_5 color_b6  color_6 color_7 color_Maj       "
+      " .      form     form     form     form     form    form     form    form      form    form    form       ";
+
+    & > * {
+      padding: 1vh;
+      //   min-height: vh;
+    }
+    & .form-check.item {
+      &--1 {
+        grid-area: tone_1;
+      }
+      &--b2 {
+        grid-area: tone_b2;
+      }
+      &--2 {
+        grid-area: tone_2;
+      }
+      &--b3 {
+        grid-area: tone_b3;
+      }
+      &--sh2 {
+        grid-area: tone_sh2;
+      }
+      &--3 {
+        grid-area: tone_3;
+      }
+      &--4 {
+        grid-area: tone_4;
+      }
+      &--b5 {
+        grid-area: tone_b5;
+      }
+      &--sh4 {
+        grid-area: tone_sh4;
+      }
+      &--5 {
+        grid-area: tone_5;
+      }
+      &--b6 {
+        grid-area: tone_b6;
+      }
+      &--sh5 {
+        grid-area: tone_sh5;
+      }
+      &--6 {
+        grid-area: tone_6;
+      }
+      &--7 {
+        grid-area: tone_7;
+      }
+      &--△7 {
+        grid-area: tone_Maj;
+      }
+    }
+
+    &__colors {
+      grid-row-start: color_1;
+      grid-column-start: color_1;
+      grid-row-end: color_Maj;
+      grid-column-end: color_Maj;
+    }
+
+    &__form {
+      grid-area: form;
+      align-self: end;
+      //   display: flex;
+
+      //   &__name {
+      //     background: orange;
+      //     grid-area: input;
+      //   }
+
+      //   &__input {
+      //     grid-area: input;
+      //   }
+
+      //   &__button {
+      //     grid-area: submit;
+      //   }
+    }
+  }
+}
