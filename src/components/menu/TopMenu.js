@@ -22,10 +22,11 @@ import NotationImg from "../../assets/img/Notation";
 import clefs from "../../data/clefs";
 import tooltipText from "../../data/tooltipText";
 // import CustomScaleSelector from "./CustomScaleSelector";
-import { DropdownCustomScaleMenu } from "./DropdownCustomScaleMenu";
+import  DropdownCustomScaleMenu  from "./DropdownCustomScaleMenu";
 import VideoButton from "./VideoButton";
 import ShareButton from "./ShareButton";
 import InfoButton from "./InfoButton";
+import { DropdownCustomScaleMenu_old } from "./DropdownCustomScaleMenu_old";
 
 const sounds = [{ name: "piano" }, { name: "xylo" }];
 
@@ -286,7 +287,8 @@ class TopMenu extends Component {
                     menuTextClassName="form-radio"
                     state={this.props.state}
                     scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
-                    handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
+                    handleChangeCustomScale={this.props.handleChangeCustomScale}
+                    onClickCloseHandler={this.handleShow} //TODO: fix this function, it should modifi the customScale in WholeApp
                   />
                 </div>
               }

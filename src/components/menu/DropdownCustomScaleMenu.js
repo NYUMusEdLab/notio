@@ -1,53 +1,49 @@
-/* eslint-disable no-fallthrough */
+import React, { useRef, useState } from "react";
+import { Tabs, Tab, Form, Button } from "react-bootstrap";
+import Overlay from "./Overlay";
 
-import React, { Component } from "react";
-import Popup from "reactjs-popup";
 import CustomScaleSelector from "./CustomScaleSelector";
 import SubMenu from "./SubMenu";
 import CustomScaleImg from "../../assets/img/CustomScale";
-import Overlay from "./Overlay";
-// import Overlay from "./Overlay";
 
-export class DropdownCustomScaleMenu extends Component {
-  render() {
-    return (
-      <div className={this.props.menuTextClassName}>
-        {/* <Popup
-          className="popup-root"
-          trigger={<div className="label-wrapper">Customize</div>}
-          position="left top"
-          on="hover"
-          repositionOnResize={true}
-          offsetY={-400}
-          closeOnEscape={true}
-          closeOnDocumentClick
-          mouseLeaveDelay={300}
-          mouseEnterDelay={0}
-          contentStyle={{ padding: "2px", border: "none" }}
-          arrow={true}> */}
-        <Overlay visible={true} key={videoUrl} close={props.onClickCloseHandler}>
-          <div className="sub-menu">
-            <div className="navbar__item menu-custom-scale">
-              {/* <Overlay></Overlay> TODO: refactor the popup to use the Overlay class instead*/}
 
-              <SubMenu
-                className={this.props.menuTextClassName}
-                active={true}
-                title=""
-                selected={"CustomScale"}
-                selectedImg={<CustomScaleImg />}
-                content={
-                  <CustomScaleSelector //TODO: add initoptions for custom scale, matching current scale, add function handleCustomScale
-                    initOptions={this.props.state.scaleObject} //TODO: fix to customscale creation
-                    handleChange={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
-                  />
-                }
-              />
+const DropdownCustomScaleMenu = (props) => {
+   const {onClickMenuHandler = () => {}} = props;
+   const {onClickCloseHandler = () => {}} =props;
+  const [show, setShow] = useState(true);
+
+  const handleShow = () => {
+    const tempshow = !show;
+    setShow(tempshow);
+  };
+
+    return( 
+      <>
+      <div className={props.menuTextClassName}>
+            <div className="label-wrapper" onClick={(e) => {handleShow();}}>
+            customize
             </div>
+        </div>
+
+            {show && (<Overlay
+              visible={false}
+              key="custom_scale"
+              close={handleShow}
+              > 
+        <div className="tabs-wrapper">
+          <Tabs defaultActiveKey="custom_scale" id="controlled-tab-example">
+            <Tab eventKey="custom_scale" title="custom scale">
+                <div className="navbar__item menu-custom-scale">    
+                      <CustomScaleSelector //TODO: add initoptions for custom scale, matching current scale, add function handleCustomScale
+                        initOptions={props.state.scaleObject} //TODO: fix to customscale creation
+                        handleChange={props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
+                  />
+                </div>
+              </Tab>
+            </Tabs>
           </div>
-        </Overlay>
-        {/* </Popup> */}
-      </div>
-    );
-  }
-}
+            </Overlay>)}
+            </>
+        ); 
+};
+export default DropdownCustomScaleMenu;
