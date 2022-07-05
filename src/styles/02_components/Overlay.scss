@@ -68,6 +68,12 @@
       // background-color: rgb(241, 111, 255);
       align-items: flex-start;
       visibility: visible;
+      &__tooltip {
+        &:hover {
+          opacity: visible;
+          z-index: 51 !important;
+        }
+      }
 
       &__button {
         border: none;
@@ -119,6 +125,7 @@
     .tab-content {
       flex: 1;
       height: 100%;
+      overflow: scroll;
       // background-color: rgba(95, 255, 21, 0.829);
     }
   }
@@ -136,6 +143,7 @@
   }
 }
 
+
 .tabs-wrapper {
   display: flex;
   height: 100%;
@@ -145,7 +153,7 @@
 .tab-content {
   display: flex;
   flex: 1 1;
-  z-index: 300;
+  z-index: 50;
   height: 100%;
   width: 100%;
   align-items: center;
@@ -157,4 +165,7 @@
   display: block;
   flex: 1;
   height: 100%;
+
 }
+
+

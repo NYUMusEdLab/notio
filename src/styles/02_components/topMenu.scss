@@ -1,57 +1,81 @@
 .navbar {
   background-color: black;
   width: 98%;
-  float: left;
   height: 13vh;
-  padding: 2rem;
+  float: left;
+  padding: 0.5rem;
+  color: white;
+
   display: flex;
   flex-wrap: nowrap;
-  align-items: flex-start;
-  color: white;
+  align-items: center;
   justify-content: space-between;
 
-  &-item {
-    align-items: flex-start;
-    margin: 0 1.5em;
-    flex: 1 1;
-    justify-content: space-between;
+  &__item {
+    height: 100% !important;
 
-    &.menu-clef {
-      padding: 0;
-      justify-content: space-between;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-content: space-between;
+    flex-wrap: nowrap;
+    flex:1 1 auto;
+    row-gap:10px;
+
+    .title-wrapper {
+      // background: orange;
+      align-self: center;//position the title at the bottom of the navbar
+
+      display: flex;
+      flex-direction: row;
+      flex: 1 1 auto;
+      align-items: flex-end;
+
+
+    }
+    .title {
+      font-size: 0.9vw;
+      font-weight: bold;
+      width: 100%;
+
+      &.selected {
+        text-align: center;
+        z-index: 20;
+        color: black;
+        margin-bottom: 10;
+        align-self: flex-start;
+      }
     }
   }
 
   .widget-wrapper {
+    align-self:center;
+    flex: 1 1 auto;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
-  .label-wrapper {
-    text-align: center;
-    max-width: 6vw;
+  .sub-menu{
+    align-self:center;
+    
+    min-width: 9.4vw;
+    position: relative;
+    max-height: 50%;
+    min-height: 40%;
 
-    .label {
-      font-size: 0.8rem;
-      font-weight: bold;
-      font-weight: 1vw;
-      display: inline-block;
-    }
+    flex: 1 1 auto;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+
   }
-}
 
-.navbar a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.tooltip-topmenu {
-  max-width: 200px;
-}
-
-.tooltip-keyboard {
-  max-width: 600px;
+ 
 }

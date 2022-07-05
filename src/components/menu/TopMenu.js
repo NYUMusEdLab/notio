@@ -22,9 +22,10 @@ import NotationImg from "../../assets/img/Notation";
 import clefs from "../../data/clefs";
 import tooltipText from "../../data/tooltipText";
 // import CustomScaleSelector from "./CustomScaleSelector";
-import { DropdownCustomScaleMenu } from "./DropdownCustomScaleMenu";
+import DropdownCustomScaleMenu from "./DropdownCustomScaleMenu";
 import VideoButton from "./VideoButton";
 import ShareButton from "./ShareButton";
+import InfoButton from "./InfoButton";
 
 const sounds = [{ name: "piano" }, { name: "xylo" }];
 
@@ -81,6 +82,10 @@ class TopMenu extends Component {
     });
   };
 
+  handleShow = () => {
+    console.log("Should Display an overlay with program info");
+  };
+
   render() {
     // console.log(this.props.sessionID);
     // console.log("topmenu scales", scales);
@@ -96,7 +101,7 @@ class TopMenu extends Component {
         >
           {/* Toggle Piano */}
           <div
-            className="navbar-item toggle"
+            className="navbar__item toggle"
             data-tip="custom"
             data-for="showKeyboardTooltip"
             data-event="null"
@@ -123,7 +128,7 @@ class TopMenu extends Component {
 
           {/* Toggle Extended */}
           <div
-            className="navbar-item toggle"
+            className="navbar__item toggle"
             data-tip="custom"
             data-for="extendedKeyboardTooltip"
             data-event="null"
@@ -150,7 +155,7 @@ class TopMenu extends Component {
 
           {/* Sounds */}
           <div
-            className="navbar-item menu-scale"
+            className="navbar__item menu-scale"
             data-tip="custom"
             data-for="soundTooltip"
             data-event="null"
@@ -159,13 +164,15 @@ class TopMenu extends Component {
               title="Sound"
               selected={this.state.titleSound}
               content={
-                <ListRadio
-                  nameField="scale"
-                  data={sounds}
-                  handleChange={this.props.handleChangeSound}
-                  setTitle={this.setSoundTitle}
-                  initOption="piano"
-                />
+                <div className="items-list">
+                  <ListRadio
+                    nameField="scale"
+                    data={sounds}
+                    handleChange={this.props.handleChangeSound}
+                    setTitle={this.setSoundTitle}
+                    initOption="piano"
+                  />
+                </div>
               }
             />
           </div>
@@ -183,7 +190,7 @@ class TopMenu extends Component {
 
           {/* Notation */}
           <div
-            className="navbar-item menu-notation"
+            className="navbar__item menu-notation"
             data-tip="custom"
             data-for="notationTooltip"
             data-event="null"
@@ -216,7 +223,7 @@ class TopMenu extends Component {
 
           {/* Root */}
           <div
-            className="navbar-item menu-root"
+            className="navbar__item menu-root"
             data-tip="custom"
             data-for="rootTooltip"
             data-event="null"
@@ -227,13 +234,14 @@ class TopMenu extends Component {
               selectedImg={<RootMenu color={"#ff0000"} />}
               //selectedImg=<RootMenu color={findColor(this.props.state.baseNote.charAt(0))} />
               content={
-                <div>
+                <div className="items-list">
                   <Root
                     label="Root"
                     baseNote={this.props.state.baseNote}
                     handleChangeRoot={this.props.handleChangeRoot}
                     handleChangeTitle={this.handleChangeTitle}
                   />
+
                   <Octaves
                     octave={this.props.state.octave}
                     handleClick={this.props.handleClickOctave}
@@ -257,7 +265,7 @@ class TopMenu extends Component {
 
           {/* Scale */}
           <div
-            className="navbar-item menu-scale"
+            className="navbar__item menu-scale"
             data-tip="custom"
             data-for="scaleTooltip"
             data-event="null"
@@ -266,7 +274,7 @@ class TopMenu extends Component {
               title="Scale"
               selected={this.state.titleNotation}
               content={
-                <>
+                <div className="items-list">
                   <ListRadio
                     nameField="scale"
                     data={this.props.state.scaleList}
@@ -280,7 +288,7 @@ class TopMenu extends Component {
                     scaleObject={this.props.state.scaleObject} //TODO: fix to customscale creation
                     handleChangeCustomScale={this.props.handleChangeCustomScale} //TODO: fix this function, it should modifi the customScale in WholeApp
                   />
-                </>
+                </div>
               }
             />
           </div>
@@ -298,7 +306,7 @@ class TopMenu extends Component {
 
           {/* Clef */}
           <div
-            className="navbar-item menu-clef"
+            className="navbar__item menu-clef"
             data-tip="custom"
             data-for="clefsTooltip"
             data-event="null"
@@ -308,15 +316,17 @@ class TopMenu extends Component {
               selected={this.state.clefTitle}
               displayClef={true}
               content={
-                <ListRadio
-                  nameField="clef"
-                  data={clefs}
-                  handleChange={this.props.handleSelectClef}
-                  setTitle={this.setClefTitle}
-                  setImage={this.setClefImage}
-                  initOption={this.props.state.clef}
-                  displayPicto={true}
-                />
+                <div className="items-list">
+                  <ListRadio
+                    nameField="clef"
+                    data={clefs}
+                    handleChange={this.props.handleSelectClef}
+                    setTitle={this.setClefTitle}
+                    setImage={this.setClefImage}
+                    initOption={this.props.state.clef}
+                    displayPicto={true}
+                  />
+                </div>
               }
             />
           </div>
@@ -334,7 +344,7 @@ class TopMenu extends Component {
 
           {/* Video */}
           <div
-            className="navbar-item menu-video"
+            className="navbar__item menu-video"
             data-tip="custom"
             data-for="videoPlayerTooltip"
             data-event="null"
@@ -343,7 +353,9 @@ class TopMenu extends Component {
               title="Video Player"
               label="video"
               handleChangeVideoVisibility={this.props.handleChangeVideoVisibility}
+              handleChangeActiveVideoTab={this.props.handleChangeActiveVideoTab}
               active={this.props.videoActive}
+              activeVideoTab={this.props.activeVideoTab}
               handleChangeVideoUrl={this.props.handleChangeVideoUrl}
               videoUrl={this.props.state.videoUrl}
               resetVideoUrl={this.props.resetVideoUrl}
@@ -366,7 +378,7 @@ class TopMenu extends Component {
 
           {/* Share */}
           <div
-            className="navbar-item menu-share"
+            className="navbar__item menu-share"
             data-tip="custom"
             data-for="shareThisSetupTooltip"
             data-event="null"
@@ -393,13 +405,19 @@ class TopMenu extends Component {
           </ReactTooltip>
 
           {/* Settings */}
-          {/* <div className="navbar-item menu-settings">
+          {/* <div className="navbar__item menu-settings">
             <Settings title="Settings" label="Settings" />
           </div> */}
         </div>
         <div className="side-menu">
           <div className="area1 area">
-            <img src={require("../../img/info.png")} alt="about" />
+            <InfoButton
+              className="overlay__header__buttonContainer__button--close"
+              onClick={(e) => {
+                this.handleShow();
+              }}>
+              <img src={require("../../img/info.png")} alt="about" />
+            </InfoButton>
           </div>
           <div className="Area2 area">
             <img
@@ -424,9 +442,9 @@ class TopMenu extends Component {
             {tooltipText["help"]}
           </ReactTooltip>
 
-          <div className="Area3 area">
+          {/* <div className="Area3 area">
             <img src={require("../../img/home.png")} alt="home" />
-          </div>
+          </div> */}
         </div>
 
         <ReactTooltip

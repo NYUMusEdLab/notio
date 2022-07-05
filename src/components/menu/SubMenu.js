@@ -14,7 +14,7 @@ class SubMenu extends Component {
   constructor(props) {
     super(props);
     this.toggleClass = this.toggleClass.bind(this);
-    const initactive = props.active ? true : false
+    const initactive = props.active ? true : false;
     this.state = {
       active: initactive,
     };
@@ -30,9 +30,6 @@ class SubMenu extends Component {
       this.selectPictoClef();
     }
   }
-
-  
-
 
   selectPictoClef() {
     // Better solution to load dyncamically components
@@ -62,33 +59,35 @@ class SubMenu extends Component {
     }
   }
 
-
-
   render() {
     let isActive = this.state.active ? "selected" : null;
     this.selectPictoClef();
     return (
-      <div className="sub-menu">
-        <div className={`button ${isActive}`} onClick={this.toggleClass}>
-          {this.props.selectedImg}
+      <React.Fragment>
+        <div className="sub-menu">
+          <div className={`sub-menu__content ${isActive}`}>{this.props.content}</div>
+          <div className={`button ${isActive}`} onClick={this.toggleClass}>
+            <div className="button-title">
+              {this.props.selectedImg}
 
-          {this.props.displayClef ? <ClefComponent /> : ""}
-          {this.props.displayClef ? (
-            <span className="sub-menu__item__selected">
-              {this.props.selected}
-            </span>
-          ) : (
-            <span className="sub-menu--title--selected">{this.props.selected}</span>
-          )}
-          <ArrowDown />
+              {this.props.displayClef ? <ClefComponent /> : ""}
+              {this.props.displayClef ? (
+                <span className="sub-menu__item selected">{this.props.selected}</span>
+              ) : (
+                <span className="sub-menu__title selected">{this.props.selected}</span>
+              )}
+            </div>
+            <ArrowDown />
+            {/* <div className={`content ${isActive}`}>{this.props.content}</div> */}
+          </div>
         </div>
-        <div className="title--wrapper">
-          <span className={`title ${isActive}`} title={this.props.title}>{this.props.title}</span>
+        <div className="title-wrapper">
+          <span className={`title ${isActive}`} title={this.props.title}>
+            {this.props.title}
+          </span>
         </div>
         {/* <hr className={isActive} /> */}
-
-        <div className={`content ${isActive}`}>{this.props.content}</div>
-      </div>
+      </React.Fragment>
     );
   }
 }

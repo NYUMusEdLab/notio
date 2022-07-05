@@ -13,9 +13,7 @@ class MusicalStaff extends Component {
 
   removePrevious() {
     if (this.musicalStaff.current.hasChildNodes()) {
-      this.musicalStaff.current.removeChild(
-        this.musicalStaff.current.lastChild
-      );
+      this.musicalStaff.current.removeChild(this.musicalStaff.current.lastChild);
     }
   }
 
@@ -25,7 +23,7 @@ class MusicalStaff extends Component {
     //renderer.resize(60, 140);
     ctx = renderer.getContext();
     ctx.setViewBox(0, 0, 60, 140); //size
-    stave = new Stave(0, 0, 60, { fill_style: 'black' });
+    stave = new Stave(0, 0, 60, { fill_style: "black" });
     stave.setContext(ctx).draw();
   }
 
@@ -42,10 +40,8 @@ class MusicalStaff extends Component {
         this.props.note.substr(0, match.index) +
         "/" +
         this.props.note.substr(match.index, this.props.note.length - 1);
-
     }
     // console.log("daNote", daNote);
-
 
     // console.log("daNote", daNote);
     // Example of singleNote
@@ -65,18 +61,15 @@ class MusicalStaff extends Component {
         // console.log("2");
 
         return new StaveNote(note).addAccidental(0, new Accidental("b"));
-      } 
-      else if (note.keys[0].includes("##")) {
+      } else if (note.keys[0].includes("##")) {
         // console.log("4");
 
-        return new StaveNote(note).addAccidental(0, new Accidental("##"));}
-      else if (note.keys[0].includes("#")) {
+        return new StaveNote(note).addAccidental(0, new Accidental("##"));
+      } else if (note.keys[0].includes("#")) {
         // console.log("3");
 
         return new StaveNote(note).addAccidental(0, new Accidental("#"));
-      } 
-      
-      else {
+      } else {
         // console.log("************ 4", note);
 
         return new StaveNote(note);
@@ -101,8 +94,6 @@ class MusicalStaff extends Component {
     // Render voice
     voice.draw(ctx, stave);
     // console.log("F");
-
-
   }
 
   componentDidMount() {
@@ -125,19 +116,18 @@ class MusicalStaff extends Component {
   }
 
   render() {
-    const {
-      width,
-      extendedKeyboard
-    } = this.props;
+    const { width, extendedKeyboard } = this.props;
 
-    return <div
-      ref={this.musicalStaff}
-      className="musical-staff"
-      style={{
-        width: width,
-        top: extendedKeyboard ? "50%" : "40%"
-      }}
-    />;
+    return (
+      <div
+        ref={this.musicalStaff}
+        className="musical-staff"
+        style={{
+          width: width,
+          top: extendedKeyboard ? "47%" : "37%",
+        }}
+      />
+    );
   }
 }
 
@@ -148,6 +138,6 @@ MusicalStaff.propTypes = {
   keyIndex: PropTypes.number,
   isOn: PropTypes.bool,
   clef: PropTypes.string,
-}
+};
 
 export default MusicalStaff;

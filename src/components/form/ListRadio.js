@@ -56,7 +56,7 @@ class ListRadio extends Component {
 
   render() {
     return (
-        <div>
+        <>
             {this.props.data.map((option) => {
                 return <Radio
                     nameField={this.props.nameField}
@@ -66,7 +66,7 @@ class ListRadio extends Component {
                     key={option.name}
                 />
             })}
-        </div>
+        </>
     )
   }
 }

@@ -53,25 +53,24 @@ export default class ShareButton extends Component {
 
     return (
       <React.Fragment>
-        <div className="button">
-          <div
-            className="circledButton"
-            onClick={(e) => {
-              this.props.onClickMenuHandler();
-              this.handleShow();
-            }}>
-            {components[this.props.label]}
-          </div>
-          <div className="title--wrapper">
-            <span className="title" title={this.props.title}>
-              {this.props.title}
-            </span>
-          </div>
+        <div
+          className="circledButton"
+          onClick={(e) => {
+            this.props.onClickMenuHandler();
+            this.handleShow();
+          }}>
+          {components[this.props.label]}
+        </div>
+        <div className="title-wrapper">
+          <span className="title" title={this.props.title}>
+            {this.props.title}
+          </span>
         </div>
         {this.state.show && (
           <Share
             saveSessionToDB={this.props.saveSessionToDB}
-            sessionID={this.props.sessionID}></Share>
+            sessionID={this.props.sessionID}
+            onClickCloseHandler={this.handleShow}></Share>
         )}
       </React.Fragment>
     );

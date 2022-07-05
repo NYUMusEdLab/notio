@@ -1,47 +1,72 @@
+//TODO:
 .menu-root {
-
   .form-row {
+    margin-top: 0.5vw;
     margin-bottom: 0.5vw;
+    margin-left: 0.3vw;
+    // display: flex;
+    // flex-wrap: wrap;
+    // // margin-right: -5px;
+    // // margin-left: -5px;
+    // justify-content: space-around;
 
+
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr;
+    grid-gap: 0;
+    justify-items: center;
+    align-items: baseline;
+    justify-content:flex-start;
+    
   }
 
   .form-check {
+      transform: translate(20%,0);
+
+    display: flex;
+    // grid-template-columns: 2fr 2fr 1fr 1fr;
+    // grid-gap: 0;
+    justify-items: flex-start;
+    flex-direction: row;
+    justify-content: flex-start;
+
     input[type="radio"] {
       opacity: 0;
-      cursor : pointer;
-
+      cursor: pointer;
+      left:2vw;
     }
 
     &-label {
-      border       : 1px solid black;
-      border-radius: 25%;
-      width        : 2vw;
-      text-align   : center;
-      display      : block;
-      cursor       : pointer;
-      position     : relative;
-      left         : -2vw;
-      transition   : all 0.2s ease-out;
-
-    }
-
-    &-input[class^="accidental"]+&-label {
+      flex:1 0 auto;
       border: 1px solid black;
-      color : black;
+      border-radius: 25%;
+      width: 1.7vw;
+      text-align: center;
+      display: block;
+      cursor: pointer;
+      position: relative;
+      left: -2vw;
+      transition: all 0.2s ease-out;
     }
 
-    @media (min-width: 1537px) {
-      .form-check-label {
-        width: 1.8vw;
-      }
+    &-input[class^="accidental"] + &-label {
+      flex:1 0 auto;
+      width: 1.7vw;
+      border: 1px solid black;
+      color: black;
+      
     }
 
+    // @media (min-width: 1537px) {
+    //   .form-check-label {
+    //     width: 1.8vw;
+    //   }
+    // }
 
-
-    .form-check-input:disabled~.form-check-label,
-    .form-check-input[disabled]~.form-check-label {
+    .form-check-input:disabled ~ .form-check-label,
+    .form-check-input[disabled] ~ .form-check-label {
       border: none;
-      color : #777;
+      color: #777;
       cursor: default;
     }
   }

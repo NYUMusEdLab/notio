@@ -25,32 +25,35 @@ export default class VideoButton extends Component {
 
   handleShow = () => {
     this.setState({ show: !this.state.show });
+    this.props.handleChangeVideoVisibility();
+
   };
 
   render() {
     return (
       <React.Fragment>
-        <div className="button">
-          <div
-            className="circledButton"
-            onClick={(e) => {
-              this.props.onClickMenuHandler();
-              this.handleShow();
-            }}>
-            {components[this.props.label]}
-          </div>
-          <div className="title--wrapper">
-            <span className="title" title={this.props.title}>
-              {this.props.title}
-            </span>
-          </div>
+        <div
+          className="circledButton"
+          onClick={(e) => {
+            this.props.onClickMenuHandler();
+            this.handleShow();
+            this.props.handleChangeVideoVisibility();
+          }}>
+          {components[this.props.label]}
+        </div>
+        <div className="title-wrapper">
+          <span className="title" title={this.props.title}>
+            {this.props.title}
+          </span>
         </div>
         {
           this.state.show && (
             <VideoTutorial
               vissible={this.props.active}
+              activeVideoTab={this.props.activeVideoTab}
               videoUrl={this.props.videoUrl}
               handleChangeVideoVisibility={this.props.handleChangeVideoVisibility}
+              handleChangeActiveVideoTab={this.props.handleChangeActiveVideoTab}
               handleChangeVideoUrl={this.props.handleChangeVideoUrl}
               resetVideoUrl={this.props.resetVideoUrl}
               handleResetVideoUrl={this.props.handleResetVideoUrl}
