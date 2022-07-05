@@ -1,6 +1,6 @@
 .musical-staff {
-  position: absolute;
-  top: 50%;
+  // position: absolute;
+  // top: 50%;
   z-index: 10;
   pointer-events: none; /* makes it click thru */
   & svg {
