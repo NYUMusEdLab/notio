@@ -34,6 +34,7 @@ class ListCheckbox extends Component {
 
   createCheckbox = (option) => (
     <Checkbox
+      className={`item--${option.replace("#", "sh")}`}
       label={option}
       isSelected={this.state.checkboxes[option]}
       onCheckboxChange={this.onChange}

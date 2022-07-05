@@ -22,7 +22,7 @@ import NotationImg from "../../assets/img/Notation";
 import clefs from "../../data/clefs";
 import tooltipText from "../../data/tooltipText";
 // import CustomScaleSelector from "./CustomScaleSelector";
-import { DropdownCustomScaleMenu } from "./DropdownCustomScaleMenu";
+import DropdownCustomScaleMenu from "./DropdownCustomScaleMenu";
 import VideoButton from "./VideoButton";
 import ShareButton from "./ShareButton";
 import InfoButton from "./InfoButton";
@@ -165,13 +165,13 @@ class TopMenu extends Component {
               selected={this.state.titleSound}
               content={
                 <div className="items-list">
-                <ListRadio
-                  nameField="scale"
-                  data={sounds}
-                  handleChange={this.props.handleChangeSound}
-                  setTitle={this.setSoundTitle}
-                  initOption="piano"
-                />
+                  <ListRadio
+                    nameField="scale"
+                    data={sounds}
+                    handleChange={this.props.handleChangeSound}
+                    setTitle={this.setSoundTitle}
+                    initOption="piano"
+                  />
                 </div>
               }
             />
@@ -241,12 +241,12 @@ class TopMenu extends Component {
                     handleChangeRoot={this.props.handleChangeRoot}
                     handleChangeTitle={this.handleChangeTitle}
                   />
-                 
+
                   <Octaves
                     octave={this.props.state.octave}
                     handleClick={this.props.handleClickOctave}
                   />
-                  </div>
+                </div>
               }
             />
             {/* <div className="half-circle"></div> */}
@@ -317,15 +317,15 @@ class TopMenu extends Component {
               displayClef={true}
               content={
                 <div className="items-list">
-                <ListRadio
-                  nameField="clef"
-                  data={clefs}
-                  handleChange={this.props.handleSelectClef}
-                  setTitle={this.setClefTitle}
-                  setImage={this.setClefImage}
-                  initOption={this.props.state.clef}
-                  displayPicto={true}
-                />
+                  <ListRadio
+                    nameField="clef"
+                    data={clefs}
+                    handleChange={this.props.handleSelectClef}
+                    setTitle={this.setClefTitle}
+                    setImage={this.setClefImage}
+                    initOption={this.props.state.clef}
+                    displayPicto={true}
+                  />
                 </div>
               }
             />

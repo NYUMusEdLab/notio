@@ -106,21 +106,31 @@ class CustomScaleSelector extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className="menu__custom-scale__tone-list">
         {/* <Checkbox label={1} isSelected={true} onCheckboxChange={null} key={1} /> */}
         <ListCheckbox
           options={customScaleSteps}
           handleCheckboxChange={this.handleAddScaleSteps}
           initOptions={this.props.initOptions.numbers}
         />
-        <form onSubmit={this.handleSubmit}>
-          <label>
+        <div className="menu__custom-scale__tone-list__colors">colors</div>
+        <form className="menu__custom-scale__tone-list__form" onSubmit={this.handleSubmit}>
+          <label className="menu__custom-scale__tone-list__form__name">
             Name:
-            <input type="text" value={this.state.name} onChange={this.handleChange} />
+            <input
+              className="menu__custom-scale__tone-list__form_input"
+              type="text"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
           </label>
-          <input type="submit" value="Submit" />
+          <input
+            className="menu__custom-scale__tone-list__form__button"
+            type="submit"
+            value="Submit"
+          />
         </form>
-      </React.Fragment>
+      </div>
     );
   }
 }
