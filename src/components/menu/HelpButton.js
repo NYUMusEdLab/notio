@@ -13,7 +13,7 @@ class HelpButton extends Component {
       };
       state = {
         minimized: false,
-        show: this.props.active ? true : false,
+        show: this.props.active ? false : true,
       };
     
       handleShow = () => {

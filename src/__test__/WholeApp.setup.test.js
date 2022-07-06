@@ -25,6 +25,15 @@ beforeEach(() => {
     SoundMaker.mockClear();
 })
 
+jest.mock('react-dom', () => {
+    return {
+        ...jest.requireActual('react-dom'),
+        createPortal: (element, target) => {
+            return element;
+        }
+    };
+});
+
 describe("THIS IS THE FEATURE BEING TESTED", () =>{
     test.each([
         [["/"]],

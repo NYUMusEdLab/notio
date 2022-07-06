@@ -53,15 +53,15 @@ const InfoOverlay = (props) => {
                             <strong>Configuring the scale</strong><br></br> 
                             You can make your own unique configuration and easily share it (see <a href="#share-setup">Sharing your setup</a>)<br></br>
                             To configure the scale, use the top menu. The possible configurations are:<br></br>
-                            <strong>Show Keyboard</strong>: turn the piano on/off (the coloured notes are still playable!)<br></br>
-                            <strong>Extended Keyboard</strong>: Make the piano fill up 2 octaves (and disable left hand play, see <a href="#play-piano">Play the piano</a>)<br></br>
-                            <strong>Sound</strong>: Make the piano use a different sound (presently not available sadly)<br></br>
-                            <strong>Notation</strong>: Show the chosen notation of the notes used in the scale<br></br>
-                            <strong>Root</strong>: Choose the base root of the scale. This will be the note played on F (see <a href="#play-piano">Play the piano</a>)<br></br>
-                            <strong>Scale</strong>: Choose the scale, or create a custom one! (see <a href="#custom-scale">Create a custom scale</a>)<br></br>
-                            <strong>Clefs</strong>: Choose the clef the scale uses, or disable it entirely<br></br>
-                            <strong>Video Player</strong> Use the video player. For more details, see <a href="#using-video">Using video</a><br></br>
-                            <strong>Share this setup</strong> Share the setup through a url. For more details see <a href="#share-setup">Share your setup</a><br></br>
+                            <strong>show keyboard</strong>: turn the piano on/off (the coloured notes are still playable!)<br></br>
+                            <strong>extended keyboard</strong>: Make the piano fill up 2 octaves (and disable left hand play, see <a href="#play-piano">Play the piano</a>)<br></br>
+                            <strong>sound</strong>: Make the piano use a different sound (presently not available sadly)<br></br>
+                            <strong>notation</strong>: Show the chosen notation of the notes used in the scale<br></br>
+                            <strong>root</strong>: Choose the base root of the scale. This will be the note played on F (see <a href="#play-piano">Play the piano</a>)<br></br>
+                            <strong>scale</strong>: Choose the scale, or create a custom one! (see <a href="#custom-scale">Create a custom scale</a>)<br></br>
+                            <strong>clefs</strong>: Choose the clef the scale uses, or disable it entirely<br></br>
+                            <strong>video player</strong> Use the video player. For more details, see <a href="#using-video">Using video</a><br></br>
+                            <strong>share this setup</strong> Share the setup through a url. For more details see <a href="#share-setup">Share your setup</a><br></br>
                           </Card.Text>
                         </Card.Body>
                       </ListGroupItem>
