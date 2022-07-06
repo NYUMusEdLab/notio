@@ -55,9 +55,9 @@
 
     .noteWrapper {
       grid-area: noteName;
-      background: yellow;
+      // background: yellow;
       display: grid;
-      grid-template-rows: repeat(6, 4vh);
+      grid-template-rows: repeat(6, auto);
       grid-gap: 1px;
       grid-template-areas:
         "extension"
