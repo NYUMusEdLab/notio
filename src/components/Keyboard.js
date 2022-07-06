@@ -140,7 +140,7 @@ class Keyboard extends Component {
     };
 
     this.synth = new SoundMaker({
-      instrument: "piano",
+      instrument: "synth",
       velocities: 5,
       volume: 4,
     });

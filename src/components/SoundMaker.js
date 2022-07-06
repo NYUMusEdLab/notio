@@ -2,51 +2,67 @@ import { Component } from "react";
 import { Piano } from "@tonejs/piano";
 import * as Tone from "tone";
 
-class SoundMaker extends Component{
-    /* 
+class SoundMaker extends Component {
+  /* 
         Module handling all making of sounds.
         Made as a Component so it updates when a new instrument is made, but never renders.
         So far only handles the Piano module from tonejs.
     */
-    constructor(props){
-        super(props)
-        this.sound = Tone;
-        //this.instrument = options.instrument;
-        this.velocities = props.velocities;
-        //this.volume = options.volume;
-        this.synth = this.chooseInstrument();
-        this.initInstrument();
-    }
+  constructor(props) {
+    super(props);
+    this.sound = Tone;
+    this.instrumentSound = props.instrumentSound;
+    this.velocities = props.velocities;
+    //this.volume = options.volume;
+    this.synth = this.chooseInstrument();
+    // this.initInstrument();
+  }
 
-    chooseInstrument(){
-        return new Piano({
-            velocities: this.velocities,
-        }).toDestination();
-    }
+  //    startSound =(note) =>{};
+  //    stopSound = (note) =>{};
 
-    initInstrument(){
-        this.synth.load();
-    }
+  chooseInstrument() {
+    const tempSynth = new Tone.PolySynth(Tone.AMSynth).toDestination();
 
-    getState(){
-        return this.sound.context.state;
-    }
+    // new Piano({
+    //   velocities: this.velocities,
+    // }).toDestination();
 
-    resumeSound(){
-        this.sound.context.resume();
-    }
+    // tempSynth.load();
+    return tempSynth;
+  }
 
-    startSound(note){
-        this.synth.keyDown({ note: note });
-    }
+  initInstrument() {
+    this.synth.load();
+  }
 
-    stopSound(note){
-        this.synth.keyUp({ note: note });
-    }
+  getState() {
+    return this.sound.context.state;
+  }
 
-    render(){
-        return null;
+  resumeSound() {
+    this.sound.context.resume();
+  }
+
+  startSound(note) {
+    if (this.instrumentSound === "piano") {
+      this.synth.keyDown({ note: note });
+    } else {
+      this.synth.triggerAttack(note);
     }
+  }
+
+  stopSound(note) {
+    if (this.instrumentSound === "piano") {
+      this.synth.keyUp({ note: note });
+    } else {
+      this.synth.triggerRelease([note], 4);
+    }
+  }
+
+  render() {
+    return null;
+  }
 }
 
 export default SoundMaker;
