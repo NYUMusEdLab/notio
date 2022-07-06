@@ -33,9 +33,9 @@ class WholeApp extends Component {
     loading: true,
     // videoUrl: "https://www.youtube.com/watch?v=g4mHPeMGTJM", // silence test video for coding
     videoUrl: notio_tutorial,
-    resetVideoUrl:notio_tutorial,
+    resetVideoUrl: notio_tutorial,
     videoActive: false,
-    activeVideoTab:"Enter_url", //Player or Enter_url
+    activeVideoTab: "Enter_url", //Player or Enter_url
     showTooltip: true,
     keyboardTooltipRef: null,
     showKeyboardTooltipRef: null,
@@ -214,7 +214,7 @@ class WholeApp extends Component {
     });
   };
 
-  handleChangeActiveVideoTab = (tabTitle)=>{
+  handleChangeActiveVideoTab = (tabTitle) => {
     this.setState({
       activeVideoTab: tabTitle,
     });
@@ -401,33 +401,35 @@ class WholeApp extends Component {
     return loading ? (
       <LoadingScreen />
     ) : (
-      <div>
-        <TopMenu
-          togglePiano={this.togglePiano}
-          toggleExtendedKeyboard={this.toggleExtendedKeyboard}
-          handleChangeNotation={this.handleChangeNotation}
-          handleChangeScale={this.handleSelectScale}
-          handleChangeCustomScale={this.handleChangeCustomScale}
-          handleSelectClef={this.handleSelectClef}
-          handleHideStaff={this.toggleStaff}
-          handleClickOctave={this.handleClickOctave}
-          handleChangeRoot={this.handleChangeRoot}
-          handleChangeVideoUrl={this.handleChangeVideoUrl}
-          handleChangeVideoVisibility={this.handleChangeVideoVisibility}
-          handleChangeActiveVideoTab={this.handleChangeActiveVideoTab}
-          handleChangeSound={this.handleChangeSound}
-          handleChangeTooltip={this.handleChangeTooltip}
-          handleResetVideoUrl={this.handleResetVideoUrl}
-          resetVideoUrl={this.state.resetVideoUrl}
-          videoActive={this.state.videoActive}
-          activeVideoTab={this.state.activeVideoTab}
-          saveSessionToDB={this.saveSessionToDB}
-          sessionID={this.state.sessionID}
-          state={this.state}
-          setRef={this.setRef}
-        />
+      <>
+        <div className="topmenu">
+          <TopMenu
+            togglePiano={this.togglePiano}
+            toggleExtendedKeyboard={this.toggleExtendedKeyboard}
+            handleChangeNotation={this.handleChangeNotation}
+            handleChangeScale={this.handleSelectScale}
+            handleChangeCustomScale={this.handleChangeCustomScale}
+            handleSelectClef={this.handleSelectClef}
+            handleHideStaff={this.toggleStaff}
+            handleClickOctave={this.handleClickOctave}
+            handleChangeRoot={this.handleChangeRoot}
+            handleChangeVideoUrl={this.handleChangeVideoUrl}
+            handleChangeVideoVisibility={this.handleChangeVideoVisibility}
+            handleChangeActiveVideoTab={this.handleChangeActiveVideoTab}
+            handleChangeSound={this.handleChangeSound}
+            handleChangeTooltip={this.handleChangeTooltip}
+            handleResetVideoUrl={this.handleResetVideoUrl}
+            resetVideoUrl={this.state.resetVideoUrl}
+            videoActive={this.state.videoActive}
+            activeVideoTab={this.state.activeVideoTab}
+            saveSessionToDB={this.saveSessionToDB}
+            sessionID={this.state.sessionID}
+            state={this.state}
+            setRef={this.setRef}
+          />
+        </div>
 
-        <div className={`Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
+        <div className={`content-body Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
           <Keyboard
             octave={this.state.octave}
             octaveDist={this.state.octaveDist}
@@ -445,7 +447,7 @@ class WholeApp extends Component {
             clef={this.state.clef}
           />
         </div>
-      </div>
+      </>
     );
   }
 }

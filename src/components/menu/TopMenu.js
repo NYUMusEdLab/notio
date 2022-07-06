@@ -90,7 +90,7 @@ class TopMenu extends Component {
     // console.log(this.props.sessionID);
     // console.log("topmenu scales", scales);
     return (
-      <div>
+      <>
         <div
           className="navbar "
           data-tip="custom"
@@ -458,7 +458,7 @@ class TopMenu extends Component {
           html={true}>
           {tooltipText["keyboard"]}
         </ReactTooltip>
-      </div>
+      </>
     );
   }
 }
