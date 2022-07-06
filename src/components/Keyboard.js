@@ -137,10 +137,11 @@ class Keyboard extends Component {
       activeScale: activeScale,
       octave: this.props.octave,
       colorname: "bright",
+      instrumentSound: this.props.instrumentSound,
     };
 
     this.synth = new SoundMaker({
-      instrument: "synth",
+      instrumentSound: this.state.instrumentSound,
       velocities: 5,
       volume: 4,
     });

@@ -22,7 +22,20 @@ class SoundMaker extends Component {
   //    stopSound = (note) =>{};
 
   chooseInstrument() {
-    const tempSynth = new Tone.PolySynth(Tone.AMSynth).toDestination();
+    var tempSynth = {};
+    switch (this.instrumentSound) {
+      case "piano":
+        tempSynth = new Piano({
+          velocities: this.velocities,
+        }).toDestination();
+
+        tempSynth.load();
+        break;
+
+      default:
+        tempSynth = new Tone.PolySynth(Tone.AMSynth).toDestination();
+        break;
+    }
 
     // new Piano({
     //   velocities: this.velocities,

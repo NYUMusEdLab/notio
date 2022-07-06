@@ -22,7 +22,7 @@ class WholeApp extends Component {
     clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
-    instrumentSound: "piano",
+    instrumentSound: "xylo",
     pianoOn: true,
     extendedKeyboard: false,
     trebleStaffOn: true,
@@ -445,6 +445,7 @@ class WholeApp extends Component {
             scaleList={this.state.scaleList}
             baseNote={this.state.baseNote}
             notation={this.state.notation}
+            instrumentSound={this.state.instrumentSound}
             pianoOn={this.state.pianoOn}
             extendedKeyboard={this.state.extendedKeyboard}
             trebleStaffOn={this.state.trebleStaffOn}
