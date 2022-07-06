@@ -6,82 +6,11 @@ import Overlay from "./Overlay";
 // import aboutPath from "../../markdown/AboutNotio.md";
 
 const InfoOverlay = (props) => {
-  // const urlInputRef = useRef();
-  // const [post, setPost] = useState(" ");
-
-  // const [playing, setPlaying] = useState(false);
-  // const [videoUrl, setVideoUrl] = useState(props.videoUrl);
-  //TODO: try to import the .md file to auto generate the layout of the infotabs
-  // const myfile = require("AboutNotio.md");
-
-  // const file = new File(aboutPath);
-
-  // const reader = new FileReader();
-  // useEffect(() => {
-  //   fetch("../../markdown/aboutNotio.md")
-  //     .then((res) => {
-  //       fetch(res.default)
-  //         .then((res) => res.text())
-  //         .then((res) => setPost(res))
-  //         .catch((err) => console.error(err));
-  //     })
-  //     .then((err) => console.error(err));
-  // });
-
-  // const handleFileRead = (e) => {
-  //   fetch(myfile)
-  //     .then((res) => res.text())
-  //     .then((post) => setPost(post));
-  //   aboutString = post;
-  //   console.log(aboutString);
-  // };
-  // let aboutString;
-  // reader.onloadend = handleFileRead;
-  // reader.readAsText(about);
-  // reader.readAsText('../../markdown/aboutNotio.md',"utf8",(err,contents)=>{
-  //   aboutString = {content: contents ? contents : "no contents"}
-  // })
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   setVideoUrl(event.target.elements[0].value);
-  //   props.handleChangeVideoUrl(event.target.elements[0].value);
-  //   // setActiveTab("playlist");
-  // };
-
-  // //this can be used if we make the tabs controlled
-  // const handleSelect = (key) => {
-  //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
-
-  //   if (key === "playlist") {
-  //     setActiveTab("playlist");
-  //     // this.setState({ activeTab: "playlist" });
-  //   }
-  //   if (key === "change_video") {
-  //     setActiveTab("change_video");
-  //     //   this.setState({ activeTab: "change_video" });
-  //   }
-  // };
-
-  // const playerOnReady = (event) => {
-  //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
-  //   // setPlayerIsReady(false);
-  //   setPlaying(true);
-  // };
-
-  // const resetVideoUrl = (event) => {
-  //   setVideoUrl(props.resetVideoUrl);
-  //   // setActiveTab("playlist");
-  //   props.handleResetVideoUrl();
-  // };
-
+  const overlayId = "infoOverlay";
   return (
     <React.Fragment>
-      {/* <Overlay visible={show} key={videoUrl}> */}
-      <Overlay visible={true} close={props.onClickCloseHandler}>
+      <Overlay overlayId={overlayId} visible={true} close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
-          {/* <Tabs defaultActiveKey="playlist" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
-          {/* <Tabs defaultActiveKey="playlist" activeTab={activeTab} id="controlled-tab-example"> */}
           <Tabs defaultActiveKey="Howto" id="controlled-tab-example">
             <Tab eventKey="Howto" title="How to">
               <div>
@@ -89,58 +18,94 @@ const InfoOverlay = (props) => {
                   <Card.Body>
                     <Card.Title>How to use Notio</Card.Title>
                     <Card.Text>
-                      {/* <Button onClick={handleFileRead} title="Read" />
-                      {<ReactMarkdown children={post} />} */}
-                      The menu: Notation:, Root, Scale, Clefs Videoplayer,
+                      Present the foundation of musical theory for a piece of music or as part of a course, 
+                      copy it and send the link to students, pupils or other interested, and learn and play through the interactive piano.
+                    </Card.Text>
+                    <Card.Text>
+                        In this how to guide, you can read about how to:<br></br>
+                        <Card.Link href="#play-piano">Play on the piano</Card.Link><br></br>
+                        <Card.Link href="#make-configuration">Make your own configuration</Card.Link><br></br>
+                        <Card.Link href="#using-video">Using video</Card.Link><br></br>
+                        <Card.Link href="#share-setup">Share your setup</Card.Link><br></br>
+                        <Card.Link href="#custom-scale">Create a custom scale</Card.Link><br></br>
+                        <Card.Link href="#suggest-improvement">Suggest improvements</Card.Link>
+                    </Card.Text>
+                    <Card.Text>
+                        Best of luck on your musical adventure!
                     </Card.Text>
                     <ListGroup>
                       <ListGroupItem>
-                        Share:
-                        <Card.Body>
+                        <Card.Body id="play-piano">
                           <Card.Text>
-                            Sharing: You create a unique setup in Notio when adjusting the
-                            particular scale, selecting a video url, setting the root note and more.
-                            This setup can be shared to other people using the "Share this setup"
-                            button and copying the url. When this url is visited, the Notio setup
-                            will be persisted connected to that particular url.
+                            <strong>Playing the piano</strong><br></br> 
+                            The coloured keys and piano are playable both by clicking and using the keyboard.<br></br>
+                            Only nodes that are part of the scale can make a sound!<br></br>
+                            To use the right hand, use the keys FGHJ... (on a QWERTY keyboard) to play<br></br>
+                            To use the left hand (in non-extended mode), the keys are ZXC ASD QWE <br></br>
+                            In extended mode, the right hand starts from ASDF... and the left hand is disabled.<br></br>
+                            The left hand can be transposed using the arrow keys up and down<br></br>
                           </Card.Text>
                         </Card.Body>
                       </ListGroupItem>
                       <ListGroupItem>
-                        Playable keys:
-                        <Card.Body>
+                        <Card.Body id="make-configuration">
                           <Card.Text>
-                            The colored stripes: can be played they correspond to a piano keyboard,
-                            and can be played using the mouse, or the qwerty keyboard.
+                            <strong>Configuring the scale</strong><br></br> 
+                            You can make your own unique configuration and easily share it (see <a href="#share-setup">Sharing your setup</a>)<br></br>
+                            To configure the scale, use the top menu. The possible configurations are:<br></br>
+                            <strong>Show Keyboard</strong>: turn the piano on/off (the coloured notes are still playable!)<br></br>
+                            <strong>Extended Keyboard</strong>: Make the piano fill up 2 octaves (and disable left hand play, see <a href="#play-piano">Play the piano</a>)<br></br>
+                            <strong>Sound</strong>: Make the piano use a different sound (presently not available sadly)<br></br>
+                            <strong>Notation</strong>: Show the chosen notation of the notes used in the scale<br></br>
+                            <strong>Root</strong>: Choose the base root of the scale. This will be the note played on F (see <a href="#play-piano">Play the piano</a>)<br></br>
+                            <strong>Scale</strong>: Choose the scale, or create a custom one! (see <a href="#custom-scale">Create a custom scale</a>)<br></br>
+                            <strong>Clefs</strong>: Choose the clef the scale uses, or disable it entirely<br></br>
+                            <strong>Video Player</strong> Use the video player. For more details, see <a href="#using-video">Using video</a><br></br>
+                            <strong>Share this setup</strong> Share the setup through a url. For more details see <a href="#share-setup">Share your setup</a><br></br>
                           </Card.Text>
                         </Card.Body>
                       </ListGroupItem>
                       <ListGroupItem>
-                        Select scale:
                         <Card.Body>
-                          <Card.Text>
-                            The scale menu can be used to select different standard scales, It can
-                            also be used to create custom scales.
-                          </Card.Text>
-                        </Card.Body>
-                      </ListGroupItem>
-                      <ListGroupItem>
-                        Notation:
-                        <Card.Body>
-                          <Card.Text>
-                            Notio is created based on the .....stone that was used to breack the
-                            code to read Hieroglyphs. The notation menu can be used to display
-                            notenames using the different western nototion systems.
-                          </Card.Text>
-                        </Card.Body>
-                      </ListGroupItem>
-                      <ListGroupItem>
-                        Video player:
-                        <Card.Body>
-                          <Card.Text>
+                          <Card.Text id="using-video">
+                            <strong>Using Videos</strong><br></br> 
                             The Notio video player can be used to play along like the old Aebersold
-                            records. Search on Youtube to find a tune that you want to practice to,
-                            copy paste the url into Notio, and share the setup with your friends.
+                            records. Notio also remembers your video choice when sharing with others, so you can set it up like you want to<br></br>
+                            The Video Player consist of 3 seperate tabs:<br></br>
+                            <strong>Enter url</strong> Search on Youtube to find a tune that you want to practice to,
+                            copy paste the url into the form and hit "Enter". <br></br> 
+                            <strong>Player</strong> is where you see the video. 
+                            <strong>Tutorials</strong> are a collection of small examples of how Notio can be used
+                          </Card.Text>
+                        </Card.Body>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <Card.Body id="share-setup">
+                          <Card.Text>
+                            <strong>Sharing your setup</strong><br></br> 
+                            When you have created a unique setup in Notio (see <a href="#make-configuration">Make your own configuration</a>)
+                            you can then share it to anybode.<br></br>
+                            Simply press the button "Share this setup", then press "create share link" and send it to anyone you like.<br></br>
+                            Those who open the link will get an exact copy of your setup, with piano settings, scale and video included! 
+                          </Card.Text>
+                        </Card.Body>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <Card.Body id="custom-scale">
+                          <Card.Text>
+                            <strong>Create custom scale</strong><br></br> 
+                            
+                          </Card.Text>
+                        </Card.Body>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <Card.Body id="suggest-improvement">
+                          <Card.Text>
+                            <strong>Suggest improvements</strong><br></br>
+                            If you have any suggestions, you can write to: suggestionsnotio@gmail.com <br></br>
+                            Notio is a development project intended to broaden the horizon of how music, teaching and technology 
+                            can work together to enhance the music education field (see About)<br></br>
+                            As such we want your feedback to further this vision. Thank you for using Notio!
                           </Card.Text>
                         </Card.Body>
                       </ListGroupItem>
@@ -152,7 +117,7 @@ const InfoOverlay = (props) => {
             </Tab>
             <Tab eventKey="About" title="About">
               <div>
-                <Card>
+                <Card id="about">
                   <Card.Body>
                     <Card.Img variant="top" src="https://i.ibb.co/RHDjH85/notio-logo.png" />
                     <Card.Title>About Notio</Card.Title>
@@ -195,81 +160,34 @@ const InfoOverlay = (props) => {
                 </Card>
               </div>
             </Tab>
-            {/* <Tab eventKey="InstructVideo" title="Instruction Videos">
-              <Card>
-                <Card.Body>
-                  <ListGroup>
-                    <ListGroupItem>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/dkIdl51TBXA"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                    </ListGroupItem>
-
-                    <ListGroupItem>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/0z88NcJy8MQ"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/RuBru-zqINU"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/Ykgavi2EjZQ"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/qoeHCq0N4I0"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                    </ListGroupItem>
-                    <ListGroupItem>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/t-NUdl19sww"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                    </ListGroupItem>
-                  </ListGroup>
-                </Card.Body>
-              </Card>
-            </Tab> */}
+            <Tab eventKey="FAQ" title="FAQ">
+              <div>
+                <Card>
+                  <Card.Body>
+                    <Card.Title>Frequently Asked Questions (FAQ)</Card.Title>
+                    <ListGroup>
+                      <ListGroupItem>
+                        <Card.Body>
+                          <Card.Title>Do you have a colourblind mode?</Card.Title>
+                          <Card.Text>
+                            Yes! If you press 1,2,3,4 or 5 it will change between the different colour modes.
+                          </Card.Text>
+                        </Card.Body>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <Card.Body>
+                          <Card.Title>Is MIDI planned for Notio?</Card.Title>
+                          <Card.Text>
+                            Yes, it is planned that you can use your MIDI devices to play in Notio.<br></br>
+                            It is however not a primary goal as of now, but we hope to have it ready during 2023 at the latest.
+                          </Card.Text>
+                        </Card.Body>
+                      </ListGroupItem>
+                    </ListGroup>
+                  </Card.Body>
+                </Card>
+              </div>
+            </Tab>
           </Tabs>
         </div>
       </Overlay>
