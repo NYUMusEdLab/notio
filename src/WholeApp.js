@@ -22,7 +22,7 @@ class WholeApp extends Component {
     clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
-    instrumentSound: "piano",
+    instrumentSound: "piano", //"piano" or "AMSynth"
     pianoOn: true,
     extendedKeyboard: false,
     trebleStaffOn: true,
@@ -423,6 +423,7 @@ class WholeApp extends Component {
             handleChangeVideoVisibility={this.handleChangeVideoVisibility}
             handleChangeActiveVideoTab={this.handleChangeActiveVideoTab}
             handleChangeSound={this.handleChangeSound}
+            instrumentSound={this.state.instrumentSound}
             handleChangeTooltip={this.handleChangeTooltip}
             handleResetVideoUrl={this.handleResetVideoUrl}
             resetVideoUrl={this.state.resetVideoUrl}

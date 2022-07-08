@@ -27,7 +27,7 @@ import VideoButton from "./VideoButton";
 import ShareButton from "./ShareButton";
 import HelpButton from "./HelpButton";
 
-const sounds = [{ name: "piano" }, { name: "xylo" }];
+const sounds = [{ name: "piano" }, { name: "AMSynth" }];
 
 class TopMenu extends Component {
   constructor(props) {
@@ -170,7 +170,7 @@ class TopMenu extends Component {
                     data={sounds}
                     handleChange={this.props.handleChangeSound}
                     setTitle={this.setSoundTitle}
-                    initOption="piano"
+                    initOption={this.props.instrumentSound}
                   />
                 </div>
               }
@@ -411,10 +411,7 @@ class TopMenu extends Component {
             data-for="helpTooltip"
             data-event="null"
             ref={(ref) => this.props.setRef(ref, "help")}>
-            <HelpButton
-              title="Help"
-              label="help"
-            />
+            <HelpButton title="Help" label="help" />
           </div>
           <ReactTooltip
             id="helpTooltip"
