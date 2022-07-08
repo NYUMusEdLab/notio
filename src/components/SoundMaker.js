@@ -37,11 +37,6 @@ class SoundMaker extends Component {
         break;
     }
 
-    // new Piano({
-    //   velocities: this.velocities,
-    // }).toDestination();
-
-    // tempSynth.load();
     return tempSynth;
   }
 
