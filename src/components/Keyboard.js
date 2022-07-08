@@ -659,10 +659,10 @@ class Keyboard extends Component {
   convertDoubleAccidental = (toneName) => {
     const ENGLISH_SHARP_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     const ENGLISH_FLAT_NAMES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
-    let octave = toneName.slice(-1, -2);
+    let octave = toneName.match(/\d/g);
     toneName = toneName.slice(0, -1);
     let result = "";
-    const regexFlat = /[b]/gi;
+    const regexFlat = /\B[b]/gi;
     const regexSharp = /[#]/gi;
 
     let flats = toneName.match(regexFlat);

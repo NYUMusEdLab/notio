@@ -27,6 +27,15 @@ beforeEach(() => {
     SoundMaker.mockClear();
 })
 
+jest.mock('react-dom', () => {
+    return {
+        ...jest.requireActual('react-dom'),
+        createPortal: (element, target) => {
+            return element;
+        }
+    };
+});
+
 describe("ComputerKeyboard pressing key to", () =>{
     test.each([
         ["C", 4,'f', ["/"]],

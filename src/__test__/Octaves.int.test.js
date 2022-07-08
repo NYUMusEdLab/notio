@@ -21,6 +21,15 @@ beforeEach(() => {
     SoundMaker.mockClear();
 })
 
+jest.mock('react-dom', () => {
+    return {
+        ...jest.requireActual('react-dom'),
+        createPortal: (element, target) => {
+            return element;
+        }
+    };
+});
+
 describe("Root menu in the TopMenu", () =>{
     test.each([
         ["C", 4, ["/"]],
