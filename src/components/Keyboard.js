@@ -1,6 +1,6 @@
 /* eslint-disable no-fallthrough */
 
-import React, { Component, useContext } from "react";
+import React, { Component } from "react";
 import Key from "./Key";
 // import scales from "../data/scalesObj";
 //import colors from "../data/colors";
@@ -159,11 +159,13 @@ class Keyboard extends Component {
 
   handleChangeSound = (soundName) => {
     // this.props.handleChangeSound();
-    this.state.synth = new SoundMaker({
+    const tempSynth = new SoundMaker({
       instrumentSound: soundName,
       velocities: 5,
       volume: 4,
     });
+
+    this.setState({ synth: tempSynth });
   };
   //#endregion
 
