@@ -25,7 +25,7 @@ import tooltipText from "../../data/tooltipText";
 import DropdownCustomScaleMenu from "./DropdownCustomScaleMenu";
 import VideoButton from "./VideoButton";
 import ShareButton from "./ShareButton";
-import InfoButton from "./InfoButton";
+import HelpButton from "./HelpButton";
 
 const sounds = [{ name: "piano" }, { name: "xylo" }];
 
@@ -90,7 +90,7 @@ class TopMenu extends Component {
     // console.log(this.props.sessionID);
     // console.log("topmenu scales", scales);
     return (
-      <div>
+      <>
         <div
           className="navbar "
           data-tip="custom"
@@ -404,47 +404,31 @@ class TopMenu extends Component {
             {tooltipText["shareThisSetup"]}
           </ReactTooltip>
 
-          {/* Settings */}
-          {/* <div className="navbar__item menu-settings">
-            <Settings title="Settings" label="Settings" />
-          </div> */}
-        </div>
-        <div className="side-menu">
-          <div className="area1 area">
-            <InfoButton
-              className="overlay__header__buttonContainer__button--close"
-              onClick={(e) => {
-                this.handleShow();
-              }}>
-              <img src={require("../../img/info.png")} alt="about" />
-            </InfoButton>
-          </div>
-          <div className="Area2 area">
-            <img
-              src={require("../../img/question_mark.png")}
-              alt="help"
-              data-tip="custom"
-              data-for="helpTooltip"
-              data-event="null"
-              ref={(ref) => this.props.setRef(ref, "help")}
-              onClick={() => this.props.handleChangeTooltip()}
+          {/* Help */}
+          <div
+            className="navbar__item menu-help"
+            data-tip="custom"
+            data-for="helpTooltip"
+            data-event="null"
+            ref={(ref) => this.props.setRef(ref, "help")}>
+            <HelpButton
+              title="Help"
+              label="help"
             />
           </div>
           <ReactTooltip
             id="helpTooltip"
-            place="left"
+            place="bottom"
             effect="solid"
             scrollHide={false}
             resizeHide={false}
-            type="info"
+            overridePosition={() => {
+              return { top: 120, left: this.state.windowWidth - 170 };
+            }}
             className="tooltip-topmenu"
             html={true}>
             {tooltipText["help"]}
           </ReactTooltip>
-
-          {/* <div className="Area3 area">
-            <img src={require("../../img/home.png")} alt="home" />
-          </div> */}
         </div>
 
         <ReactTooltip
@@ -458,7 +442,7 @@ class TopMenu extends Component {
           html={true}>
           {tooltipText["keyboard"]}
         </ReactTooltip>
-      </div>
+      </>
     );
   }
 }

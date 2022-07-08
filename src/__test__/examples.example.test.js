@@ -7,6 +7,15 @@ import WholeApp from "../WholeApp";
 import TopMenu from "../components/menu/TopMenu";
 import Keyboard from "../components/Keyboard";
 
+jest.mock('react-dom', () => {
+    return {
+        ...jest.requireActual('react-dom'),
+        createPortal: (element, target) => {
+            return element;
+        }
+    };
+});
+
 describe("Example with basis WholeApp rendering to", () => {
     test("this example showing basic functionality", () => {
         // WARNING: The "@tonejs/piano" and "tone" libraries are mocked.

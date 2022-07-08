@@ -6,6 +6,14 @@ import { Piano } from "@tonejs/piano";
 import WholeApp from "../WholeApp";
 import TopMenu from "../components/menu/TopMenu";
 
+jest.mock('react-dom', () => {
+    return {
+        ...jest.requireActual('react-dom'),
+        createPortal: (element, target) => {
+            return element;
+        }
+    };
+});
 
 describe("When displaying the customScale creater menu", () => {
     test("that it contains customScale menu", () => {

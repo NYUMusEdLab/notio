@@ -154,36 +154,34 @@ class ColorKey extends Component {
       clef,
     } = this.props;
 
-    
     // console.log("ColorKey note", note);
 
     const noteNames = noteName
       ? noteName.map(function (item, i) {
-        item = item.toString();
-        const regexFlat = /[b]/gi;
-        const regexSharp = /[#]/gi;
+          var name = item.value.toString();
+          const regexFlat = /[b]/gi;
+          const regexSharp = /[#]/gi;
 
-        let flats = item.match(regexFlat)
-        let sharps = item.match(regexSharp)
-        if (flats && flats.length === 2) {
-          //doubleflat
-          item = item.replace("bb", "𝄫");
-          //item = item.replace("bb", "\u1D12B");
-        } else if (flats && flats.length === 1) {
-          //flat
-          item = item.replace("b", "\u266D");
-        }
-        else if (sharps && sharps.length === 2){
-          //doubleSharp
-          item = item.replace("##", "×");//𝄪
-        }
+          let flats = name.match(regexFlat);
+          let sharps = name.match(regexSharp);
+          if (flats && flats.length === 2) {
+            //doubleflat
+            name = name.replace("bb", "𝄫");
+            //item = item.replace("bb", "\u1D12B");
+          } else if (flats && flats.length === 1) {
+            //flat
+            name = name.replace("b", "\u266D");
+          } else if (sharps && sharps.length === 2) {
+            //doubleSharp
+            name = name.replace("##", "×"); //𝄪
+          }
 
-        return (
-          <div className="noteName" key={i}>
-            {item}
-          </div>
-        );
-      })
+          return (
+            <div className={`noteName noteWrapper--${item.key}`} key={i}>
+              {name}
+            </div>
+          );
+        })
       : null;
     // console.log("this.state.myWidth", this.state.myWidth);
     // console.log("-- note", note);
@@ -191,10 +189,14 @@ class ColorKey extends Component {
     return (
       <div
         ref={this.keyRef}
-        data-testid={"ColorKey:"+note} 
-        className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${isOn ? "on" : "off"
-          } ${(note.includes("C") && !note.includes("#") && !note.includes("b")) ||
-            note.includes("B#") ? "" /*"c-mark"*/: ""}
+        data-testid={"ColorKey:" + note}
+        className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${
+          isOn ? "on" : "off"
+        } ${
+          (note.includes("C") && !note.includes("#") && !note.includes("b")) || note.includes("B#")
+            ? "" /*"c-mark"*/
+            : ""
+        }
         `}
         style={{
           height: pianoOn ? "70%" : "100%",
@@ -210,15 +212,13 @@ class ColorKey extends Component {
         onTouchStart={this.touchDown}
         onTouchEnd={this.touchUp}
         onMouseEnter={this.mouseEnter}
-        onMouseLeave={this.mouseLeave}
-      >
+        onMouseLeave={this.mouseLeave}>
         <div
           className={`noteWrapper note ${isOn ? "on" : "off"}`}
           style={{
             backgroundColor: this.state.clicked ? color : null,
             top: extendedKeyboard ? "17%" : "10%",
-          }}
-        >
+          }}>
           {noteNames}
 
           {isMajorSeventh ? (
