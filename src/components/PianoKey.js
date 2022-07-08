@@ -6,10 +6,10 @@ class PianoKey extends Component {
     super(props);
     this.keyRef = React.createRef();
     this.state = {
-      isMouseDown: false
+      isMouseDown: false,
     };
   }
-  touchDown = e => {
+  touchDown = (e) => {
     if (e.cancelable) {
       e.preventDefault();
     }
@@ -17,7 +17,7 @@ class PianoKey extends Component {
       this.playNote(this.props.note);
     }
   };
-  touchUp = e => {
+  touchUp = (e) => {
     if (e.cancelable) {
       e.preventDefault(); // prevent default calling of mouse event after touch event
     }
@@ -26,34 +26,34 @@ class PianoKey extends Component {
     }
   };
 
-  clickedMouse = e => {
+  clickedMouse = (e) => {
     if (this.props.isOn) {
       this.playNote(this.props.note);
     }
   };
-  unClickedMouse = e => {
+  unClickedMouse = (e) => {
     if (this.props.isOn) {
       this.releaseNote(this.props.note);
     }
   };
 
-  mouseEnter = e => {
+  mouseEnter = (e) => {
     if (this.props.isOn && this.props.isMouseDown === true) {
       this.playNote(this.props.note);
     }
   };
 
-  mouseLeave = e => {
+  mouseLeave = (e) => {
     if (this.props.isOn && this.props.isMouseDown === true) {
       this.releaseNote(this.props.note);
     }
   };
 
-  playNote = note => {
+  playNote = (note) => {
     this.props.noteOn(note);
   };
 
-  releaseNote = note => {
+  releaseNote = (note) => {
     this.props.noteOff(note);
   };
 
@@ -89,40 +89,29 @@ class PianoKey extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     return {
-      isMouseDown: nextProps.isMouseDown
+      isMouseDown: nextProps.isMouseDown,
     };
   }
 
   render() {
-    const {
-      keyColor,
-      index,
-      root,
-      color,
-      isActive,
-      noteNameEnglish
-    } = this.props;
+    const { keyColor, index, root, color, isActive, noteNameEnglish } = this.props;
 
     return (
       <div
         ref={this.keyRef}
         className={`piano-key ${keyColor} ${noteNameEnglish.toLowerCase()}`}
         style={{
-          backgroundColor: isActive && keyColor === "white" ? color : ""
+          backgroundColor: isActive && keyColor === "white" ? color : "",
         }}
         onMouseUp={this.unClickedMouse}
         onMouseDown={this.clickedMouse}
         onTouchStart={this.touchDown}
         onTouchEnd={this.touchUp}
         onMouseEnter={this.mouseEnter}
-        onMouseLeave={this.mouseLeave}
-      >
+        onMouseLeave={this.mouseLeave}>
         {keyColor === "black" ? (
           <div className="blackPianoKeyContainer">
-            <div
-              className="blackPianoKey"
-              style={{ backgroundColor: isActive ? color : "" }}
-            ></div>
+            <div className="blackPianoKey" style={{ backgroundColor: isActive ? color : "" }}></div>
             <div className="blackPianoKeyFiller"></div>
           </div>
         ) : null}
@@ -139,7 +128,7 @@ PianoKey.propTypes = {
   keyColor: PropTypes.string,
   index: PropTypes.number,
   root: PropTypes.string,
-  isActive: PropTypes.bool
+  isActive: PropTypes.bool,
 };
 
 export default PianoKey;
