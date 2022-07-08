@@ -14,6 +14,8 @@
   /* keyboard */
 
   .Keyboard {
+    background: #f1f1da;
+
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -159,6 +161,7 @@
 
   .Key.black .piano-key .blackPianoKeyFiller {
     height: 35%;
+    visibility: hidden;
   }
 
   .Key.black .piano-key .blackPianoKey {
