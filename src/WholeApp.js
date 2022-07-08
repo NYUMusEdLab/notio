@@ -33,9 +33,9 @@ class WholeApp extends Component {
     loading: true,
     // videoUrl: "https://www.youtube.com/watch?v=g4mHPeMGTJM", // silence test video for coding
     videoUrl: notio_tutorial,
-    resetVideoUrl:notio_tutorial,
+    resetVideoUrl: notio_tutorial,
     videoActive: false,
-    activeVideoTab:"Enter_url", //Player or Enter_url
+    activeVideoTab: "Enter_url", //Player or Enter_url
     showTooltip: true,
     keyboardTooltipRef: null,
     showKeyboardTooltipRef: null,
@@ -214,7 +214,7 @@ class WholeApp extends Component {
     });
   };
 
-  handleChangeActiveVideoTab = (tabTitle)=>{
+  handleChangeActiveVideoTab = (tabTitle) => {
     this.setState({
       activeVideoTab: tabTitle,
     });
@@ -437,6 +437,7 @@ class WholeApp extends Component {
             scaleList={this.state.scaleList}
             baseNote={this.state.baseNote}
             notation={this.state.notation}
+            instrumentSound={this.state.instrumentSound}
             pianoOn={this.state.pianoOn}
             extendedKeyboard={this.state.extendedKeyboard}
             trebleStaffOn={this.state.trebleStaffOn}
