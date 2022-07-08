@@ -5,6 +5,7 @@ import Key from "./Key";
 // import scales from "../data/scalesObj";
 //import colors from "../data/colors";
 import SoundMaker from "./SoundMaker";
+// import { SoundEngineContext } from "../context/SoundEngineContext";
 import MusicScale from "../Model/MusicScale";
 //import colors from "../data/colors";
 
@@ -123,7 +124,9 @@ const pressedKeys = new Set();
  * currentScale       - is the scale the scale that should be shown on the piano (the scale selected by the user)
  *
  */
+
 class Keyboard extends Component {
+  // static soundContext = useContext(SoundEngineContext);
   //#region Constructor
   constructor(props) {
     super(props);
@@ -137,19 +140,42 @@ class Keyboard extends Component {
       activeScale: activeScale,
       octave: this.props.octave,
       colorname: "bright",
+      instrumentSound: this.props.instrumentSound,
+      synth: new SoundMaker({
+        instrumentSound: this.props.instrumentSound,
+        velocities: 5,
+        volume: 4,
+      }),
     };
+  }
 
-    this.synth = new SoundMaker({
-      instrument: "piano",
+  //   synth = new SoundMaker({
+  //     instrumentSound: this.props.instrumentSound,
+  //     velocities: 5,
+  //     volume: 4,
+  //   });
+
+  // soundCtx = useContext(SoundEngineContext);
+
+  handleChangeSound = (soundName) => {
+    // this.props.handleChangeSound();
+    const tempSynth = new SoundMaker({
+      instrumentSound: soundName,
       velocities: 5,
       volume: 4,
     });
-  }
 
+    this.setState({ synth: tempSynth });
+  };
   //#endregion
 
   //#region Keypress Handlers
   handleKeyDown = (e) => {
+    // if (this.state.instrumentSound !== this.props.instrumentSound) {
+    //   this.handleChangeSound(this.props.instrumentSound);
+    // }
+    console.log(this.state.instrumentSound);
+    console.log(this.props.instrumentSound);
     /* this helps us deal with this problem in Chrome:
      *
      * The AudioContext was not allowed to start. It must be resumed (or created)
@@ -161,8 +187,8 @@ class Keyboard extends Component {
     const { extendedKeyboard, octave, octaveDist } = this.props;
     const { activeScale } = this.state;
 
-    if (this.synth.getState() !== "running") {
-      this.synth.resumeSound();
+    if (this.state.synth.getState() !== "running") {
+      this.state.synth.resumeSound();
     }
 
     if (e.repeat) {
@@ -203,7 +229,7 @@ class Keyboard extends Component {
       /*this.highlightNote(buttonPressed.dataset.note) //.querySelector('.on'));
       if (!currentActiveNotes.has(buttonPressed.dataset.note)) {
         currentActiveNotes.add(buttonPressed.dataset.note);
-        this.playNote(buttonPressed.dataset.note); //this.synth.triggerAttack(buttonPressed.dataset.note);
+        this.playNote(buttonPressed.dataset.note); //this.state.synth.triggerAttack(buttonPressed.dataset.note);
       }*/
       this.noteOn(buttonPressed.dataset.note);
     } else if (!extendedKeyboard) {
@@ -444,8 +470,8 @@ class Keyboard extends Component {
      * after a user gesture on the page. <URL>
      *
      */
-    if (this.synth.getState() !== "running") {
-      this.synth.resumeSound();
+    if (this.state.synth.getState() !== "running") {
+      this.state.synth.resumeSound();
     }
     this.setState({ mouse_is_down: true });
   };
@@ -462,7 +488,7 @@ class Keyboard extends Component {
     if (note && note.length > 3) {
       note = this.convertDoubleAccidental(note);
     }
-    this.synth.startSound(note);
+    this.state.synth.startSound(note);
   };
 
   releaseNote = (note) => {
@@ -470,7 +496,7 @@ class Keyboard extends Component {
     if (note && note.length > 3) {
       note = this.convertDoubleAccidental(note);
     }
-    this.synth.stopSound(note);
+    this.state.synth.stopSound(note);
   };
 
   noteOn = (note) => {
@@ -544,7 +570,7 @@ class Keyboard extends Component {
   //#region Component Lifecycle functions
   componentDidUpdate(prevProps) {
     //refresh the keys every time we update the props
-    const { notation, scale: scaleName, baseNote, extendedKeyboard } = this.props;
+    const { notation, scale: scaleName, baseNote, extendedKeyboard, instrumentSound } = this.props;
     if (
       notation !== prevProps.notation ||
       scaleName !== prevProps.scale ||
@@ -560,6 +586,23 @@ class Keyboard extends Component {
       });
       threeLowerOctave.clear();
     }
+
+    if (instrumentSound !== prevProps.instrumentSound) {
+      console.log(instrumentSound);
+      const tempSynth = new SoundMaker({
+        instrumentSound: this.props.instrumentSound,
+        velocities: 5,
+        volume: 4,
+      });
+      this.setState({ synth: tempSynth });
+    }
+
+    //     this.state.synth = new SoundMaker({
+    //     instrumentSound: this.props.instrumentSound,
+    //     velocities: 5,
+    //     volume: 4,
+    //   });
+    // }
   }
 
   componentWillUnmount() {
@@ -569,11 +612,11 @@ class Keyboard extends Component {
   }
 
   //#endregion
-  /* 
+  /*
 // the keyboardLayoutScaleReciepe is the layout of the instrument
 // if you change the scale you can show what tones from the selected scale matches the availlable tones on the instrument
 // the setup as it is always uses a Chromatic scale from same root as the selected scale
-// Some extra development may be needed if you want to allow different BaseNotes on the selected scale and the instrument. 
+// Some extra development may be needed if you want to allow different BaseNotes on the selected scale and the instrument.
 // e.g what tones from D Ionian can be played on a F major pentatonic flute.
 */
   updateScales() {
@@ -648,7 +691,7 @@ class Keyboard extends Component {
       clef,
     } = this.props;
 
-    const { synth } = this;
+    const { synth } = this.state;
     const { mouse_is_down } = this.state;
     const { keyboardLayoutScale, currentScale } = this.updateScales();
 

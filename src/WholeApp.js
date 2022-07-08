@@ -22,6 +22,7 @@ class WholeApp extends Component {
     clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
+    instrumentSound: "piano",
     pianoOn: true,
     extendedKeyboard: false,
     trebleStaffOn: true,
@@ -88,7 +89,9 @@ class WholeApp extends Component {
     }
   };
 
-  handleChangeSound = (sound) => {};
+  handleChangeSound = (sound) => {
+    this.setState({ instrumentSound: sound });
+  };
 
   handleClickOctave = (action) => {
     const { octave, octaveDist } = this.state;
@@ -257,6 +260,7 @@ class WholeApp extends Component {
       scaleObject,
       baseNote,
       notation,
+      instrumentSound,
       pianoOn,
       extendedKeyboard,
       trebleStaffOn,
@@ -274,6 +278,7 @@ class WholeApp extends Component {
         scaleObject: scaleObject,
         baseNote: baseNote,
         notation: notation,
+        instrumentSound: instrumentSound,
         pianoOn: pianoOn,
         extendedKeyboard: extendedKeyboard,
         trebleStaffOn: trebleStaffOn,
@@ -313,6 +318,7 @@ class WholeApp extends Component {
           scaleObject: result.scaleObject,
           baseNote: result.baseNote,
           notation: result.notation,
+          instrumentSound: result.instrumentSound,
           pianoOn: result.pianoOn,
           extendedKeyboard: result.extendedKeyboard,
           trebleStaffOn: result.trebleStaffOn,
@@ -439,6 +445,7 @@ class WholeApp extends Component {
             scaleList={this.state.scaleList}
             baseNote={this.state.baseNote}
             notation={this.state.notation}
+            instrumentSound={this.state.instrumentSound}
             pianoOn={this.state.pianoOn}
             extendedKeyboard={this.state.extendedKeyboard}
             trebleStaffOn={this.state.trebleStaffOn}
