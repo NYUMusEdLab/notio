@@ -1,0 +1,1 @@
+the themes folder contains different visual themes

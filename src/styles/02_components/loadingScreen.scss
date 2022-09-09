@@ -1,0 +1,32 @@
+#loading-screen {
+  background-color: black;
+  display: flex;
+  flex: 1;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  flex-direction: column;
+
+  & ul.animation li {
+    display: block;
+    float: left;
+    font-size: 2em;
+    color: #ccc;
+    text-shadow: 0 -1px 0 white, 0 1px 0 black;
+  }
+  & .anim {
+    animation: music 0.5s ease-in-out both infinite;
+    -webkit-animation: music 0.5s ease-in-out both infinite;
+  }
+}
+
+@keyframes music {
+  0%,
+  100% {
+    -webkit-transform: translate3d(0, -10px, 0);
+  }
+  50% {
+    -webkit-transform: translate3d(0, 10px, 0);
+  }
+}

@@ -1,0 +1,14 @@
+//TODO:NOT IN USE YET ----do a BEM 7-1 setup, in here the layout of the basics is defined: Top-menu and content-body
+.topmenu {
+  background-color: black;
+  display: flex;
+  height: 15vh;
+  width: 100%;
+}
+
+.content-body {
+  background-color: black;
+  display: flex;
+  height: 85vh;
+  width: 100%;
+}

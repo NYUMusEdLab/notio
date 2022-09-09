@@ -1,0 +1,75 @@
+/* Hide the browser's default checkbox */
+/* Create a custom checkbox */
+/* On mouse-over, add a grey background color */
+/* When the checkbox is checked, add a blue background */
+/* Create the checkmark/indicator (hidden when not checked) */
+/* Show the checkmark when checked */
+/* Style the checkmark/indicator */
+/* Hide the browser's default checkbox */
+/* Create a custom checkbox */
+/* On mouse-over, add a grey background color */
+/* When the checkbox is checked, add a blue background */
+/* Create the checkmark/indicator (hidden when not checked) */
+/* Show the checkmark when checked */
+/* Style the checkmark/indicator */
+.form-check {
+	.label-wrapper {
+		display: block;
+		position: relative;
+		padding-left: 2em;
+		margin-bottom: 0.6em;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		font-weight: 700;
+		font-size: 0.7vw;
+		text-align: left;
+	}
+	.label-wrapper {
+		input {
+			position: absolute;
+			opacity: 0;
+			cursor: pointer;
+			height: 0;
+			width: 0;
+			&:checked {
+				~ {
+					.checkmark {
+						background-color: black;
+						&:after {
+							display: block;
+						}
+					}
+				}
+			}
+		}
+		&:hover {
+			input {
+				~ {
+					.checkmark {
+						background-color: #ccc;
+					}
+				}
+			}
+		}
+		.checkmark {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 1.3em;
+			width: 1.3em;
+			background-color: #eee;
+			border: 2px solid black;
+			&:after {
+				width: 0.6vw;
+				height: 0.6vw;
+				top: -0.2vw;
+				content: url(../img/tick_submenu.svg);
+				position: absolute;
+				display: none;
+			}
+		}
+	}
+}

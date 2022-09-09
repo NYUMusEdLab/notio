@@ -1,0 +1,26 @@
+.notationSVG {
+  width: 5vw;
+  margin: 0 auto;
+  display: block;
+
+  .typeA {
+    font-size: 1.46em;
+  }
+  .typeA,
+  .typeB {
+    font-family: Quicksand-Medium, Quicksand;
+    font-weight: 700;
+  }
+  .typeB {
+    font-size: 1.13em;
+  }
+}
+
+.selected {
+  .notationSVG {
+    .typeA,
+    .typeB {
+      fill: white;
+    }
+  }
+}

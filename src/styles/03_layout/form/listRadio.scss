@@ -1,0 +1,21 @@
+.form-radio {
+  font-size: 0.7em;
+  font-weight: bold;
+  input[type="radio"] {
+    display: none;
+  }
+
+  .label-wrapper {
+    display: block;
+    padding: 0.5vh 0;
+    margin-bottom: 0.1vh;
+    &:hover,
+    &.active {
+      background-color: #ddd;
+    }
+  }
+
+  &__label {
+    margin-left: 0.3vw;
+  }
+}
