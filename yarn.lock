@@ -9423,6 +9423,11 @@ vary@~1.1.2:
   resolved "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
+vexflow@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/vexflow/-/vexflow-4.0.3.tgz#03f5a013724be89268f1df3d0b397432cfc92d99"
+  integrity sha512-0gucH04apVISxY86gnjKwzV8IMr7ndYsBmYCOPioCr0m38NfS4rQt7yrGQQtl1jB7JAiaOCjN0lKMUflFeMIXA==
+
 w3c-hr-time@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/w3c-hr-time/-/w3c-hr-time-1.0.2.tgz"

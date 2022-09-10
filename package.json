@@ -19,6 +19,7 @@
     "react-tooltip": "^4.2.21",
     "sass": "^1.54.9",
     "tone": "^14.7.77",
+    "vexflow": "^4.0.3",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
