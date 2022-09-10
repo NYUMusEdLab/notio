@@ -3,7 +3,7 @@ import db from "./Firebase";
 import { useParams } from "react-router-dom";
 import "./styles/style.scss";
 import ReactTooltip from "react-tooltip";
-// import Keyboard from "./components/Keyboard";
+import Keyboard from "./components/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
 import LoadingScreen from "./components/LoadingScreen";
 import { notio_tutorial } from "./data/config";
@@ -446,7 +446,7 @@ class WholeApp extends Component {
         <div className={`content-body Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
           BODY
           {/* //TODO: uncomm */}
-          {/* <Keyboard
+          <Keyboard
             octave={this.state.octave}
             octaveDist={this.state.octaveDist}
             handleClickOctave={this.handleClickOctave}
@@ -462,7 +462,7 @@ class WholeApp extends Component {
             showOffNotes={this.state.showOffNotes}
             theme={this.state.theme}
             clef={this.state.clef}
-          /> */}
+          />
         </div>
       </>
     );
