@@ -416,7 +416,6 @@ class WholeApp extends Component {
     // ) :
     return (
       <>
-        <div>Wholeapp is called</div>
         <div className="topmenu">
           <TopMenu
             togglePiano={this.togglePiano}
