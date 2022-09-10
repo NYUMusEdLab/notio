@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Piano } from "@tonejs/piano";
+// import { Piano } from "@tonejs/piano";
 import * as Tone from "tone";
 
 class SoundMaker extends Component {
@@ -24,13 +24,14 @@ class SoundMaker extends Component {
   chooseInstrument() {
     var tempSynth = {};
     switch (this.instrumentSound) {
-      case "piano":
-        tempSynth = new Piano({
-          velocities: this.velocities,
-        }).toDestination();
+      //TODO: Uncomm and implement some piano sound
+      // case "piano":
+      //   tempSynth = new Piano({
+      //     velocities: this.velocities,
+      //   }).toDestination();
 
-        tempSynth.load();
-        break;
+      //   tempSynth.load();
+      //   break;
 
       default:
         tempSynth = new Tone.PolySynth(Tone.AMSynth).toDestination();
