@@ -1,12 +1,20 @@
 import React, { Component } from "react";
+import db from "./Firebase";
+import { useParams } from "react-router-dom";
 import "./styles/style.scss";
-// import ReactTooltip from "react-tooltip";
+import ReactTooltip from "react-tooltip";
 // import Keyboard from "./components/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
 import LoadingScreen from "./components/LoadingScreen";
-import db from "./Firebase";
 import { notio_tutorial } from "./data/config";
 import scales from "./data/scalesObj";
+
+// TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
+//This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
+//Also fix index.js call to WholeApp
+function WholeAppWithParams(Component) {
+  return (props) => <Component {...props} params={useParams} />;
+}
 
 class WholeApp extends Component {
   state = {
@@ -31,7 +39,7 @@ class WholeApp extends Component {
     showOffNotes: true,
     sessionID: null,
     sessionError: null,
-    loading: false,
+    loading: true,
     // videoUrl: "https://www.youtube.com/watch?v=g4mHPeMGTJM", // silence test video for coding
     videoUrl: notio_tutorial,
     resetVideoUrl: notio_tutorial,
@@ -229,22 +237,20 @@ class WholeApp extends Component {
       showTooltip: tooltip,
     });
     if (tooltip === true) {
-      // // console.log("GOTTA SHOW!");
-      //TODO: uncomm
-      // ReactTooltip.show(this.state.keyboardTooltipRef);
-      // ReactTooltip.show(this.state.showKeyboardTooltipRef);
-      // ReactTooltip.show(this.state.extendedKeyboardTooltipRef);
-      // ReactTooltip.show(this.state.soundTooltipRef);
-      // ReactTooltip.show(this.state.notationTooltipRef);
-      // ReactTooltip.show(this.state.rootTooltipRef);
-      // ReactTooltip.show(this.state.scaleTooltipRef);
-      // ReactTooltip.show(this.state.clefsTooltipRef);
-      // ReactTooltip.show(this.state.videoPlayerTooltipRef);
-      // ReactTooltip.show(this.state.shareThisSetupTooltipRef);
-      // ReactTooltip.show(this.state.helpTooltipRef);
+      // console.log("GOTTA SHOW!");
+      ReactTooltip.show(this.state.keyboardTooltipRef);
+      ReactTooltip.show(this.state.showKeyboardTooltipRef);
+      ReactTooltip.show(this.state.extendedKeyboardTooltipRef);
+      ReactTooltip.show(this.state.soundTooltipRef);
+      ReactTooltip.show(this.state.notationTooltipRef);
+      ReactTooltip.show(this.state.rootTooltipRef);
+      ReactTooltip.show(this.state.scaleTooltipRef);
+      ReactTooltip.show(this.state.clefsTooltipRef);
+      ReactTooltip.show(this.state.videoPlayerTooltipRef);
+      ReactTooltip.show(this.state.shareThisSetupTooltipRef);
+      ReactTooltip.show(this.state.helpTooltipRef);
     } else {
-      //TODO: uncomm
-      // ReactTooltip.hide();
+      ReactTooltip.hide();
     }
   };
 
@@ -302,44 +308,43 @@ class WholeApp extends Component {
   };
 
   openSavedSession = (sessionId) => {
-    //TODO: uncomm
-    // // console.log("*********** openSaved session:", sessionId);
-    // const ref = db.collection("sessions").doc(sessionId);
-    // ref.get().then((doc) => {
-    //   if (doc.exists) {
-    //     const result = doc.data();
-    //     this.handleChangeCustomScale(
-    //       result.scaleObject.name,
-    //       result.scaleObject.steps,
-    //       result.scaleObject.numbers,
-    //       true
-    //     ); //true denotes that this is a firstRun
-    //     // console.log("********* result", result);
-    //     this.setState({
-    //       octave: result.octave,
-    //       scale: result.scale,
-    //       scaleObject: result.scaleObject,
-    //       baseNote: result.baseNote,
-    //       notation: result.notation,
-    //       instrumentSound: result.instrumentSound,
-    //       pianoOn: result.pianoOn,
-    //       extendedKeyboard: result.extendedKeyboard,
-    //       trebleStaffOn: result.trebleStaffOn,
-    //       menuOpen: result.menuOpen,
-    //       theme: result.theme,
-    //       showOffNotes: result.showOffNotes,
-    //       clef: result.clef,
-    //       loading: false,
-    //       videoUrl: result.videoUrl,
-    //       resetVideoUrl: result.videoUrl,
-    //       videoActive: result.videoActive,
-    //       activeVideoTab: result.activeVideoTab,
-    //     });
-    //   } else {
-    //     this.setState({ loading: false });
-    //     // console.log("No such document!");
-    //   }
-    // });
+    // console.log("*********** openSaved session:", sessionId);
+    const ref = db.collection("sessions").doc(sessionId);
+    ref.get().then((doc) => {
+      if (doc.exists) {
+        const result = doc.data();
+        this.handleChangeCustomScale(
+          result.scaleObject.name,
+          result.scaleObject.steps,
+          result.scaleObject.numbers,
+          true
+        ); //true denotes that this is a firstRun
+        // console.log("********* result", result);
+        this.setState({
+          octave: result.octave,
+          scale: result.scale,
+          scaleObject: result.scaleObject,
+          baseNote: result.baseNote,
+          notation: result.notation,
+          instrumentSound: result.instrumentSound,
+          pianoOn: result.pianoOn,
+          extendedKeyboard: result.extendedKeyboard,
+          trebleStaffOn: result.trebleStaffOn,
+          menuOpen: result.menuOpen,
+          theme: result.theme,
+          showOffNotes: result.showOffNotes,
+          clef: result.clef,
+          loading: false,
+          videoUrl: result.videoUrl,
+          resetVideoUrl: result.videoUrl,
+          videoActive: result.videoActive,
+          activeVideoTab: result.activeVideoTab,
+        });
+      } else {
+        this.setState({ loading: false });
+        // console.log("No such document!");
+      }
+    });
   };
 
   // connectToDB() {
@@ -366,17 +371,16 @@ class WholeApp extends Component {
 
     // const { match } = this.props;
     // const { params } = match;
-
-    //TODO:Uncomm
-    // const sessionId = this.props.match.params.sessionId;
-    // console.log("********************** componentDidMount sessionId", sessionId);
-    // if (sessionId) {
-    //   this.openSavedSession(sessionId);
-    // } else {
-    //   this.setState({
-    //     loading: false,
-    //   });
-    // }
+    // TODO: when rewriting to use functional component this should read: = useParams()
+    const { sessionId } = this.props.params;
+    console.log("********************** componentDidMount sessionId", sessionId);
+    if (sessionId) {
+      this.openSavedSession(sessionId);
+    } else {
+      this.setState({
+        loading: false,
+      });
+    }
 
     //Initialze the tooltip
     /* TODO: MOMENTARILY TURNED OFF DUE TO REQUEST BY CECILIA
@@ -410,10 +414,9 @@ class WholeApp extends Component {
     const { loading, showOffNotes } = this.state;
 
     // console.log("whole app", this.state.notation);
-    // return loading ? (
-    //   <LoadingScreen />
-    // ) :
-    return (
+    return loading ? (
+      <LoadingScreen />
+    ) : (
       <>
         <div className="topmenu">
           <TopMenu
@@ -469,4 +472,7 @@ class WholeApp extends Component {
   }
 }
 
-export default WholeApp;
+// TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
+//This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
+//Also fix index.js call to WholeApp
+export default WholeAppWithParams(WholeApp);

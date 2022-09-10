@@ -1,7 +1,11 @@
+// TODO:This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
+// TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
+//This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
+//Also fix index.js call to WholeApp
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/style.scss";
-import WholeApp from "./WholeApp";
+import WholeAppWithParams from "./WholeApp";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 const container = document.getElementById("root");
@@ -11,8 +15,8 @@ root.render(
   // <React.StrictMode>
   <BrowserRouter>
     <Routes>
-      <Route path="/shared/:sessionId" element={<WholeApp />} />
-      <Route path="/" element={<WholeApp />} />
+      <Route path="/shared/:sessionId" element={<WholeAppWithParams />} />
+      <Route path="/" element={<WholeAppWithParams />} />
     </Routes>
   </BrowserRouter>
   // </React.StrictMode>

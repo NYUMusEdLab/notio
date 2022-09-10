@@ -12,7 +12,7 @@ const Share = (props) => {
     if (sessionId !== props.sessionID) {
       setSessionId(props.sessionID);
     }
-  }, [props.sessionID, sessionId]);
+  }, [props.sessionID]);
 
   // handleSelectTab = (key) => {
   //   // A bit dummy but need to control tabs after submit (cf handleSumbit())
