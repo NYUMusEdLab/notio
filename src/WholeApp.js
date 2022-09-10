@@ -4,7 +4,7 @@ import "./styles/style.scss";
 // import Keyboard from "./components/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
 import LoadingScreen from "./components/LoadingScreen";
-// import db from "./Firebase";
+import db from "./Firebase";
 import { notio_tutorial } from "./data/config";
 import scales from "./data/scalesObj";
 
@@ -29,9 +29,9 @@ class WholeApp extends Component {
     menuOpen: false,
     theme: "light",
     showOffNotes: true,
-    sessionID: 1,
+    sessionID: null,
     sessionError: null,
-    loading: true,
+    loading: false,
     // videoUrl: "https://www.youtube.com/watch?v=g4mHPeMGTJM", // silence test video for coding
     videoUrl: notio_tutorial,
     resetVideoUrl: notio_tutorial,
@@ -255,51 +255,50 @@ class WholeApp extends Component {
   // }
 
   saveSessionToDB = () => {
-    //TODO: uncomm
-    // // console.log("saveSessionToDB");
-    // const {
-    //   octave,
-    //   scale,
-    //   scaleObject,
-    //   baseNote,
-    //   notation,
-    //   instrumentSound,
-    //   pianoOn,
-    //   extendedKeyboard,
-    //   trebleStaffOn,
-    //   theme,
-    //   showOffNotes,
-    //   clef,
-    //   videoUrl,
-    //   videoActive,
-    //   activeVideoTab,
-    // } = this.state;
-    // db.collection("sessions")
-    //   .add({
-    //     octave: octave,
-    //     scale: scale,
-    //     scaleObject: scaleObject,
-    //     baseNote: baseNote,
-    //     notation: notation,
-    //     instrumentSound: instrumentSound,
-    //     pianoOn: pianoOn,
-    //     extendedKeyboard: extendedKeyboard,
-    //     trebleStaffOn: trebleStaffOn,
-    //     theme: theme,
-    //     showOffNotes: showOffNotes,
-    //     clef: clef,
-    //     videoUrl: videoUrl,
-    //     videoActive: videoActive,
-    //     activeVideoTab: activeVideoTab,
-    //   })
-    //   .then((docRef) => {
-    //     // console.log("Session written with ID: ", docRef.id);
-    //     this.setState({ sessionID: docRef.id });
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error adding document: ", error);
-    //     this.setState({ sessionError: error });
-    //   });
+    // console.log("saveSessionToDB");
+    const {
+      octave,
+      scale,
+      scaleObject,
+      baseNote,
+      notation,
+      instrumentSound,
+      pianoOn,
+      extendedKeyboard,
+      trebleStaffOn,
+      theme,
+      showOffNotes,
+      clef,
+      videoUrl,
+      videoActive,
+      activeVideoTab,
+    } = this.state;
+    db.collection("sessions")
+      .add({
+        octave: octave,
+        scale: scale,
+        scaleObject: scaleObject,
+        baseNote: baseNote,
+        notation: notation,
+        instrumentSound: instrumentSound,
+        pianoOn: pianoOn,
+        extendedKeyboard: extendedKeyboard,
+        trebleStaffOn: trebleStaffOn,
+        theme: theme,
+        showOffNotes: showOffNotes,
+        clef: clef,
+        videoUrl: videoUrl,
+        videoActive: videoActive,
+        activeVideoTab: activeVideoTab,
+      })
+      .then((docRef) => {
+        // console.log("Session written with ID: ", docRef.id);
+        this.setState({ sessionID: docRef.id });
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+        this.setState({ sessionError: error });
+      });
   };
 
   openSavedSession = (sessionId) => {

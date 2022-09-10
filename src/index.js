@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
+//INFO: to learn about react-roue-dom v6 https://reactrouter.com/en/v6.3.0/upgrading/v5
 root.render(
   // <React.StrictMode>
   <BrowserRouter>
