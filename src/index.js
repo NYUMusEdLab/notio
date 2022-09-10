@@ -5,9 +5,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/style.scss";
-import WholeAppWithParams from "./WholeApp";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import WholeAppWrapper from "WholeAppWrapper";
+import WholeApp from "./WholeApp";
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 //INFO: to learn about react-roue-dom v6 https://reactrouter.com/en/v6.3.0/upgrading/v5
@@ -15,8 +16,9 @@ root.render(
   // <React.StrictMode>
   <BrowserRouter>
     <Routes>
-      <Route path="/shared/:sessionId" element={<WholeAppWithParams />} />
-      <Route path="/" element={<WholeAppWithParams />} />
+      <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+
+      <Route path="/" element={<WholeApp />} />
     </Routes>
   </BrowserRouter>
   // </React.StrictMode>

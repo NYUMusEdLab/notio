@@ -12,9 +12,6 @@ import scales from "./data/scalesObj";
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
 //This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
 //Also fix index.js call to WholeApp
-function WholeAppWithParams(Component) {
-  return (props) => <Component {...props} params={useParams} />;
-}
 
 class WholeApp extends Component {
   state = {
@@ -372,7 +369,7 @@ class WholeApp extends Component {
     // const { match } = this.props;
     // const { params } = match;
     // TODO: when rewriting to use functional component this should read: = useParams()
-    const { sessionId } = this.props.params;
+    const { sessionId } = this.props;
     console.log("********************** componentDidMount sessionId", sessionId);
     if (sessionId) {
       this.openSavedSession(sessionId);
@@ -475,4 +472,4 @@ class WholeApp extends Component {
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
 //This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
 //Also fix index.js call to WholeApp
-export default WholeAppWithParams(WholeApp);
+export default WholeApp;

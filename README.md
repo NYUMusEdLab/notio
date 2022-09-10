@@ -64,3 +64,5 @@ react-player
 
 firebase
 @react-firebase/database
+
+react-router-dom v6
