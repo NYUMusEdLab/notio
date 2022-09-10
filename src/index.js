@@ -3,15 +3,17 @@ import ReactDOM from "react-dom/client";
 import "./styles/style.scss";
 import WholeApp from "./WholeApp";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 root.render(
   // <React.StrictMode>
-  <>
-    <WholeApp />
-    <div>called wholeApp</div>
-  </>
-  // <div>createRoot works</div>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/shared/:sessionId" element={<WholeApp />} />
+      <Route path="/" element={<WholeApp />} />
+    </Routes>
+  </BrowserRouter>
   // </React.StrictMode>
 );
 
