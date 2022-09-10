@@ -3,7 +3,7 @@ import db from "./Firebase";
 import { useParams } from "react-router-dom";
 import "./styles/style.scss";
 import ReactTooltip from "react-tooltip";
-import Keyboard from "./components/Keyboard";
+import Keyboard from "./components/keyboard/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
 import LoadingScreen from "./components/LoadingScreen";
 import { notio_tutorial } from "./data/config";

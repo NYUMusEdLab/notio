@@ -4,9 +4,9 @@ import React, { Component } from "react";
 import Key from "./Key";
 // import scales from "../data/scalesObj";
 //import colors from "../data/colors";
-import SoundMaker from "../Model/SoundMaker";
+import SoundMaker from "../../Model/SoundMaker";
 // import { SoundEngineContext } from "../context/SoundEngineContext";
-import MusicScale from "../Model/MusicScale";
+import MusicScale from "../../Model/MusicScale";
 //import colors from "../data/colors";
 
 const colorsD = {
