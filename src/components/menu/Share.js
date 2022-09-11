@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ShareLink from "./ShareLink";
-import Overlay from "./Overlay";
+import Overlay from "./../OverlayPlugins/Overlay";
 import { Tabs, Tab } from "react-bootstrap";
 
 const Share = (props) => {

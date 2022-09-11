@@ -12,6 +12,11 @@ import Notation from "./Notation";
 import Root from "./Root";
 import RootMenu from "../../assets/img/RootMenu";
 import Octaves from "./Octaves";
+
+import DropdownCustomScaleMenu from "./DropdownCustomScaleMenu";
+import VideoButton from "./VideoButton";
+import ShareButton from "./ShareButton";
+import HelpButton from "./HelpButton";
 // import { findColor } from '../utils.js';
 
 import ListRadio from "../form/ListRadio";
@@ -22,10 +27,6 @@ import NotationImg from "../../assets/img/Notation";
 import clefs from "../../data/clefs";
 import tooltipText from "../../data/tooltipText";
 // import CustomScaleSelector from "./CustomScaleSelector";
-import DropdownCustomScaleMenu from "./DropdownCustomScaleMenu";
-import VideoButton from "./VideoButton";
-import ShareButton from "./ShareButton";
-import HelpButton from "./HelpButton";
 
 const sounds = [{ name: "piano" }, { name: "AMSynth" }];
 

@@ -1,33 +1,26 @@
 {
   "name": "notio",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@loadable/component": "^5.14.1",
-    "@testing-library/dom": "^8.1.0",
-    "@testing-library/react": "^12.0.0",
+    "@react-firebase/database": "^0.3.11",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "@tonejs/piano": "^0.2.1",
-    "color": "^3.1.2",
-    "firebase": "^6.2.1",
-    "gh-pages": "^2.2.0",
-    "greensock": "^1.20.2",
-    "gsap": "^3.6.0",
-    "jquery": "^3.5.1",
-    "lodash": "^4.17.20",
-    "node-sass": "4.12",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.5.1",
-    "react-dom": "^16.9.0",
-    "react-draggable": "^4.4.4",
-    "react-markdown": "^8.0.2",
-    "react-player": "^2.9.0",
-    "react-router-dom": "^5.2.0",
+    "color": "^4.2.3",
+    "firebase": "^9.9.4",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
+    "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.5",
+    "react-player": "^2.10.1",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
     "react-tooltip": "^4.2.21",
-    "reactjs-popup": "^2.0.4",
+    "sass": "^1.54.9",
     "tone": "^14.7.77",
-    "vexflow": "^3.0.9",
-    "webmidi": "^2.5.2"
+    "vexflow": "^4.0.3",
+    "web-vitals": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,10 +32,11 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "devDependencies": {
-    "mutation-observer": "^1.0.3",
-    "react-scripts": "^2.1.8",
-    "react-test-renderer": "^16.13.1"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
