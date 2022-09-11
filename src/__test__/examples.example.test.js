@@ -2,10 +2,10 @@ import * as React from "react"; // Necessary to run the tests, apparently.
 import { MemoryRouter, Route } from "react-router-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Piano } from "@tonejs/piano";
+// import { Piano } from "@tonejs/piano";
 import WholeApp from "../WholeApp";
-import TopMenu from "../components/menu/TopMenu";
-import Keyboard from "../components/Keyboard/Keyboard";
+// import TopMenu from "../components/menu/TopMenu";
+// import Keyboard from "../components/Keyboard/Keyboard";
 
 jest.mock("react-dom", () => {
   return {
@@ -24,7 +24,7 @@ describe("Example with basis WholeApp rendering to", () => {
 
     render(
       <MemoryRouter>
-        <Route exact path="/" component={WholeApp}></Route>;
+        <Route path="/" element={<WholeApp />}></Route>;
       </MemoryRouter>
     );
 

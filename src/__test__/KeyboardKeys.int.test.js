@@ -1,13 +1,13 @@
 import * as React from "react"; // Necessary to run the tests, apparently.
 import { MemoryRouter, Route } from "react-router-dom";
 import { render, screen, waitFor } from "@testing-library/react";
-import fireEvent from "@testing-library/dom";
+// import fireEvent from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
-import Keyboard from "../components/Keyboard/Keyboard";
+// import Keyboard from "../components/Keyboard/Keyboard";
 import SoundMaker from "../Model/SoundMaker";
-import ReactPlayer from "react-player/lazy";
+// import ReactPlayer from "react-player/lazy";
 import WholeApp from "../WholeApp";
-import { Time } from "tone";
+// import { Time } from "tone";
 
 /*
     File containing all integration tests of the Keyboard Functionality
@@ -17,6 +17,7 @@ import { Time } from "tone";
 // This is necessary to make waitFor works, which makes sure Notio renders /shared/urls, otherwise its a loading screen.
 // To make sure it loads "await waitFor(() => screen.getAllByText("Root"));" is added after the render.
 import MutationObserver from "mutation-observer";
+import WholeAppWrapper from "WholeAppWrapper";
 global.MutationObserver = MutationObserver;
 
 // Overview of Mocks necessary
@@ -47,8 +48,8 @@ describe("ComputerKeyboard pressing key to", () => {
     expect(SoundMaker).not.toHaveBeenCalled();
     render(
       <MemoryRouter initialEntries={url}>
-        <Route path="/shared/:sessionId" component={WholeApp} />
-        <Route exact path={"/"} component={WholeApp}></Route>;
+        <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+        <Route path={"/"} element={<WholeApp />}></Route>;
       </MemoryRouter>
     );
     await waitFor(() => screen.getAllByText("Root"));
@@ -70,8 +71,8 @@ describe("ComputerKeyboard pressing key to", () => {
       expect(SoundMaker).not.toHaveBeenCalled();
       render(
         <MemoryRouter initialEntries={url}>
-          <Route path="/shared/:sessionId" component={WholeApp} />
-          <Route exact path={"/"} component={WholeApp}></Route>;
+          <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+          <Route path={"/"} element={<WholeApp />}></Route>;
         </MemoryRouter>
       );
       await waitFor(() => screen.getAllByText("Root"));
@@ -101,8 +102,8 @@ describe("ComputerKeyboard pressing key to", () => {
       expect(SoundMaker).not.toHaveBeenCalled();
       render(
         <MemoryRouter initialEntries={url}>
-          <Route path="/shared/:sessionId" component={WholeApp} />
-          <Route exact path={"/"} component={WholeApp}></Route>;
+          <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+          <Route path={"/"} element={<WholeApp />}></Route>;
         </MemoryRouter>
       );
       await waitFor(() => screen.getAllByText("Root"));
