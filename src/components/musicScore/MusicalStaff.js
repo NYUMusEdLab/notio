@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Vex from "vexflow";
 import PropTypes from "prop-types";
+
+//INFO: vexFlow 4 documentation: https://github.com/0xfe/vexflow/wiki/Tutorial
 const { Renderer, Stave, Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
 
 let stave, ctx, renderer;
@@ -23,7 +25,9 @@ class MusicalStaff extends Component {
     // renderer.resize(0, 0, 60, 140);
     ctx = renderer.getContext();
     ctx.setViewBox(0, 0, 60, 140); //size
-    stave = new Stave(0, 0, 60, { fill_style: "black" });
+    stave = new Stave(0, 10, 60, { fill_style: "black" });
+    //Hides the barlines
+    stave.setBegBarType(Vex.Flow.Barline.type.NONE);
     stave.setContext(ctx).draw();
   }
 
@@ -75,6 +79,7 @@ class MusicalStaff extends Component {
         return new StaveNote(note);
       }
     });
+
     // console.log("C");
 
     // console.log("oneNote", oneNote);
@@ -90,7 +95,6 @@ class MusicalStaff extends Component {
     // console.log("E");
 
     new Formatter().joinVoices([voice]).format([voice], window.innerWidth);
-
     // Render voice
     voice.draw(ctx, stave);
     // console.log("F");
