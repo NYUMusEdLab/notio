@@ -17,7 +17,6 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
-
       <Route path="/" element={<WholeApp />} />
     </Routes>
   </BrowserRouter>

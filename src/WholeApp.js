@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import db from "./Firebase";
-import { useParams } from "react-router-dom";
 import "./styles/style.scss";
 import ReactTooltip from "react-tooltip";
 import Keyboard from "./components/keyboard/Keyboard";
@@ -444,8 +443,6 @@ class WholeApp extends Component {
         </div>
 
         <div className={`content-body Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
-          BODY
-          {/* //TODO: uncomm */}
           <Keyboard
             octave={this.state.octave}
             octaveDist={this.state.octaveDist}

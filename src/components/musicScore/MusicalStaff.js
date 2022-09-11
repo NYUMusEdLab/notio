@@ -20,7 +20,7 @@ class MusicalStaff extends Component {
   setupStaff() {
     let containerSVG = this.musicalStaff.current;
     renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
-    //renderer.resize(60, 140);
+    // renderer.resize(0, 0, 60, 140);
     ctx = renderer.getContext();
     ctx.setViewBox(0, 0, 60, 140); //size
     stave = new Stave(0, 0, 60, { fill_style: "black" });
@@ -56,19 +56,19 @@ class MusicalStaff extends Component {
     let oneNote = singleNote.map(function (note) {
       if (note.keys[0].includes("bb")) {
         // console.log("1");
-        return new StaveNote(note).addAccidental(0, new Accidental("bb"));
+        return new StaveNote(note).addModifier(new Accidental("bb"), 0);
       } else if (note.keys[0].includes("b")) {
         // console.log("2");
 
-        return new StaveNote(note).addAccidental(0, new Accidental("b"));
+        return new StaveNote(note).addModifier(new Accidental("b"), 0);
       } else if (note.keys[0].includes("##")) {
         // console.log("4");
 
-        return new StaveNote(note).addAccidental(0, new Accidental("##"));
+        return new StaveNote(note).addModifier(new Accidental("##"), 0);
       } else if (note.keys[0].includes("#")) {
         // console.log("3");
 
-        return new StaveNote(note).addAccidental(0, new Accidental("#"));
+        return new StaveNote(note).addModifier(new Accidental("#"), 0);
       } else {
         // console.log("************ 4", note);
 

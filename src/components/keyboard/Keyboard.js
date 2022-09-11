@@ -149,6 +149,13 @@ class Keyboard extends Component {
     };
   }
 
+  scaleStart = () => {
+    return this.props.extendedKeyboard ? 7 : 0;
+  };
+  ambitus = () => {
+    return this.props.extendedKeyboard ? 24 : 13;
+  };
+
   //   synth = new SoundMaker({
   //     instrumentSound: this.props.instrumentSound,
   //     velocities: 5,
@@ -619,11 +626,41 @@ class Keyboard extends Component {
 // Some extra development may be needed if you want to allow different BaseNotes on the selected scale and the instrument.
 // e.g what tones from D Ionian can be played on a F major pentatonic flute.
 */
-  updateScales() {
-    const { scale: scaleName, baseNote, extendedKeyboard } = this.props;
-    const scaleStart = extendedKeyboard ? 7 : 0; //Decides on what chromatic step  the extended scale start on 7 == starts on the fifth, 2 == starts on the major second. TODO: this should be set elsewhere not as a magic number in a function!!
-    const ambitus = extendedKeyboard ? 24 : 13; //Decides How many halftones should be shown on the keyboard, 13 == shows an octave from Root to Root                    TODO: this should be set elsewhere not as a magic number in a function!!
-    const keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic"); // Returns a scaleObj
+  // updateScales() {
+  //   const { scale: scaleName, baseNote } = this.props;
+  //   const scaleStart = this.state.scaleStart; //extendedKeyboard ? 7 : 0; //Decides on what chromatic step  the extended scale start on 7 == starts on the fifth, 2 == starts on the major second. TODO: this should be set elsewhere not as a magic number in a function!!
+  //   const ambitus = this.state.ambitus; //extendedKeyboard ? 24 : 13; //Decides How many halftones should be shown on the keyboard, 13 == shows an octave from Root to Root                    TODO: this should be set elsewhere not as a magic number in a function!!
+  //   const keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic"); // Returns a scaleObj
+  //   const keyboardLayoutScale = new MusicScale(
+  //     keyboardLayoutScaleReciepe,
+  //     baseNote,
+  //     scaleStart,
+  //     ambitus,
+  //     colorsD[this.state.colorname]
+  //   );
+  //   const scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName);
+  //   const currentScale = new MusicScale(
+  //     scaleReciepe,
+  //     baseNote,
+  //     scaleStart,
+  //     ambitus,
+  //     colorsD[this.state.colorname]
+  //   );
+  //   //TODO: move this state update to other place
+  //   // if (
+  //   //   this.state.activeScale.Name !== currentScale.Name ||
+  //   //   this.state.activeScale.RootNoteName !== currentScale.RootNoteName
+  //   // ) {
+  //   //   this.setState({ activeScale: currentScale }); //This crashes due to a render issue, state can not be set as part of render
+  //   // }
+  //   return { keyboardLayoutScale, currentScale };
+  // }
+
+  keyboardLayoutScale(scaleName) {
+    const { baseNote } = this.props;
+    const scaleStart = this.scaleStart(); //extendedKeyboard ? 7 : 0; //Decides on what chromatic step  the extended scale start on 7 == starts on the fifth, 2 == starts on the major second. TODO: this should be set elsewhere not as a magic number in a function!!
+    const ambitus = this.ambitus(); //extendedKeyboard ? 24 : 13; //Decides How many halftones should be shown on the keyboard, 13 == shows an octave from Root to Root                    TODO: this should be set elsewhere not as a magic number in a function!!
+    const keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName); // Returns a scaleObj
     const keyboardLayoutScale = new MusicScale(
       keyboardLayoutScaleReciepe,
       baseNote,
@@ -631,6 +668,15 @@ class Keyboard extends Component {
       ambitus,
       colorsD[this.state.colorname]
     );
+
+    return keyboardLayoutScale;
+  }
+
+  mapCurrentScaleToKeyboardLayout() {
+    const { scale: scaleName, baseNote } = this.props;
+    const scaleStart = this.scaleStart(); //extendedKeyboard ? 7 : 0; //Decides on what chromatic step  the extended scale start on 7 == starts on the fifth, 2 == starts on the major second. TODO: this should be set elsewhere not as a magic number in a function!!
+    const ambitus = this.ambitus(); //extendedKeyboard ? 24 : 13; //Decides How many halftones should be shown on the keyboard, 13 == shows an octave from Root to Root                    TODO: this should be set elsewhere not as a magic number in a function!!
+
     const scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName);
     const currentScale = new MusicScale(
       scaleReciepe,
@@ -640,13 +686,7 @@ class Keyboard extends Component {
       colorsD[this.state.colorname]
     );
 
-    if (
-      this.state.activeScale.Name !== currentScale.Name ||
-      this.state.activeScale.RootNoteName !== currentScale.RootNoteName
-    ) {
-      this.setState({ activeScale: currentScale });
-    }
-    return { keyboardLayoutScale, currentScale };
+    return currentScale;
   }
 
   getRootInfo(rootNote, baseNote) {
@@ -693,7 +733,9 @@ class Keyboard extends Component {
 
     const { synth } = this.state;
     const { mouse_is_down } = this.state;
-    const { keyboardLayoutScale, currentScale } = this.updateScales();
+    //TODO: use state to get the current scale.
+    const keyboardLayoutScale = this.keyboardLayoutScale("Chromatic");
+    const currentScale = this.mapCurrentScaleToKeyboardLayout();
 
     // Loop on note list
     //creates all keys on the keyboard, their naming, color, and activeness (can they be played or not)
