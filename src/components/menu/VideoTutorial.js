@@ -65,7 +65,7 @@ const VideoTutorial = (props) => {
 
           <Tabs
             defaultActiveKey={activeTab}
-            activeTab={activeTab}
+            // activeTab={activeTab}
             id="controlled-tab-example"
             onSelect={handleTabSelected}>
             <Tab eventKey="Player" title="Player">
