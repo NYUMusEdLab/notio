@@ -71,8 +71,10 @@ describe("Root menu in the TopMenu", () => {
       expect(SoundMaker).not.toHaveBeenCalled();
       render(
         <MemoryRouter initialEntries={url}>
-          <Route path="/shared/:sessionId" component={WholeApp} />
-          <Route exact path={"/"} component={WholeApp}></Route>;
+          <Routes>
+            <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+            <Route path="/" element={<WholeApp />}></Route>;
+          </Routes>
         </MemoryRouter>
       );
       await waitFor(() => screen.getAllByText("Root"));
