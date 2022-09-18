@@ -1,9 +1,9 @@
 import * as React from "react"; // Necessary to run the tests, apparently.
-import { MemoryRouter, Route } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 // import fireEvent from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
-// import Keyboard from "../components/Keyboard/Keyboard";
+// import Keyboard from "../Components/Keyboard/Keyboard";
 import SoundMaker from "../Model/SoundMaker";
 // import ReactPlayer from "react-player/lazy";
 import WholeApp from "../WholeApp";
@@ -15,13 +15,13 @@ import WholeApp from "../WholeApp";
 */
 
 // This is necessary to make waitFor works, which makes sure Notio renders /shared/urls, otherwise its a loading screen.
-// To make sure it loads "await waitFor(() => screen.getAllByText("Root"));" is added after the render.
+// To make sure it loads "await waitFor(() => screen.getAllByText("Notation"));" is added after the render.
 import MutationObserver from "mutation-observer";
 import WholeAppWrapper from "WholeAppWrapper";
 global.MutationObserver = MutationObserver;
 
 // Overview of Mocks necessary
-jest.mock("../components/SoundMaker"); // Automatic mock, which can be asserted against
+jest.mock("../Model/SoundMaker"); // Automatic mock, which can be asserted against
 jest.mock("react-player/lazy"); // Manual mock in __mock__ folder, made just to make the tests pass
 
 beforeEach(() => {
@@ -48,11 +48,13 @@ describe("ComputerKeyboard pressing key to", () => {
     expect(SoundMaker).not.toHaveBeenCalled();
     render(
       <MemoryRouter initialEntries={url}>
-        <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
-        <Route path={"/"} element={<WholeApp />}></Route>;
+        <Routes>
+          <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+          <Route path="/" element={<WholeApp />}></Route>;
+        </Routes>
       </MemoryRouter>
     );
-    await waitFor(() => screen.getAllByText("Root"));
+    await waitFor(() => screen.getAllByText("Notation"));
     expect(SoundMaker).toHaveBeenCalledTimes(1);
 
     await userEvent.keyboard(keypress);
@@ -71,11 +73,13 @@ describe("ComputerKeyboard pressing key to", () => {
       expect(SoundMaker).not.toHaveBeenCalled();
       render(
         <MemoryRouter initialEntries={url}>
-          <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
-          <Route path={"/"} element={<WholeApp />}></Route>;
+          <Routes>
+            <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+            <Route path="/" element={<WholeApp />}></Route>;
+          </Routes>
         </MemoryRouter>
       );
-      await waitFor(() => screen.getAllByText("Root"));
+      await waitFor(() => screen.getAllByText("Notation"));
       expect(SoundMaker).toHaveBeenCalledTimes(1);
       const octave_in_menu = screen.getByText("Octave:", { exact: false });
       expect(octave_in_menu.textContent).toBe("Octave: " + octave);
@@ -102,11 +106,13 @@ describe("ComputerKeyboard pressing key to", () => {
       expect(SoundMaker).not.toHaveBeenCalled();
       render(
         <MemoryRouter initialEntries={url}>
-          <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
-          <Route path={"/"} element={<WholeApp />}></Route>;
+          <Routes>
+            <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+            <Route path="/" element={<WholeApp />}></Route>;
+          </Routes>
         </MemoryRouter>
       );
-      await waitFor(() => screen.getAllByText("Root"));
+      await screen.findAllByTitle("Notation");
       expect(SoundMaker).toHaveBeenCalledTimes(1);
       const octave_in_menu = screen.getByText("Octave:", { exact: false });
       expect(octave_in_menu.textContent).toBe("Octave: " + octave);

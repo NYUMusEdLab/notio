@@ -369,9 +369,9 @@ class WholeApp extends Component {
     // const { params } = match;
 
     // TODO: when rewriting to use functional component this should read: = useParams()
-    const { sessionId } = this.props;
+    const sessionId = this.props.sessionId === undefined ? null : this.props.sessionId;
     console.log("********************** componentDidMount sessionId", sessionId);
-    if (sessionId) {
+    if (sessionId !== null) {
       this.openSavedSession(sessionId);
     } else {
       this.setState({

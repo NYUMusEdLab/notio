@@ -3,7 +3,7 @@ import Vex from "vexflow";
 import PropTypes from "prop-types";
 
 //INFO: vexFlow 4 documentation: https://github.com/0xfe/vexflow/wiki/Tutorial
-const { Renderer, Stave, Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
+// const { Renderer, Stave, Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
 
 let stave, ctx, renderer;
 
@@ -20,6 +20,8 @@ class MusicalStaff extends Component {
   }
 
   setupStaff() {
+    const { Renderer, Stave } = Vex.Flow;
+
     let containerSVG = this.musicalStaff.current;
     renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
     // renderer.resize(0, 0, 60, 140);
@@ -32,6 +34,8 @@ class MusicalStaff extends Component {
   }
 
   drawNotes() {
+    const { Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
+
     // console.log("A");
     // console.log("drawNotes this.props.note", this.props.note);
     let daNote;

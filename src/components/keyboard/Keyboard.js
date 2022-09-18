@@ -181,8 +181,8 @@ class Keyboard extends Component {
     // if (this.state.instrumentSound !== this.props.instrumentSound) {
     //   this.handleChangeSound(this.props.instrumentSound);
     // }
-    console.log(this.state.instrumentSound);
-    console.log(this.props.instrumentSound);
+    // console.log(this.state.instrumentSound);
+    // console.log(this.props.instrumentSound);
     /* this helps us deal with this problem in Chrome:
      *
      * The AudioContext was not allowed to start. It must be resumed (or created)
@@ -882,7 +882,11 @@ class Keyboard extends Component {
       // );
     });
 
-    return <div className="Keyboard">{noteList}</div>;
+    return (
+      <div className="Keyboard" data-testid="Keyboard">
+        {noteList}
+      </div>
+    );
   }
   //#endregion
 }

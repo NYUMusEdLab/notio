@@ -1,5 +1,5 @@
 import * as React from "react"; // Necessary to run the tests, apparently.
-import { MemoryRouter, Route } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 // import { Piano } from "@tonejs/piano";
@@ -24,7 +24,9 @@ describe("Example with basis WholeApp rendering to", () => {
 
     render(
       <MemoryRouter>
-        <Route path="/" element={<WholeApp />}></Route>;
+        <Routes>
+          <Route path="/" element={<WholeApp />}></Route>;
+        </Routes>
       </MemoryRouter>
     );
 

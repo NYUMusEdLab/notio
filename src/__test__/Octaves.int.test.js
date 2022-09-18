@@ -1,5 +1,5 @@
 import * as React from "react"; // Necessary to run the tests, apparently.
-import { MemoryRouter, Route } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SoundMaker from "../Model/SoundMaker";
@@ -12,9 +12,10 @@ import WholeApp from "../WholeApp";
 // This is necessary to make waitFor works, which makes sure Notio renders /shared/urls, otherwise its a loading screen.
 // To make sure it loads, the "await waitFor(() => screen.getAllByText("Root"));" is added after the render.
 import MutationObserver from "mutation-observer";
+import WholeAppWrapper from "WholeAppWrapper";
 global.MutationObserver = MutationObserver;
 
-jest.mock("../components/SoundMaker"); // Automatic mock, which can be asserted against
+jest.mock("../Model/SoundMaker"); // Automatic mock, which can be asserted against
 jest.mock("react-player/lazy"); // Manual mock in __mock__ folder, made just to make the tests pass
 
 beforeEach(() => {
@@ -39,8 +40,10 @@ describe("Root menu in the TopMenu", () => {
     expect(SoundMaker).not.toHaveBeenCalled();
     render(
       <MemoryRouter initialEntries={url}>
-        <Route path="/shared/:sessionId" component={WholeApp} />
-        <Route exact path={"/"} component={WholeApp}></Route>;
+        <Routes>
+          <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+          <Route path="/" element={<WholeApp />}></Route>;
+        </Routes>
       </MemoryRouter>
     );
     await waitFor(() => screen.getAllByText("Root"));
@@ -99,8 +102,10 @@ describe("Root menu in the TopMenu", () => {
     expect(SoundMaker).not.toHaveBeenCalled();
     render(
       <MemoryRouter initialEntries={url}>
-        <Route path="/shared/:sessionId" component={WholeApp} />
-        <Route exact path={"/"} component={WholeApp}></Route>;
+        <Routes>
+          <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+          <Route path="/" element={<WholeApp />}></Route>;
+        </Routes>
       </MemoryRouter>
     );
     await waitFor(() => screen.getAllByText("Root"));
@@ -128,8 +133,10 @@ describe("Root menu in the TopMenu", () => {
       expect(SoundMaker).not.toHaveBeenCalled();
       render(
         <MemoryRouter initialEntries={url}>
-          <Route path="/shared/:sessionId" component={WholeApp} />
-          <Route exact path={"/"} component={WholeApp}></Route>;
+          <Routes>
+            <Route path="/shared/:sessionId" element={<WholeAppWrapper />} />
+            <Route path="/" element={<WholeApp />}></Route>;
+          </Routes>
         </MemoryRouter>
       );
       await waitFor(() => screen.getAllByText("Root"));
