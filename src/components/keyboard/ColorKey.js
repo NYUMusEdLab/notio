@@ -216,6 +216,7 @@ class ColorKey extends Component {
         <div
           className={`noteWrapper note ${isOn ? "on" : "off"}`}
           style={{
+            marginBottom: pianoOn ? "0%" : "20vh", //TODO: find better solution, this will not work on all screen sizes
             backgroundColor: this.state.clicked ? color : null,
             top: extendedKeyboard ? "17%" : "10%",
           }}>

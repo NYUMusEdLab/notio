@@ -47,7 +47,7 @@
   .color-key {
     background: yellow;
     display: grid;
-    grid-template-rows: 60% 30%;
+    grid-template-rows: 60% 30%; //this is set as inlinestyle in colorkey.js
     grid-gap: 0px;
     grid-template-areas:
       "noteName"
