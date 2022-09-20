@@ -55,9 +55,9 @@ class ColorKey extends Component {
         return {
           _color:
             "linear-gradient(180deg, rgba(255,255,255,0) 20%, " +
-            this._colorActive +
+            // this._colorActive +
             " 100%, " +
-            this._colorActive +
+            // this._colorActive +
             " 100%)",
         };
       });
@@ -200,6 +200,7 @@ class ColorKey extends Component {
         `}
         style={{
           height: pianoOn ? "70%" : "100%",
+          // @ts-ignore
           background: isOn
             ? this.state._color
             : "linear-gradient(356deg, rgba(249,247,223,1) 0%, rgba(235,227,245,1) 100%)",
