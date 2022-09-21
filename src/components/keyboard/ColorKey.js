@@ -190,16 +190,19 @@ class ColorKey extends Component {
       <div
         ref={this.keyRef}
         data-testid={"ColorKey:" + note}
-        className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${
-          isOn ? "on" : "off"
+        className={`color-key ${/*this.state.clicked &&*/ /*isOn ? "active" :*/ ""} ${
+          /*isOn ? "on" : "off"*/ " "
         } ${
-          (note.includes("C") && !note.includes("#") && !note.includes("b")) || note.includes("B#")
-            ? "" /*"c-mark"*/
-            : ""
+          // //TODO:Do we want this to show whether the tone is C or whether it is the Root in the scale
+          // (note.includes("C") && !note.includes("#") && !note.includes("b")) || note.includes("B#")
+          //   ? "" /*"c-mark"*/
+          //   : ""
+          ""
         }
         `}
         style={{
           height: pianoOn ? "70%" : "100%",
+          //background is set to color if tone is in scale or the gradient app background if it is not in scale
           // @ts-ignore
           background: isOn
             ? this.state._color

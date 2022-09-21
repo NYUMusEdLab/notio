@@ -24,15 +24,14 @@ class Key extends Component {
       noteNameEnglish,
       root,
       extendedKeyboard,
-      clef
+      clef,
     } = this.props;
     // console.log("Key note", note, noteName);
     return (
       <div
         className={`Key ${keyColor}
           ${isOn ? "on" : "off"}`}
-        data-note={note}
-      >
+        data-note={note}>
         <ColorKey
           color={color}
           keyColor={keyColor}
@@ -50,7 +49,8 @@ class Key extends Component {
           extendedKeyboard={extendedKeyboard}
           clef={clef}
         />
-        {/*toggle Piano */
+        {
+          /*toggle Piano */
           pianoOn ? (
             <PianoKey
               note={note}
@@ -66,7 +66,8 @@ class Key extends Component {
               noteOn={noteOn}
               noteOff={noteOff}
             />
-          ) : null}
+          ) : null
+        }
       </div>
     );
   }
