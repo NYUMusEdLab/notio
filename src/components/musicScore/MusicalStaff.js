@@ -26,6 +26,8 @@ class MusicalStaff extends Component {
     renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
     // renderer.resize(0, 0, 60, 140);
     ctx = renderer.getContext();
+    //For some reason this works dispite the error
+    // @ts-ignore
     ctx.setViewBox(0, 0, 60, 140); //size
     stave = new Stave(0, 10, 60, { fill_style: "black" });
     //Hides the barlines

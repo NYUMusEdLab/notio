@@ -53,7 +53,7 @@ class ColorKey extends Component {
     if (this.props.toneIsInScale) {
       this.setState((state) => {
         return {
-          _color: "linear-gradient(180deg, rgba(255,255,255,0) 20%, " + " 100%, " + " 100%)",
+          _color: "linear-gradient(180deg, rgba(255,255,255,0) 20%,  100% 100%)",
         };
       });
       this.playNote(this.props.note);
