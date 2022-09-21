@@ -55,7 +55,7 @@ class Key extends Component {
             <PianoKey
               note={note}
               noteNameEnglish={noteNameEnglish}
-              isOn={toneIsInScale}
+              toneIsInScale={toneIsInScale}
               color={color}
               keyColor={keyColor}
               index={index}
@@ -80,7 +80,7 @@ Key.propTypes = {
   color: PropTypes.string,
   // offcolor: PropTypes.string,
   keyColor: PropTypes.string,
-  isOn: PropTypes.bool,
+  toneIsInScale: PropTypes.bool,
   root: PropTypes.string,
   isMajorSeventh: PropTypes.bool,
   isActive: PropTypes.bool,

@@ -183,7 +183,7 @@ class ColorKey extends Component {
       <div
         ref={this.keyRef}
         data-testid={"ColorKey:" + note}
-        className={`color-key`}
+        className={`color-key ${toneIsInScale ? "on" : "off"}`}
         style={{
           height: pianoOn ? "70%" : "100%",
           //background is set to color if tone is in scale or the gradient app background if it is not in scale
