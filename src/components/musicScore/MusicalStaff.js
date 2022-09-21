@@ -106,7 +106,7 @@ class MusicalStaff extends Component {
 
   componentDidMount() {
     this.setupStaff();
-    if (this.props.isOn) this.drawNotes();
+    if (this.props.toneIsInScale) this.drawNotes();
   }
 
   componentDidUpdate(prevProps) {
@@ -114,12 +114,12 @@ class MusicalStaff extends Component {
       prevProps.note !== this.props.note ||
       prevProps.showOffNote !== this.props.showOffNotes ||
       prevProps.width !== this.props.width ||
-      prevProps.isOn !== this.props.isOn ||
+      prevProps.toneIsInScale !== this.props.toneIsInScale ||
       prevProps.clef !== this.props.clef
     ) {
       this.removePrevious();
       this.setupStaff();
-      if (this.props.isOn) this.drawNotes();
+      if (this.props.toneIsInScale) this.drawNotes();
     }
   }
 
@@ -144,7 +144,7 @@ MusicalStaff.propTypes = {
   showOffNote: PropTypes.bool,
   width: PropTypes.number,
   keyIndex: PropTypes.number,
-  isOn: PropTypes.bool,
+  toneIsInScale: PropTypes.bool,
   clef: PropTypes.string,
 };
 

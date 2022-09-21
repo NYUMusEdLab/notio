@@ -14,7 +14,7 @@ class Key extends Component {
       synth,
       trebleStaffOn,
       pianoOn,
-      isOn,
+      toneIsInScale,
       isMouseDown,
       isActive,
       keyIndex,
@@ -30,12 +30,12 @@ class Key extends Component {
     return (
       <div
         className={`Key ${keyColor}
-          ${isOn ? "on" : "off"}`}
+          ${toneIsInScale ? "on" : "off"}`}
         data-note={note}>
         <ColorKey
           color={color}
           keyColor={keyColor}
-          isOn={isOn}
+          toneIsInScale={toneIsInScale}
           noteName={noteName}
           theme={theme}
           trebleStaffOn={trebleStaffOn}
@@ -55,7 +55,7 @@ class Key extends Component {
             <PianoKey
               note={note}
               noteNameEnglish={noteNameEnglish}
-              isOn={isOn}
+              isOn={toneIsInScale}
               color={color}
               keyColor={keyColor}
               index={index}

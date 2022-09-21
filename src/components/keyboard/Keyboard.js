@@ -744,10 +744,10 @@ class Keyboard extends Component {
     const noteList = keyboardLayoutScale.ExtendedScaleTones.map((note, index) => {
       let toneColor;
       let noteName = [];
-      let isKeyInScale = false; //If this is false , the tone will be grayed out on the keyboard (only layout)
+      let toneIsInScale = false; //If this is false , the tone will be grayed out on the keyboard (only layout)
       let toneindex = currentScale.MidiNoteNr.indexOf(keyboardLayoutScale.MidiNoteNr[index]);
       if (toneindex !== -1) {
-        isKeyInScale = true;
+        toneIsInScale = true;
         //TODO: decide how to store custom color, should it be in the --import colors from "../data/colors";-- or some other way.
         toneColor = currentScale.Colors[toneindex];
         for (let i = 0; i < notation.length; i++) {
@@ -806,12 +806,12 @@ class Keyboard extends Component {
 
       //keyboardNote is either a note in the currentScale thus playable and namable or
       //a note not in the scale and thus grayed out, no name and not playable
-      const keyboardNote = isKeyInScale
+      const keyboardNote = toneIsInScale
         ? currentScale.ExtendedScaleTones[toneindex]
         : keyboardLayoutScale.ExtendedScaleTones[index];
 
       let namedNote = `${
-        isKeyInScale
+        toneIsInScale
           ? currentScale.ExtendedScaleToneNames.English[toneindex]
           : keyboardNote.note_english
       }${octave + keyboardNote.octaveOffset}`;
@@ -827,7 +827,7 @@ class Keyboard extends Component {
           color={toneColor} //{colors[index%colors.length]}
           offColor={keyboardNote.colorRGBA}
           keyColor={keyboardNote.pianoColor}
-          isOn={isKeyInScale}
+          toneIsInScale={toneIsInScale}
           root={baseNote}
           isMajorSeventh={true} //TODO: I believe that this should be removed!!(JAKOB)
           synth={synth}
