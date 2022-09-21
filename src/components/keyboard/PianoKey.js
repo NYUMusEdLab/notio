@@ -50,11 +50,11 @@ class PianoKey extends Component {
   };
 
   playNote = (note) => {
-    this.props.noteOn(note);
+    this.props.noteOnHandler(note);
   };
 
   releaseNote = (note) => {
-    this.props.noteOff(note);
+    this.props.noteOffHandler(note);
   };
 
   updateDimensions = () => {

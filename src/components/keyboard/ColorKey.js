@@ -86,11 +86,11 @@ class ColorKey extends Component {
   };
 
   playNote = (note) => {
-    this.props.noteOn(note);
+    this.props.noteOnHandler(note);
   };
 
   releaseNote = (note) => {
-    this.props.noteOff(note);
+    this.props.noteOffHandler(note);
   };
 
   updateDimensions = () => {
@@ -183,23 +183,12 @@ class ColorKey extends Component {
           );
         })
       : null;
-    // console.log("this.state.myWidth", this.state.myWidth);
-    // console.log("-- note", note);
 
     return (
       <div
         ref={this.keyRef}
         data-testid={"ColorKey:" + note}
-        className={`color-key ${/*this.state.clicked &&*/ /*isOn ? "active" :*/ ""} ${
-          /*isOn ? "on" : "off"*/ " "
-        } ${
-          // //TODO:Do we want this to show whether the tone is C or whether it is the Root in the scale
-          // (note.includes("C") && !note.includes("#") && !note.includes("b")) || note.includes("B#")
-          //   ? "" /*"c-mark"*/
-          //   : ""
-          ""
-        }
-        `}
+        className={`color-key`}
         style={{
           height: pianoOn ? "70%" : "100%",
           //background is set to color if tone is in scale or the gradient app background if it is not in scale

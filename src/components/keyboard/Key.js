@@ -18,8 +18,8 @@ class Key extends Component {
       isMouseDown,
       isActive,
       keyIndex,
-      noteOn,
-      noteOff,
+      noteOnHandler,
+      noteOffHandler,
       index,
       noteNameEnglish,
       root,
@@ -44,8 +44,8 @@ class Key extends Component {
           pianoOn={pianoOn}
           isMouseDown={isMouseDown}
           keyIndex={keyIndex}
-          noteOn={noteOn}
-          noteOff={noteOff}
+          noteOnHandler={noteOnHandler}
+          noteOffHandler={noteOffHandler}
           extendedKeyboard={extendedKeyboard}
           clef={clef}
         />
@@ -63,8 +63,8 @@ class Key extends Component {
               synth={synth}
               isMouseDown={isMouseDown}
               isActive={isActive}
-              noteOn={noteOn}
-              noteOff={noteOff}
+              noteOnHandler={noteOnHandler}
+              noteOffHandler={noteOffHandler}
             />
           ) : null
         }
