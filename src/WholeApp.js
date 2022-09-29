@@ -415,7 +415,7 @@ class WholeApp extends Component {
       <LoadingScreen />
     ) : (
       <>
-        <div className="topmenu">
+        <div className="topmenu" data-testid="topmenu">
           <TopMenu
             togglePiano={this.togglePiano}
             toggleExtendedKeyboard={this.toggleExtendedKeyboard}
