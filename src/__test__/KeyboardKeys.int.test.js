@@ -54,7 +54,8 @@ describe("ComputerKeyboard pressing key to", () => {
         </Routes>
       </MemoryRouter>
     );
-    await waitFor(() => screen.getAllByText("Notation"));
+    await screen.findAllByText("Notation");
+
     expect(SoundMaker).toHaveBeenCalledTimes(1);
 
     await userEvent.keyboard(keypress);
