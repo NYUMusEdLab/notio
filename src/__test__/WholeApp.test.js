@@ -1,48 +1,44 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import "@testing-library/jest-dom";
-// import Fetch from './fetch'
 import React from "react";
-import WholeApp from "WholeApp";
 import ReactDOM from "react-dom/client";
+import WholeApp from "../WholeApp";
 
-describe("WholeApp basic tasts", () => {
+describe("WholeApp basic tests", () => {
+  // let acontainer;
+
+  // beforeEach(() => {
+  //   acontainer = document.createElement("div");
+  //   document.body.appendChild(acontainer);
+  // });
+
+  // afterEach(() => {
+  //   document.body.removeChild(acontainer);
+  //   acontainer = null;
+  // });
+
   it("loads WholeApp", async () => {
-    // ARRANGE
-    const container = document.createElement("div"); //document.getElementById("root");
-    const root = ReactDOM.createRoot(container);
-    //   render(<Fetch url="/greeting" />)
-
-    root.render(<WholeApp />);
-
-    // ACT
-    //   await userEvent.click(screen.getByText("Load Greeting"));
-    //   await screen.findByRole("heading");
-
-    // ASSERT
-    //   expect(screen.getByRole("heading")).toHaveTextContent("hello there");
-    //   expect(screen.getByRole("button")).toBeDisabled();
-
-    // eslint-disable-next-line testing-library/no-debugging-utils
-    screen.debug();
+    let container = document.createElement("div");
+    document.body.appendChild(container);
+    ReactDOM.createRoot(container).render(<WholeApp />);
   });
 
-  it("renders the topmenu", async () => {
+  test("renders the topmenu", async () => {
     // ARRANGE
-    const container = document.createElement("div"); //document.getElementById("root");
-    const root = ReactDOM.createRoot(container);
-    //   render(<Fetch url="/greeting" />)
-
     // ACT
-    root.render(<WholeApp />);
-    //   await userEvent.click(screen.getByText("Load Greeting"));
-    await screen.findByTestId("topmenu");
+    render(<WholeApp />);
+    const topMenu = await screen.findByTestId(/topmenu/);
 
     // ASSERT
-    //   expect(screen.getByRole("heading")).toHaveTextContent("hello there");
-    //   expect(screen.getByRole("button")).toBeDisabled();
-
-    // eslint-disable-next-line testing-library/no-debugging-utils
-    screen.debug();
+    expect(topMenu).toBeInTheDocument();
   });
+
+  // it(" renders wholeApp via MemoryRouter", () => {
+  //   render(
+  //     <MemoryRouter>
+  //       <Routes>
+  //         <Route path="/" element={<WholeApp />}></Route>;
+  //       </Routes>
+  //     </MemoryRouter>
+  //   );
+  // });
 });

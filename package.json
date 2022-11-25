@@ -9,6 +9,7 @@
     "@tonejs/piano": "^0.2.1",
     "color": "^4.2.3",
     "firebase": "^9.9.4",
+    "gsap": "^3.11.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
@@ -26,7 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && cp netlify.toml build/netlify.toml",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|gsap)/)\" --watchAll",
+    "test": "react-scripts test --transformIgnorePatterns  --watchAll",
     "test-ci": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|@tonejs/piano|gsap)/)\" --ci",
     "eject": "react-scripts eject",
     "now-build": "react-scripts build",
