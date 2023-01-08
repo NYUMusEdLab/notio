@@ -26,6 +26,8 @@ class MusicalStaff extends Component {
     renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
     // renderer.resize(0, 0, 60, 140);
     ctx = renderer.getContext();
+    //For some reason this works dispite the error
+    // @ts-ignore
     ctx.setViewBox(0, 0, 60, 140); //size
     stave = new Stave(0, 10, 60, { fill_style: "black" });
     //Hides the barlines
@@ -106,7 +108,7 @@ class MusicalStaff extends Component {
 
   componentDidMount() {
     this.setupStaff();
-    if (this.props.isOn) this.drawNotes();
+    if (this.props.toneIsInScale) this.drawNotes();
   }
 
   componentDidUpdate(prevProps) {
@@ -114,12 +116,12 @@ class MusicalStaff extends Component {
       prevProps.note !== this.props.note ||
       prevProps.showOffNote !== this.props.showOffNotes ||
       prevProps.width !== this.props.width ||
-      prevProps.isOn !== this.props.isOn ||
+      prevProps.toneIsInScale !== this.props.toneIsInScale ||
       prevProps.clef !== this.props.clef
     ) {
       this.removePrevious();
       this.setupStaff();
-      if (this.props.isOn) this.drawNotes();
+      if (this.props.toneIsInScale) this.drawNotes();
     }
   }
 
@@ -144,7 +146,7 @@ MusicalStaff.propTypes = {
   showOffNote: PropTypes.bool,
   width: PropTypes.number,
   keyIndex: PropTypes.number,
-  isOn: PropTypes.bool,
+  toneIsInScale: PropTypes.bool,
   clef: PropTypes.string,
 };
 

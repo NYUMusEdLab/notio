@@ -71,7 +71,7 @@ const colorsD = {
     "#ff8c00",
     "#ffff00",
     "#c0c0c0",
-    "#ffffff",
+    "#dddddd",
     "#228b22",
     "#00ff7f",
     "#00ffff",
@@ -238,7 +238,7 @@ class Keyboard extends Component {
         currentActiveNotes.add(buttonPressed.dataset.note);
         this.playNote(buttonPressed.dataset.note); //this.state.synth.triggerAttack(buttonPressed.dataset.note);
       }*/
-      this.noteOn(buttonPressed.dataset.note);
+      this.noteOnHandler(buttonPressed.dataset.note);
     } else if (!extendedKeyboard) {
       if (e.code === "ArrowDown") {
         this.props.handleClickOctave(e.code);
@@ -363,7 +363,7 @@ class Keyboard extends Component {
       if (pressedKeys.has(buttonReleased)) {
         pressedKeys.delete(buttonReleased);
       }
-      this.noteOff(buttonReleased.dataset.note);
+      this.noteOffHandler(buttonReleased.dataset.note);
     } else if (!extendedKeyboard) {
       if (e.code === "KeyE") {
         const StepsAboveRoot = 2; //root==0, 2 selects the third tone in the scale
@@ -490,6 +490,7 @@ class Keyboard extends Component {
   //#endregion
 
   //#region Sound Handlers
+  //note is on the form : "A#4"
   playNote = (note) => {
     //TODO: consider implementing doubleSharp in a better way
     if (note && note.length > 3) {
@@ -506,7 +507,7 @@ class Keyboard extends Component {
     this.state.synth.stopSound(note);
   };
 
-  noteOn = (note) => {
+  noteOnHandler = (note) => {
     const { activeNotes } = this.state;
 
     if (!activeNotes.has(note)) {
@@ -519,7 +520,7 @@ class Keyboard extends Component {
     }
   };
 
-  noteOff = (note) => {
+  noteOffHandler = (note) => {
     const { activeNotes } = this.state;
 
     if (activeNotes.has(note)) {
@@ -535,6 +536,7 @@ class Keyboard extends Component {
   //#endregion
 
   //#region  Highlighting Handlers
+  //Makes shadow on the entire key, it does not handle the piano-key color change.
   highlightNote = (note) => {
     // Add press effect animation
     const buttonTarget = document.querySelector(`[data-note="${note}"]`);
@@ -742,10 +744,10 @@ class Keyboard extends Component {
     const noteList = keyboardLayoutScale.ExtendedScaleTones.map((note, index) => {
       let toneColor;
       let noteName = [];
-      let isKeyInScale = false; //If this is false , the tone will be grayed out on the keyboard (only layout)
+      let toneIsInScale = false; //If this is false , the tone will be grayed out on the keyboard (only layout)
       let toneindex = currentScale.MidiNoteNr.indexOf(keyboardLayoutScale.MidiNoteNr[index]);
       if (toneindex !== -1) {
-        isKeyInScale = true;
+        toneIsInScale = true;
         //TODO: decide how to store custom color, should it be in the --import colors from "../data/colors";-- or some other way.
         toneColor = currentScale.Colors[toneindex];
         for (let i = 0; i < notation.length; i++) {
@@ -804,26 +806,28 @@ class Keyboard extends Component {
 
       //keyboardNote is either a note in the currentScale thus playable and namable or
       //a note not in the scale and thus grayed out, no name and not playable
-      const keyboardNote = isKeyInScale
+      const keyboardNote = toneIsInScale
         ? currentScale.ExtendedScaleTones[toneindex]
         : keyboardLayoutScale.ExtendedScaleTones[index];
+
+      let namedNote = `${
+        toneIsInScale
+          ? currentScale.ExtendedScaleToneNames.English[toneindex]
+          : keyboardNote.note_english
+      }${octave + keyboardNote.octaveOffset}`;
 
       return (
         <Key
           key={index} // Index in loop of notes
           index={index} // index on Keyboard
-          note={`${
-            isKeyInScale
-              ? currentScale.ExtendedScaleToneNames.English[toneindex]
-              : keyboardNote.note_english
-          }${octave + keyboardNote.octaveOffset}`} //sounding note //could use the function in MusicScale: NoteNameWithOctaveNumber = (currentOctave,distToCurrentOctave,distFromRoot)
+          note={namedNote} //sounding note //could use the function in MusicScale: NoteNameWithOctaveNumber = (currentOctave,distToCurrentOctave,distFromRoot)
           noteNameEnglish={keyboardNote.note_english}
           notation={notation}
           noteName={noteName}
           color={toneColor} //{colors[index%colors.length]}
           offColor={keyboardNote.colorRGBA}
           keyColor={keyboardNote.pianoColor}
-          isOn={isKeyInScale}
+          toneIsInScale={toneIsInScale}
           root={baseNote}
           isMajorSeventh={true} //TODO: I believe that this should be removed!!(JAKOB)
           synth={synth}
@@ -833,13 +837,9 @@ class Keyboard extends Component {
           clef={clef}
           trebleStaffOn={trebleStaffOn}
           showOffNotes={showOffNotes}
-          isActive={this.state.activeNotes.has(
-            `${keyboardNote.note_english}${
-              octave + keyboardNote.octaveOffset /*+ Math.floor(index/12)*/
-            }`
-          )}
-          noteOn={this.noteOn}
-          noteOff={this.noteOff}
+          isActive={this.state.activeNotes.has(namedNote)}
+          noteOnHandler={this.noteOnHandler}
+          noteOffHandler={this.noteOffHandler}
           extendedKeyboard={extendedKeyboard}
         />
       );
