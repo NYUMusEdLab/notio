@@ -1,4 +1,4 @@
-//TODO:!!IN USE, -do a BEM 7-1 setup, in here the basics and variables are defined 
+//TODO:!!IN USE, -do a BEM 7-1 setup, in here the basics and variables are defined
 /*
 COLORS
 
@@ -9,50 +9,48 @@ Grey
 
 */
 
-:root{
-    --color-promary: #0b0b0b;
-    --color-promary-light: #393637;
+:root {
+  --color-promary: #0b0b0b;
+  --color-promary-light: #393637;
 
-    --piano-white: #cac9b4;
-    --piano-white--hovered: #8f8e7f;
-    --piano-white--pressed: #f7f6ea;
+  --piano-white: #cac9b4;
+  --piano-white--hovered: #8f8e7f;
+  --piano-white--pressed: #f7f6ea;
 
-    --piano-black: #272726;
-    --piano-black--hovered: #000000;
-    --piano-black--pressed: #30302d;
-
+  --piano-black: #272726;
+  --piano-black--hovered: #000000;
+  --piano-black--pressed: #30302d;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    /* ? */
-  }
-  *,
-  *::before,
-  *::after{
-    box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* ? */
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+html {
+  box-sizing: border-box;
+  // font-size: 62.5%; //1rem = 10px
+  font-size: 16px;
+}
 
-  }
-  html{
-    box-sizing: border-box;
-    // font-size: 62.5%; //1rem = 10px
-    font-size: 16px;
-  }
-  
-  body {
-    width: 100vw;
-    height: 100vh;
-    background-color: #f1f1da;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Quicksand", sans-serif;
-    overflow: hidden;
-  }
-  
-  h1,
-  p {
-    font-family: Lato;
-  }
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f1f1da;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Quicksand", sans-serif;
+  overflow: hidden;
+}
+
+h1,
+p {
+  font-family: Lato;
+}
