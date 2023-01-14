@@ -7,6 +7,7 @@ import SoundMaker from "../../Model/SoundMaker";
 // import { SoundEngineContext } from "../context/SoundEngineContext";
 import MusicScale from "../../Model/MusicScale";
 
+// Using 'code' property for compatibility with AZERTY, QWERTY... keyboards
 const keycodes = ["KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote"];
 
 const keycodesExtended = [
