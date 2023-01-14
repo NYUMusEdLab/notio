@@ -2,100 +2,11 @@
 
 import React, { Component } from "react";
 import Key from "./Key";
-// import scales from "../data/scalesObj";
-//import colors from "../data/colors";
+import colors from "../../data/colors";
 import SoundMaker from "../../Model/SoundMaker";
 // import { SoundEngineContext } from "../context/SoundEngineContext";
 import MusicScale from "../../Model/MusicScale";
-//import colors from "../data/colors";
 
-const colorsD = {
-  colorBlind1: [
-    "#882255",
-    "#AA4499",
-    "#CC6677",
-    "#DDCC77",
-    "#88CCEE",
-    "#44AA99",
-    "#117733",
-    "#4035FF",
-    "#A8B8EF",
-    "#332288",
-    "#9BB34D",
-    "#D3F3B8",
-  ],
-  colorBlind2: [
-    "#920000",
-    "#924900",
-    "#db6d00",
-    "#24ff24",
-    "#ffff6d",
-    "#ff6db6",
-    "#ffb6db",
-    "#490092",
-    "#006ddb",
-    "#b66dff",
-    "#6db6ff",
-    "#b6dbff",
-  ], //"#009292"
-  pastel: [
-    "#F8BBD0",
-    "#E1BEE7",
-    "#D1C4E9",
-    "#C5CAE9",
-    "#BBDEFB",
-    "#B2EBF2",
-    "#B2DFDB",
-    "#C8E6C9",
-    "#DCEDC8",
-    "#FFF9C4",
-    "#FFECB3",
-    "#FFE0B2",
-  ],
-  greenis: [
-    "#FFAAAA",
-    "#CCFFFF",
-    "#FFFFCC",
-    "#99CCCC",
-    "#66CC99",
-    "#9999CC",
-    "#CC6699",
-    "#FF9900",
-    "#CC99CC",
-    "#FFCC99",
-    "#CCCCFF",
-    "#CCCCCC",
-  ],
-  bright: [
-    "#ff0000",
-    "#ff8c00",
-    "#ffff00",
-    "#c0c0c0",
-    "#ffffff",
-    "#228b22",
-    "#00ff7f",
-    "#00ffff",
-    "#0000ff",
-    "#87cefa",
-    "#8a2be2",
-    "#ee82ee",
-  ],
-  other: [
-    "#cd0223",
-    "#d45331",
-    "#e39255",
-    "#ecbb10",
-    "#e3d98a",
-    "#47e643",
-    "#28cbb9",
-    "#049496",
-    "#2f7ecc",
-    "#674ed8",
-    "#a059ed",
-    "#ba04ff",
-  ],
-};
-// Using 'code' property for compatibility with AZERTY, QWERTY... keyboards
 const keycodes = ["KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote"];
 
 const keycodesExtended = [
@@ -117,6 +28,18 @@ const keycodesExtended = [
 const keycodesLeftHand = ["KeyZ", "KeyX", "KeyC", "KeyA", "KeyS", "KeyD", "KeyQ", "KeyW", "KeyE"];
 const stepsAboveRootLeftHand = [-6, -5, -4, -3, -2, -1, 0, 1, 2];
 
+const keycodesExtendedLeftHand = [
+  "KeyZ",
+  "KeyX",
+  "KeyC",
+  "KeyV",
+  "KeyB",
+  "KeyN",
+  "KeyM",
+  "KeyQ",
+  "KeyW",
+];
+
 let targetArr, activeElementsforKeyboard, activeScale; //, scaleReciepe, keyboardLayoutScaleReciepe;
 let threeLowerOctave = new Set();
 
@@ -134,14 +57,11 @@ class Keyboard extends Component {
   //#region Constructor
   constructor(props) {
     super(props);
-    const scaleStart = props.extendedKeyboard ? 7 : 0;
-    const ambitus = props.extendedKeyboard ? 24 : 13;
-    activeScale = new MusicScale(props.scaleObject, props.baseNote, scaleStart, ambitus);
+
     this.state = {
       activeNotes: new Set(),
       mouse_is_down: false,
       scales: this.props.scaleList,
-      // activeScale: activeScale,
       octave: this.props.octave,
       colorname: "bright",
       instrumentSound: this.props.instrumentSound,
@@ -182,6 +102,7 @@ class Keyboard extends Component {
 
   //#region Keypress Handlers
   handleKeyDown = (e) => {
+    console.log(e.code);
     // if (this.state.instrumentSound !== this.props.instrumentSound) {
     //   this.handleChangeSound(this.props.instrumentSound);
     // }
@@ -254,14 +175,15 @@ class Keyboard extends Component {
       }
 
       // this.noteOnHandler(buttonPressed);
-    } else if (!extendedKeyboard) {
-      if (e.code === "ArrowDown") {
-        this.props.handleClickOctave(e.code);
-      }
-      if (e.code === "ArrowUp") {
-        this.props.handleClickOctave(e.code);
-      }
     }
+    //else if (!extendedKeyboard) {
+    if (e.code === "ArrowDown") {
+      this.props.handleClickOctave(e.code);
+    }
+    if (e.code === "ArrowUp") {
+      this.props.handleClickOctave(e.code);
+    }
+    //}
   };
 
   handleKeyUp = (e) => {
@@ -485,7 +407,7 @@ class Keyboard extends Component {
       baseNote,
       scaleStart,
       ambitus,
-      colorsD[this.state.colorname]
+      colors[this.state.colorname]
     );
 
     return keyboardLayoutScale;
@@ -502,7 +424,7 @@ class Keyboard extends Component {
       baseNote,
       scaleStart,
       ambitus,
-      colorsD[this.state.colorname]
+      colors[this.state.colorname]
     );
 
     return currentScale;
