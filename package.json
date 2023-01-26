@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=false react-scripts build && cp netlify.toml build/netlify.toml",
+    "build": "react-scripts build && cp netlify.toml build/netlify.toml",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|gsap)/)\" --watchAll",
     "test-ci": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(vexflow|@tonejs/piano|gsap)/)\" --ci",
     "eject": "react-scripts eject",
