@@ -29,17 +29,17 @@ const keycodesExtended = [
 const keycodesLeftHand = ["KeyZ", "KeyX", "KeyC", "KeyA", "KeyS", "KeyD", "KeyQ", "KeyW", "KeyE"];
 const stepsAboveRootLeftHand = [-6, -5, -4, -3, -2, -1, 0, 1, 2];
 
-const keycodesExtendedLeftHand = [
-  "KeyZ",
-  "KeyX",
-  "KeyC",
-  "KeyV",
-  "KeyB",
-  "KeyN",
-  "KeyM",
-  "KeyQ",
-  "KeyW",
-];
+// const keycodesExtendedLeftHand = [
+//   "KeyZ",
+//   "KeyX",
+//   "KeyC",
+//   "KeyV",
+//   "KeyB",
+//   "KeyN",
+//   "KeyM",
+//   "KeyQ",
+//   "KeyW",
+// ];
 
 let targetArr, activeElementsforKeyboard, activeScale; //, scaleReciepe, keyboardLayoutScaleReciepe;
 let threeLowerOctave = new Set();
