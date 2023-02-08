@@ -2,99 +2,11 @@
 
 import React, { Component } from "react";
 import Key from "./Key";
-// import scales from "../data/scalesObj";
-//import colors from "../data/colors";
-import SoundMaker from "./SoundMaker";
+import colors from "../../data/colors";
+import SoundMaker from "../../Model/SoundMaker";
 // import { SoundEngineContext } from "../context/SoundEngineContext";
-import MusicScale from "../Model/MusicScale";
-//import colors from "../data/colors";
+import MusicScale from "../../Model/MusicScale";
 
-const colorsD = {
-  colorBlind1: [
-    "#882255",
-    "#AA4499",
-    "#CC6677",
-    "#DDCC77",
-    "#88CCEE",
-    "#44AA99",
-    "#117733",
-    "#4035FF",
-    "#A8B8EF",
-    "#332288",
-    "#9BB34D",
-    "#D3F3B8",
-  ],
-  colorBlind2: [
-    "#920000",
-    "#924900",
-    "#db6d00",
-    "#24ff24",
-    "#ffff6d",
-    "#ff6db6",
-    "#ffb6db",
-    "#490092",
-    "#006ddb",
-    "#b66dff",
-    "#6db6ff",
-    "#b6dbff",
-  ], //"#009292"
-  pastel: [
-    "#F8BBD0",
-    "#E1BEE7",
-    "#D1C4E9",
-    "#C5CAE9",
-    "#BBDEFB",
-    "#B2EBF2",
-    "#B2DFDB",
-    "#C8E6C9",
-    "#DCEDC8",
-    "#FFF9C4",
-    "#FFECB3",
-    "#FFE0B2",
-  ],
-  greenis: [
-    "#FFAAAA",
-    "#CCFFFF",
-    "#FFFFCC",
-    "#99CCCC",
-    "#66CC99",
-    "#9999CC",
-    "#CC6699",
-    "#FF9900",
-    "#CC99CC",
-    "#FFCC99",
-    "#CCCCFF",
-    "#CCCCCC",
-  ],
-  bright: [
-    "#ff0000",
-    "#ff8c00",
-    "#ffff00",
-    "#c0c0c0",
-    "#ffffff",
-    "#228b22",
-    "#00ff7f",
-    "#00ffff",
-    "#0000ff",
-    "#87cefa",
-    "#8a2be2",
-    "#ee82ee",
-  ],
-  other: [
-    "#cd0223",
-    "#d45331",
-    "#e39255",
-    "#ecbb10",
-    "#e3d98a",
-    "#47e643",
-    "#28cbb9",
-    "#049496",
-    "#2f7ecc",
-    "#674ed8",
-    "#a059ed",
-    "#ba04ff",
-  ],
-};
 // Using 'code' property for compatibility with AZERTY, QWERTY... keyboards
 const keycodes = ["KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote"];
 
@@ -114,10 +26,26 @@ const keycodesExtended = [
   "Equal",
 ];
 
-let targetArr, activeElementsforKeyboard; //, scaleReciepe, keyboardLayoutScaleReciepe;
+const keycodesLeftHand = ["KeyZ", "KeyX", "KeyC", "KeyA", "KeyS", "KeyD", "KeyQ", "KeyW", "KeyE"];
+const stepsAboveRootLeftHand = [-6, -5, -4, -3, -2, -1, 0, 1, 2];
+
+// const keycodesExtendedLeftHand = [
+//   "KeyZ",
+//   "KeyX",
+//   "KeyC",
+//   "KeyV",
+//   "KeyB",
+//   "KeyN",
+//   "KeyM",
+//   "KeyQ",
+//   "KeyW",
+// ];
+
+let targetArr, activeElementsforKeyboard, activeScale; //, scaleReciepe, keyboardLayoutScaleReciepe;
 let threeLowerOctave = new Set();
 
 const pressedKeys = new Set();
+const pressedKeysLeftHand = new Set();
 
 /*There are two scales:
  * keyboardlayoutScale- is the scale that represents all the keys on the piano.
@@ -130,14 +58,11 @@ class Keyboard extends Component {
   //#region Constructor
   constructor(props) {
     super(props);
-    const scaleStart = props.extendedKeyboard ? 7 : 0;
-    const ambitus = props.extendedKeyboard ? 24 : 13;
-    const activeScale = new MusicScale(props.scaleObject, props.baseNote, scaleStart, ambitus);
+
     this.state = {
       activeNotes: new Set(),
       mouse_is_down: false,
       scales: this.props.scaleList,
-      activeScale: activeScale,
       octave: this.props.octave,
       colorname: "bright",
       instrumentSound: this.props.instrumentSound,
@@ -148,6 +73,13 @@ class Keyboard extends Component {
       }),
     };
   }
+
+  scaleStart = () => {
+    return this.props.extendedKeyboard ? 7 : 0;
+  };
+  ambitus = () => {
+    return this.props.extendedKeyboard ? 24 : 13;
+  };
 
   //   synth = new SoundMaker({
   //     instrumentSound: this.props.instrumentSound,
@@ -171,11 +103,12 @@ class Keyboard extends Component {
 
   //#region Keypress Handlers
   handleKeyDown = (e) => {
+    console.log(e.code);
     // if (this.state.instrumentSound !== this.props.instrumentSound) {
     //   this.handleChangeSound(this.props.instrumentSound);
     // }
-    console.log(this.state.instrumentSound);
-    console.log(this.props.instrumentSound);
+    // console.log(this.state.instrumentSound);
+    // console.log(this.props.instrumentSound);
     /* this helps us deal with this problem in Chrome:
      *
      * The AudioContext was not allowed to start. It must be resumed (or created)
@@ -185,7 +118,7 @@ class Keyboard extends Component {
     //e.preventDefault();
 
     const { extendedKeyboard, octave, octaveDist } = this.props;
-    const { activeScale } = this.state;
+    //const { activeScale } = this.state;
 
     if (this.state.synth.getState() !== "running") {
       this.state.synth.resumeSound();
@@ -200,9 +133,7 @@ class Keyboard extends Component {
     //     return false;
     //   }
     // }
-    let buttonPressed;
-    const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
-    const mapKeyDown = activeKeyCodes.indexOf(e.code);
+
     if (e.code === "Digit1") {
       this.setState({ colorname: "standard" });
     }
@@ -222,130 +153,45 @@ class Keyboard extends Component {
       this.setState({ colorname: "bright" });
     }
 
+    const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
+    let mapKeyDown = activeKeyCodes.indexOf(e.code);
     if (activeKeyCodes.includes(e.code) && mapKeyDown + 1 <= activeElementsforKeyboard.length) {
-      buttonPressed = activeElementsforKeyboard[mapKeyDown];
+      const buttonPressed = activeElementsforKeyboard[mapKeyDown];
 
       pressedKeys.add(buttonPressed);
-      /*this.highlightNote(buttonPressed.dataset.note) //.querySelector('.on'));
-      if (!currentActiveNotes.has(buttonPressed.dataset.note)) {
-        currentActiveNotes.add(buttonPressed.dataset.note);
-        this.playNote(buttonPressed.dataset.note); //this.state.synth.triggerAttack(buttonPressed.dataset.note);
-      }*/
-      this.noteOn(buttonPressed.dataset.note);
-    } else if (!extendedKeyboard) {
-      if (e.code === "ArrowDown") {
-        this.props.handleClickOctave(e.code);
+
+      this.noteOnHandler(buttonPressed.dataset.note);
+    } else if (keycodesLeftHand.includes(e.code)) {
+      const mapKeyDownLeftHand = keycodesLeftHand.indexOf(e.code);
+      const StepsAboveRoot = stepsAboveRootLeftHand[mapKeyDownLeftHand]; //root==0, 2 selects the third tone in the scale
+      const distToCurrentOctave = 0;
+      const buttonPressed = activeScale.NoteNameWithOctaveNumber(
+        octave + octaveDist,
+        distToCurrentOctave,
+        StepsAboveRoot
+      );
+      if (!pressedKeysLeftHand.has(buttonPressed)) {
+        pressedKeysLeftHand.add(buttonPressed);
+        this.playNote(buttonPressed);
       }
-      if (e.code === "ArrowUp") {
-        this.props.handleClickOctave(e.code);
-      }
-      if (e.code === "KeyE") {
-        const StepsAboveRoot = 2; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.playNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyW") {
-        const StepsAboveRoot = 1; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.playNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyQ") {
-        const StepsAboveRoot = 0; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.playNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyD") {
-        const StepsAboveRoot = -1; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.playNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyS") {
-        const StepsAboveRoot = -2; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.playNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyA") {
-        const StepsAboveRoot = -3; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.playNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyC") {
-        const StepsAboveRoot = -4; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.playNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyX") {
-        const StepsAboveRoot = -5; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.playNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyZ") {
-        const StepsAboveRoot = -6; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.playNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
+
+      // this.noteOnHandler(buttonPressed);
     }
+    //else if (!extendedKeyboard) {
+    if (e.code === "ArrowDown") {
+      this.props.handleClickOctave(e.code);
+    }
+    if (e.code === "ArrowUp") {
+      this.props.handleClickOctave(e.code);
+    }
+    //}
   };
 
   handleKeyUp = (e) => {
     //e.preventDefault();
 
     const { extendedKeyboard, octave, octaveDist } = this.props;
-    const { activeScale } = this.state;
+    //const { activeScale } = this.state;
 
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
     const mapKeyUp = activeKeyCodes.indexOf(e.code);
@@ -356,107 +202,24 @@ class Keyboard extends Component {
       if (pressedKeys.has(buttonReleased)) {
         pressedKeys.delete(buttonReleased);
       }
-      this.noteOff(buttonReleased.dataset.note);
-    } else if (!extendedKeyboard) {
-      if (e.code === "KeyE") {
-        const StepsAboveRoot = 2; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.releaseNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
+
+      this.noteOffHandler(buttonReleased.dataset.note);
+    }
+    //TODO:Check what happens on z,x,c,a,s,d, they seem to disapear 2'nd time they are pressed
+    else if (keycodesLeftHand.includes(e.code)) {
+      const mapKeyUpLeftHand = keycodesLeftHand.indexOf(e.code);
+      const StepsAboveRoot = stepsAboveRootLeftHand[mapKeyUpLeftHand]; //root==0, 2 selects the third tone in the scale
+      const distToCurrentOctave = 0;
+      const buttonReleased = activeScale.NoteNameWithOctaveNumber(
+        octave + octaveDist,
+        distToCurrentOctave,
+        StepsAboveRoot
+      );
+      if (pressedKeysLeftHand.has(buttonReleased)) {
+        pressedKeysLeftHand.delete(buttonReleased);
       }
-      if (e.code === "KeyW") {
-        const StepsAboveRoot = 1; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.releaseNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyQ") {
-        const StepsAboveRoot = 0; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.releaseNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyD") {
-        const StepsAboveRoot = -1; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.releaseNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyS") {
-        const StepsAboveRoot = -2; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.releaseNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyA") {
-        const StepsAboveRoot = -3; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.releaseNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyC") {
-        const StepsAboveRoot = -4; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.releaseNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyX") {
-        const StepsAboveRoot = -5; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.releaseNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
-      if (e.code === "KeyZ") {
-        const StepsAboveRoot = -6; //root==0, 2 selects the third tone in the scale
-        const distToCurrentOctave = 0;
-        this.releaseNote(
-          activeScale.NoteNameWithOctaveNumber(
-            octave + octaveDist,
-            distToCurrentOctave,
-            StepsAboveRoot
-          )
-        );
-      }
+      this.releaseNote(buttonReleased);
+      //this.noteOffHandler(buttonReleased);
     }
   };
 
@@ -483,6 +246,7 @@ class Keyboard extends Component {
   //#endregion
 
   //#region Sound Handlers
+  //note is on the form : "A#4"
   playNote = (note) => {
     //TODO: consider implementing doubleSharp in a better way
     if (note && note.length > 3) {
@@ -499,7 +263,7 @@ class Keyboard extends Component {
     this.state.synth.stopSound(note);
   };
 
-  noteOn = (note) => {
+  noteOnHandler = (note) => {
     const { activeNotes } = this.state;
 
     if (!activeNotes.has(note)) {
@@ -512,7 +276,7 @@ class Keyboard extends Component {
     }
   };
 
-  noteOff = (note) => {
+  noteOffHandler = (note) => {
     const { activeNotes } = this.state;
 
     if (activeNotes.has(note)) {
@@ -528,6 +292,7 @@ class Keyboard extends Component {
   //#endregion
 
   //#region  Highlighting Handlers
+  //Makes shadow on the entire key, it does not handle the piano-key color change.
   highlightNote = (note) => {
     // Add press effect animation
     const buttonTarget = document.querySelector(`[data-note="${note}"]`);
@@ -555,6 +320,10 @@ class Keyboard extends Component {
     keyboard.addEventListener("mousedown", this.mouseDown, false);
     keyboard.addEventListener("mouseup", this.mouseUp, false);
 
+    const scaleStart = this.props.extendedKeyboard ? 7 : 0;
+    const ambitus = this.props.extendedKeyboard ? 24 : 13;
+    activeScale = new MusicScale(this.props.scaleObject, this.props.baseNote, scaleStart, ambitus);
+
     targetArr = Array.from(document.querySelectorAll(".Key"));
 
     //only count the elements that are in the scale (className= .note .on)
@@ -577,6 +346,15 @@ class Keyboard extends Component {
       baseNote !== prevProps.baseNote ||
       extendedKeyboard !== prevProps.extendedKeyboard
     ) {
+      const scaleStart = this.props.extendedKeyboard ? 7 : 0;
+      const ambitus = this.props.extendedKeyboard ? 24 : 13;
+      activeScale = new MusicScale(
+        this.props.scaleObject,
+        this.props.baseNote,
+        scaleStart,
+        ambitus
+      );
+
       targetArr = Array.from(document.querySelectorAll(".Key"));
       activeElementsforKeyboard = targetArr.filter((key) => {
         for (let i = 0; i < key.children.length; i++) {
@@ -619,34 +397,38 @@ class Keyboard extends Component {
 // Some extra development may be needed if you want to allow different BaseNotes on the selected scale and the instrument.
 // e.g what tones from D Ionian can be played on a F major pentatonic flute.
 */
-  updateScales() {
-    const { scale: scaleName, baseNote, extendedKeyboard } = this.props;
-    const scaleStart = extendedKeyboard ? 7 : 0; //Decides on what chromatic step  the extended scale start on 7 == starts on the fifth, 2 == starts on the major second. TODO: this should be set elsewhere not as a magic number in a function!!
-    const ambitus = extendedKeyboard ? 24 : 13; //Decides How many halftones should be shown on the keyboard, 13 == shows an octave from Root to Root                    TODO: this should be set elsewhere not as a magic number in a function!!
-    const keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe("Chromatic"); // Returns a scaleObj
+
+  keyboardLayoutScale(scaleName) {
+    const { baseNote } = this.props;
+    const scaleStart = this.scaleStart(); //extendedKeyboard ? 7 : 0; //Decides on what chromatic step  the extended scale start on 7 == starts on the fifth, 2 == starts on the major second. TODO: this should be set elsewhere not as a magic number in a function!!
+    const ambitus = this.ambitus(); //extendedKeyboard ? 24 : 13; //Decides How many halftones should be shown on the keyboard, 13 == shows an octave from Root to Root                    TODO: this should be set elsewhere not as a magic number in a function!!
+    const keyboardLayoutScaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName); // Returns a scaleObj
     const keyboardLayoutScale = new MusicScale(
       keyboardLayoutScaleReciepe,
       baseNote,
       scaleStart,
       ambitus,
-      colorsD[this.state.colorname]
+      colors[this.state.colorname]
     );
+
+    return keyboardLayoutScale;
+  }
+
+  mapCurrentScaleToKeyboardLayout() {
+    const { scale: scaleName, baseNote } = this.props;
+    const scaleStart = this.scaleStart(); //extendedKeyboard ? 7 : 0; //Decides on what chromatic step  the extended scale start on 7 == starts on the fifth, 2 == starts on the major second. TODO: this should be set elsewhere not as a magic number in a function!!
+    const ambitus = this.ambitus(); //extendedKeyboard ? 24 : 13; //Decides How many halftones should be shown on the keyboard, 13 == shows an octave from Root to Root                    TODO: this should be set elsewhere not as a magic number in a function!!
+
     const scaleReciepe = this.convert_ScaleNameTo_ScaleReciepe(scaleName);
     const currentScale = new MusicScale(
       scaleReciepe,
       baseNote,
       scaleStart,
       ambitus,
-      colorsD[this.state.colorname]
+      colors[this.state.colorname]
     );
 
-    if (
-      this.state.activeScale.Name !== currentScale.Name ||
-      this.state.activeScale.RootNoteName !== currentScale.RootNoteName
-    ) {
-      this.setState({ activeScale: currentScale });
-    }
-    return { keyboardLayoutScale, currentScale };
+    return currentScale;
   }
 
   getRootInfo(rootNote, baseNote) {
@@ -693,17 +475,19 @@ class Keyboard extends Component {
 
     const { synth } = this.state;
     const { mouse_is_down } = this.state;
-    const { keyboardLayoutScale, currentScale } = this.updateScales();
+    //TODO: use state to get the current scale.
+    const keyboardLayoutScale = this.keyboardLayoutScale("Chromatic");
+    const currentScale = this.mapCurrentScaleToKeyboardLayout();
 
     // Loop on note list
     //creates all keys on the keyboard, their naming, color, and activeness (can they be played or not)
     const noteList = keyboardLayoutScale.ExtendedScaleTones.map((note, index) => {
       let toneColor;
       let noteName = [];
-      let isKeyInScale = false; //If this is false , the tone will be grayed out on the keyboard (only layout)
+      let toneIsInScale = false; //If this is false , the tone will be grayed out on the keyboard (only layout)
       let toneindex = currentScale.MidiNoteNr.indexOf(keyboardLayoutScale.MidiNoteNr[index]);
       if (toneindex !== -1) {
-        isKeyInScale = true;
+        toneIsInScale = true;
         //TODO: decide how to store custom color, should it be in the --import colors from "../data/colors";-- or some other way.
         toneColor = currentScale.Colors[toneindex];
         for (let i = 0; i < notation.length; i++) {
@@ -762,26 +546,28 @@ class Keyboard extends Component {
 
       //keyboardNote is either a note in the currentScale thus playable and namable or
       //a note not in the scale and thus grayed out, no name and not playable
-      const keyboardNote = isKeyInScale
+      const keyboardNote = toneIsInScale
         ? currentScale.ExtendedScaleTones[toneindex]
         : keyboardLayoutScale.ExtendedScaleTones[index];
+
+      let namedNote = `${
+        toneIsInScale
+          ? currentScale.ExtendedScaleToneNames.English[toneindex]
+          : keyboardNote.note_english
+      }${octave + keyboardNote.octaveOffset}`;
 
       return (
         <Key
           key={index} // Index in loop of notes
           index={index} // index on Keyboard
-          note={`${
-            isKeyInScale
-              ? currentScale.ExtendedScaleToneNames.English[toneindex]
-              : keyboardNote.note_english
-          }${octave + keyboardNote.octaveOffset}`} //sounding note //could use the function in MusicScale: NoteNameWithOctaveNumber = (currentOctave,distToCurrentOctave,distFromRoot)
+          note={namedNote} //sounding note //could use the function in MusicScale: NoteNameWithOctaveNumber = (currentOctave,distToCurrentOctave,distFromRoot)
           noteNameEnglish={keyboardNote.note_english}
           notation={notation}
           noteName={noteName}
           color={toneColor} //{colors[index%colors.length]}
           offColor={keyboardNote.colorRGBA}
           keyColor={keyboardNote.pianoColor}
-          isOn={isKeyInScale}
+          toneIsInScale={toneIsInScale}
           root={baseNote}
           isMajorSeventh={true} //TODO: I believe that this should be removed!!(JAKOB)
           synth={synth}
@@ -791,13 +577,9 @@ class Keyboard extends Component {
           clef={clef}
           trebleStaffOn={trebleStaffOn}
           showOffNotes={showOffNotes}
-          isActive={this.state.activeNotes.has(
-            `${keyboardNote.note_english}${
-              octave + keyboardNote.octaveOffset /*+ Math.floor(index/12)*/
-            }`
-          )}
-          noteOn={this.noteOn}
-          noteOff={this.noteOff}
+          isActive={this.state.activeNotes.has(namedNote)}
+          noteOnHandler={this.noteOnHandler}
+          noteOffHandler={this.noteOffHandler}
           extendedKeyboard={extendedKeyboard}
         />
       );
@@ -840,7 +622,11 @@ class Keyboard extends Component {
       // );
     });
 
-    return <div className="Keyboard">{noteList}</div>;
+    return (
+      <div className="Keyboard" data-testid="Keyboard">
+        {noteList}
+      </div>
+    );
   }
   //#endregion
 }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Star from "../assets/img/Star";
-import MusicalStaff from "./MusicalStaff";
+import Star from "../../assets/img/Star";
+import MusicalStaff from "../musicScore/MusicalStaff";
 import Color from "color";
 
 class ColorKey extends Component {
@@ -18,7 +18,7 @@ class ColorKey extends Component {
     if (e.cancelable) {
       e.preventDefault();
     }
-    if (this.props.isOn) {
+    if (this.props.toneIsInScale) {
       this.playNote(this.props.note);
     }
   };
@@ -26,14 +26,14 @@ class ColorKey extends Component {
     if (e.cancelable) {
       e.preventDefault(); // prevent default calling of mouse event after touch event
     }
-    if (this.props.isOn) {
+    if (this.props.toneIsInScale) {
       this.releaseNote(this.props.note);
     }
   };
 
   //TODO: check if this is used or can be used to fix the unresponsive keys color when pressed
   onMouseOver = (e) => {
-    if (this.props.isOn) {
+    if (this.props.toneIsInScale) {
       // this.setState((state) => {
       //   return { _color: this._colorActive, }
       // })
@@ -42,7 +42,7 @@ class ColorKey extends Component {
 
   //TODO: check if this is used or can be used to fix the unresponsive keys color when pressed
   onMouseOut = (e) => {
-    if (this.props.isOn) {
+    if (this.props.toneIsInScale) {
       // this.setState((state) => {
       //   return { _color: this._colorInit, }
       // })
@@ -50,22 +50,17 @@ class ColorKey extends Component {
   };
 
   clickedMouse = (e) => {
-    if (this.props.isOn) {
+    if (this.props.toneIsInScale) {
       this.setState((state) => {
         return {
-          _color:
-            "linear-gradient(180deg, rgba(255,255,255,0) 20%, " +
-            this._colorActive +
-            " 100%, " +
-            this._colorActive +
-            " 100%)",
+          _color: "linear-gradient(180deg, rgba(255,255,255,0) 20%,  100% 100%)",
         };
       });
       this.playNote(this.props.note);
     }
   };
   unClickedMouse = (e) => {
-    if (this.props.isOn) {
+    if (this.props.toneIsInScale) {
       this.setState((state) => {
         return { _color: this._colorInit };
       });
@@ -74,23 +69,23 @@ class ColorKey extends Component {
   };
 
   mouseEnter = (e) => {
-    if (this.props.isOn && this.props.isMouseDown === true) {
+    if (this.props.toneIsInScale && this.props.isMouseDown === true) {
       this.playNote(this.props.note);
     }
   };
 
   mouseLeave = (e) => {
-    if (this.props.isOn && this.props.isMouseDown === true) {
+    if (this.props.toneIsInScale && this.props.isMouseDown === true) {
       this.releaseNote(this.props.note);
     }
   };
 
   playNote = (note) => {
-    this.props.noteOn(note);
+    this.props.noteOnHandler(note);
   };
 
   releaseNote = (note) => {
-    this.props.noteOff(note);
+    this.props.noteOffHandler(note);
   };
 
   updateDimensions = () => {
@@ -141,7 +136,7 @@ class ColorKey extends Component {
   render() {
     const {
       color,
-      isOn,
+      toneIsInScale,
       pianoOn,
       noteName,
       theme,
@@ -183,24 +178,17 @@ class ColorKey extends Component {
           );
         })
       : null;
-    // console.log("this.state.myWidth", this.state.myWidth);
-    // console.log("-- note", note);
 
     return (
       <div
         ref={this.keyRef}
         data-testid={"ColorKey:" + note}
-        className={`color-key ${this.state.clicked && isOn ? "active" : ""} ${
-          isOn ? "on" : "off"
-        } ${
-          (note.includes("C") && !note.includes("#") && !note.includes("b")) || note.includes("B#")
-            ? "" /*"c-mark"*/
-            : ""
-        }
-        `}
+        className={`color-key ${toneIsInScale ? "on" : "off"}`}
         style={{
           height: pianoOn ? "70%" : "100%",
-          background: isOn
+          //background is set to color if tone is in scale or the gradient app background if it is not in scale
+          // @ts-ignore
+          background: toneIsInScale
             ? this.state._color
             : "linear-gradient(356deg, rgba(249,247,223,1) 0%, rgba(235,227,245,1) 100%)",
           opacity: theme === "dark" ? "0.7" : null,
@@ -214,8 +202,9 @@ class ColorKey extends Component {
         onMouseEnter={this.mouseEnter}
         onMouseLeave={this.mouseLeave}>
         <div
-          className={`noteWrapper note ${isOn ? "on" : "off"}`}
+          className={`noteWrapper note ${toneIsInScale ? "on" : "off"}`}
           style={{
+            marginBottom: pianoOn ? "0%" : "16vh", //TODO: find better solution, this will not work on all screen sizes
             backgroundColor: this.state.clicked ? color : null,
             top: extendedKeyboard ? "17%" : "10%",
           }}>
@@ -233,7 +222,7 @@ class ColorKey extends Component {
             note={note}
             showOffNotes={showOffNotes}
             keyIndex={keyIndex}
-            isOn={isOn}
+            toneIsInScale={toneIsInScale}
             extendedKeyboard={extendedKeyboard}
             clef={clef}
           />
@@ -249,7 +238,7 @@ ColorKey.propTypes = {
   noteName: PropTypes.array,
   color: PropTypes.string,
   keyColor: PropTypes.string,
-  isOn: PropTypes.bool,
+  toneIsInScale: PropTypes.bool,
   root: PropTypes.string,
   isMajorSeventh: PropTypes.bool,
   keyIndex: PropTypes.number,

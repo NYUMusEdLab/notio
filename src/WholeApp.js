@@ -1,12 +1,16 @@
 import React, { Component } from "react";
+import db from "./Firebase";
+import "./styles/style.scss";
 import ReactTooltip from "react-tooltip";
-import Keyboard from "./components/Keyboard";
+import Keyboard from "./components/keyboard/Keyboard";
 import TopMenu from "./components/menu/TopMenu";
 import LoadingScreen from "./components/LoadingScreen";
-import "./styles/style.scss";
-import db from "./Firebase";
 import { notio_tutorial } from "./data/config";
 import scales from "./data/scalesObj";
+
+// TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
+//This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
+//Also fix index.js call to WholeApp
 
 class WholeApp extends Component {
   state = {
@@ -363,9 +367,11 @@ class WholeApp extends Component {
 
     // const { match } = this.props;
     // const { params } = match;
-    const sessionId = this.props.match.params.sessionId;
-    // console.log("********************** componentDidMount sessionId", sessionId);
-    if (sessionId) {
+
+    // TODO: when rewriting to use functional component this should read: = useParams()
+    const sessionId = this.props.sessionId === undefined ? null : this.props.sessionId;
+    console.log("********************** componentDidMount sessionId", sessionId);
+    if (sessionId !== null) {
       this.openSavedSession(sessionId);
     } else {
       this.setState({
@@ -403,6 +409,7 @@ class WholeApp extends Component {
 
   render() {
     const { loading, showOffNotes } = this.state;
+
     // console.log("whole app", this.state.notation);
     return loading ? (
       <LoadingScreen />
@@ -460,4 +467,7 @@ class WholeApp extends Component {
   }
 }
 
+// TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
+//This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
+//Also fix index.js call to WholeApp
 export default WholeApp;

@@ -34,8 +34,8 @@ You can see the project [here. 2019 dev of project](https://notio.pestanias.now.
 -tab size 2
 -allow double and single quotes
 
-
 ## Info to developers
+
 use nvm to install the latest node-version found int the .nvmrc file
 if nvm is not installed run:
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | zsh
@@ -51,3 +51,18 @@ nvm install [version.number]
 
 run :
 yarn
+
+# Yarn Packages:
+
+##needed to run topMenu:
+react-tooltip  
+react-draggable
+react-bootstrap  
+react-player
+
+##
+
+firebase
+@react-firebase/database
+
+react-router-dom v6

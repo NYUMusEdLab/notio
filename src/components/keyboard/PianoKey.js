@@ -13,7 +13,7 @@ class PianoKey extends Component {
     if (e.cancelable) {
       e.preventDefault();
     }
-    if (this.props.isOn) {
+    if (this.props.toneIsInScale) {
       this.playNote(this.props.note);
     }
   };
@@ -21,40 +21,40 @@ class PianoKey extends Component {
     if (e.cancelable) {
       e.preventDefault(); // prevent default calling of mouse event after touch event
     }
-    if (this.props.isOn) {
+    if (this.props.toneIsInScale) {
       this.releaseNote(this.props.note);
     }
   };
 
   clickedMouse = (e) => {
-    if (this.props.isOn) {
+    if (this.props.toneIsInScale) {
       this.playNote(this.props.note);
     }
   };
   unClickedMouse = (e) => {
-    if (this.props.isOn) {
+    if (this.props.toneIsInScale) {
       this.releaseNote(this.props.note);
     }
   };
 
   mouseEnter = (e) => {
-    if (this.props.isOn && this.props.isMouseDown === true) {
+    if (this.props.toneIsInScale && this.props.isMouseDown === true) {
       this.playNote(this.props.note);
     }
   };
 
   mouseLeave = (e) => {
-    if (this.props.isOn && this.props.isMouseDown === true) {
+    if (this.props.toneIsInScale && this.props.isMouseDown === true) {
       this.releaseNote(this.props.note);
     }
   };
 
   playNote = (note) => {
-    this.props.noteOn(note);
+    this.props.noteOnHandler(note);
   };
 
   releaseNote = (note) => {
-    this.props.noteOff(note);
+    this.props.noteOffHandler(note);
   };
 
   updateDimensions = () => {
@@ -123,7 +123,7 @@ class PianoKey extends Component {
 
 PianoKey.propTypes = {
   note: PropTypes.string,
-  isOn: PropTypes.bool,
+  toneIsInScale: PropTypes.bool,
   color: PropTypes.string,
   keyColor: PropTypes.string,
   index: PropTypes.number,

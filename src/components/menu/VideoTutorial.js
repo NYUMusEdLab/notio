@@ -1,13 +1,15 @@
 import React, { useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Form, Button } from "react-bootstrap";
-import Overlay from "./Overlay";
+
+import Overlay from "./../OverlayPlugins/Overlay";
 
 const VideoTutorial = (props) => {
   const urlInputRef = useRef();
   const [playing, setPlaying] = useState(false);
   const [videoUrl, setVideoUrl] = useState(props.videoUrl);
-  const [activeTab,setActiveTab] = useState(props.activeVideoTab);
+  const [activeTab, setActiveTab] = useState(props.activeVideoTab);
+
   // TODO:use this : handleChangeActiveVideoTab={this.props.handleChangeActiveVideoTab}, when a tab is selected to persist the selection
   const tabKeys = ["Player", "Enter_url", "Tutorials"];
 
@@ -15,17 +17,17 @@ const VideoTutorial = (props) => {
     event.preventDefault();
     setVideoUrl(event.target.elements[0].value);
     props.handleChangeVideoUrl(event.target.elements[0].value);
-    props.handleChangeActiveVideoTab("Player")
+    props.handleChangeActiveVideoTab("Player");
     setActiveTab("Player");
   };
 
   // //this can be used if we make the tabs controlled
   const handleTabSelected = (key) => {
     // A bit dummy but need to control tabs after submit (cf handleSumbit())
-    if (tabKeys.includes(key) ){
-      setActiveTab(key);
-      props.handleChangeActiveVideoTab(key)
 
+    if (tabKeys.includes(key)) {
+      setActiveTab(key);
+      props.handleChangeActiveVideoTab(key);
     }
     // if (key === "Player") {
     //   setActiveTab("Player");
@@ -60,7 +62,12 @@ const VideoTutorial = (props) => {
         <div className="tabs-wrapper">
           {/* <Tabs defaultActiveKey="Player" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
           {/* <Tabs defaultActiveKey="Player" activeTab={activeTab} id="controlled-tab-example"> */}
-          <Tabs defaultActiveKey={activeTab} activeTab={activeTab} id="controlled-tab-example" onSelect={handleTabSelected}>
+
+          <Tabs
+            defaultActiveKey={activeTab}
+            // activeTab={activeTab}
+            id="controlled-tab-example"
+            onSelect={handleTabSelected}>
             <Tab eventKey="Player" title="Player">
               <ReactPlayer
                 className="react-player"
@@ -73,128 +80,118 @@ const VideoTutorial = (props) => {
               />
             </Tab>
             <Tab eventKey="Enter_url" title="Enter url">
-              <div >
+              <div>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="video-url" controlId="formYoutubeUrl">
                     <Form.Label className="video-url__title">Video url</Form.Label>
-                    
-                    <Form.Control className="video-url__url-field" type="text" placeholder={"Enter url"} ref={urlInputRef} >
-                    </Form.Control>
+
+                    <Form.Control
+                      className="video-url__url-field"
+                      type="text"
+                      placeholder={"Enter url"}
+                      ref={urlInputRef}></Form.Control>
 
                     <Form.Text className="video-url__explainer text-muted">
-                      Enter the url for any youtube video or playlist that you want to use with Notio and hit Enter.
+                      Enter the url for any youtube video or playlist that you want to use with
+                      Notio and hit Enter.
                     </Form.Text>
                     <Form.Text className="video-url__currently-watching">
-                      You are curently watching: 
+                      You are curently watching:
                       <a href={props.videoUrl}> {props.videoUrl} </a>
                     </Form.Text>
                     {/* <Form.Text className="text-muted">Current url: {videoUrl}</Form.Text> */}
-                    <Button className="video-url__btn--reset" variant="outline-danger" onClick={resetVideoUrl}>
+                    <Button
+                      className="video-url__btn--reset"
+                      variant="outline-danger"
+                      onClick={resetVideoUrl}>
                       Reset
                     </Button>
                     <Button className="video-url__btn--submit" variant="primary" type="submit">
                       Enter
                     </Button>
-                    
                   </Form.Group>
                 </Form>
               </div>
             </Tab>
             <Tab eventKey="Tutorials" title="Tutorials">
-              
-                   <div className="video__tutorial__list">
-                    <div className="video__tutorial__list__item">
-                      <div className="video__tutorial__list__item__title" >
-                        Keyboard on/off
-                      </div>
-                      <ReactPlayer
-                        className="react-player"                       // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/dkIdl51TBXA"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                      
-                      </div>
-                   
-
-                      <div className="video__tutorial__list__item">
-                      <div className="video__tutorial__list__item__title" >
-                        Notation
-                      </div>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/0z88NcJy8MQ"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                   </div>
-                   
-
-                   <div className="video__tutorial__list__item">
-                      <div className="video__tutorial__list__item__title" >
-                        Ambitus
-                      </div>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/RuBru-zqINU"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                      </div>
-                   
-                      <div className="video__tutorial__list__item">
-                      <div className="video__tutorial__list__item__title" >
-                        Select different scales
-                      </div>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/Ykgavi2EjZQ"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                      </div>
-                   
-                      <div className="video__tutorial__list__item">
-                      <div className="video__tutorial__list__item__title" >
-                        Video player
-                      </div>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/qoeHCq0N4I0"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                      </div>
-                   
-                      <div className="video__tutorial__list__item">
-                      <div className="video__tutorial__list__item__title" >
-                        Share your setup
-                      </div>
-                      <ReactPlayer
-                        className="react-player"
-                        // playing={playing}
-                        width="100%"
-                        height="100%"
-                        url={"https://youtu.be/t-NUdl19sww"}
-                        controls={true}
-                        // onReady={playerOnReady}
-                      />
-                      </div>
+              <div className="video__tutorial__list">
+                <div className="video__tutorial__list__item">
+                  <div className="video__tutorial__list__item__title">Keyboard on/off</div>
+                  <ReactPlayer
+                    className="react-player" // playing={playing}
+                    width="100%"
+                    height="100%"
+                    url={"https://youtu.be/dkIdl51TBXA"}
+                    controls={true}
+                    // onReady={playerOnReady}
+                  />
                 </div>
+
+                <div className="video__tutorial__list__item">
+                  <div className="video__tutorial__list__item__title">Notation</div>
+                  <ReactPlayer
+                    className="react-player"
+                    // playing={playing}
+                    width="100%"
+                    height="100%"
+                    url={"https://youtu.be/0z88NcJy8MQ"}
+                    controls={true}
+                    // onReady={playerOnReady}
+                  />
+                </div>
+
+                <div className="video__tutorial__list__item">
+                  <div className="video__tutorial__list__item__title">Ambitus</div>
+                  <ReactPlayer
+                    className="react-player"
+                    // playing={playing}
+                    width="100%"
+                    height="100%"
+                    url={"https://youtu.be/RuBru-zqINU"}
+                    controls={true}
+                    // onReady={playerOnReady}
+                  />
+                </div>
+
+                <div className="video__tutorial__list__item">
+                  <div className="video__tutorial__list__item__title">Select different scales</div>
+                  <ReactPlayer
+                    className="react-player"
+                    // playing={playing}
+                    width="100%"
+                    height="100%"
+                    url={"https://youtu.be/Ykgavi2EjZQ"}
+                    controls={true}
+                    // onReady={playerOnReady}
+                  />
+                </div>
+
+                <div className="video__tutorial__list__item">
+                  <div className="video__tutorial__list__item__title">Video player</div>
+                  <ReactPlayer
+                    className="react-player"
+                    // playing={playing}
+                    width="100%"
+                    height="100%"
+                    url={"https://youtu.be/qoeHCq0N4I0"}
+                    controls={true}
+                    // onReady={playerOnReady}
+                  />
+                </div>
+
+                <div className="video__tutorial__list__item">
+                  <div className="video__tutorial__list__item__title">Share your setup</div>
+                  <ReactPlayer
+                    className="react-player"
+                    // playing={playing}
+                    width="100%"
+                    height="100%"
+                    url={"https://youtu.be/t-NUdl19sww"}
+                    controls={true}
+                    // onReady={playerOnReady}
+                  />
+                </div>
+              </div>
             </Tab>
           </Tabs>
         </div>

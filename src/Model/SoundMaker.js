@@ -24,6 +24,7 @@ class SoundMaker extends Component {
   chooseInstrument() {
     var tempSynth = {};
     switch (this.instrumentSound) {
+      //TODO: Uncomm and implement some piano sound
       case "piano":
         tempSynth = new Piano({
           velocities: this.velocities,

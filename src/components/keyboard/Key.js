@@ -14,29 +14,28 @@ class Key extends Component {
       synth,
       trebleStaffOn,
       pianoOn,
-      isOn,
+      toneIsInScale,
       isMouseDown,
       isActive,
       keyIndex,
-      noteOn,
-      noteOff,
+      noteOnHandler,
+      noteOffHandler,
       index,
       noteNameEnglish,
       root,
       extendedKeyboard,
-      clef
+      clef,
     } = this.props;
     // console.log("Key note", note, noteName);
     return (
       <div
         className={`Key ${keyColor}
-          ${isOn ? "on" : "off"}`}
-        data-note={note}
-      >
+          ${toneIsInScale ? "on" : "off"}`}
+        data-note={note}>
         <ColorKey
           color={color}
           keyColor={keyColor}
-          isOn={isOn}
+          toneIsInScale={toneIsInScale}
           noteName={noteName}
           theme={theme}
           trebleStaffOn={trebleStaffOn}
@@ -45,17 +44,18 @@ class Key extends Component {
           pianoOn={pianoOn}
           isMouseDown={isMouseDown}
           keyIndex={keyIndex}
-          noteOn={noteOn}
-          noteOff={noteOff}
+          noteOnHandler={noteOnHandler}
+          noteOffHandler={noteOffHandler}
           extendedKeyboard={extendedKeyboard}
           clef={clef}
         />
-        {/*toggle Piano */
+        {
+          /*toggle Piano */
           pianoOn ? (
             <PianoKey
               note={note}
               noteNameEnglish={noteNameEnglish}
-              isOn={isOn}
+              toneIsInScale={toneIsInScale}
               color={color}
               keyColor={keyColor}
               index={index}
@@ -63,10 +63,11 @@ class Key extends Component {
               synth={synth}
               isMouseDown={isMouseDown}
               isActive={isActive}
-              noteOn={noteOn}
-              noteOff={noteOff}
+              noteOnHandler={noteOnHandler}
+              noteOffHandler={noteOffHandler}
             />
-          ) : null}
+          ) : null
+        }
       </div>
     );
   }
@@ -79,7 +80,7 @@ Key.propTypes = {
   color: PropTypes.string,
   // offcolor: PropTypes.string,
   keyColor: PropTypes.string,
-  isOn: PropTypes.bool,
+  toneIsInScale: PropTypes.bool,
   root: PropTypes.string,
   isMajorSeventh: PropTypes.bool,
   isActive: PropTypes.bool,
