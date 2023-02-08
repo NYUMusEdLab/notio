@@ -1,6 +1,7 @@
 const colors = {
   colorBlind1: [
-    "#882255",
+    "#cd0223",
+    //"#882255",
     "#AA4499",
     "#CC6677",
     "#DDCC77",
@@ -14,7 +15,8 @@ const colors = {
     "#D3F3B8",
   ],
   colorBlind2: [
-    "#920000",
+    "#cd0223",
+    //"#920000",
     "#924900",
     "#db6d00",
     "#24ff24",
@@ -28,7 +30,8 @@ const colors = {
     "#b6dbff",
   ], //"#009292"
   pastel: [
-    "#F8BBD0",
+    "#cd0223",
+    //"#F8BBD0",
     "#E1BEE7",
     "#D1C4E9",
     "#C5CAE9",
@@ -42,7 +45,8 @@ const colors = {
     "#FFE0B2",
   ],
   greenis: [
-    "#FFAAAA",
+    "#cd0223",
+    //"#FFAAAA",
     "#CCFFFF",
     "#FFFFCC",
     "#99CCCC",
@@ -56,7 +60,8 @@ const colors = {
     "#CCCCCC",
   ],
   bright: [
-    "#ff0000",
+    "#cd0223",
+    //"#ff0000",
     "#ff8c00",
     "#ffff00",
     "#c0c0c0",
