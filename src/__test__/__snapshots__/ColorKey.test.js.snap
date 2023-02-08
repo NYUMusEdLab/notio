@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ColorKey should render correctly 1`] = `
+<div>
+  <div
+    class="color-key on"
+    data-testid="ColorKey:C4"
+    style="height: 70%; background: rgb(255, 0, 0);"
+  >
+    <div
+      class="noteWrapper note on"
+      style="margin-bottom: 0%; top: 10%;"
+    />
+  </div>
+</div>
+`;
