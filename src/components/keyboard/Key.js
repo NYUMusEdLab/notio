@@ -31,8 +31,10 @@ class Key extends Component {
       <div
         className={`Key ${keyColor}
           ${toneIsInScale ? "on" : "off"}`}
+        data-testid="test-key"
         data-note={note}>
         <ColorKey
+          data-testid="test-color-key"
           color={color}
           keyColor={keyColor}
           toneIsInScale={toneIsInScale}
@@ -53,6 +55,7 @@ class Key extends Component {
           /*toggle Piano */
           pianoOn ? (
             <PianoKey
+              data-testid="test-piano-key"
               note={note}
               noteNameEnglish={noteNameEnglish}
               toneIsInScale={toneIsInScale}

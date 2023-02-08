@@ -2,8 +2,8 @@ import * as React from "react"; // Necessary to run the tests, apparently.
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import SoundMaker from "../Model/SoundMaker";
-import WholeApp from "../WholeApp";
+import SoundMaker from "../../Model/SoundMaker";
+import WholeApp from "../../WholeApp";
 
 /*
     ERASE THIS TEXT AND WRITE WHAT FEATURE THIS FILE TESTS
