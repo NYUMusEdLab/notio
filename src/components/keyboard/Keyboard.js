@@ -7,6 +7,7 @@ import SoundMaker from "../../Model/SoundMaker";
 // import { SoundEngineContext } from "../context/SoundEngineContext";
 import MusicScale from "../../Model/MusicScale";
 
+// Using 'code' property for compatibility with AZERTY, QWERTY... keyboards
 const keycodes = ["KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote"];
 
 const keycodesExtended = [
@@ -28,17 +29,17 @@ const keycodesExtended = [
 const keycodesLeftHand = ["KeyZ", "KeyX", "KeyC", "KeyA", "KeyS", "KeyD", "KeyQ", "KeyW", "KeyE"];
 const stepsAboveRootLeftHand = [-6, -5, -4, -3, -2, -1, 0, 1, 2];
 
-const keycodesExtendedLeftHand = [
-  "KeyZ",
-  "KeyX",
-  "KeyC",
-  "KeyV",
-  "KeyB",
-  "KeyN",
-  "KeyM",
-  "KeyQ",
-  "KeyW",
-];
+// const keycodesExtendedLeftHand = [
+//   "KeyZ",
+//   "KeyX",
+//   "KeyC",
+//   "KeyV",
+//   "KeyB",
+//   "KeyN",
+//   "KeyM",
+//   "KeyQ",
+//   "KeyW",
+// ];
 
 let targetArr, activeElementsforKeyboard, activeScale; //, scaleReciepe, keyboardLayoutScaleReciepe;
 let threeLowerOctave = new Set();
@@ -150,6 +151,9 @@ class Keyboard extends Component {
     }
     if (e.code === "Digit6") {
       this.setState({ colorname: "bright" });
+    }
+    if (e.code === "Digit7") {
+      this.setState({ colorname: "grayScale" });
     }
 
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
