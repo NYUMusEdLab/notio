@@ -94,7 +94,7 @@ class PianoKey extends Component {
   }
 
   render() {
-    const { keyColor, index, root, color, isActive, noteNameEnglish } = this.props;
+    const { keyColor, color, isActive, noteNameEnglish } = this.props;
 
     return (
       <div
@@ -115,7 +115,7 @@ class PianoKey extends Component {
             <div className="blackPianoKeyFiller"></div>
           </div>
         ) : null}
-        {index === 0 ? root : null}
+        {noteNameEnglish === "C" ? "C" : null}
       </div>
     );
   }
