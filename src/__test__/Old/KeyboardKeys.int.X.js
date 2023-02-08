@@ -4,9 +4,9 @@ import { render, screen, waitFor } from "@testing-library/react";
 // import fireEvent from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 // import Keyboard from "../Components/Keyboard/Keyboard";
-import SoundMaker from "../Model/SoundMaker";
+import SoundMaker from "../../Model/SoundMaker";
 // import ReactPlayer from "react-player/lazy";
-import WholeApp from "../WholeApp";
+import WholeApp from "../../WholeApp";
 // import { Time } from "tone";
 
 /*
