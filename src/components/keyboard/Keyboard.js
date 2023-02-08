@@ -152,6 +152,9 @@ class Keyboard extends Component {
     if (e.code === "Digit6") {
       this.setState({ colorname: "bright" });
     }
+    if (e.code === "Digit7") {
+      this.setState({ colorname: "grayScale" });
+    }
 
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;
     let mapKeyDown = activeKeyCodes.indexOf(e.code);
