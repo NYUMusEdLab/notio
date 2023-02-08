@@ -60,7 +60,7 @@ const colors = {
     "#ff8c00",
     "#ffff00",
     "#c0c0c0",
-    "#ffffff",
+    "#dddddd",
     "#228b22",
     "#00ff7f",
     "#00ffff",
