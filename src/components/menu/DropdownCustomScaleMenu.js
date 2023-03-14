@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Tabs, Tab } from "react-bootstrap";
-import Overlay from "./Overlay";
+
+import Overlay from "../OverlayPlugins/Overlay";
 
 import CustomScaleSelector from "./CustomScaleSelector";
 // import CustomScaleImg from "../../assets/img/CustomScale";

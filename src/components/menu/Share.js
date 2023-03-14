@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ShareLink from "./ShareLink";
-import Overlay from "./Overlay";
+import Overlay from "./../OverlayPlugins/Overlay";
 import { Tabs, Tab } from "react-bootstrap";
 
 const Share = (props) => {
@@ -12,7 +12,7 @@ const Share = (props) => {
     if (sessionId !== props.sessionID) {
       setSessionId(props.sessionID);
     }
-  }, [props.sessionID]);
+  }, [props.sessionID, sessionId]);
 
   // handleSelectTab = (key) => {
   //   // A bit dummy but need to control tabs after submit (cf handleSumbit())

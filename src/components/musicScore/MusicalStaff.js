@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Vex from "vexflow";
 import PropTypes from "prop-types";
-const { Renderer, Stave, Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
+
+//INFO: vexFlow 4 documentation: https://github.com/0xfe/vexflow/wiki/Tutorial
+// const { Renderer, Stave, Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
 
 let stave, ctx, renderer;
 
@@ -18,16 +20,24 @@ class MusicalStaff extends Component {
   }
 
   setupStaff() {
+    const { Renderer, Stave } = Vex.Flow;
+
     let containerSVG = this.musicalStaff.current;
     renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
-    //renderer.resize(60, 140);
+    // renderer.resize(0, 0, 60, 140);
     ctx = renderer.getContext();
+    //For some reason this works dispite the error
+    // @ts-ignore
     ctx.setViewBox(0, 0, 60, 140); //size
-    stave = new Stave(0, 0, 60, { fill_style: "black" });
+    stave = new Stave(0, 10, 60, { fill_style: "black" });
+    //Hides the barlines
+    stave.setBegBarType(Vex.Flow.Barline.type.NONE);
     stave.setContext(ctx).draw();
   }
 
   drawNotes() {
+    const { Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
+
     // console.log("A");
     // console.log("drawNotes this.props.note", this.props.note);
     let daNote;
@@ -56,25 +66,26 @@ class MusicalStaff extends Component {
     let oneNote = singleNote.map(function (note) {
       if (note.keys[0].includes("bb")) {
         // console.log("1");
-        return new StaveNote(note).addAccidental(0, new Accidental("bb"));
+        return new StaveNote(note).addModifier(new Accidental("bb"), 0);
       } else if (note.keys[0].includes("b")) {
         // console.log("2");
 
-        return new StaveNote(note).addAccidental(0, new Accidental("b"));
+        return new StaveNote(note).addModifier(new Accidental("b"), 0);
       } else if (note.keys[0].includes("##")) {
         // console.log("4");
 
-        return new StaveNote(note).addAccidental(0, new Accidental("##"));
+        return new StaveNote(note).addModifier(new Accidental("##"), 0);
       } else if (note.keys[0].includes("#")) {
         // console.log("3");
 
-        return new StaveNote(note).addAccidental(0, new Accidental("#"));
+        return new StaveNote(note).addModifier(new Accidental("#"), 0);
       } else {
         // console.log("************ 4", note);
 
         return new StaveNote(note);
       }
     });
+
     // console.log("C");
 
     // console.log("oneNote", oneNote);
@@ -90,7 +101,6 @@ class MusicalStaff extends Component {
     // console.log("E");
 
     new Formatter().joinVoices([voice]).format([voice], window.innerWidth);
-
     // Render voice
     voice.draw(ctx, stave);
     // console.log("F");
@@ -98,7 +108,7 @@ class MusicalStaff extends Component {
 
   componentDidMount() {
     this.setupStaff();
-    if (this.props.isOn) this.drawNotes();
+    if (this.props.toneIsInScale) this.drawNotes();
   }
 
   componentDidUpdate(prevProps) {
@@ -106,12 +116,12 @@ class MusicalStaff extends Component {
       prevProps.note !== this.props.note ||
       prevProps.showOffNote !== this.props.showOffNotes ||
       prevProps.width !== this.props.width ||
-      prevProps.isOn !== this.props.isOn ||
+      prevProps.toneIsInScale !== this.props.toneIsInScale ||
       prevProps.clef !== this.props.clef
     ) {
       this.removePrevious();
       this.setupStaff();
-      if (this.props.isOn) this.drawNotes();
+      if (this.props.toneIsInScale) this.drawNotes();
     }
   }
 
@@ -136,7 +146,7 @@ MusicalStaff.propTypes = {
   showOffNote: PropTypes.bool,
   width: PropTypes.number,
   keyIndex: PropTypes.number,
-  isOn: PropTypes.bool,
+  toneIsInScale: PropTypes.bool,
   clef: PropTypes.string,
 };
 
