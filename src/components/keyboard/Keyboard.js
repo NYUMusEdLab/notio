@@ -70,6 +70,7 @@ class Keyboard extends Component {
         instrumentSound: this.props.instrumentSound,
         velocities: 5,
         volume: 4,
+        handleSoundsAreLoaded: this.props.handleSoundsAreLoaded,
       }),
     };
   }
