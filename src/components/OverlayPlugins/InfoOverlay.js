@@ -208,8 +208,15 @@ const InfoOverlay = (props) => {
                         <Card.Body>
                           <Card.Title>Do you have a colourblind mode?</Card.Title>
                           <Card.Text>
-                            Yes! If you press 1,2,3,4 or 5 it will change between the different
-                            colour modes.
+                            Yes! If you press 1,2,3,4,5,6,7,8 or 9 it will change between the
+                            different colour modes.
+                            <ul>
+                              <li>1: Our favorite</li>
+                              <li>2: Protanopia</li>
+                              <li>3: Deuteranopia</li>
+                              <li>4: Tritanopia</li>
+                              <li>try them out</li>
+                            </ul>
                           </Card.Text>
                         </Card.Body>
                       </ListGroupItem>

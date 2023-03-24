@@ -1,18 +1,47 @@
 const colors = {
-  colorBlind1: [
-    "#cd0223",
-    //"#882255",
+  colorBlindProtanopia: [
+    "#cd0223", // red
     "#AA4499",
+    "#6E6BB8",
+    "#117733",
+    "#44AA99",
+    "#88CCEE",
+    "#A8B8EF",
+    "#D3F3B8",
+    "#DDCC77",
+    "#9BB34D",
+    "#4035FF",
+    "#CC6677",
+  ],
+
+  colorBlindDeuteranopia: [
+    "#cd0223", // red
+    "#44AA99",
+    "#A8B8EF",
+    "#117733",
+    "#6E6BB8",
+    "#AA4499",
+    "#9BB34D",
+    "#4035FF",
+    "#D3F3B8",
+    "#88CCEE",
     "#CC6677",
     "#DDCC77",
+  ],
+
+  colorBlindTritanopia: [
+    "#cd0223", // red
+    "#AA4499",
+    "#CC6677",
     "#88CCEE",
     "#44AA99",
     "#117733",
-    "#4035FF",
     "#A8B8EF",
-    "#332288",
-    "#9BB34D",
+    "#6E6BB8",
     "#D3F3B8",
+    "#9BB34D",
+    "#5C5C81",
+    "#DDCC77",
   ],
   colorBlind2: [
     "#cd0223",
@@ -23,7 +52,8 @@ const colors = {
     "#ffff6d",
     "#ff6db6",
     "#ffb6db",
-    "#490092",
+    "#9D7AFF",
+    // "#490092",
     "#006ddb",
     "#b66dff",
     "#6db6ff",
@@ -69,7 +99,7 @@ const colors = {
     "#228b22",
     "#00ff7f",
     "#00ffff",
-    "#0000ff",
+    "#4d4dff",
     "#87cefa",
     "#8a2be2",
     "#ee82ee",
@@ -88,7 +118,8 @@ const colors = {
     "#a059ed",
     "#ba04ff",
   ],
-  grayScale: [
+  // grayscale
+  standard: [
     "#cd0223",
     "#C8C8C8",
     "#C0C0C0",
@@ -97,10 +128,12 @@ const colors = {
     "#696969",
     "#A9A9A9",
     "#B2BEB5",
-    "#464646",
+    "#989898",
+    // "#464646",
     "#868686",
     //"#4692B4",
-    "#343434",
+    // "#343434",
+    "#737373",
     "#E6E8FA",
     //"#5F9EA0",
   ],
