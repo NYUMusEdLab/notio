@@ -64,7 +64,7 @@ class Keyboard extends Component {
       mouse_is_down: false,
       scales: this.props.scaleList,
       octave: this.props.octave,
-      colorname: "grayScale",
+      colorname: "standard",
       instrumentSound: this.props.instrumentSound,
       synth: new SoundMaker({
         instrumentSound: this.props.instrumentSound,

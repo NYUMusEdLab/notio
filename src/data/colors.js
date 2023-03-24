@@ -1,4 +1,29 @@
+//Test colorblindness pallettes with the folowing simulators:
+// Here are some color blindness simulators that you can use:
+
+// Coblis: https://www.color-blindness.com/coblis-color-blindness-simulator/
+// Color Oracle: https://colororacle.org/
+// Sim Daltonism: https://michelf.ca/projects/sim-daltonism/
 const colors = {
+  // grayscale
+  standard: [
+    "#cd0223",
+    "#C8C8C8",
+    "#C0C0C0",
+    "#696969",
+    "#808080",
+    "#696969",
+    "#A9A9A9",
+    "#B2BEB5",
+    "#989898",
+    // "#464646",
+    "#868686",
+    //"#4692B4",
+    // "#343434",
+    "#737373",
+    "#E6E8FA",
+    //"#5F9EA0",
+  ],
   colorBlindProtanopia: [
     "#cd0223", // red
     "#AA4499",
@@ -117,25 +142,6 @@ const colors = {
     "#674ed8",
     "#a059ed",
     "#ba04ff",
-  ],
-  // grayscale
-  standard: [
-    "#cd0223",
-    "#C8C8C8",
-    "#C0C0C0",
-    "#696969",
-    "#808080",
-    "#696969",
-    "#A9A9A9",
-    "#B2BEB5",
-    "#989898",
-    // "#464646",
-    "#868686",
-    //"#4692B4",
-    // "#343434",
-    "#737373",
-    "#E6E8FA",
-    //"#5F9EA0",
   ],
 };
 
