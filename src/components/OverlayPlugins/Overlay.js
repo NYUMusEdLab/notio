@@ -56,7 +56,7 @@ export default class Overlay extends Component {
 
   render() {
     return ReactDOM.createPortal(
-      <Draggable handle={".drag"}>
+      <Draggable handle={".drag"} bounds={{ top: -200, bottom: 0 }}>
         <div
           className={`overlay${this.state.minimized ? " minimized" : ""}${
             this.state.hidden ? " hide" : ""
