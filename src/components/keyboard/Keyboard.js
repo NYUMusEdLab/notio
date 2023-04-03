@@ -64,7 +64,7 @@ class Keyboard extends Component {
       mouse_is_down: false,
       scales: this.props.scaleList,
       octave: this.props.octave,
-      colorname: "grayScale",
+      colorname: "standard",
       instrumentSound: this.props.instrumentSound,
       synth: new SoundMaker({
         instrumentSound: this.props.instrumentSound,
@@ -138,13 +138,13 @@ class Keyboard extends Component {
       this.setState({ colorname: "standard" });
     }
     if (e.code === "Digit2") {
-      this.setState({ colorname: "colorBlind1" });
+      this.setState({ colorname: "colorBlindProtanopia" });
     }
     if (e.code === "Digit3") {
-      this.setState({ colorname: "colorBlind2" });
+      this.setState({ colorname: "colorBlindDeuteranopia" });
     }
     if (e.code === "Digit4") {
-      this.setState({ colorname: "other" });
+      this.setState({ colorname: "colorBlindTritanopia" });
     }
     if (e.code === "Digit5") {
       this.setState({ colorname: "greenis" });
@@ -153,7 +153,13 @@ class Keyboard extends Component {
       this.setState({ colorname: "bright" });
     }
     if (e.code === "Digit7") {
-      this.setState({ colorname: "grayScale" });
+      this.setState({ colorname: "other" });
+    }
+    if (e.code === "Digit8") {
+      this.setState({ colorname: "colorBlind2" });
+    }
+    if (e.code === "Digit9") {
+      this.setState({ colorname: "pastel" });
     }
 
     const activeKeyCodes = extendedKeyboard ? keycodesExtended : keycodes;

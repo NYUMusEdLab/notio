@@ -40,8 +40,8 @@
   .Key .note {
     opacity: 0.4;
     text-align: center;
-    font-weight: 700;
-    font-size: 3vmin;
+    font-weight: bolder;
+    font-size: 3.2vmin;
   }
 
   .color-key {
@@ -56,6 +56,9 @@
     align-items: end;
 
     .noteWrapper {
+      opacity: 1;
+      // text-shadow: 0px 0px -0px rgb(250, 244, 244), 0 0 0.01em rgb(66, 66, 68),
+      //   0 0 0.001em rgb(245, 245, 251);
       grid-area: noteName;
       // background: yellow;
       display: grid;
