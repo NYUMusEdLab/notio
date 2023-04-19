@@ -568,6 +568,7 @@ class MusicScale {
   };
 
   toRomanceNotation(note_english) {
+    let cleanedNoteName = this.clean(note_english);
     const RomanceMapping = {
       Cb: "Dob",
       C: "Do",
@@ -591,7 +592,7 @@ class MusicScale {
       B: "Si",
       "B#": "Si#",
     };
-    return RomanceMapping[note_english];
+    return RomanceMapping[cleanedNoteName];
   }
 
   ////#endregion
@@ -762,6 +763,86 @@ class MusicScale {
         break;
     }
     return result !== "Hb" ? result : "B";
+  }
+
+  cleanAccidentals(toneName) {
+    const ENGLISH_SHARP_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+    const ENGLISH_FLAT_NAMES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+    let result = "";
+    let accidental = "";
+
+    let deconstructedToneName = toneName.split("");
+    let basistoneName = deconstructedToneName.shift();
+    let Accidentals = [...deconstructedToneName];
+    const convertAccidentalToStep = (accid) =>
+      accid === "b" ? -1 : accid === "#" ? 1 : accid === "x" ? 2 : 0;
+    const stepsFromToneName = Accidentals.reduce(
+      (accumulator, accid) => convertAccidentalToStep(accid) + accumulator,
+      0
+    );
+    switch (stepsFromToneName) {
+      case 0:
+        result = basistoneName;
+        break;
+      case 1:
+        result = basistoneName + "#";
+        break;
+
+      case -1:
+        result = basistoneName + "b";
+        break;
+
+      default:
+        if (stepsFromToneName < -1) {
+          let indexFlats = this.previous(
+            ENGLISH_FLAT_NAMES,
+            ENGLISH_FLAT_NAMES.indexOf(basistoneName)
+          );
+          indexFlats = this.previous(ENGLISH_FLAT_NAMES, indexFlats);
+
+          const tempb = ENGLISH_FLAT_NAMES[indexFlats];
+
+          accidental = "b".repeat(-1 * stepsFromToneName - 2);
+          result = this.addAccidental(tempb + accidental);
+        } else if (stepsFromToneName > 1) {
+          let indexSharps = this.next(
+            ENGLISH_SHARP_NAMES,
+            ENGLISH_SHARP_NAMES.indexOf(basistoneName)
+          );
+          indexSharps = this.next(ENGLISH_SHARP_NAMES, indexSharps);
+
+          const temp = ENGLISH_SHARP_NAMES[indexSharps];
+          accidental = "#".repeat(stepsFromToneName - 2);
+          result = this.addAccidental(temp + accidental);
+        } else {
+          result = basistoneName + Accidentals.join("");
+          console.error(
+            "something went wrong trying to add " +
+              Accidentals +
+              " \n Not implemented in  addAccidental() in MusicScale"
+          );
+        }
+        break;
+    }
+    return result !== "Hb" ? result : "B";
+  }
+
+  clean(notename) {
+    let deconstructedToneName = notename.split("");
+    let basistoneName = deconstructedToneName.shift();
+    let accidentals = [...deconstructedToneName];
+    console.log(basistoneName, accidentals);
+    switch (accidentals.length) {
+      case 0:
+      case 1:
+        return notename;
+      case 2:
+        return this.cleanAccidentals(notename);
+
+      default:
+        return basistoneName;
+        break;
+    }
   }
 }
 
