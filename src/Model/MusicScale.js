@@ -668,8 +668,6 @@ class MusicScale {
     let romanceScale = [];
 
     for(let tone in scale){
-      console.log("Tone")
-      console.log(scale[tone])
       let toneWithoutDoubleAccidental = scale[tone].replace("##","#").replace("bb","b");
       switch (toneWithoutDoubleAccidental) {
         case "Cb":
