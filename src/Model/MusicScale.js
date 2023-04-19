@@ -377,6 +377,10 @@ class MusicScale {
         case "German":
           theScale = this.MakeCustomScale(scaleFormula, keyName, whichNotation, this.Recipe);
           break;
+        case "Romance":
+          const englishScale = this.MakeCustomScale(scaleFormula, keyName, "English", this.Recipe);
+          theScale = this.GenerateRomanceNames(englishScale);
+          break;
         default:
           theScale = this.MakeChromatic(
             scaleFormula,
@@ -527,7 +531,6 @@ class MusicScale {
       // );
       startingNote = 0; //relative;
     }
-
     let myScaleFormula = scaleFormula;
     let myScale = [];
 
@@ -558,6 +561,37 @@ class MusicScale {
     }
 
     return myScale;
+  }
+
+  GenerateRomanceNames = (english_note_names) => {
+    return english_note_names.map((note_name) => this.toRomanceNotation(note_name));
+  };
+
+  toRomanceNotation(note_english) {
+    const RomanceMapping = {
+      Cb: "Dob",
+      C: "Do",
+      "C#": "Do#",
+      Db: "Reb",
+      D: "Re",
+      "D#": "Re#",
+      Eb: "Mib",
+      E: "Mi",
+      "E#": "Mi#",
+      Fb: "Fab",
+      F: "Fa",
+      "F#": "Fa#",
+      Gb: "Sob",
+      G: "So",
+      "G#": "So#",
+      Ab: "Lab",
+      A: "La",
+      "A#": "La#",
+      Bb: "Sib",
+      B: "Si",
+      "B#": "Si#",
+    };
+    return RomanceMapping[note_english];
   }
 
   ////#endregion
