@@ -5,7 +5,7 @@ const Checkbox = ({ className = "", label, isSelected, onCheckboxChange }) => (
     <label className="label-wrapper">
       <input type="checkbox" name={label} checked={isSelected} onChange={onCheckboxChange} />
       <span className="checkmark"></span>
-      {label}
+      <h4>{label}</h4>
     </label>
   </div>
 );
