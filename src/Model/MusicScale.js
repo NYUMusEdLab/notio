@@ -467,9 +467,6 @@ class MusicScale {
    *   scaleRecipe: scaleObj
    */
   MakeCustomScale(scaleFormula, keyName, whichNotation, scaleRecipe) {
-    /*if(whichNotation === "Romance"){
-      return "G";
-    }*/
     const majorScale = this.getMajorScale(keyName, whichNotation); //this.MakeChromatic([0,2,4,5,7,9,11], keyName, whichNotation)//this.MakeScaleMajorMinor([0,2,4,5,7,9,11], keyName, whichNotation)
     let tempScale = [];
     let numbers = this.makeScaleNumbers(scaleRecipe, scaleFormula);
