@@ -377,6 +377,10 @@ class MusicScale {
         case "German":
           theScale = this.MakeCustomScale(scaleFormula, keyName, whichNotation, this.Recipe);
           break;
+        case "Romance":
+          theScale = this.MakeCustomScale(scaleFormula, keyName, "English", this.Recipe);
+          theScale = this.convertToRomance(theScale);
+          break;
         default:
           theScale = this.MakeChromatic(
             scaleFormula,
@@ -463,6 +467,9 @@ class MusicScale {
    *   scaleRecipe: scaleObj
    */
   MakeCustomScale(scaleFormula, keyName, whichNotation, scaleRecipe) {
+    /*if(whichNotation === "Romance"){
+      return "G";
+    }*/
     const majorScale = this.getMajorScale(keyName, whichNotation); //this.MakeChromatic([0,2,4,5,7,9,11], keyName, whichNotation)//this.MakeScaleMajorMinor([0,2,4,5,7,9,11], keyName, whichNotation)
     let tempScale = [];
     let numbers = this.makeScaleNumbers(scaleRecipe, scaleFormula);
@@ -659,6 +666,85 @@ class MusicScale {
 
     return absoluteMajorScales[notation][foneticTonename];
   }
+
+  convertToRomance(scale) {
+    let romanceScale = [];
+
+    for(let tone in scale){
+      console.log("Tone")
+      console.log(scale[tone])
+      let toneWithoutDoubleAccidental = scale[tone].replace("##","#").replace("bb","b");
+      switch (toneWithoutDoubleAccidental) {
+        case "Cb":
+          romanceScale.push("Dob");
+          break;
+        case "C":
+          romanceScale.push("Do")
+          break;
+        case "C#":
+          romanceScale.push("Do#")
+          break;
+        case "Db":
+          romanceScale.push("Reb")
+          break;
+        case "D":
+          romanceScale.push("Re")
+          break;
+        case "D#":
+          romanceScale.push("Re#")
+          break;
+        case "Eb":
+          romanceScale.push("Mib")
+          break;
+        case "E":
+          romanceScale.push("Mi")
+          break;
+        case "E#":
+          romanceScale.push("Mi#")
+          break;
+        case "Fb":
+          romanceScale.push("Fab");
+          break;
+        case "F":
+          romanceScale.push("Fa")
+          break;
+        case "F#":
+          romanceScale.push("Fa#")
+          break;
+        case "Gb":
+          romanceScale.push("Solb")
+          break;
+        case "G":
+          romanceScale.push("Sol")
+          break;
+        case "G#":
+          romanceScale.push("Sol#")
+          break;
+        case "Ab":
+          romanceScale.push("Lab")
+          break;
+        case "A":
+          romanceScale.push("La")
+          break;
+        case "A#":
+          romanceScale.push("La#")
+          break;
+        case "Bb":
+          romanceScale.push("Sib")
+          break;
+        case "B":
+          romanceScale.push("Si")
+          break;
+        case "B#":
+          romanceScale.push("Si#")
+          break;
+        default:
+          break;
+      }
+    }
+    return romanceScale;
+  }
+
   /*
    *  adds accidentals to toneName, replacing several accidentals with the corresponding toneName
    * A### == C
