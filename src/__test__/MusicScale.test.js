@@ -39,12 +39,20 @@ describe("Music Scale component", () => {
     expect(DoReMiList).toEqual(["Dob", "Reb", "Mib", "Fab", "Sob", "Lab", "Sib"]);
   });
 
-  it("C Custom should return Do, Re#, Mi, Fab, So#, Lab, Si", () => {
+  it("C Custom should return Mi, Fab, So#, Lab, Si", () => {
     const englishScale = ["C", "D#", "E", "Fb", "G#", "Ab", "B"];
     const DoReMiList = scaleObjectUnderTest.GenerateRomanceNames(englishScale);
     expect(DoReMiList).toEqual(["Do", "Re#", "Mi", "Fab", "So#", "Lab", "Si"]);
   });
 
+  it("E Custom should return Do, Re#, Mi, Fab, So#, Lab, Si", () => {
+    const englishScale = ["E", "Fb", "G#", "Ab", "B"];
+    const DoReMiList = scaleObjectUnderTest.GenerateRomanceNames(englishScale);
+    expect(DoReMiList).toEqual(["Mi", "Fab", "So#", "Lab", "Si"]);
+  });
+
+
+  
   it("C Custom should return Do", () => {
     const romancename = scaleObjectUnderTest.toRomanceNotation("C");
     expect(romancename).toEqual("Do");
