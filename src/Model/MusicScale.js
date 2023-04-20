@@ -665,77 +665,22 @@ class MusicScale {
   }
 
   convertToRomance(scale) {
+    const englishToRomance = {
+      "C": "Do",
+      "D": "Re",
+      "E": "Mi",
+      "F": "Fa",
+      "G": "Sol",
+      "A": "La",
+      "B": "Si"
+    }
     let romanceScale = [];
 
     for(let tone in scale){
-      let toneWithoutDoubleAccidental = scale[tone].replace("##","#").replace("bb","b");
-      switch (toneWithoutDoubleAccidental) {
-        case "Cb":
-          romanceScale.push("Dob");
-          break;
-        case "C":
-          romanceScale.push("Do")
-          break;
-        case "C#":
-          romanceScale.push("Do#")
-          break;
-        case "Db":
-          romanceScale.push("Reb")
-          break;
-        case "D":
-          romanceScale.push("Re")
-          break;
-        case "D#":
-          romanceScale.push("Re#")
-          break;
-        case "Eb":
-          romanceScale.push("Mib")
-          break;
-        case "E":
-          romanceScale.push("Mi")
-          break;
-        case "E#":
-          romanceScale.push("Mi#")
-          break;
-        case "Fb":
-          romanceScale.push("Fab");
-          break;
-        case "F":
-          romanceScale.push("Fa")
-          break;
-        case "F#":
-          romanceScale.push("Fa#")
-          break;
-        case "Gb":
-          romanceScale.push("Solb")
-          break;
-        case "G":
-          romanceScale.push("Sol")
-          break;
-        case "G#":
-          romanceScale.push("Sol#")
-          break;
-        case "Ab":
-          romanceScale.push("Lab")
-          break;
-        case "A":
-          romanceScale.push("La")
-          break;
-        case "A#":
-          romanceScale.push("La#")
-          break;
-        case "Bb":
-          romanceScale.push("Sib")
-          break;
-        case "B":
-          romanceScale.push("Si")
-          break;
-        case "B#":
-          romanceScale.push("Si#")
-          break;
-        default:
-          break;
-      }
+      let toneWithoutAccidentals = scale[tone].replace(/[^A-G]/,"").toString();
+      let accidentals = scale[tone].replace(/[A-G]/,"").toString();
+      const romanceTone = englishToRomance[toneWithoutAccidentals] + accidentals;
+      romanceScale.push(romanceTone)
     }
     return romanceScale;
   }
