@@ -677,7 +677,7 @@ class MusicScale {
     let romanceScale = [];
 
     for(let tone in scale){
-      let toneWithoutAccidentals = scale[tone].replace(/[^A-G]/,"").toString();
+      let toneWithoutAccidentals = scale[tone].replace(/[^A-G]+/,"").toString();
       let accidentals = scale[tone].replace(/[A-G]/,"").toString();
       const romanceTone = englishToRomance[toneWithoutAccidentals] + accidentals;
       romanceScale.push(romanceTone)
