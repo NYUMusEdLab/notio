@@ -18,7 +18,7 @@ class SoundMaker extends Component {
     this.soundMakerAdapter = new Adapter_to_SoundMaker(props);
   }
 
-  Instruments = () => this.soundMakerAdapter.Instruments;
+  Instruments = () => SoundFontLibraryNames; //this.soundMakerAdapter.Instruments;
 
   chooseInstrument() {
     this.soundMakerAdapter.chooseInstrument();
@@ -28,19 +28,19 @@ class SoundMaker extends Component {
   }
 
   getState(note) {
-    return this.soundMakerAdapter.getState();
+    return this.soundMakerAdapter.getState(note);
   }
 
   resumeSound(tone) {
-    this.soundMakerAdapter.resumeSound();
+    this.soundMakerAdapter.resumeSound(tone);
   }
 
   startSound(note) {
-    this.soundMakerAdapter.startSound();
+    this.soundMakerAdapter.startSound(note);
   }
 
   stopSound(note) {
-    this.soundMakerAdapter.stopSound();
+    this.soundMakerAdapter.stopSound(note);
   }
 
   render() {
