@@ -1,8 +1,8 @@
-import SoundFontLibraryNames from "data/SoundFontLibraryNames";
+// import SoundFontLibraryNames from "data/SoundFontLibraryNames";
 import { Component } from "react";
-import Adapter_to_SoundMaker from "./Adapters/Adapter_SoundFont_to_SoundMaker";
+import sf_Adapter_to_SoundMaker from "./Adapters/Adapter_SoundFont_to_SoundMaker";
 
-// import Adapter_to_SoundMaker from "./Adapters/Adapter_Tonejs_to_SoundMaker";
+import ts_Adapter_to_SoundMaker from "./Adapters/Adapter_Tonejs_to_SoundMaker";
 //TODO: make some adaptor pattern to implement different sound libraries: Sounds, Choose instrument, StartSound, StopSound
 class SoundMaker extends Component {
   /*
@@ -15,10 +15,17 @@ class SoundMaker extends Component {
     // this.instrumentSound = props.instrumentSound;
     // this.velocities = props.velocities;
     // this.synth = this.chooseInstrument();
-    this.soundMakerAdapter = new Adapter_to_SoundMaker(props);
+    // this.soundMakerAdapter = new Adapter_to_SoundMaker(props);
+    this.selectedAdaptor = 1;
+    this.soundMakerAdapters = [
+      new sf_Adapter_to_SoundMaker(props),
+      new ts_Adapter_to_SoundMaker(props),
+    ];
+    this.soundMakerAdapter = this.soundMakerAdapters[this.selectedAdaptor];
   }
 
-  Instruments = () => SoundFontLibraryNames; //this.soundMakerAdapter.Instruments;
+  // Instruments = () => SoundFontLibraryNames; //this.soundMakerAdapter.Instruments;
+  Instruments = () => this.soundMakerAdapter.Instruments;
 
   chooseInstrument() {
     this.soundMakerAdapter.chooseInstrument();
@@ -28,11 +35,11 @@ class SoundMaker extends Component {
   }
 
   getState(note) {
-    return this.soundMakerAdapter.getState(note);
+    return this.soundMakerAdapter.getState();
   }
 
-  resumeSound(tone) {
-    this.soundMakerAdapter.resumeSound(tone);
+  resumeSound(note) {
+    this.soundMakerAdapter.resumeSound(note);
   }
 
   startSound(note) {

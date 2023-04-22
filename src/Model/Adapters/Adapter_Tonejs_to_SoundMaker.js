@@ -1,4 +1,4 @@
-import SoundFontLibraryNames from "data/SoundFontLibraryNames";
+// import SoundFontLibraryNames from "data/SoundFontLibraryNames";
 import { Component } from "react";
 import { Piano } from "@tonejs/piano";
 import * as Tone from "tone";
@@ -24,7 +24,7 @@ class Adapter_Tonejs_to_SoundMaker extends Component {
   //    stopSound = (note) =>{};
   Instruments = TonejsSoundsNames;
   chooseInstrument() {
-    var tempSynth = {};
+    let tempSynth = {};
     switch (this.instrumentSound) {
       //TODO: Uncomm and implement some piano sound
       case "piano":
@@ -47,11 +47,11 @@ class Adapter_Tonejs_to_SoundMaker extends Component {
     this.synth.load();
   }
 
-  getState() {
+  getState(tone) {
     return this.sound.context.state;
   }
 
-  resumeSound() {
+  resumeSound(tone) {
     this.sound.context.resume();
   }
 
