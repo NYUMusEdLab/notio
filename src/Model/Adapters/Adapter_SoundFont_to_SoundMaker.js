@@ -1,7 +1,6 @@
 import SoundFontLibraryNames from "data/SoundFontLibraryNames";
 import Soundfont from "soundfont-player";
 import Adapter_X_to_SoundMaker from "./Adapter_X_to_SoundMaker";
-import { AudioContext } from "standardized-audio-context";
 
 //TODO: make some adaptor pattern to implement different sound libraries: Sounds, Choose instrument, StartSound, StopSound
 class Adapter_SoundFont_to_SoundMaker extends Adapter_X_to_SoundMaker {
