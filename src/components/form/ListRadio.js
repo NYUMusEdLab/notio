@@ -60,7 +60,7 @@ class ListRadio extends Component {
             {this.props.data.map((option) => {
                 return <Radio
                     nameField={this.props.nameField}
-                    label={option.name}
+                    label={option.label || option.name}
                     isSelected={this.state.radios[option.name]}
                     onRadioChange={this.onChange}
                     key={option.name}
