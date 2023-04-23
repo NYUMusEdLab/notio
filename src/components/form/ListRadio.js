@@ -25,11 +25,9 @@ class ListRadio extends Component {
       this.props.setTitle(this.props.initOption);
       if (this.props.displayPicto) this.props.setImage(this.props.initOption);
     }
-   
   }
 
   onChange = (changeEvent) => {
-
     const { value } = changeEvent.target;
     this.setState(
       (prevState) => ({
@@ -56,18 +54,20 @@ class ListRadio extends Component {
 
   render() {
     return (
-        <>
-            {this.props.data.map((option) => {
-                return <Radio
-                    nameField={this.props.nameField}
-                    label={option.name}
-                    isSelected={this.state.radios[option.name]}
-                    onRadioChange={this.onChange}
-                    key={option.name}
-                />
-            })}
-        </>
-    )
+      <>
+        {this.props.data.map((option) => {
+          return (
+            <Radio
+              nameField={this.props.nameField}
+              label={option.data_index_name || option.name || option.label}
+              isSelected={this.state.radios[option.name]}
+              onRadioChange={this.onChange}
+              key={option.name}
+            />
+          );
+        })}
+      </>
+    );
   }
 }
 

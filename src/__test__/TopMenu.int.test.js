@@ -3,6 +3,13 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import WholeApp from "../WholeApp";
+import SoundMaker from "../Model/SoundMaker";
+
+jest.mock("../Model/SoundMaker"); // Automatic mock, which can be asserted against
+
+beforeEach(() => {
+  SoundMaker.mockClear();
+});
 
 jest.mock("react-dom", () => {
   return {

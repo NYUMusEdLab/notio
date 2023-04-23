@@ -26,13 +26,13 @@ import NotationImg from "../../assets/img/Notation";
 
 import clefs from "../../data/clefs";
 import tooltipText from "../../data/tooltipText";
+// import SoundFontLibraryNames from "data/SoundFontLibraryNames";
 // import CustomScaleSelector from "./CustomScaleSelector";
-
-const sounds = [{ name: "piano" }, { name: "AMSynth" }];
 
 class TopMenu extends Component {
   constructor(props) {
     super(props);
+    this.sounds = props.soundNames;
     this.state = {
       titleNotation: "",
       clefTitle: "",
@@ -167,8 +167,8 @@ class TopMenu extends Component {
               content={
                 <div className="items-list">
                   <ListRadio
-                    nameField="scale"
-                    data={sounds}
+                    nameField="sound"
+                    data={this.sounds}
                     handleChange={this.props.handleChangeSound}
                     setTitle={this.setSoundTitle}
                     initOption={this.props.instrumentSound}
