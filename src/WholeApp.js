@@ -465,6 +465,7 @@ class WholeApp extends Component {
           />
         </div>
         <MobileView>
+          <div className="blackout"></div>
           <Popup trigger={<div/>} modal open={true} closeOnDocumentClick={false}>
             <div style={{
               "backgroundColor": "white",
