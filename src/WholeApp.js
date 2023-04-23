@@ -7,7 +7,8 @@ import TopMenu from "./components/menu/TopMenu";
 import LoadingScreen from "./components/LoadingScreen";
 import { notio_tutorial } from "./data/config";
 import scales from "./data/scalesObj";
-// import SoundLibraryNames from "data/SoundFontLibraryNames";
+import { MobileView } from 'react-device-detect';
+import Popup from 'reactjs-popup';
 import SoundLibraryNames from "data/TonejsSoundNames";
 
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
@@ -471,10 +472,26 @@ class WholeApp extends Component {
             clef={this.state.clef}
           />
         </div>
+        <MobileView>
+          <div className="blackout"></div>
+          <Popup trigger={<div/>} modal open={true} closeOnDocumentClick={false}>
+            <div style={{
+              "backgroundColor": "white",
+              "fontSize": "12px",
+              "width": "100%",
+              "padding": "5px",
+              "textAlign": "center"
+            }}>
+              <h3>Notio does not have mobile support yet.</h3>
+              <h3>Please use a computer</h3>
+            </div>
+          </Popup>
+        </MobileView>
       </>
     );
   }
 }
+// 
 
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
 //This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
