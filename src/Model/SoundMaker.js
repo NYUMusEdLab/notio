@@ -15,7 +15,7 @@ class SoundMaker extends Component {
     // this.velocities = props.velocities;
     // this.synth = this.chooseInstrument();
     // this.soundMakerAdapter = new Adapter_to_SoundMaker(props);
-    this.selectedAdaptor = "tonejs-player";
+    this.selectedAdaptor = "soundfont-player";
     this.soundMakerAdapters = {
       "soundfont-player": new sf_Adapter_to_SoundMaker(props),
       "tonejs-player": new ts_Adapter_to_SoundMaker(props),

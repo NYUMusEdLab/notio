@@ -7,8 +7,8 @@ import TopMenu from "./components/menu/TopMenu";
 import LoadingScreen from "./components/LoadingScreen";
 import { notio_tutorial } from "./data/config";
 import scales from "./data/scalesObj";
-// import SoundLibraryNames from "data/SoundFontLibraryNames";
-import SoundLibraryNames from "data/TonejsSoundNames";
+import SoundLibraryNames from "data/SoundFontLibraryNames";
+// import SoundLibraryNames from "data/TonejsSoundNames";
 
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
 //This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
@@ -101,6 +101,7 @@ class WholeApp extends Component {
   };
 
   handleChangeSound = (sound) => {
+    // const instrumentsound = this.state.soundNames.find(instrument => instrument.label === sound)
     this.setState({ instrumentSound: sound });
   };
 

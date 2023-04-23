@@ -1,5 +1,5 @@
 const TonejsSoundsNames = [
-  { data_index_name: "piano", name: "piano" },
-  { data_index_name: "AMSynth", name: "AMSynth" },
+  { data_index_name: "piano", label: "piano" },
+  { data_index_name: "AMSynth", label: "AMSynth" },
 ];
 export default TonejsSoundsNames;
