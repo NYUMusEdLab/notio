@@ -1,5 +1,6 @@
 const scales = [
   {
+    data_index_name: "Major (Ionian)",
     name: "Major (Ionian)",
     steps: [0, 2, 4, 5, 7, 9, 11],
     numbers: ["1", "2", "3", "4", "5", "6", "△7"],
@@ -7,75 +8,89 @@ const scales = [
     default: true,
   },
   {
+    data_index_name: "Chromatic",
     name: "Chromatic",
     steps: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     numbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
   },
   {
+    data_index_name: "Mixolydian",
     name: "Mixolydian",
     steps: [0, 2, 4, 5, 7, 9, 10],
     numbers: ["1", "2", "3", "4", "5", "6", "7"],
   },
   {
+    data_index_name: "Lydian",
     name: "Lydian",
     steps: [0, 2, 4, 6, 7, 9, 11],
     numbers: ["1", "2", "3", "#4", "5", "6", "△7"],
     major_seventh: 11,
   },
   {
+    data_index_name: "Major Pentatonic",
     name: "Major Pentatonic",
     steps: [0, 2, 4, 7, 9],
     numbers: ["1", "2", "3", "5", "6"],
   },
   {
+    data_index_name: "Minor Pentatonic",
     name: "Minor Pentatonic",
     steps: [0, 3, 5, 7, 10],
     numbers: ["1", "b3", "4", "5", "7"],
   },
   {
+    data_index_name: "Natural Minor/Aeolian",
     name: "Natural Minor/Aeolian",
     steps: [0, 2, 3, 5, 7, 8, 10],
     numbers: ["1", "2", "b3", "4", "5", "b6", "7"],
   },
   {
+    data_index_name: "Dorian",
     name: "Dorian",
     steps: [0, 2, 3, 5, 7, 9, 10],
     numbers: ["1", "2", "b3", "4", "5", "6", "7"],
   },
   {
+    data_index_name: "Harmonic Minor",
     name: "Harmonic Minor",
     steps: [0, 2, 3, 5, 7, 8, 11],
     numbers: ["1", "2", "b3", "4", "5", "b6", "△7"],
     major_seventh: 11,
   },
   {
+    data_index_name: "Melodic Minor",
     name: "Melodic Minor",
     steps: [0, 2, 3, 5, 7, 9, 11],
     numbers: ["1", "2", "b3", "4", "5", "6", "△7"],
     major_seventh: 11,
   },
   {
+    data_index_name: "Phrygian",
     name: "Phrygian",
     steps: [0, 1, 3, 5, 7, 8, 10],
     numbers: ["1", "b2", "b3", "4", "5", "b6", "7"],
   },
   {
+    data_index_name: "Locrian",
     name: "Locrian",
     steps: [0, 1, 3, 5, 6, 8, 10],
     numbers: ["1", "b2", "b3", "4", "b5", "b6", "7"],
   },
   {
+    data_index_name: "Minor Blues",
     name: "Minor Blues",
     steps: [0, 3, 5, 6, 7, 10],
     numbers: ["1", "b3", "4", "b5", "5", "7"],
   },
   {
+    data_index_name: "Major Blues",
     name: "Major Blues",
     steps: [0, 2, 3, 4, 7, 9],
     numbers: ["1", "2", "b3", "3", "5", "6"],
   },
   //theese are commented out to make the scale menu shorter, not overlapping the keys on the keyboard
   // {
+  //   data_index_name: "Whole tone",
   //   name: "Whole tone",
   //   steps: [0, 2, 4, 6, 8, 10],
   //   numbers: ["1", "2", "3", "#4", "#5", "7"],
@@ -83,6 +98,7 @@ const scales = [
   //   // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
   // },
   // {
+  //   data_index_name: "Dim scale major7",
   //   name: "Dim scale major7",
   //   steps: [0, 2, 3, 5, 6, 8, 9, 11],
   //   numbers: ["1", "2", "b3", "4", "b5", "#5", "6", "△7"],
@@ -90,6 +106,7 @@ const scales = [
   //   // numbers: ['1', 'b2', '2', 'b3', 'b5', '△7'],
   // },
   // {
+  //   data_index_name: "Dim scale minor7",
   //   name: "Dim scale minor7",
   //   steps: [0, 1, 3, 4, 6, 7, 9, 10],
   //   numbers: ["1", "b2", "b3", "3", "#4", "5", "6", "7"],
@@ -98,6 +115,7 @@ const scales = [
   // },
 
   // {
+  //   data_index_name: "Mixolydian b9b13",
   //   name: "Mixolydian b9b13",
   //   steps: [0, 1, 4, 5, 7, 8, 10],
   //   numbers: ["1", "b2", "3", "4", "5", "b6", "7"],

@@ -1,11 +1,12 @@
 const themes = [
   {
-    name: 'light'
+    data_index_name: "light",
+    name: "Light",
   },
   {
-    name: 'dark',
-  }
-
+    data_index_name: "dark",
+    name: "Dark",
+  },
 ];
 
 export default themes;
