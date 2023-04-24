@@ -15,16 +15,16 @@
 .form-check {
   .label-wrapper {
     display: block;
-    position: relative;
-    padding-left: 2em;
-    margin-bottom: 0.6em;
+    // position: relative;
+    padding-left: 2rem;
+    margin-bottom: 0.6rem;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    font-weight: 700;
-    font-size: 0.7vw;
+    // font-weight: 700;
+    font-size: 1.1rem;
     text-align: left;
   }
   .label-wrapper {
@@ -58,14 +58,14 @@
       position: absolute;
       top: 0;
       left: 0;
-      height: 2.3em;
-      width: 2.3em;
+      height: 2rem;
+      width: 2rem;
       background-color: #eee;
       border: 2px solid black;
       &:after {
-        width: 1.6vw;
-        height: 1.6vw;
-        top: -0.2vw;
+        width: 2rem;
+        height: 2rem;
+        top: -0.2rem;
         content: url(../../../img/tick_submenu.svg);
         position: absolute;
         display: none;
