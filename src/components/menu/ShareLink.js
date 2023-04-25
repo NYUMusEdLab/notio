@@ -14,7 +14,7 @@ const ShareLink = (props) => {
     return (
       <div className="share-link">
         <h2>Share</h2>
-        <p>Share your current setup:</p>
+        <p>Share your stored setup:</p>
         <a href={url} title="" target="_blank" rel="noopener noreferrer">
           {fullUrl}
         </a>
@@ -35,6 +35,7 @@ const ShareLink = (props) => {
         <p>Share your current setup:</p>
         <button onClick={props.saveSessionToDB}>create share link</button>
         <span className={`message ${hasCopied ? "show" : ""}`}>The link has been copied</span>
+        <span>will store online and create a new link for sharing</span>
       </div>
     );
   } else {
