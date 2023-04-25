@@ -7,6 +7,8 @@
 }
 
 .overlay {
+  font-size: 1.5rem;
+
   // margin: 8rem auto;
   resize: both;
   // display: flex;
@@ -158,6 +160,10 @@
   align-items: center;
   align-content: center;
   justify-content: center;
+
+  .h5 {
+    font-size: 2rem;
+  }
 }
 
 .tab-content > .active {
