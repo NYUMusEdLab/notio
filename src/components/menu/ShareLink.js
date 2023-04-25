@@ -28,11 +28,11 @@ const ShareLink = (props) => {
           }}>
           copy
         </button>
-        <button onClick={props.saveSessionToDB}>save new setup</button>
+        {/* <button onClick={props.saveSessionToDB}>save new setup</button> */}
         <span className={`message ${hasCopied ? "show" : ""}`}>The link has been copied</span>
       </div>
     );
-  } else {
+  } else if (props.saveSessionToDB) {
     return (
       <div className="share-link">
         <h2>Share</h2>
@@ -42,6 +42,13 @@ const ShareLink = (props) => {
       </div>
     );
     // return <div>Could not generate url</div>;
+  } else {
+    return (
+      <div className="share-link">
+        <h2>Share</h2>
+        <p>Create a Share link on the create links tab</p>
+      </div>
+    );
   }
 };
 
