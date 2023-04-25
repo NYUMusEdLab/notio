@@ -27,10 +27,16 @@ const Share = (props) => {
       <Overlay key={props.sessionID} close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
           {/* <Tabs defaultActiveKey="share" activeTab={activeTab} id="controlled-tab-example"> */}
-          <Tabs defaultActiveKey="share" id="controlled-tab-example">
+          <Tabs defaultActiveKey={props.sessionID ? "share" : "links"} id="controlled-tab-example">
             <Tab eventKey="share" title="Share">
               <div>
-                <ShareLink sessionID={props.sessionID} saveSessionToDB={props.saveSessionToDB} />
+                <ShareLink sessionID={props.sessionID} saveSessionToDB={undefined} />
+              </div>
+            </Tab>
+
+            <Tab eventKey="links" title="create links">
+              <div>
+                <ShareLink sessionID={undefined} saveSessionToDB={props.saveSessionToDB} />
               </div>
             </Tab>
           </Tabs>
