@@ -1,78 +1,57 @@
+// import SoundFontLibraryNames from "data/SoundFontLibraryNames";
 import { Component } from "react";
-import { Piano } from "@tonejs/piano";
-import * as Tone from "tone";
+import sf_Adapter_to_SoundMaker from "./Adapters/Adapter_SoundFont_to_SoundMaker";
 
+import ts_Adapter_to_SoundMaker from "./Adapters/Adapter_Tonejs_to_SoundMaker";
+//TODO: make some adaptor pattern to implement different sound libraries: Sounds, Choose instrument, StartSound, StopSound
 class SoundMaker extends Component {
-  /* 
-        Module handling all making of sounds.
-        Made as a Component so it updates when a new instrument is made, but never renders.
-        So far only handles the Piano module from tonejs.
-    */
+  /*
+    Module handling all making of sounds.
+    Made as a Component so it updates when a new instrument is made, but never renders.
+    So far only handles the Piano module from tonejs.
+  */
   constructor(props) {
     super(props);
-    this.sound = Tone;
-    this.instrumentSound = props.instrumentSound;
-    this.velocities = props.velocities;
-    //this.volume = options.volume;
-    this.synth = this.chooseInstrument();
-    // this.initInstrument();
+    // this.instrumentSound = props.instrumentSound;
+    // this.velocities = props.velocities;
+    // this.synth = this.chooseInstrument();
+    // this.soundMakerAdapter = new Adapter_to_SoundMaker(props);
+    this.selectedAdaptor = 1;
+    this.soundMakerAdapters = [
+      new sf_Adapter_to_SoundMaker(props),
+      new ts_Adapter_to_SoundMaker(props),
+    ];
+    this.soundMakerAdapter = this.soundMakerAdapters[this.selectedAdaptor];
   }
 
-  //    startSound =(note) =>{};
-  //    stopSound = (note) =>{};
+  // Instruments = () => SoundFontLibraryNames; //this.soundMakerAdapter.Instruments;
+  Instruments = () => this.soundMakerAdapter.Instruments;
 
   chooseInstrument() {
-    var tempSynth = {};
-    switch (this.instrumentSound) {
-      //TODO: Uncomm and implement some piano sound
-      case "piano":
-        tempSynth = new Piano({
-          velocities: this.velocities,
-        }).toDestination();
-
-        tempSynth.load();
-        break;
-
-      default:
-        tempSynth = new Tone.PolySynth(Tone.AMSynth).toDestination();
-        break;
-    }
-
-    return tempSynth;
+    this.soundMakerAdapter.chooseInstrument();
   }
-
   initInstrument() {
-    this.synth.load();
+    this.soundMakerAdapter.initInstrument();
   }
 
-  getState() {
-    return this.sound.context.state;
+  getState(note) {
+    return this.soundMakerAdapter.getState();
   }
 
-  resumeSound() {
-    this.sound.context.resume();
+  resumeSound(note) {
+    this.soundMakerAdapter.resumeSound(note);
   }
 
   startSound(note) {
-    if (this.instrumentSound === "piano") {
-      this.synth.keyDown({ note: note });
-    } else {
-      const now = Tone.now();
-      this.synth.triggerAttack(note, now);
-    }
+    this.soundMakerAdapter.startSound(note);
   }
 
   stopSound(note) {
-    if (this.instrumentSound === "piano") {
-      this.synth.keyUp({ note: note });
-    } else {
-      const now = Tone.now();
-      this.synth.triggerRelease([note], now);
-    }
+    this.soundMakerAdapter.stopSound(note);
   }
 
   render() {
-    return null;
+    return this.soundMakerAdapter.render();
   }
 }
 
