@@ -157,40 +157,94 @@ const InfoOverlay = (props) => {
               <div>
                 <Card id="about">
                   <Card.Body>
-                    <Card.Img variant="top" src="https://i.ibb.co/RHDjH85/notio-logo.png" />
                     <Card.Title>About Notio</Card.Title>
                     <ListGroup>
                       <ListGroupItem>
-                        The idea behind Notio.
                         <Card.Body>
                           <Card.Text>
-                            The Notio Project focuses on developing new pedagogies and technologies
-                            for improving the teaching of music theory together within the creative
-                            music practices of songwriting and improvisation to improve music
-                            education in schools in Finland. This project is funded as a Bridging
-                            the Theory and Practice of Music through Educational Research and
-                            Technology research grant from the Åbo Academy University Foundation
-                            (Finland). The MusEDLab is collaborating with PI Cecilia Björk (Åbo
-                            Academy), Mats Granfors (Novia University of Applied Sciences), and Jan
-                            Jansson (Vasa Övningsskola).
+                            <b>The Notio project</b> focuses on researching and developing 
+                            new pedagogies and technologies that support processes 
+                            of learning to actively theorise and conceptualise music. 
+                            We believe that having the possibility to explore and 
+                            create music is central to those processes. With this in mind, 
+                            we have designed the Notio digital environment as a flexible, 
+                            open resource for teachers and learners. 
+                          </Card.Text>
+                          <Card.Text>
+                            This browser-based application can be used together with music videos, 
+                            tutorials, or backing tracks; to play along and improvise, 
+                            and as support for writing, analysing and transcribing music. 
+                            Notio also works well for ear training and for memorising scales 
+                            and modes in different languages. By curating material that 
+                            fits the learning goals and needs of groups and individual students, 
+                            teachers can use the digital resource from beginner level to 
+                            advanced professional level. Notio is public and free for anyone to use. 
+                            For an optimal user experience, please open the application in Chrome 
+                            on a laptop or desktop computer. 
+                          </Card.Text>
+                          <Card.Text>
+                            We thank the funders of the project:  
+                            The Åbo Akademi University Foundation (Stiftelsen för Åbo Akademi)
+                            The Swedish Cultural Foundation in Finland (Svenska kulturfonden)
+                            Högskolestiftelsen i Österbotten
+                            The association Föreningen Konstsamfundet r.f.
+                            Ålands musikinstitut
+                            Vasa övningsskola
+                          </Card.Text>
+                          <Card.Text>
+                            Many thanks also to all our colleagues and friends who keep providing feedback!
                           </Card.Text>
                         </Card.Body>
                       </ListGroupItem>
                       <ListGroupItem>
-                        Developers currently working at Notio.
+                        <b>Project Team</b>
                         <Card.Body>
                           <Card.Text>
-                            Jakob Skov Søndergård(Denmark), Martin Bruun Michaelsen(Denmark).
+                            Dr. Cecilia Björk, Assistant Professor, University of Music and Performing Arts Vienna, Austria
+                          </Card.Text>
+                          <Card.Text>
+                            Mats Granfors, Senior Lecturer, Novia University of Applied Science, Finland
+                          </Card.Text>
+                          <Card.Text>
+                            Dr. Alex Ruthmann, Associate Professor, New York University Steinhardt School of Education, Culture, and Human Development, USA
                           </Card.Text>
                         </Card.Body>
                       </ListGroupItem>
                       <ListGroupItem>
-                        Developers that have contributed to Notio.
+                        <b>Developers currently working at Notio</b>
                         <Card.Body>
                           <Card.Text>
-                            Emilie Zawadzki(France),Guergana Tzatchkova(Germany),Martin
-                            Desrumaux(France)
+                            Jakob Skov Søndergård(Denmark).
                           </Card.Text>
+                          <Card.Text>
+                            Martin Bruun Michaelsen(Denmark)
+                          </Card.Text>
+                        </Card.Body>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <b>Developers that have contributed to Notio</b>
+                        <Card.Body>
+                          <Card.Text>
+                          Muriel Colagrande (France)
+                          </Card.Text>
+                          <Card.Text>
+                          Martin Desrumaux (France)
+                          </Card.Text>
+                          <Card.Text>
+                          Marcus Gustafsson (Finland)
+                          </Card.Text>
+                          <Card.Text>
+                          Joachim Högväg (Finland)
+                          </Card.Text>
+                          <Card.Text>
+                          Joachim Majors (Finland)
+                          </Card.Text>
+                          <Card.Text>
+                          Guergana Tzatchkova(Germany/Mexico)
+                          </Card.Text>
+                          <Card.Text>
+                          Emilie Zawadzki (France)
+                          </Card.Text>                          
                         </Card.Body>
                       </ListGroupItem>
                     </ListGroup>
