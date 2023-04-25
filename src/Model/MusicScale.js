@@ -377,6 +377,10 @@ class MusicScale {
         case "German":
           theScale = this.MakeCustomScale(scaleFormula, keyName, whichNotation, this.Recipe);
           break;
+        case "Romance":
+          theScale = this.MakeCustomScale(scaleFormula, keyName, "English", this.Recipe);
+          theScale = this.convertToRomance(theScale);
+          break;
         default:
           theScale = this.MakeChromatic(
             scaleFormula,
@@ -659,6 +663,28 @@ class MusicScale {
 
     return absoluteMajorScales[notation][foneticTonename];
   }
+
+  convertToRomance(scale) {
+    const englishToRomance = {
+      "C": "Do",
+      "D": "Re",
+      "E": "Mi",
+      "F": "Fa",
+      "G": "Sol",
+      "A": "La",
+      "B": "Si"
+    }
+    let romanceScale = [];
+
+    for(let tone in scale){
+      let toneWithoutAccidentals = scale[tone].replace(/[^A-G]+/,"").toString();
+      let accidentals = scale[tone].replace(/[A-G]/,"").toString();
+      const romanceTone = englishToRomance[toneWithoutAccidentals] + accidentals;
+      romanceScale.push(romanceTone)
+    }
+    return romanceScale;
+  }
+
   /*
    *  adds accidentals to toneName, replacing several accidentals with the corresponding toneName
    * A### == C

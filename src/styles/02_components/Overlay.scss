@@ -9,7 +9,7 @@
 .overlay {
   font-size: 1.5rem;
 
-  // margin: 8rem auto;
+  margin: 8rem auto;
   resize: both;
   // display: flex;
   overflow: hidden;
@@ -145,6 +145,7 @@
   }
 }
 
+
 .tabs-wrapper {
   display: flex;
   height: 100%;
@@ -170,4 +171,7 @@
   display: block;
   flex: 1;
   height: 100%;
+
 }
+
+

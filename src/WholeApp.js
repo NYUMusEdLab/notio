@@ -7,6 +7,9 @@ import TopMenu from "./components/menu/TopMenu";
 import LoadingScreen from "./components/LoadingScreen";
 import { notio_tutorial } from "./data/config";
 import scales from "./data/scalesObj";
+import { MobileView } from 'react-device-detect';
+import Popup from 'reactjs-popup';
+import SoundLibraryNames from "data/TonejsSoundNames";
 
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
 //This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
@@ -26,6 +29,7 @@ class WholeApp extends Component {
     clef: "treble",
     baseNote: "C",
     notation: ["Colors"],
+    soundNames: SoundLibraryNames,
     instrumentSound: "piano", //"piano" or "AMSynth"
     pianoOn: true,
     extendedKeyboard: false,
@@ -91,6 +95,10 @@ class WholeApp extends Component {
     } else if (menu === "help" && this.state.helpTooltipRef === null) {
       this.setState({ helpTooltipRef: ref });
     }
+  };
+
+  handleSoundsAreLoaded = (sounds) => {
+    this.setState({ soundNames: sounds });
   };
 
   handleChangeSound = (sound) => {
@@ -431,6 +439,7 @@ class WholeApp extends Component {
             handleChangeActiveVideoTab={this.handleChangeActiveVideoTab}
             handleChangeSound={this.handleChangeSound}
             instrumentSound={this.state.instrumentSound}
+            soundNames={this.state.soundNames}
             handleChangeTooltip={this.handleChangeTooltip}
             handleResetVideoUrl={this.handleResetVideoUrl}
             resetVideoUrl={this.state.resetVideoUrl}
@@ -454,6 +463,7 @@ class WholeApp extends Component {
             baseNote={this.state.baseNote}
             notation={this.state.notation}
             instrumentSound={this.state.instrumentSound}
+            // handleSoundsAreLoaded={this.handleSoundsAreLoaded}
             pianoOn={this.state.pianoOn}
             extendedKeyboard={this.state.extendedKeyboard}
             trebleStaffOn={this.state.trebleStaffOn}
@@ -462,10 +472,26 @@ class WholeApp extends Component {
             clef={this.state.clef}
           />
         </div>
+        <MobileView>
+          <div className="blackout"></div>
+          <Popup trigger={<div/>} modal open={true} closeOnDocumentClick={false}>
+            <div style={{
+              "backgroundColor": "white",
+              "fontSize": "12px",
+              "width": "100%",
+              "padding": "5px",
+              "textAlign": "center"
+            }}>
+              <h3>Notio does not have mobile support yet.</h3>
+              <h3>Please use a computer</h3>
+            </div>
+          </Popup>
+        </MobileView>
       </>
     );
   }
 }
+// 
 
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
 //This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
