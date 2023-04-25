@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 const ShareLink = (props) => {
   const [hasCopied, setHasCopied] = useState(false);
-  // console.log("ShareLink");
-  // console.log(props.sessionID);
 
   if (props.sessionID) {
     const url = "/shared/" + props.sessionID;
@@ -12,7 +10,6 @@ const ShareLink = (props) => {
     const copyToClipBoard = () => {
       navigator.clipboard.writeText(fullUrl);
     };
-    // console.log("hasCopied", hasCopied);
 
     return (
       <div className="share-link">
@@ -28,7 +25,6 @@ const ShareLink = (props) => {
           }}>
           copy
         </button>
-        {/* <button onClick={props.saveSessionToDB}>save new setup</button> */}
         <span className={`message ${hasCopied ? "show" : ""}`}>The link has been copied</span>
       </div>
     );
@@ -41,7 +37,6 @@ const ShareLink = (props) => {
         <span className={`message ${hasCopied ? "show" : ""}`}>The link has been copied</span>
       </div>
     );
-    // return <div>Could not generate url</div>;
   } else {
     return (
       <div className="share-link">
