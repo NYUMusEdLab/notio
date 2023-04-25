@@ -1,4 +1,8 @@
 .notationSVG {
+  // background-color: yellow;
+  max-height: 2vh;
+  min-height: 1vh;
+  min-width: 90%;
   width: 5vw;
   margin: 1 auto;
   display: block;
@@ -12,7 +16,7 @@
     font-weight: 700;
   }
   .typeB {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 }
 
