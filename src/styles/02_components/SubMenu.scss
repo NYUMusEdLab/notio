@@ -1,5 +1,4 @@
 .sub-menu {
-  
   // position: relative;
   // align-self: end;
 
@@ -8,16 +7,14 @@
   // height: 60%;
   // flex-direction: column;
   // align-items: center;
-  
-
 
   .button {
     align-self: center;
     flex: 1 1 auto;
     // height: 100%;
-    max-height:4vh;
+    max-height: 4vh;
     width: 100%;
-    min-width:75px;
+    min-width: 75px;
     // width: 8.7vw;
     background-color: white;
     border-radius: 3em;
@@ -29,12 +26,12 @@
     font-weight: bold;
     text-align: center;
     vertical-align: middle;
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: center;
     // font-size: 1.5em;
-    &-title{
-      flex:1 1 auto;
+    &-title {
+      flex: 1 1 auto;
       align-self: center;
       justify-self: center;
       display: flex;
@@ -42,9 +39,8 @@
       align-items: center;
       justify-content: center;
       flex-wrap: nowrap;
+      font-size: 1.6rem;
     }
-    
-  
 
     //This hides the white submenu button
     .menu-root & {
@@ -61,7 +57,7 @@
       //   fill: white;
       // }
     }
-    
+
     &.selected {
       background: black;
       z-index: 20;
@@ -81,19 +77,16 @@
         }
       }
     }
-
-    
   }
 
-  &__title{
+  &__title {
     // background:blue;
     align-self: center;
     justify-self: center;
 
-    display:flex;
-    // font-size: 100px;
+    display: flex;
+    font-size: 1.6rem;
   }
-  
 
   // .clef {
   //   width: 1vw;
@@ -126,7 +119,7 @@
     visibility: hidden;
     transition: all 0.3s ease-out;
     width: 9.7vw;
-    min-width:75px;
+    min-width: 75px;
     background-color: white;
     border-bottom-left-radius: 10% 5%;
     border-bottom-right-radius: 10% 5%;
@@ -137,17 +130,19 @@
     overflow: scroll;
     padding-left: 0;
     padding-right: 0;
-    padding-top:11vh; //positions the first row of the submenu items
-    padding-bottom:2.7vw;
+    padding-top: 11vh; //positions the first row of the submenu items
+    padding-bottom: 2.7vw;
     // padding: 6vw 1vh 1vh 2.7vh;
     // padding-top: 9vw;
     box-shadow: 5px 3px 15px #666;
     font-weight: 700;
-    font-size: 0.7vw;
+    // font-size: 2.7rem;
 
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
+    //Sets the size of the root selection Tone-names
+    font-size: 1.1rem;
 
     // .menu-root & {
     //   padding-top: 9.5vw;
@@ -158,9 +153,9 @@
       z-index: 15;
       visibility: visible;
     }
-    .items-list{
+    .items-list {
       // background:blue;
-      width:98%;
+      width: 98%;
       padding-left: 0.5vw;
       padding-right: 0.5vw;
       padding-top: 1vw;
@@ -169,21 +164,21 @@
 
   .label-wrapper {
     // background:blue;
-    display:flex;
+    display: flex;
     text-align: center;
     // max-width: 6vw;
-    width:100%;
+    width: 100%;
+    //text in menus
+    font-size: 1rem;
 
-    .label {
-      font-size: 0.8rem;
-      font-weight: bold;
-      font-weight: 1vw;
-      display: inline-block;
-    }
+    // .label {
+    //   font-size: 3.6rem;
+    //   font-weight: bold;
+    //   font-weight: 1vw;
+    //   display: inline-block;
+    // }
   }
 }
-
-
 
 // .menu-notation {
 //   .sub-menu {
@@ -211,7 +206,6 @@
   .sub-menu {
     &__title {
       font-size: 2vh;
-    
 
       &.selected {
         display: block;
@@ -224,7 +218,6 @@
         // color: white;
       }
     }
-    
 
     .button {
       padding: 0 1.9vw 0 1.8vw;
@@ -236,10 +229,8 @@
         color: black;
       }
     }
-    
-    .rootform{
-     
 
+    .rootform {
       display: flex;
       /* grid-template-columns: 1fr; */
       /* grid-template-rows: repeat(8, 1fr); */
@@ -249,8 +240,8 @@
 
       // flex: 1 1 auto;
     }
-    .octave{
-      transform: translate(20%,0);
+    .octave {
+      transform: translate(20%, 0);
 
       display: flex;
       flex-direction: column;
@@ -271,22 +262,21 @@
     //   padding: 8.5vw 1vw 1vw 1vw;
     // }
 
-    .label-wrapper {
-      max-width: 100%;
-      font-size: 0.7vw;
-    }
+    // .label-wrapper {
+    //   max-width: 100%;
+    //   font-size: 3.4rem;
+    // }
   }
 }
 
-
 .circledButton {
   text-align: center;
-    align-content: center;
-    align-items: center;
-    border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-display:flex;
+  align-content: center;
+  align-items: center;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: flex;
   // display: inline-block;
   // position: relative;
   height: 3.4vw;
@@ -309,16 +299,16 @@ display:flex;
 
 .VideoSVG {
   width: 60%;
-  height:auto;
-  
+  height: auto;
+
   // @media (min-width: 1537px) {
   //   // transform: translate(0, 68%);
   // }
 }
 .share-svg {
   width: 50%;
-  height:auto;
- 
+  height: auto;
+
   // @media (min-width: 1537px) {
   //   // transform: translate(0, 68%);
   // }
@@ -327,8 +317,6 @@ display:flex;
 .react-player {
   overflow: hidden;
 }
-
-
 
 .half-circle {
   width: 200px;

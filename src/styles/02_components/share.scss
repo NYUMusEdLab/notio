@@ -12,29 +12,27 @@
   text-decoration: underline;
 }
 
-
 .share-link {
   color: rgb(255, 255, 255);
   padding: 1vw 3vw 4vw 3vw;
 
   h2 {
     margin-bottom: 0.4vw;
-    font-size: 2vw;
+    font-size: 2rem;
   }
   p {
     font-family: "Quicksand", sans-serif;
     margin-bottom: 2vw;
-    font-size: 1vw;
+    font-size: 1.6rem;
   }
   button {
     font-family: "Quicksand", sans-serif;
     margin-left: 1vw;
     padding: 0 0.8vw;
-    font-size: 1vw;
+    font-size: 1.6rem;
     font-weight: bold;
     height: 3.2vw;
     margin-bottom: 0.3vw;
-
   }
 
   .message {
@@ -43,7 +41,7 @@
     color: green;
     transition: 0.3s ease-in;
     opacity: 0;
-    font-size: 1vw;
+    font-size: 1.6rem;
 
     &.show {
       visibility: visible;

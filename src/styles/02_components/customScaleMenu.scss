@@ -1,11 +1,11 @@
 .menu__custom-scale {
   &__tone-list {
-    width: 90%;
-    min-height: 80%;
-    margin: 5%;
+    width: 100%;
+    min-height: 100%;
+    padding: 0.6vw;
     background: white;
     display: grid;
-    grid-template-columns: repeat(12, 2.4vw);
+    grid-template-columns: repeat(12, 2vw);
     grid-template-rows: (1fr 1fr 2fr 2fr);
     grid-template-areas:
       "tone_1  tone_b2  tone_2   tone_b3  tone_3   tone_4  tone_b5  tone_5  tone_b6   tone_6  tone_7  tone_Maj"
@@ -14,10 +14,12 @@
       " .      form     form     form     form     form    form     form    form      form    form    form       ";
 
     & > * {
-      padding: 1vh;
+      padding: 0vh;
       //   min-height: vh;
     }
     & .form-check.item {
+      // display: flex;
+      // flex-direction: column;
       &--1 {
         grid-area: tone_1;
       }

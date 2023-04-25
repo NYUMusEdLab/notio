@@ -14,18 +14,21 @@
 /* Style the checkmark/indicator */
 .form-check {
   .label-wrapper {
-    display: block;
-    position: relative;
-    padding-left: 2em;
-    margin-bottom: 0.6em;
+    // display: block;
+    // position: relative;
+
+    padding-left: 2rem;
+    margin-bottom: 0.6rem;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    font-weight: 700;
-    font-size: 0.7vw;
-    text-align: left;
+    // font-weight: 700;
+    font-size: 1.1rem;
+    text-align: center;
+
+    // text-align: left;
   }
   .label-wrapper {
     input {
@@ -37,9 +40,18 @@
       &:checked {
         ~ {
           .checkmark {
-            background-color: black;
+            // background-color: black;
             &:after {
+              font-size: 2rem;
+
+              text-align: center;
+              // display: table-cell;
+              // vertical-align: middle;
+              width: 2rem !important;
+              height: 2rem !important;
               display: block;
+              content: "\2713";
+              top: -0.5rem;
             }
           }
         }
@@ -49,26 +61,29 @@
       input {
         ~ {
           .checkmark {
-            background-color: #ccc;
+            background-color: #e4cece;
           }
         }
       }
     }
     .checkmark {
-      position: absolute;
+      // position: absolute;
+      display: flex;
+
       top: 0;
       left: 0;
-      height: 1.3em;
-      width: 1.3em;
+      margin-right: 0.5rem;
+      height: 2.8rem;
+      min-width: 2.4rem;
       background-color: #eee;
       border: 2px solid black;
       &:after {
-        width: 0.6vw;
-        height: 0.6vw;
-        top: -0.2vw;
-        content: url(../../../img/tick_submenu.svg);
+        width: 2rem;
+        height: 2rem;
+        top: -0.2rem;
+
+        // content: url(../../../img/tick_submenu.svg);
         position: absolute;
-        display: none;
       }
     }
   }
