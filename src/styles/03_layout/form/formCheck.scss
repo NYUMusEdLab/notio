@@ -14,7 +14,7 @@
 /* Style the checkmark/indicator */
 .form-check {
   .label-wrapper {
-    display: block;
+    // display: block;
     // position: relative;
     padding-left: 2rem;
     margin-bottom: 0.6rem;
@@ -49,15 +49,18 @@
       input {
         ~ {
           .checkmark {
-            background-color: #ccc;
+            background-color: #cccccc84;
           }
         }
       }
     }
     .checkmark {
-      position: absolute;
+      // position: absolute;
+      display: flex;
+
       top: 0;
       left: 0;
+      margin-right: 0.5rem;
       height: 2rem;
       width: 2rem;
       background-color: #eee;
@@ -68,7 +71,6 @@
         top: -0.2rem;
         content: url(../../../img/tick_submenu.svg);
         position: absolute;
-        display: none;
       }
     }
   }
