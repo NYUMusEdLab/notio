@@ -16,13 +16,9 @@ const colors = {
     "#A9A9A9",
     "#B2BEB5",
     "#989898",
-    // "#464646",
     "#868686",
-    //"#4692B4",
-    // "#343434",
     "#737373",
     "#E6E8FA",
-    //"#5F9EA0",
   ],
   colorBlindProtanopia: [
     "#cd0223", // red
@@ -70,7 +66,6 @@ const colors = {
   ],
   colorBlind2: [
     "#cd0223",
-    //"#920001",
     "#924900",
     "#db6d00",
     "#24ff24",
@@ -78,15 +73,13 @@ const colors = {
     "#ff6db6",
     "#ffb6db",
     "#9D7AFF",
-    // "#490092",
     "#006ddb",
     "#b66dff",
     "#6db6ff",
     "#b6dbff",
-  ], //"#009292"
+  ],
   pastel: [
     "#cd0223",
-    //"#F8BBD0",
     "#E1BEE7",
     "#D1C4E9",
     "#C5CAE9",
@@ -101,7 +94,6 @@ const colors = {
   ],
   greenis: [
     "#cd0223",
-    //"#FFAAAA",
     "#CCFFFF",
     "#FFFFCC",
     "#99CCCC",
@@ -116,7 +108,6 @@ const colors = {
   ],
   bright: [
     "#cd0223",
-    //"#ff0000",
     "#ff8c00",
     "#ffff00",
     "#c0c0c0",
