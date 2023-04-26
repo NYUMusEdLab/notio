@@ -264,7 +264,7 @@ class WholeApp extends Component {
   //   //this.setState({ [selectedElement]: selectedValue });
   // }
 
-  saveSessionToDB = () => {
+  saveSessionToDB = async () => {
     // console.log("saveSessionToDB");
     const {
       octave,
@@ -283,7 +283,8 @@ class WholeApp extends Component {
       videoActive,
       activeVideoTab,
     } = this.state;
-    db.collection("sessions")
+    console.log("START SAVE");
+    return await db.collection("sessions")
       .add({
         octave: octave,
         scale: scale,
@@ -301,10 +302,7 @@ class WholeApp extends Component {
         videoActive: videoActive,
         activeVideoTab: activeVideoTab,
       })
-      .then((docRef) => {
-        // console.log("Session written with ID: ", docRef.id);
-        this.setState({ sessionID: docRef.id });
-      })
+      .then((docRef) => docRef.id)
       .catch((error) => {
         console.error("Error adding document: ", error);
         this.setState({ sessionError: error });
