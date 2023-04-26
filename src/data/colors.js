@@ -1,29 +1,84 @@
+//Test colorblindness pallettes with the folowing simulators:
+// Here are some color blindness simulators that you can use:
+
+// Coblis: https://www.color-blindness.com/coblis-color-blindness-simulator/
+// Color Oracle: https://colororacle.org/
+// Sim Daltonism: https://michelf.ca/projects/sim-daltonism/
 const colors = {
-  colorBlind1: [
+  // grayscale
+  standard: [
     "#cd0223",
-    //"#882255",
+    "#C8C8C8",
+    "#C0C0C0",
+    "#696969",
+    "#808080",
+    "#696969",
+    "#A9A9A9",
+    "#B2BEB5",
+    "#989898",
+    // "#464646",
+    "#868686",
+    //"#4692B4",
+    // "#343434",
+    "#737373",
+    "#E6E8FA",
+    //"#5F9EA0",
+  ],
+  colorBlindProtanopia: [
+    "#cd0223", // red
     "#AA4499",
+    "#6E6BB8",
+    "#117733",
+    "#44AA99",
+    "#88CCEE",
+    "#A8B8EF",
+    "#D3F3B8",
+    "#DDCC77",
+    "#9BB34D",
+    "#4035FF",
+    "#CC6677",
+  ],
+
+  colorBlindDeuteranopia: [
+    "#cd0223", // red
+    "#44AA99",
+    "#A8B8EF",
+    "#117733",
+    "#6E6BB8",
+    "#AA4499",
+    "#9BB34D",
+    "#4035FF",
+    "#D3F3B8",
+    "#88CCEE",
     "#CC6677",
     "#DDCC77",
+  ],
+
+  colorBlindTritanopia: [
+    "#cd0223", // red
+    "#AA4499",
+    "#CC6677",
     "#88CCEE",
     "#44AA99",
     "#117733",
-    "#4035FF",
     "#A8B8EF",
-    "#332288",
-    "#9BB34D",
+    "#6E6BB8",
     "#D3F3B8",
+    "#9BB34D",
+    "#5C5C81",
+    "#DDCC77",
   ],
   colorBlind2: [
     "#cd0223",
-    //"#920000",
+    //"#920001",
     "#924900",
     "#db6d00",
     "#24ff24",
     "#ffff6d",
     "#ff6db6",
     "#ffb6db",
-    "#490092",
+    "#9D7AFF",
+    // "#490092",
     "#006ddb",
     "#b66dff",
     "#6db6ff",
@@ -69,7 +124,7 @@ const colors = {
     "#228b22",
     "#00ff7f",
     "#00ffff",
-    "#0000ff",
+    "#4d4dff",
     "#87cefa",
     "#8a2be2",
     "#ee82ee",
@@ -87,22 +142,6 @@ const colors = {
     "#674ed8",
     "#a059ed",
     "#ba04ff",
-  ],
-  grayScale: [
-    "#cd0223",
-    "#C8C8C8",
-    "#C0C0C0",
-    "#696969",
-    "#808080",
-    "#696969",
-    "#A9A9A9",
-    "#B2BEB5",
-    "#464646",
-    "#868686",
-    //"#4692B4",
-    "#343434",
-    "#E6E8FA",
-    //"#5F9EA0",
   ],
 };
 
