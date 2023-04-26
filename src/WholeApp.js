@@ -283,7 +283,6 @@ class WholeApp extends Component {
       videoActive,
       activeVideoTab,
     } = this.state;
-    console.log("START SAVE");
     return await db.collection("sessions")
       .add({
         octave: octave,

@@ -4,7 +4,6 @@ const ShareLink = (props) => {
   const [url, setUrl] = useState("");
 
   const copyToClipBoard = (fullUrl) => {
-    console.log("COPY");
     navigator.clipboard.writeText(fullUrl);
   };
 
@@ -13,10 +12,7 @@ const ShareLink = (props) => {
       <h2>Share</h2>
       <p>Share your current setup:</p>
       <button onClick={ async () => {
-        console.log("HERE");
         let dbId = await props.saveSessionToDB();
-        console.log("AFTER WITH ", dbId);
-        console.log(dbId);
         let url = "/shared/" + dbId;
         let fullUrl = window.location.host + url;
         copyToClipBoard(fullUrl);
