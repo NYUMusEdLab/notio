@@ -18,9 +18,9 @@
   position: absolute;
   transform: scale(96%, 96%);
   padding: 5px;
-  width: 40rem;
+  width: 60rem;
   max-width: 90%;
-  height: 25rem;
+  height: 40rem;
   max-height: 90%;
   z-index: 30;
   left: 0;
@@ -145,7 +145,6 @@
   }
 }
 
-
 .tabs-wrapper {
   display: flex;
   height: 100%;
@@ -171,7 +170,4 @@
   display: block;
   flex: 1;
   height: 100%;
-
 }
-
-
