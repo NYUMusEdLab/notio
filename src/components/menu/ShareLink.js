@@ -1,51 +1,46 @@
 import React, { useState } from "react";
 
 const ShareLink = (props) => {
-  const [hasCopied, setHasCopied] = useState(false);
+  const [url, setUrl] = useState("");
+  const [fullUrl, setFullUrl] = useState("");
 
-  if (props.sessionID) {
-    const url = "/shared/" + props.sessionID;
-    const fullUrl = window.location.host + url;
+  const copyToClipBoard = (text) => {
+    navigator.clipboard.writeText(text);
+  };
 
-    const copyToClipBoard = () => {
-      navigator.clipboard.writeText(fullUrl);
-    };
-
-    return (
-      <div className="share-link">
-        <h2>Share</h2>
-        <p>Share your stored setup:</p>
-        <a href={url} title="" target="_blank" rel="noopener noreferrer">
-          {fullUrl}
-        </a>
-        <button
-          onClick={() => {
-            copyToClipBoard();
-            setHasCopied(!hasCopied);
-          }}>
-          copy
-        </button>
-        <span className={`message ${hasCopied ? "show" : ""}`}>The link has been copied</span>
-      </div>
-    );
-  } else if (props.saveSessionToDB) {
-    return (
-      <div className="share-link">
-        <h2>Share</h2>
-        <p>Share your current setup:</p>
-        <button onClick={props.saveSessionToDB}>create share link</button>
-        <span className={`message ${hasCopied ? "show" : ""}`}>The link has been copied</span>
-        <span>will store online and create a new link for sharing</span>
-      </div>
-    );
-  } else {
-    return (
-      <div className="share-link">
-        <h2>Share</h2>
-        <p>Create a Share link on the create links tab</p>
-      </div>
-    );
-  }
+  return (
+    <div className="share-link">
+      <h2>Share</h2>
+      <p>Share your current setup:</p>
+      <a
+        href={url}
+        className={`message ${url !== "" ? "show" : ""}`}
+        title=""
+        target="_blank"
+        rel="noopener noreferrer">
+        {fullUrl}
+      </a>
+      <br></br>
+      <button
+        onClick={async () => {
+          if (url === "") {
+            let dbId = await props.saveSessionToDB();
+            let url = "/shared/" + dbId;
+            setUrl(url);
+            setFullUrl(window.location.host + url);
+          }
+          copyToClipBoard(fullUrl);
+        }}>
+        {url ? "Copy to clipboard" : "Create Share Link"}
+      </button>
+      <br></br>
+      <span>
+        {url
+          ? "The link is copied to your clipboard and can be sent to others to open the same setup"
+          : "Store your current setup and share it with a link."}
+      </span>
+    </div>
+  );
 };
 
 export default ShareLink;

@@ -26,7 +26,7 @@ import NotationImg from "../../assets/img/Notation";
 
 import clefs from "../../data/clefs";
 import tooltipText from "../../data/tooltipText";
-import SoundFontLibraryNames from "data/SoundFontLibraryNames";
+//import SoundFontLibraryNames from "data/SoundFontLibraryNames";
 // import CustomScaleSelector from "./CustomScaleSelector";
 
 class TopMenu extends Component {
