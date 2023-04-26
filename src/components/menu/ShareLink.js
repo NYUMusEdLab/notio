@@ -33,11 +33,11 @@ const ShareLink = (props) => {
         }}>
         {url ? "Copy to clipboard" : "Create Share Link"}
       </button>
-      <span className={`message ${url !== "" ? "" : "show"}`}>
-        Store your current setup and share it with a link.
-      </span>
-      <span className={`message ${url !== "" ? "show" : ""}`}>
-        The link is copied to your clipboard and can be sent to others to open the same setup
+      <br></br>
+      <span>
+        {url
+          ? "The link is copied to your clipboard and can be sent to others to open the same setup"
+          : "Store your current setup and share it with a link."}
       </span>
     </div>
   );
