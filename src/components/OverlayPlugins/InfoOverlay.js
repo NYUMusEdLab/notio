@@ -83,14 +83,16 @@ const InfoOverlay = (props) => {
                             <b>Video player</b>: Open and use the video player.<br/>
                             <b>Share this setup</b>: Share the setup you have created through a URL link.<br/>
                             <br/>
-                            You can change the colour scheme by pressing the numbers
-                            1: The Original Notio (bright)<br/>
+                            You can change the colour scheme by pressing the numbers<br/>
+                            1: Greyscale<br/>
                             2: Protanopia<br/>
                             3: Deuteranopia<br/>
                             4: Tritanopia<br/>
-                            5: Pastel<br/>
-                            6: Notio (darker)<br/> 
-                            7: Back to Greyscale (default)<br/>
+                            5: Variation 1<br/>
+                            6: The Original Notio<br/> 
+                            7: Variation 2<br/>
+                            8: Variation 3<br/>
+                            9: Pastel<br/>
                           </Card.Text>
                         </Card.Body>
                       </ListGroupItem>
@@ -218,7 +220,7 @@ const InfoOverlay = (props) => {
                           <br/>
                           Mats Granfors, Senior Lecturer, Novia University of Applied Science, Finland<br/>
                           <br/>
-                          Dr. Alex Ruthmann, Associate Professor, New York University Steinhardt School of Education, Culture, and Human Development, USA<br/>
+                          Dr. Alex Ruthmann, Associate Professor, New York University Steinhardt School of Culture, Education, and Human Development, USA<br/>
                           <br/>
                         </Card.Body>
                       </ListGroupItem>
@@ -231,7 +233,7 @@ const InfoOverlay = (props) => {
                         </Card.Body>
                       </ListGroupItem>
                       <ListGroupItem>
-                        <b>Developers that have contributed to Notio</b>
+                        <b>Developers who have contributed to Notio</b>
                         <Card.Body>
                           Muriel Colagrande (France)<br/>
                           <br/>
