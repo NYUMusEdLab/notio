@@ -21,16 +21,17 @@
     flex-wrap: nowrap;
     flex: 1 1 auto;
     row-gap: 10px;
-    padding: 1rem;
 
     .title-wrapper {
       // background: orange;
       align-self: center; //position the title at the bottom of the navbar
-
       display: flex;
       flex-direction: row;
       flex: 1 1 auto;
       align-items: flex-end;
+      text-align: center;
+      padding: 1rem 0;
+      // background-color: rgb(40, 40, 4);
     }
     .title {
       font-size: 0.9vw;
