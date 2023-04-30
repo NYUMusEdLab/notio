@@ -33,6 +33,8 @@ describe("When displaying the customScale creater menu", () => {
         </Routes>
       </MemoryRouter>
     );
+    // Close help menu
+    userEvent.click(screen.getByText("Press for help"));
 
     const scaleMenu = screen.getAllByText("Scale");
     expect(scaleMenu.length).toBe(1);
