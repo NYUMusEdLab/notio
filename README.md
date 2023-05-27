@@ -6,6 +6,10 @@ The Notio Project focuses on developing new pedagogies and technologies for impr
 
 ![alt text](http://res.cloudinary.com/dfwzmr3kv/image/upload/v1541950072/libpjli26z1bue7z4hs1.png "Notio Proto")
 
+# License
+
+This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
 Detailed info about Notio [here](http://musedlab.org/notio)
 
 [Notio hosted at Github Pages. 2020](https://nyumusedlab.github.io/notio/)
