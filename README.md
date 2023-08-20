@@ -12,7 +12,7 @@ This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 I
 
 Detailed info about Notio [here](http://musedlab.org/notio)
 
-[Notio hosted at Netlify. 2023]([here](https://notio-novia-fi.netlify.app/))
+[Notio hosted at Netlify. 2023 [here](https://notio-novia-fi.netlify.app/)
 
 You can see the project [here. 2019 dev of project](https://notio.pestanias.now.sh/)
 
