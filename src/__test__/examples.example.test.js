@@ -33,6 +33,8 @@ describe("Example with basis WholeApp rendering to", () => {
         </Routes>
       </MemoryRouter>
     );
+    // Close help menu
+    userEvent.click(screen.getByText("Press for help"));
 
     // Texts directly present in the DOM, and examples of what can be done
     screen.getByText("Show keyboard");
