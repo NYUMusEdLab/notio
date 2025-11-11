@@ -1,0 +1,12 @@
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+
+# Personal notes (not shared)
+notes/
+personal/
+
+# Agent outputs in progress
+*.draft.md
+*.wip.md
