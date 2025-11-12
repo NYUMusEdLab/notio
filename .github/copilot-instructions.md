@@ -904,3 +904,762 @@ numbers: ["1", "2", "3", "4", "5", "6", "△7"]  // Scale degrees
 
 *This document reflects the codebase as of November 2025. Update when architecture changes significantly.*
 
+# Additional Documentation for Notio Project
+
+**Note:** This content should be appended to `.github/copilot-instructions.md` after the current "END OF CODING INSTRUCTIONS" section.
+
+---
+
+## 🎹 Keyboard Interaction System
+
+### QWERTY Keyboard Mapping
+
+**Purpose:** Allow users to play notes using computer keyboard
+
+**Keycodes (Right Hand - Main Scale):**
+- Standard: `F G H J K L ; '` (8 keys)
+- Extended: `A S D F G H J K L ; ' [ =` (13 keys)
+
+**Keycodes (Left Hand - Lower Octave):**
+- `Z X C A S D Q W E` 
+- Maps to steps: `-6, -5, -4, -3, -2, -1, 0, 1, 2` relative to root
+
+**Implementation:**
+- Uses `code` property for cross-keyboard compatibility (AZERTY, QWERTY)
+- Maintains `pressedKeys` Set to prevent duplicate events
+- Three octave support via `threeLowerOctave` Set
+
+**Key Interaction Flow:**
+1. User presses physical keyboard key
+2. `handleKeyDown` checks if key is mapped
+3. Converts keycode to scale degree
+4. Triggers `noteOnHandler` with calculated note
+5. Adds key to `pressedKeys` Set
+6. On release, removes from Set and calls `noteOffHandler`
+
+---
+
+## 🎨 Color System
+
+### Color Schemes
+
+**Purpose:** Visual differentiation of scale degrees with accessibility support
+
+**Available Palettes:**
+- **standard:** Grayscale (accessibility neutral)
+- **colorBlindProtanopia:** Red-green colorblind optimized
+- **colorBlindDeuteranopia:** Red-green colorblind (deuteranopia variant)
+
+**Color Assignment:**
+- Each scale degree (0-11) assigned a color from palette
+- Colors cycle for extended scales spanning multiple octaves
+- Root note always gets first color in palette (usually red `#cd0223`)
+
+**Testing Resources:**
+- Coblis simulator: https://www.color-blindness.com/coblis-color-blindness-simulator/
+- Color Oracle: https://colororacle.org/
+- Sim Daltonism: https://michelf.ca/projects/sim-daltonism/
+
+**Implementation:**
+```javascript
+// colors.js exports object with named palettes
+const colors = {
+  standard: ["#cd0223", "#C8C8C8", ...],
+  colorBlindProtanopia: ["#cd0223", "#AA4499", ...],
+};
+```
+
+---
+
+## 🎛️ Feature Flags & State
+
+### Boolean Feature Toggles
+
+**Location:** `WholeApp.js` state
+
+| Flag | Default | Purpose |
+|------|---------|---------|
+| `pianoOn` | `true` | Show/hide virtual keyboard |
+| `extendedKeyboard` | `false` | Toggle 8-key vs 13-key keyboard layout |
+| `trebleStaffOn` | `true` | Show/hide musical staff notation |
+| `showOffNotes` | `true` | Display keys not in current scale (grayed out) |
+| `videoActive` | `false` | Video tutorial overlay visibility |
+| `showTooltip` | `true` | Enable/disable all tooltips |
+| `loading` | `true` | Show loading screen during initialization |
+
+**Extended Keyboard:**
+- **Standard (8 keys):** Covers 1 octave + 1 note (13 semitones)
+- **Extended (13 keys):** Covers 2 octaves (24 semitones)
+- Ambitus calculation: `extendedKeyboard ? 24 : 13`
+- Scale start offset: `extendedKeyboard ? 7 : 0`
+
+**Show Off-Notes:**
+- When `true`: Display all chromatic keys, gray out non-scale tones
+- When `false`: Only show keys that are in the selected scale
+- CSS class applied: `.showOffNotes` on `.Piano` container
+
+---
+
+## 🪟 Overlay System
+
+### Draggable Overlays
+
+**Purpose:** Modal-like windows that can be dragged and minimized
+
+**Components:**
+- `Overlay.js` - Base draggable container
+- `InfoOverlay.js` - Help/about content
+- `VideoTutorial.js` - Video player implementation
+
+**Key Features:**
+- **Draggable:** Uses `react-draggable` library
+- **Minimizable:** Underscore button collapses to title bar only
+- **Closeable:** X button dismisses overlay
+- **Portal-based:** Renders outside main DOM hierarchy
+
+**Overlay State:**
+```javascript
+state = {
+  minimized: false,  // Collapsed to title bar
+  hidden: false,     // Content visibility
+};
+```
+
+**Grab Bar:**
+- Draggable handle at top of overlay
+- CSS class: `.overlay__grabbar.drag`
+- User can click and drag to reposition
+
+---
+
+## 📹 Video Tutorial System
+
+### VideoTutorial Component
+
+**Purpose:** Embedded YouTube player with custom URL support
+
+**Tab Structure:**
+1. **Player Tab:** ReactPlayer component for video playback
+2. **Enter URL Tab:** Form to input custom video URL
+3. **Tutorials Tab:** Placeholder for curated tutorial list
+
+**Default Tutorial:**
+- Playlist URL stored in `data/config.js`
+- YouTube playlist: `notio_tutorial` constant
+- URL: https://youtube.com/playlist?list=PL7imp2jxKd0Bcx4cjR3gEMirkAzd84G_C
+
+**State Management:**
+```javascript
+const [playing, setPlaying] = useState(false);
+const [videoUrl, setVideoUrl] = useState(props.videoUrl);
+const [activeTab, setActiveTab] = useState(props.activeVideoTab);
+```
+
+**URL Persistence:**
+- Custom URLs saved to WholeApp state
+- Shared via Firebase session sharing
+- Reset button restores default tutorial
+
+**Player Behavior:**
+- Lazy loaded via `react-player/lazy`
+- Auto-play on ready
+- Responsive sizing (100% width/height)
+- Full YouTube controls available
+
+---
+
+## 🚀 Deployment & Infrastructure
+
+### Netlify Configuration
+
+**File:** `netlify.toml`
+
+**Critical Redirects:**
+```toml
+[[redirects]]
+  from = "/shared/*"
+  to = "/"
+  status = 200
+  force = true
+```
+
+**Purpose:** Client-side routing support
+- All `/shared/:sessionId` routes redirect to index.html
+- Allows React Router to handle routing
+- Status 200 (not 301/302) preserves URL for React Router
+
+**Build Settings (in package.json):**
+```bash
+CI=false react-scripts build && cp netlify.toml build/netlify.toml
+```
+- `CI=false` prevents warnings from failing build
+- Copies `netlify.toml` to build directory for deployment
+
+### GitHub Pages (Alternative)
+
+**Command:** `yarn deploy`
+
+**Process:**
+1. Runs `predeploy` script (builds project)
+2. Uses `gh-pages` package to deploy `build/` folder
+3. Publishes to `gh-pages` branch
+
+**Note:** Primary deployment is Netlify, GitHub Pages is fallback
+
+---
+
+## 🔧 Development Environment
+
+### Git Workflow
+
+**`.gitignore` Essentials:**
+- `/node_modules` - Dependencies (never commit)
+- `/build` - Production builds
+- `.DS_Store` - macOS system files
+- `*.log` - All log files
+- `.env.*` - Environment variables
+- `notio.code-workspace` - Local VS Code settings
+
+**Best Practices:**
+- Never commit `node_modules` or `build` directories
+- Keep `yarn.lock` committed (never `package-lock.json` alongside it)
+- Commit `.nvmrc` for Node version consistency
+
+### ESLint Configuration
+
+**Location:** Configured in `package.json` (no separate `.eslintrc`)
+
+**Extends:**
+- `react-app`
+- `react-app/jest`
+
+**Usage:**
+- `/* eslint-disable */` used sparingly
+- Common: `/* eslint-disable no-fallthrough */` in switch statements
+- **Best Practice:** Fix warnings instead of disabling them
+
+### Browser Compatibility
+
+**Target Browsers (from package.json):**
+
+**Production:**
+- `>0.2%` market share
+- `not dead` (actively maintained)
+- `not op_mini all` (Opera Mini excluded)
+
+**Development:**
+- Last 1 Chrome version
+- Last 1 Firefox version
+- Last 1 Safari version
+
+**Audio Compatibility:**
+- Web Audio API required (all modern browsers)
+- User interaction needed before audio plays (browser security)
+
+---
+
+## 🎼 Music Notation Details
+
+### Clef System
+
+**Available Clefs:**
+```javascript
+const clefs = [
+  { name: 'treble', svg: 'treble', default: true },
+  { name: 'bass', svg: 'BassClef' },
+  { name: 'alto', svg: 'AltoClef' },
+  { name: 'tenor', svg: 'TenorClef' },
+  { name: "hide notes", svg: "NoNoteClef" }  // Special: hides staff
+];
+```
+
+**SVG Icons:**
+- Stored as React components in `src/assets/img/`
+- File naming: PascalCase (e.g., `TrebleClef.js`, `BassClef.js`)
+- Imported and used via `svg` property in clef objects
+
+**"Hide Notes" Feature:**
+- Special clef option that disables staff rendering
+- Sets `trebleStaffOn` to `false`
+- Useful for focusing on ear training without visual aid
+- Students can practice by ear only
+
+### VexFlow Note Format Conversion
+
+**Challenge:** VexFlow uses different notation than MIDI/Tone.js
+
+**Conversion Pattern:**
+```javascript
+// Input: "C4" (MIDI format)
+// Output: "C/4" (VexFlow format)
+
+let match = /[0-9]/.exec(this.props.note);
+if (match) {
+  daNote = this.props.note.substr(0, match.index) + "/" + 
+           this.props.note.substr(match.index);
+}
+```
+
+**Accidental Handling in VexFlow:**
+- `b` → flat (♭)
+- `bb` → double flat (𝄫)
+- `#` → sharp (♯)
+- `##` → double sharp (𝄪)
+- Added via `StaveNote.addModifier(new Accidental(...), 0)`
+
+---
+
+## 🧩 State Serialization (Firebase Sharing)
+
+### Shareable State Structure
+
+**What Gets Shared:**
+```javascript
+{
+  octave,
+  octaveDist,
+  scale,
+  scaleObject,
+  clef,
+  baseNote,
+  notation,
+  instrumentSound,
+  pianoOn,
+  extendedKeyboard,
+  trebleStaffOn,
+  theme,
+  showOffNotes,
+  videoUrl,
+  activeVideoTab
+}
+```
+
+**What Does NOT Get Shared:**
+- Tooltip refs (UI-specific)
+- Loading states
+- Session ID itself
+- Sound engine instances
+- Active notes being played
+
+**Loading Shared Session:**
+1. Extract `sessionId` from URL via React Router
+2. Query Firestore: `db.collection("sessions").doc(sessionId).get()`
+3. Merge result into `WholeApp` state via `setState()`
+4. UI automatically updates via React re-render
+5. User sees exact configuration from shared link
+
+**Error Handling:**
+- Invalid session IDs show error in state: `sessionError`
+- Missing sessions handled gracefully (fallback to defaults)
+
+---
+
+## 🎯 Custom Scale Feature
+
+### Creating Custom Scales
+
+**User Flow:**
+1. Click "Custom Scale" button in menu
+2. Enter scale name (e.g., "My Blues Scale")
+3. Define semitone steps (comma-separated, 0-11)
+4. Define scale degree numbers (e.g., "1, 2, ♭3, 4, 5")
+5. Submit → Scale added to `scaleList` state
+
+**Implementation:**
+```javascript
+handleChangeCustomScale = (customScaleName, customsteps, customNumbers, firstRun = false) => {
+  // Check if scale name already exists
+  if (!this.state.scaleList.map((element) => element.name === customScaleName).includes(true)) {
+    this.setState({
+      scaleList: [...this.state.scaleList, { 
+        name: customScaleName, 
+        steps: customsteps, 
+        numbers: customNumbers 
+      }],
+      scale: customScaleName,
+      scaleObject: { name: customScaleName, steps: customsteps, numbers: customNumbers }
+    });
+    if (!firstRun) {
+      alert("Custom Scale Created " + customScaleName);
+    }
+  } else if (!firstRun) {
+    alert("A scale of that name already exists");
+  }
+};
+```
+
+**Validation:**
+- Duplicate names prevented
+- Alert shown to user on success/failure
+- `firstRun` parameter suppresses alerts during session loading
+
+**Persistence:**
+- Custom scales added to session state
+- Shared via Firebase if user clicks "Share"
+- **Not persisted locally** (cleared on refresh)
+- Recipients of shared link get custom scales
+
+---
+
+## 🐛 Additional Known Issues
+
+### 6. QwertyKeyboard Component Incomplete
+**Issue:** `QwertyKeyboard.js` is commented out/stub implementation
+
+**Location:** `src/components/keyboard/QwertyKeyboard.js`
+
+**Current Status:** Keyboard mapping logic currently in `Keyboard.js`
+
+**Impact:** Code organization could be improved
+
+**Future Work:** Separate QWERTY logic into dedicated component
+
+### 7. Unused Imports
+**Issue:** Lodash imported implicitly in some files
+
+**Example:** `import _ from "lodash"` but only `.startCase()` used
+
+**Impact:** Bundle size slightly larger than necessary
+
+**Fix:** Use direct imports: `import startCase from "lodash/startCase"`
+
+**Files Affected:** `TopMenu.js` and others
+
+### 8. Theme System Minimal
+**Issue:** Only two themes defined (light/dark)
+
+**Location:** `src/data/themes.js` only has name properties
+
+**Missing:** Actual CSS variable definitions in theme objects
+
+**Current Implementation:** Theme switching handled in SCSS via CSS classes
+
+**Workaround:** SCSS files contain theme-specific variables, not JS
+
+---
+
+## 📊 Performance Considerations
+
+### Bundle Size Optimization
+
+**Current Issues:**
+- Full Lodash imported (not tree-shakeable)
+- VexFlow is large library (~500KB)
+- Tone.js + Piano samples add significant size
+
+**Optimization Opportunities:**
+1. Use `lodash-es` for tree-shaking
+2. Code-split VexFlow (load only when staff visible)
+3. Lazy-load Piano samples on user interaction
+4. Implement route-based code splitting
+
+### Audio Loading Strategy
+
+**Current:**
+- All instruments load at app startup
+- Loading screen shown during initialization
+- `LoadingScreen.js` component displays progress
+
+**Flow:**
+1. `SoundMaker` initializes selected adapter
+2. Adapter loads instrument samples (async)
+3. `handleSoundsAreLoaded` callback fires when ready
+4. Loading screen hidden, app becomes interactive
+
+**User Experience:**
+- First load: 2-5 seconds (downloading samples)
+- Subsequent loads: ~1 second (browser cache)
+- Mobile networks: May take longer
+
+---
+
+## 🎓 Pedagogical Design Patterns
+
+### Educational Focus Areas
+
+**1. Visual Learning:**
+- Color-coded scale degrees
+- Multiple notation systems (English, German, Latin)
+- Real-time staff notation updates
+
+**2. Auditory Learning:**
+- Immediate audio feedback on key press
+- Multiple instrument timbres available
+- Octave shifting for range exploration
+
+**3. Kinesthetic Learning:**
+- Physical keyboard interaction (QWERTY)
+- Touch-enabled for tablets
+- Drag-and-drop interfaces
+
+**4. Scaffolded Learning:**
+- Start with simple scales (Major, Minor)
+- Progress to modes (Dorian, Phrygian, etc.)
+- Advanced: Custom scale creation
+- "Hide notes" option for ear training
+
+### Finnish Education Context
+
+**Target Grade Levels:**
+- Primary: 7-12 years old
+- Lower secondary: 13-15 years old
+
+**Curriculum Integration:**
+- Complements traditional music theory
+- Supports improvisation pedagogy
+- Enables creative exploration (songwriting)
+
+**Accessibility:**
+- Free, open-source tool
+- Works on school computers (no installation)
+- Mobile-friendly for home practice
+
+---
+
+## 🧪 Future: Playwright E2E Testing (Rainer Hahnekamp Principles)
+
+### Planned Implementation
+
+**Purpose:** End-to-end testing with Playwright following Rainer Hahnekamp's testing principles
+
+**Reference:** [Rainer Hahnekamp's Testing Principles](https://www.rainerhahnekamp.com/en/test-automation-principles/)
+
+### Core Testing Principles to Follow
+
+1. **Test User Workflows, Not Implementation**
+   - Focus on what users actually do (select scale, play notes, share session)
+   - Avoid testing internal component state or implementation details
+   - Test the application as a black box from user's perspective
+
+2. **Prioritize Integration Over Unit Tests**
+   - E2E tests cover real user scenarios
+   - Test interactions between components (keyboard + audio + notation)
+   - Reduce reliance on mocked dependencies
+
+3. **Test Behavior, Not Structure**
+   - Don't test if a component rendered
+   - Test if the user can accomplish their goal
+   - Example: "User can play a C major scale" vs "ColorKey component exists"
+
+4. **Stable Selectors**
+   - Use `data-testid` attributes for test stability
+   - Avoid CSS selectors that break with styling changes
+   - Use semantic HTML and ARIA labels when possible
+
+5. **Test at the Right Level**
+   - **E2E (Playwright):** Critical user journeys
+   - **Integration (RTL):** Component interactions
+   - **Unit (Jest):** Pure functions, music theory calculations
+
+### Planned Playwright Test Structure
+
+```
+e2e/
+├── tests/
+│   ├── scale-selection.spec.ts      # User selects different scales
+│   ├── keyboard-interaction.spec.ts # User plays notes, hears audio
+│   ├── notation-display.spec.ts     # Musical notation updates correctly
+│   ├── session-sharing.spec.ts      # User shares and loads sessions
+│   ├── clef-switching.spec.ts       # User switches between clefs
+│   └── mobile-touch.spec.ts         # Touch interactions on mobile
+├── fixtures/
+│   └── test-sessions.json           # Predefined sessions for testing
+└── playwright.config.ts             # Playwright configuration
+```
+
+### Example Test Scenarios (Planned)
+
+**Critical User Journeys to Test:**
+
+1. **Scale Exploration Journey**
+   ```typescript
+   test('User explores C Major scale', async ({ page }) => {
+     await page.goto('/');
+     
+     // Select C Major scale
+     await page.getByTestId('scale-selector').click();
+     await page.getByText('Major (Ionian)').click();
+     
+     // Verify keyboard shows correct keys highlighted
+     const whiteKeys = page.getByTestId('white-key-in-scale');
+     await expect(whiteKeys).toHaveCount(7); // 7 notes in major scale
+     
+     // Play each note in scale
+     await page.getByTestId('key-C4').click();
+     await page.getByTestId('key-D4').click();
+     
+     // Verify notation displays correctly
+     await expect(page.getByTestId('musical-staff')).toBeVisible();
+   });
+   ```
+
+2. **Session Sharing Journey**
+   ```typescript
+   test('User shares custom setup', async ({ page, context }) => {
+     // Setup custom configuration
+     await page.goto('/');
+     await page.getByTestId('root-selector').selectOption('F#');
+     await page.getByTestId('scale-selector').selectOption('Phrygian');
+     
+     // Share session
+     await page.getByTestId('share-button').click();
+     const shareUrl = await page.getByTestId('share-url-input').inputValue();
+     
+     // Open in new tab
+     const newPage = await context.newPage();
+     await newPage.goto(shareUrl);
+     
+     // Verify configuration loaded
+     await expect(newPage.getByTestId('root-display')).toHaveText('F#');
+     await expect(newPage.getByTestId('scale-display')).toHaveText('Phrygian');
+   });
+   ```
+
+3. **Mobile Touch Interaction Journey**
+   ```typescript
+   test('Mobile user plays notes via touch', async ({ page }) => {
+     await page.setViewportSize({ width: 375, height: 667 });
+     await page.goto('/');
+     
+     // Touch and hold key
+     const key = page.getByTestId('key-C4');
+     await key.tap();
+     
+     // Verify visual feedback
+     await expect(key).toHaveClass(/active/);
+   });
+   ```
+
+### Playwright Configuration Principles
+
+```typescript
+// playwright.config.ts
+export default defineConfig({
+  testDir: './e2e/tests',
+  
+  // Test against multiple browsers (cross-browser audio testing)
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+    { name: 'mobile', use: { ...devices['iPhone 12'] } },
+  ],
+  
+  // Run local dev server
+  webServer: {
+    command: 'yarn start',
+    port: 3000,
+    reuseExistingServer: !process.env.CI,
+  },
+  
+  // Screenshots and videos on failure only
+  use: {
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    trace: 'retain-on-failure',
+  },
+  
+  // Parallel execution
+  workers: process.env.CI ? 1 : undefined,
+});
+```
+
+### Audio Testing Strategy with Playwright
+
+**Challenge:** Testing audio playback in automated tests
+
+**Approaches:**
+
+1. **Audio Context Mocking**
+   - Mock Web Audio API in test environment
+   - Verify `startSound()` and `stopSound()` called with correct notes
+   - Check audio context state changes
+
+2. **Visual Feedback Verification**
+   - Test that keys show active state when pressed
+   - Verify loading screen appears while instruments load
+   - Check console for audio errors
+
+3. **Integration Points**
+   - Verify Tone.js initializes correctly
+   - Test instrument selection works
+   - Ensure no audio context warnings
+
+### Implementation Checklist
+
+**Phase 1: Setup**
+- [ ] Install Playwright: `yarn add -D @playwright/test`
+- [ ] Initialize config: `npx playwright install`
+- [ ] Create `e2e/` directory structure
+- [ ] Add `data-testid` attributes to key components
+- [ ] Configure CI integration
+
+**Phase 2: Core Tests**
+- [ ] Scale selection workflow
+- [ ] Note playback interaction
+- [ ] Musical notation rendering
+- [ ] Root note selection
+- [ ] Clef switching
+
+**Phase 3: Advanced Tests**
+- [ ] Session sharing (Firebase integration)
+- [ ] Mobile touch interactions
+- [ ] Keyboard navigation (a11y)
+- [ ] Video tutorial integration
+- [ ] Theme switching
+
+**Phase 4: Cross-browser & Performance**
+- [ ] Test on Chrome, Firefox, Safari
+- [ ] Mobile device testing (iOS/Android)
+- [ ] Performance benchmarks
+- [ ] Visual regression testing
+
+### Benefits for Notio Project
+
+1. **Confidence in Refactoring**
+   - Safe to refactor `WholeApp` to functional component
+   - Verify behavior unchanged after Router v6 updates
+
+2. **Educational Quality Assurance**
+   - Ensure students always have working tool
+   - Catch regressions in music theory calculations
+   - Verify audio works across browsers
+
+3. **Cross-Platform Validation**
+   - Test on actual mobile devices (critical for touch)
+   - Verify clef rendering in different browsers
+   - Ensure Firebase sharing works in all environments
+
+4. **Documentation via Tests**
+   - Tests serve as living documentation of features
+   - New contributors see how features should work
+   - User journeys explicitly defined in code
+
+### Commands (When Implemented)
+
+```bash
+# Run all Playwright tests
+yarn playwright test
+
+# Run specific test file
+yarn playwright test scale-selection
+
+# Run with UI (debug mode)
+yarn playwright test --ui
+
+# Run on specific browser
+yarn playwright test --project=firefox
+
+# Generate test report
+yarn playwright show-report
+
+# Update test screenshots (visual regression)
+yarn playwright test --update-snapshots
+```
+
+---
+
+**END OF ADDITIONAL DOCUMENTATION**
+
+*Last comprehensive update: November 12, 2025*
+
