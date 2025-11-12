@@ -31,7 +31,42 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+### Testing Strategy Compliance (Principle I)
+- [ ] 100% code coverage target confirmed
+- [ ] Integration tests planned for 60-70% of test suite (primary strategy)
+- [ ] E2E tests planned for 20-30% of test suite (critical user journeys)
+- [ ] Unit tests planned for 10-20% (edge cases and complex algorithms only)
+- [ ] Test approach follows Rainer Hahnekamp's integration-first principles
+
+### Component Reusability (Principle II)
+- [ ] UI components designed for reusability
+- [ ] Single responsibility principle applied
+- [ ] Props interfaces clearly defined
+
+### Educational Pedagogy First (Principle III)
+- [ ] Target learner personas identified
+- [ ] Progressive disclosure of complexity considered
+- [ ] Immediate, pedagogically meaningful feedback designed
+
+### Performance & Responsiveness (Principle IV)
+- [ ] Audio latency targets met (< 50ms for interactive instruments)
+- [ ] Notation rendering targets met (< 200ms)
+- [ ] Performance validated on target educational devices
+
+### Integration-First Testing (Principle V)
+- [ ] Musical feature integration tests planned
+- [ ] Cross-component workflows covered
+- [ ] Audio-visual synchronization tested
+
+### Accessibility & Inclusive Design (Principle VI)
+- [ ] Keyboard navigation fully functional
+- [ ] Color not sole information channel
+- [ ] WCAG 2.1 AA standards met
+
+### Simplicity & Maintainability (Principle VII)
+- [ ] Simplest solution implemented (YAGNI principle)
+- [ ] Abstractions justified by actual need
+- [ ] Dependencies evaluated for necessity
 
 ## Project Structure
 
