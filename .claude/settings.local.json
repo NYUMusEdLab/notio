@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npm test:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "SlashCommand(/speckit.specify i want the project to meet the constitution requirements)",
+      "SlashCommand(/speckit.specify:*)"
     ],
     "deny": [],
     "ask": []
