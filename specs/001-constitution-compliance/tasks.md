@@ -43,17 +43,17 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T008 Configure Jest for coverage thresholds in jest.config.js (set branches: 100, functions: 100, lines: 100, statements: 100)
-- [ ] T009 Update jest.config.js to include integration test patterns: `**/__integration__/**/*.(test|spec).js`
-- [ ] T010 Update jest.config.js collectCoverageFrom patterns to include `src/**/*.{js,jsx}` and exclude mocks/tests
-- [ ] T011 Create Playwright configuration file: playwright.config.js with chromium, firefox, webkit projects
-- [ ] T012 Configure Playwright launch options for audio testing in playwright.config.js (autoplay-policy, fake-media-stream)
-- [ ] T013 Update src/setupTests.js to import jest-axe and extend Jest matchers with toHaveNoViolations()
-- [ ] T014 Configure @axe-core/react in src/index.js for development-only runtime accessibility auditing
-- [ ] T015 Update package.json scripts: add test:e2e, test:e2e:headed, test:e2e:debug, test:e2e:chromium, test:e2e:firefox, test:e2e:webkit
-- [ ] T016 Update package.json scripts: add test:a11y for running accessibility-specific tests
-- [ ] T017 Update .eslintrc.js or package.json eslintConfig to use strict jsx-a11y mode: `plugin:jsx-a11y/strict`
-- [ ] T018 Create scripts/validate-test-distribution.js to check 60-70-20-30 distribution
+- [x] T008 Configure Jest for coverage thresholds in jest.config.js (set branches: 100, functions: 100, lines: 100, statements: 100)
+- [x] T009 Update jest.config.js to include integration test patterns: `**/__integration__/**/*.(test|spec).js`
+- [x] T010 Update jest.config.js collectCoverageFrom patterns to include `src/**/*.{js,jsx}` and exclude mocks/tests
+- [x] T011 Create Playwright configuration file: playwright.config.js with chromium, firefox, webkit projects
+- [x] T012 Configure Playwright launch options for audio testing in playwright.config.js (autoplay-policy, fake-media-stream)
+- [x] T013 Update src/setupTests.js to import jest-axe and extend Jest matchers with toHaveNoViolations()
+- [x] T014 Configure @axe-core/react in src/index.js for development-only runtime accessibility auditing
+- [x] T015 Update package.json scripts: add test:e2e, test:e2e:headed, test:e2e:debug, test:e2e:chromium, test:e2e:firefox, test:e2e:webkit
+- [x] T016 Update package.json scripts: add test:a11y for running accessibility-specific tests
+- [x] T017 Update .eslintrc.js or package.json eslintConfig to use strict jsx-a11y mode: `plugin:jsx-a11y/strict`
+- [x] T018 Create scripts/validate-test-distribution.js to check 60-70-20-30 distribution
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 

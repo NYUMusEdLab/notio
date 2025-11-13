@@ -8,7 +8,7 @@ import SoundMaker from "../Model/SoundMaker";
 jest.mock("../Model/SoundMaker"); // Automatic mock, which can be asserted against
 
 beforeEach(() => {
-  SoundMaker.mockClear();
+  //SoundMaker.mockClear();
 });
 
 jest.mock("react-dom", () => {
