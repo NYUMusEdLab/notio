@@ -1,0 +1,217 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e7]:
+          - checkbox [checked]
+        - generic [ref=e10]: Show keyboard
+      - generic [ref=e11]:
+        - generic [ref=e13]:
+          - checkbox
+        - generic [ref=e16]: Extended Keyboard
+      - generic [ref=e17]:
+        - generic [ref=e19]:
+          - generic [ref=e21]: piano
+          - img [ref=e23]
+        - generic "Sound" [ref=e27]
+      - generic [ref=e28]:
+        - generic [ref=e30]:
+          - img [ref=e32]:
+            - generic [ref=e33]: ALa11Maj
+          - img [ref=e35]
+        - generic "Notation" [ref=e39]
+      - generic [ref=e40]:
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - img [ref=e44]
+            - generic [ref=e48]: C
+          - img [ref=e50]
+        - generic "Root" [ref=e54]
+      - generic [ref=e55]:
+        - generic [ref=e57]:
+          - generic [ref=e59]: Major (Ionian)
+          - img [ref=e61]
+        - generic "Scale" [ref=e65]
+      - generic [ref=e66]:
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - img "Treble Clef" [ref=e70]
+            - generic [ref=e80]: treble
+          - img [ref=e82]
+        - generic "Clefs" [ref=e86]
+      - generic [ref=e87]:
+        - img [ref=e89]
+        - generic "Video Player" [ref=e94]
+      - generic [ref=e95]:
+        - img [ref=e97]
+        - generic "Share this setup" [ref=e101]
+      - generic [ref=e102]:
+        - generic [ref=e105]: Press for help
+        - generic "Help" [ref=e107]
+    - generic [ref=e109]:
+      - generic:
+        - generic [ref=e110]:
+          - generic:
+            - img
+        - generic [ref=e112]: C
+      - generic:
+        - generic:
+          - generic:
+            - img
+      - generic [ref=e114]:
+        - generic:
+          - img
+      - generic:
+        - generic:
+          - generic:
+            - img
+      - generic [ref=e118]:
+        - generic:
+          - img
+      - generic [ref=e121]:
+        - generic:
+          - img
+      - generic:
+        - generic:
+          - generic:
+            - img
+      - generic [ref=e125]:
+        - generic:
+          - img
+      - generic:
+        - generic:
+          - generic:
+            - img
+      - generic [ref=e129]:
+        - generic:
+          - img
+      - generic:
+        - generic:
+          - generic:
+            - img
+      - generic [ref=e133]:
+        - generic:
+          - img
+      - generic:
+        - generic [ref=e136]:
+          - generic:
+            - img
+        - generic [ref=e138]: C
+  - generic [ref=e139]:
+    - banner [ref=e140]:
+      - generic [ref=e142]:
+        - button [ref=e143] [cursor=pointer]:
+          - img [ref=e144]
+        - button [ref=e146] [cursor=pointer]:
+          - img [ref=e147]
+    - generic [ref=e152]:
+      - tablist [ref=e153]:
+        - tab "How to" [selected] [ref=e154] [cursor=pointer]
+        - tab "About" [ref=e155] [cursor=pointer]
+        - tab "FAQ" [ref=e156] [cursor=pointer]
+      - tabpanel "How to" [ref=e158]:
+        - generic [ref=e161]:
+          - generic [ref=e162]: How to use Notio
+          - paragraph [ref=e163]: "In this guide, you will find instructions and suggestions on how to:"
+          - paragraph [ref=e164]:
+            - link "Play" [ref=e165] [cursor=pointer]:
+              - /url: "#play"
+            - link "Make configurations" [ref=e166] [cursor=pointer]:
+              - /url: "#make-configurations"
+            - link "Explore" [ref=e167] [cursor=pointer]:
+              - /url: "#explore"
+            - link "Use videos" [ref=e168] [cursor=pointer]:
+              - /url: "#using-video"
+            - link "Share your setups" [ref=e169] [cursor=pointer]:
+              - /url: "#share-setup"
+            - link "Listen" [ref=e170] [cursor=pointer]:
+              - /url: "#listen"
+            - link "Create" [ref=e171] [cursor=pointer]:
+              - /url: "#create"
+            - link "Learn" [ref=e172] [cursor=pointer]:
+              - /url: "#learn"
+            - link "Teach" [ref=e173] [cursor=pointer]:
+              - /url: "#teach"
+            - link "Suggest improvements" [ref=e174] [cursor=pointer]:
+              - /url: "#suggest-improvements"
+          - paragraph [ref=e175]: Best of luck on your musical adventure!
+          - generic [ref=e176]:
+            - generic [ref=e178]:
+              - text: Play
+              - paragraph [ref=e179]:
+                - text: The coloured “xylophone” keys and the piano are playable both by clicking and by using the computer keyboard.
+                - text: Only notes that are part of the scale can make a sound!
+                - text: "On the computer keyboard:"
+                - text: To play the notes of the scale from the root, start with the keys FGHJ.
+                - text: "To add a bass line (in non-extended mode), the keys are, depending on your keyboard:"
+                - text: ZXC ASD QWE (QWERTY)
+                - text: WXC QSD AZE (AZERTY)
+                - text: YXC ASD QWE (QWERTZ)
+                - text: The bass line can be moved to another octave using the arrow keys up and down.
+                - text: In extended mode, you can start playing in the octave below the root by using ASDF/QSDF and continue three notes into the next octave by using
+                - text: ‘[= (QWERTY)
+                - text: ÄÅ´ (QWERTY Nordic)
+                - text: ù^= (AZERTY)
+                - text: ÄÜ´ (QWERTZ)
+                - text: The bass line is disabled in extended mode.
+            - generic [ref=e181]:
+              - text: Make configurations
+              - paragraph [ref=e182]:
+                - text: You can make your own unique configurations and share them easily through the top menu.
+                - text: "The possible configurations are:"
+                - text: "Show keyboard: Turn the piano on/off (the xylophone is still playable)."
+                - text: "Extended keyboard: Extend to 2 octaves (this disables bass line)."
+                - text: "Sound: Choose from a sound menu (more options coming!)"
+                - text: "Notation: Show the names of the notes used in the scale in different languages and in the relative system. Show scale steps and extensions."
+                - text: "Root: Choose the root of the scale (DO). This will be the note that is played on the F of the computer keyboard and it will be displayed in red both on the xylophone and the piano keyboard."
+                - text: "Scale: Choose a scale or create your own!"
+                - text: "Clefs: Choose the clef to be used, or disable the staff entirely."
+                - text: "Video player: Open and use the video player."
+                - text: "Share this setup: Share the setup you have created through a URL link."
+                - text: You can change the colour scheme by pressing the numbers
+                - text: "1: Greyscale"
+                - text: "2: Protanopia"
+                - text: "3: Deuteranopia"
+                - text: "4: Tritanopia"
+                - text: "5: Variation 1"
+                - text: "6: The Original Notio"
+                - text: "7: Variation 2"
+                - text: "8: Variation 3"
+                - text: "9: Pastel"
+            - generic [ref=e184]:
+              - text: Explore
+              - paragraph [ref=e185]: Set up Notio for different keys and modes, try them out, improvise. Enter your favourite music or backing track in the video player, play along, compare sounds, develop a combined aural and visual understanding of musical concepts and structures, generate theory for music that you are curious about…
+            - generic [ref=e187]:
+              - text: Use videos
+              - paragraph [ref=e188]:
+                - text: "The video player has three separate tabs:"
+                - text: Enter URL Choose a video that you want to use for learning or practising. Copy-paste the URL into the form, then press Enter.
+                - text: Player is where you see the video.
+                - text: Tutorials is a collection of short examples of how Notio can be used.
+            - generic [ref=e190]:
+              - text: Share your setups
+              - paragraph [ref=e191]: "When you have created a setup in Notio, you can save a link to it. Simply press the button \"Share this setup\", then press “Copy link”. You can share your link or a collection of copied links with anyone. For example, as a teacher, you can create a list of setups for your students to work through. Those who open the link will get an exact copy of your setup: all settings including the video URL will be included."
+            - generic [ref=e193]:
+              - text: Listen
+              - paragraph [ref=e194]: "Use the keyboard and the video player to find the specific sounds of different scales, modes, keys, and tonalities. Use the Notation menu for ear training. Become familiar with the sounds of extensions: the connection between 2nd and 9th, 4th and 11th, 6th and 13th."
+            - generic [ref=e196]:
+              - text: Create
+              - paragraph [ref=e197]:
+                - text: "Use Notio as support for your own songwriting and musical creativity: find inspiration in music videos, play around with ideas, get help with notation for something cool you found while improvising."
+                - text: You can also create your own scale! In the Scale menu, select Customize. A pop-up window with checkboxes will appear. Choose the notes you want in your scale, give it a name, then press Submit, then OK. Your scale will now appear in the Scale menu. Refresh the page to remove it.
+            - generic [ref=e199]:
+              - text: Learn
+              - paragraph [ref=e200]: Develop a combined aural and visual understanding of musical concepts and structures. Use Notio as support for your learning with video tutorials. Generate theory for music that you are curious about. Practice solmisation with relative note names.
+            - generic [ref=e202]:
+              - text: Teach
+              - paragraph [ref=e203]: Encourage your students to explore the connections between sound, structure, and notation. Introduce elements of theory in a piece of music or as part of a course. Ask students to select music for listening and playing together, discuss what makes the music sound the way it sounds. Use Notio as support for songwriting sessions. Curate material for play-along, improvisation, and analysis
+            - generic [ref=e205]:
+              - text: Suggest improvements
+              - paragraph [ref=e206]:
+                - text: Notio is a research and development project intended to broaden the horizon of how educational research and technology can enhance musical teaching and learning (see About). We welcome your feedback on how to further this vision. If you have any suggestions, please write to us at suggestionsnotio@gmail.com
+                - text: Thank you for using Notio!
+        - paragraph
+```
