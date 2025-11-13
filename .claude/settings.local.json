@@ -7,7 +7,9 @@
       "SlashCommand(/speckit.specify:*)",
       "Bash(.specify/scripts/bash/setup-plan.sh:*)",
       "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
-      "Bash(.specify/scripts/bash/update-agent-context.sh:*)"
+      "Bash(.specify/scripts/bash/update-agent-context.sh:*)",
+      "Bash(yarn add:*)",
+      "Bash(yarn list:*)"
     ],
     "deny": [],
     "ask": []

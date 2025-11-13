@@ -27,13 +27,13 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 [P] Install Playwright and dependencies: `npm install --save-dev @playwright/test`
-- [ ] T002 [P] Install Playwright browsers: `npx playwright install --with-deps`
-- [ ] T003 [P] Install accessibility testing tools: `npm install --save-dev jest-axe @axe-core/playwright @axe-core/react`
-- [ ] T004 [P] Verify eslint-plugin-jsx-a11y is available: `npm list eslint-plugin-jsx-a11y`
-- [ ] T005 Create test directory structure: `src/__integration__/`, `src/__integration__/musical-components/`, `src/__integration__/user-workflows/`, `src/__integration__/error-handling/`
-- [ ] T006 Create E2E directory structure: `e2e/`
-- [ ] T007 Create src/components/common/ directory for reusable components
+- [x] T001 [P] Install Playwright and dependencies: `yarn add --dev @playwright/test`
+- [x] T002 [P] Install Playwright browsers: `npx playwright install --with-deps`
+- [x] T003 [P] Install accessibility testing tools: `yarn add --dev jest-axe @axe-core/playwright @axe-core/react`
+- [x] T004 [P] Verify eslint-plugin-jsx-a11y is available: `yarn list --pattern eslint-plugin-jsx-a11y`
+- [x] T005 Create test directory structure: `src/__integration__/`, `src/__integration__/musical-components/`, `src/__integration__/user-workflows/`, `src/__integration__/error-handling/`
+- [x] T006 Create E2E directory structure: `e2e/`
+- [x] T007 Create src/components/common/ directory for reusable components
 
 ---
 
