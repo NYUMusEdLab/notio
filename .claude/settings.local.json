@@ -4,7 +4,10 @@
       "Bash(npm test:*)",
       "Bash(cat:*)",
       "SlashCommand(/speckit.specify i want the project to meet the constitution requirements)",
-      "SlashCommand(/speckit.specify:*)"
+      "SlashCommand(/speckit.specify:*)",
+      "Bash(.specify/scripts/bash/setup-plan.sh:*)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(.specify/scripts/bash/update-agent-context.sh:*)"
     ],
     "deny": [],
     "ask": []
