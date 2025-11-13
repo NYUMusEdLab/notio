@@ -1,6 +1,9 @@
+// T008-T010: Jest configuration for constitutional testing compliance
+// This extends react-scripts default configuration
+
 module.exports = {
-  // Use react-scripts preset as base
-  ...require('react-scripts/config/jest/jest.config'),
+  // Inherit from react-scripts
+  preset: 'react-scripts',
 
   // T008: Coverage thresholds - 100% mandatory (Constitution v2.0.0)
   coverageThreshold: {
@@ -35,7 +38,7 @@ module.exports = {
   // Coverage reporters
   coverageReporters: ['html', 'text', 'lcov', 'json'],
 
-  // Transform patterns (preserve existing)
+  // Transform patterns (preserve existing for vexflow/gsap)
   transformIgnorePatterns: [
     'node_modules/(?!(vexflow|@tonejs/piano|gsap)/)',
   ],
