@@ -58,7 +58,7 @@ Bring Notio project into full compliance with Constitution v2.0.0 by implementin
 ### Simplicity & Maintainability (Principle VII)
 - [x] Simplest solution implemented (YAGNI principle) - Test infrastructure uses existing Jest + RTL, adds minimal new dependencies
 - [x] Abstractions justified by actual need - Test utilities only where patterns repeat
-- [x] Dependencies evaluated for necessity - Only add E2E framework (Cypress/Playwright), axe-core for accessibility
+- [x] Dependencies evaluated for necessity - Only add E2E framework (Playwright), axe-core for accessibility
 
 **GATE STATUS**: ✅ **PASSED** - All constitutional principles addressed by user stories and requirements
 
