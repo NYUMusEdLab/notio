@@ -35,10 +35,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Review research.md keyboard event patterns and ARIA role decisions
-- [ ] T006 Review contracts/keyboard-event-contract.md for implementation patterns
-- [ ] T007 Review contracts/aria-attributes-contract.md for ARIA requirements
-- [ ] T008 Review contracts/focus-management-contract.md for focus behavior
+- [x] T005 Review research.md keyboard event patterns and ARIA role decisions
+- [x] T006 Review contracts/keyboard-event-contract.md for implementation patterns
+- [x] T007 Review contracts/aria-attributes-contract.md for ARIA requirements
+- [x] T008 Review contracts/focus-management-contract.md for focus behavior
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
