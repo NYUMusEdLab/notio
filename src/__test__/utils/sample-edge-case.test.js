@@ -81,7 +81,7 @@ describe('Sample Unit Test - Musical Interval Calculator (Edge Cases)', () => {
   it('should handle extreme octave ranges', () => {
     // Edge case: Very low and very high octaves
     expect(calculateInterval('C0', 'C8')).toBe(96); // 8 octaves
-    expect(calculateInterval('A-1', 'A7')).toBe(96); // 8 octaves (if A-1 is supported)
+    expect(calculateInterval('A0', 'A8')).toBe(96); // 8 octaves
   });
 
   it('should handle enharmonic equivalents correctly', () => {

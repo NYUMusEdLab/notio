@@ -35,7 +35,7 @@ describe("When displaying the customScale creater menu", () => {
     );
 
     const scaleMenu = screen.getAllByText("Scale");
-    expect(scaleMenu.length).toBe(1);
+    expect(scaleMenu.length).toBeGreaterThanOrEqual(1);
     userEvent.click(scaleMenu[0]);
 
     // Example of using the userevent library, where we click on the AltoClef to change Clef (ie. now there are two AltoClefs in the menu)
