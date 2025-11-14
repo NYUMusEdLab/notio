@@ -132,6 +132,7 @@ class MusicalStaff extends Component {
       <div
         ref={this.musicalStaff}
         className="musical-staff"
+        data-testid="musical-staff"
         style={{
           width: width,
           top: extendedKeyboard ? "47%" : "37%",

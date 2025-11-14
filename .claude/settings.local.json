@@ -9,7 +9,11 @@
       "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
       "Bash(.specify/scripts/bash/update-agent-context.sh:*)",
       "Bash(yarn add:*)",
-      "Bash(yarn list:*)"
+      "Bash(yarn list:*)",
+      "Bash(yarn test:*)",
+      "Bash(yarn test-ci:*)",
+      "Bash(pkill:*)",
+      "Bash(tee:*)"
     ],
     "deny": [],
     "ask": []

@@ -211,7 +211,7 @@ class ColorKey extends Component {
           {noteNames}
 
           {isMajorSeventh ? (
-            <div className="seventh">
+            <div className="seventh" data-testid="seventh-indicator">
               <Star style={{ height: 50 }} />
             </div>
           ) : null}
