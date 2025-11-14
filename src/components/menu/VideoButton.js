@@ -29,6 +29,16 @@ export default class VideoButton extends Component {
 
   };
 
+  handleKeyDown = (event) => {
+    // Keyboard accessibility: Activate on Enter or Space key
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Prevent Space from scrolling page
+      this.props.onClickMenuHandler();
+      this.handleShow();
+      this.props.handleChangeVideoVisibility();
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -38,7 +48,11 @@ export default class VideoButton extends Component {
             this.props.onClickMenuHandler();
             this.handleShow();
             this.props.handleChangeVideoVisibility();
-          }}>
+          }}
+          onKeyDown={this.handleKeyDown}
+          tabIndex={0}
+          role="button"
+          aria-label="Watch tutorial video">
           {components[this.props.label]}
         </div>
         <div className="title-wrapper">

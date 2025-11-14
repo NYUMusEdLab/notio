@@ -180,6 +180,7 @@ class ColorKey extends Component {
       : null;
 
     return (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/mouse-events-have-key-events
       <div
         ref={this.keyRef}
         data-testid={"ColorKey:" + note}

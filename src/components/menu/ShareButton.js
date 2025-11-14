@@ -30,6 +30,15 @@ export default class ShareButton extends Component {
     this.setState({ show: !this.state.show });
   };
 
+  handleKeyDown = (event) => {
+    // Keyboard accessibility: Activate on Enter or Space key
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Prevent Space from scrolling page
+      this.props.onClickMenuHandler();
+      this.handleShow();
+    }
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
     // set video url
@@ -58,7 +67,11 @@ export default class ShareButton extends Component {
           onClick={(e) => {
             this.props.onClickMenuHandler();
             this.handleShow();
-          }}>
+          }}
+          onKeyDown={this.handleKeyDown}
+          tabIndex={0}
+          role="button"
+          aria-label="Share">
           {components[this.props.label]}
         </div>
         <div className="title-wrapper">

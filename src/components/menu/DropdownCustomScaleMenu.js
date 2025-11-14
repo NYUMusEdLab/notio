@@ -16,6 +16,14 @@ const DropdownCustomScaleMenu = (props) => {
     setShow(tempshow);
   };
 
+  const handleKeyDown = (event) => {
+    // Keyboard accessibility: Activate on Enter or Space key
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Prevent Space from scrolling page
+      handleShow();
+    }
+  };
+
   return (
     <>
       <div className={props.menuTextClassName}>
@@ -23,7 +31,11 @@ const DropdownCustomScaleMenu = (props) => {
           className="label-wrapper"
           onClick={(e) => {
             handleShow();
-          }}>
+          }}
+          onKeyDown={handleKeyDown}
+          tabIndex={0}
+          role="button"
+          aria-label="Customize scale settings">
           Customize
         </div>
       </div>

@@ -25,6 +25,14 @@ class SubMenu extends Component {
     this.setState({ active: !currentState });
   }
 
+  handleKeyDown = (event) => {
+    // Keyboard accessibility: Activate on Enter or Space key
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Prevent Space from scrolling page
+      this.toggleClass();
+    }
+  };
+
   componentDidMount() {
     if (this.props.displayClef) {
       this.selectPictoClef();
@@ -66,7 +74,13 @@ class SubMenu extends Component {
       <React.Fragment>
         <div className="sub-menu">
           <div className={`sub-menu__content ${isActive}`}>{this.props.content}</div>
-          <div className={`button ${isActive}`} onClick={this.toggleClass}>
+          <div
+            className={`button ${isActive}`}
+            onClick={this.toggleClass}
+            onKeyDown={this.handleKeyDown}
+            tabIndex={0}
+            role="button"
+            aria-label={this.props.title}>
             <div className="button-title">
               {this.props.selectedImg}
 

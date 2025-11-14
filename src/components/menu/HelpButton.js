@@ -20,11 +20,25 @@ class HelpButton extends Component {
     this.setState({ show: !this.state.show });
   };
 
+  handleKeyDown = (event) => {
+    // Keyboard accessibility: Activate on Enter or Space key
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Prevent Space from scrolling page
+      this.handleShow();
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
         <div className="sub-menu">
-          <div className={`button ${this.props.active}`} onClick={this.handleShow}>
+          <div
+            className={`button ${this.props.active}`}
+            onClick={this.handleShow}
+            onKeyDown={this.handleKeyDown}
+            tabIndex={0}
+            role="button"
+            aria-label="Help">
             <div className="button-title">Press for help</div>
           </div>
         </div>
