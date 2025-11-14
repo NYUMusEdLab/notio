@@ -13,7 +13,13 @@
       "Bash(yarn test:*)",
       "Bash(yarn test-ci:*)",
       "Bash(pkill:*)",
-      "Bash(tee:*)"
+      "Bash(tee:*)",
+      "Bash(git fetch:*)",
+      "Bash(sed:*)",
+      "Bash(.specify/scripts/bash/create-new-feature.sh:*)",
+      "Bash(mkdir:*)",
+      "Bash(yarn build)",
+      "Bash(git rev-parse:*)"
     ],
     "deny": [],
     "ask": []
