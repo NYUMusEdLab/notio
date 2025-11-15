@@ -7,9 +7,9 @@
 .pnp.js
 
 # testing
-coverage/**
-playwright-report/**
-test-results/**
+/coverage/**
+/playwright-report/**
+/test-results/**
 
 
 # production
