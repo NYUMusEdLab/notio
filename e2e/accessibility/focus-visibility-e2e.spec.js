@@ -10,8 +10,8 @@
  * - Focus management during user workflows
  */
 
-import { test, expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
+const { test, expect } = require('@playwright/test');
+const AxeBuilder = require('@axe-core/playwright').default;
 
 test.describe('Focus Visibility E2E Tests', () => {
   test.beforeEach(async ({ page }) => {

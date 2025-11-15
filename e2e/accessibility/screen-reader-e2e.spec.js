@@ -10,8 +10,8 @@
  * - ARIA compliance testing
  */
 
-import { test, expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
+const { test, expect } = require('@playwright/test');
+const AxeBuilder = require('@axe-core/playwright').default;
 
 test.describe('Screen Reader Compatibility E2E Tests', () => {
   test.beforeEach(async ({ page }) => {
@@ -72,7 +72,7 @@ test.describe('Screen Reader Compatibility E2E Tests', () => {
       }
 
       expect(hasAccessibleName).toBeTruthy();
-    });
+    }
   });
 
   test('Should have proper roles on all custom components', async ({ page }) => {
@@ -99,20 +99,26 @@ test.describe('Screen Reader Compatibility E2E Tests', () => {
 
   test('Should have descriptive labels for icon-only buttons', async ({ page }) => {
     // Check ShareButton
-    const shareButton = await page.locator('[aria-label="Share"]').first();
-    if (await shareButton.count() > 0) {
+    const shareButton = page.locator('[aria-label="Share"]').first();
+    const shareButtonCount = await shareButton.count();
+    expect(shareButtonCount).toBeGreaterThanOrEqual(0);
+    if (shareButtonCount > 0) {
       await expect(shareButton).toHaveAttribute('role', 'button');
     }
 
     // Check VideoButton
-    const videoButton = await page.locator('[aria-label="Watch tutorial video"]').first();
-    if (await videoButton.count() > 0) {
+    const videoButton = page.locator('[aria-label="Watch tutorial video"]').first();
+    const videoButtonCount = await videoButton.count();
+    expect(videoButtonCount).toBeGreaterThanOrEqual(0);
+    if (videoButtonCount > 0) {
       await expect(videoButton).toHaveAttribute('role', 'button');
     }
 
     // Check HelpButton
-    const helpButton = await page.locator('[aria-label="Help"]').first();
-    if (await helpButton.count() > 0) {
+    const helpButton = page.locator('[aria-label="Help"]').first();
+    const helpButtonCount = await helpButton.count();
+    expect(helpButtonCount).toBeGreaterThanOrEqual(0);
+    if (helpButtonCount > 0) {
       await expect(helpButton).toHaveAttribute('role', 'button');
     }
   });
@@ -154,9 +160,6 @@ test.describe('Accessibility Tree Validation', () => {
     await page.goto('http://localhost:3000');
     await page.waitForSelector('.Keyboard');
 
-    // Get accessibility tree snapshot for a Key component
-    const key = await page.locator('[aria-label="Play C4"]').first();
-
     // Verify the element is in the accessibility tree
     const snapshot = await page.accessibility.snapshot();
 
@@ -174,6 +177,9 @@ test.describe('Accessibility Tree Validation', () => {
     }
 
     const c4Node = findInTree(snapshot, 'Play C4');
+
+    // Ensure the node exists in the accessibility tree
+    expect(c4Node).toBeTruthy();
 
     if (c4Node) {
       // Verify it has proper role

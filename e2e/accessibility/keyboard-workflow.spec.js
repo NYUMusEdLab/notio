@@ -10,8 +10,8 @@
  * - Test cross-browser compatibility
  */
 
-import { test, expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
+const { test, expect } = require('@playwright/test');
+const AxeBuilder = require('@axe-core/playwright').default;
 
 test.describe('Keyboard-Only Workflow E2E Tests', () => {
   test.beforeEach(async ({ page }) => {
