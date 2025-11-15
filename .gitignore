@@ -44,3 +44,4 @@ notio.code-workspace
 # Logs
 *.log
 logs
+playwright-report/index.html
