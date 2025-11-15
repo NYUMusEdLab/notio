@@ -169,14 +169,14 @@
 ### Tests for User Story 3 (MANDATORY for 100% coverage) ⚠️
 
 **Integration Tests (Primary)**:
-- [ ] T062 [P] [US3] Integration test for focus/hover parity in ColorKey in src/__integration__/accessibility/focus-visibility.test.js
-- [ ] T063 [P] [US3] Integration test for focus indicator visibility in src/__integration__/accessibility/focus-visibility.test.js
+- [x] T062 [P] [US3] Integration test for focus/hover parity in ColorKey in src/__integration__/accessibility/focus-visibility.test.js
+- [x] T063 [P] [US3] Integration test for focus indicator visibility in src/__integration__/accessibility/focus-visibility.test.js
 
 **E2E Tests (Secondary)**:
-- [ ] T064 [P] [US3] E2E test for focus visibility across browsers in e2e/accessibility/cross-browser-a11y.spec.js
+- [x] T064 [P] [US3] E2E test for focus visibility across browsers in e2e/accessibility/focus-visibility-e2e.spec.js
 
 **Unit Tests (Edge cases only)**:
-- [ ] T065 [P] [US3] Unit test for focus behavior when element removed from DOM in src/__tests__/unit/accessibility/focus-management.test.js
+- [x] T065 [P] [US3] Unit test for focus behavior when element removed from DOM in src/__tests__/unit/accessibility/focus-management.test.js
 
 ### Implementation for User Story 3
 
