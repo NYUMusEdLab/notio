@@ -23,10 +23,22 @@ export default class VideoButton extends Component {
     show: this.props.active ? true : false,
   };
 
-  handleShow = () => {
-    this.setState({ show: !this.state.show });
-    this.props.handleChangeVideoVisibility();
+  constructor(props) {
+    super(props);
+    this.triggerRef = React.createRef();
+  }
 
+  handleShow = () => {
+    this.setState(prevState => {
+      // If closing, restore focus to trigger
+      if (prevState.show) {
+        setTimeout(() => {
+          this.triggerRef.current?.focus();
+        }, 0);
+      }
+      return { show: !prevState.show };
+    });
+    this.props.handleChangeVideoVisibility();
   };
 
   handleKeyDown = (event) => {
@@ -43,6 +55,7 @@ export default class VideoButton extends Component {
     return (
       <React.Fragment>
         <div
+          ref={this.triggerRef}
           className="circledButton"
           onClick={(e) => {
             this.props.onClickMenuHandler();

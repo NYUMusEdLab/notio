@@ -17,8 +17,21 @@ class HelpButton extends Component {
     show: this.props.startOpen !== undefined ? this.props.startOpen : true,
   };
 
+  constructor(props) {
+    super(props);
+    this.triggerRef = React.createRef();
+  }
+
   handleShow = () => {
-    this.setState({ show: !this.state.show });
+    this.setState(prevState => {
+      // If closing, restore focus to trigger
+      if (prevState.show) {
+        setTimeout(() => {
+          this.triggerRef.current?.focus();
+        }, 0);
+      }
+      return { show: !prevState.show };
+    });
   };
 
   handleKeyDown = (event) => {
@@ -34,6 +47,7 @@ class HelpButton extends Component {
       <React.Fragment>
         <div className="sub-menu">
           <div
+            ref={this.triggerRef}
             className={`button ${this.props.active}`}
             onClick={this.handleShow}
             onKeyDown={this.handleKeyDown}

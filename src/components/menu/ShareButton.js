@@ -26,8 +26,21 @@ export default class ShareButton extends Component {
     sessionID: this.props.sessionID,
   };
 
+  constructor(props) {
+    super(props);
+    this.triggerRef = React.createRef();
+  }
+
   handleShow = () => {
-    this.setState({ show: !this.state.show });
+    this.setState(prevState => {
+      // If closing, restore focus to trigger
+      if (prevState.show) {
+        setTimeout(() => {
+          this.triggerRef.current?.focus();
+        }, 0);
+      }
+      return { show: !prevState.show };
+    });
   };
 
   handleKeyDown = (event) => {
@@ -63,6 +76,7 @@ export default class ShareButton extends Component {
     return (
       <React.Fragment>
         <div
+          ref={this.triggerRef}
           className="circledButton"
           onClick={(e) => {
             this.props.onClickMenuHandler();
