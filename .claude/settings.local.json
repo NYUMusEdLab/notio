@@ -28,7 +28,9 @@
       "Bash(npm run test:e2e:*)",
       "Bash(curl:*)",
       "Bash(npx playwright:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(if [ -d \"/Users/saxjax/developer/notio-with-ai/notio/specs/003-menu-arrow-navigation/checklists\" ])",
+      "Bash(then ls -1 \"/Users/saxjax/developer/notio-with-ai/notio/specs/003-menu-arrow-navigation/checklists\")"
     ],
     "deny": [],
     "ask": []
