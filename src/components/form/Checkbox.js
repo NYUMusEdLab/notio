@@ -24,7 +24,7 @@ const Checkbox = ({ className = "", label, isSelected, onCheckboxChange }) => {
         aria-checked={isSelected ? 'true' : 'false'}
         onKeyDown={handleKeyDown}
         onClick={() => onCheckboxChange({ target: { name: label } })}>
-        <span className="checkmark"></span>
+        <span className={`checkmark ${isSelected ? 'checked' : ''}`}></span>
         {label}
       </div>
     </div>
