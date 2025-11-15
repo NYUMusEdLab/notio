@@ -13,6 +13,25 @@ export default class Overlay extends Component {
 
   content = (<Fragment>{this.props.children}</Fragment>);
 
+  componentDidMount() {
+    // Add Escape key listener when overlay mounts
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    // Remove Escape key listener when overlay unmounts
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = (event) => {
+    // Close overlay on Escape key
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.props.close();
+    }
+  };
+
   grabBar() {
     return <div className="overlay__grabbar drag "></div>;
   }
