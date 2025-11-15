@@ -97,6 +97,15 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run E2E tests (Chromium)
         run: yarn test:e2e:chromium
+        env:
+          CI: true
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: playwright-report-chromium
+          path: playwright-report/
+          retention-days: 30
 
   e2e-firefox:
     name: E2E - Firefox
@@ -112,6 +121,15 @@ jobs:
         run: npx playwright install --with-deps firefox
       - name: Run E2E tests (Firefox)
         run: yarn test:e2e:firefox
+        env:
+          CI: true
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: playwright-report-firefox
+          path: playwright-report/
+          retention-days: 30
 
   e2e-webkit:
     name: E2E - WebKit
@@ -127,6 +145,15 @@ jobs:
         run: npx playwright install --with-deps webkit
       - name: Run E2E tests (WebKit)
         run: yarn test:e2e:webkit
+        env:
+          CI: true
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: playwright-report-webkit
+          path: playwright-report/
+          retention-days: 30
 
   integration-error-handling:
     name: Integration - Error Handling
