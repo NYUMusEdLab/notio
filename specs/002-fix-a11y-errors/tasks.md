@@ -135,12 +135,12 @@
 ### Tests for User Story 2 (MANDATORY for 100% coverage) ⚠️
 
 **Integration Tests (Primary)**:
-- [ ] T051 [P] [US2] Integration test for screen reader announcements using jest-axe in src/__integration__/accessibility/screen-reader.test.js
-- [ ] T052 [P] [US2] Integration test for ARIA roles verification in src/__integration__/accessibility/screen-reader.test.js
-- [ ] T053 [P] [US2] Integration test for ARIA labels on icon-only buttons in src/__integration__/accessibility/screen-reader.test.js
+- [x] T051 [P] [US2] Integration test for screen reader announcements using jest-axe in src/__integration__/accessibility/screen-reader.test.js
+- [x] T052 [P] [US2] Integration test for ARIA roles verification in src/__integration__/accessibility/screen-reader.test.js
+- [x] T053 [P] [US2] Integration test for ARIA labels on icon-only buttons in src/__integration__/accessibility/screen-reader.test.js
 
 **E2E Tests (Secondary)**:
-- [ ] T054 [P] [US2] E2E test for axe-core accessibility violations check in e2e/accessibility/cross-browser-a11y.spec.js
+- [x] T054 [P] [US2] E2E test for axe-core accessibility violations check in e2e/accessibility/screen-reader-e2e.spec.js
 
 **Unit Tests (Edge cases only)**:
 - [ ] T055 [P] [US2] Unit test for accessibility tree structure validation in src/__tests__/unit/accessibility/aria-tree.test.js (if needed)

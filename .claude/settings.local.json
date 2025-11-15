@@ -27,7 +27,8 @@
       "Bash(npm run test:a11y:*)",
       "Bash(npm run test:e2e:*)",
       "Bash(curl:*)",
-      "Bash(npx playwright:*)"
+      "Bash(npx playwright:*)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "ask": []
