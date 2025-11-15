@@ -110,6 +110,15 @@ class SubMenu extends Component {
   };
 
   /**
+   * Get the current focused index based on which element actually has focus
+   * @returns {number} Current focused item index, or -1 if not in menu
+   */
+  getCurrentFocusedIndex = () => {
+    const activeElement = document.activeElement;
+    return this.menuItemRefs.findIndex(item => item === activeElement);
+  };
+
+  /**
    * Handle keyboard navigation within the menu
    */
   handleMenuKeyDown = (event) => {
@@ -118,14 +127,16 @@ class SubMenu extends Component {
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
-        if (this.state.focusedIndex === -1) {
+        // Use actual focused element, not just state
+        const currentDownIndex = this.getCurrentFocusedIndex();
+        if (currentDownIndex === -1) {
           // Moving from trigger to first enabled item
           const firstIndex = this.findFirstEnabledItem();
           this.setState({ focusedIndex: firstIndex });
           this.menuItemRefs[firstIndex]?.focus();
         } else {
           // Navigate to next enabled item
-          const nextIndex = this.findNextEnabledIndex(this.state.focusedIndex, 1);
+          const nextIndex = this.findNextEnabledIndex(currentDownIndex, 1);
           this.setState({ focusedIndex: nextIndex });
           this.menuItemRefs[nextIndex]?.focus();
         }
@@ -133,14 +144,16 @@ class SubMenu extends Component {
 
       case 'ArrowUp':
         event.preventDefault();
-        if (this.state.focusedIndex === -1) {
+        // Use actual focused element, not just state
+        const currentUpIndex = this.getCurrentFocusedIndex();
+        if (currentUpIndex === -1) {
           // Moving from trigger to first enabled item
           const firstIndex = this.findFirstEnabledItem();
           this.setState({ focusedIndex: firstIndex });
           this.menuItemRefs[firstIndex]?.focus();
         } else {
           // Navigate to previous enabled item
-          const prevIndex = this.findNextEnabledIndex(this.state.focusedIndex, -1);
+          const prevIndex = this.findNextEnabledIndex(currentUpIndex, -1);
           this.setState({ focusedIndex: prevIndex });
           this.menuItemRefs[prevIndex]?.focus();
         }

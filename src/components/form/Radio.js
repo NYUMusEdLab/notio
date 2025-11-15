@@ -47,23 +47,13 @@ class Radio extends React.Component{
                     className={`label-wrapper ${this.props.isSelected ? 'active' : ''}`}
                     tabIndex={-1}
                     role="menuitemradio"
-                    aria-checked={this.props.isSelected}
+                    aria-checked={this.props.isSelected ? 'true' : 'false'}
                     onKeyDown={this.handleKeyDown}
                     onClick={() => this.props.onRadioChange({
                         target: { value: this.props.label }
-                    })}>
+                    })}
+                    data-testid={"Radio:"+this.props.label}>
                     {components[this.props.label]}
-                    <input
-                        type="radio"
-                        value={this.props.label}
-                        data-testid={"Radio:"+this.props.label}
-                        name={this.props.nameField}
-                        checked={this.props.isSelected}
-                        onChange={this.props.onRadioChange}
-                        tabIndex={-1}
-                        aria-hidden="true"
-                        style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}
-                    />
                     <span className="form-radio__label">{this.props.label}</span>
                 </div>
             </div>

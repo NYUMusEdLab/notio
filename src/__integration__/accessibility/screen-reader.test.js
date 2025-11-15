@@ -224,9 +224,9 @@ describe('Screen Reader Compatibility Integration Tests', () => {
         />
       );
 
-      const button = screen.getByRole('button', { name: 'Customize scale settings' });
-      expect(button).toHaveAttribute('role', 'button');
-      expect(button).toHaveAttribute('aria-label', 'Customize scale settings');
+      const menuitem = screen.getByRole('menuitem', { name: 'Customize scale settings' });
+      expect(menuitem).toHaveAttribute('role', 'menuitem');
+      expect(menuitem).toHaveAttribute('aria-label', 'Customize scale settings');
     });
   });
 
@@ -295,9 +295,9 @@ describe('Screen Reader Compatibility Integration Tests', () => {
         />
       );
 
-      const button = screen.getByRole('button', { name: 'Customize scale settings' });
-      expect(button).toHaveAccessibleName();
-      expect(button).toHaveAttribute('aria-label', 'Customize scale settings');
+      const menuitem = screen.getByRole('menuitem', { name: 'Customize scale settings' });
+      expect(menuitem).toHaveAccessibleName();
+      expect(menuitem).toHaveAttribute('aria-label', 'Customize scale settings');
     });
 
     it('should have descriptive aria-labels on all icon buttons', () => {

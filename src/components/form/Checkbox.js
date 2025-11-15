@@ -21,18 +21,9 @@ const Checkbox = ({ className = "", label, isSelected, onCheckboxChange }) => {
         className="label-wrapper"
         tabIndex={-1}
         role="menuitemcheckbox"
-        aria-checked={isSelected}
+        aria-checked={isSelected ? 'true' : 'false'}
         onKeyDown={handleKeyDown}
         onClick={() => onCheckboxChange({ target: { name: label } })}>
-        <input
-          type="checkbox"
-          name={label}
-          checked={isSelected}
-          onChange={onCheckboxChange}
-          tabIndex={-1}
-          aria-hidden="true"
-          style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}
-        />
         <span className="checkmark"></span>
         {label}
       </div>

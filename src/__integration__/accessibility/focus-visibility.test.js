@@ -270,8 +270,8 @@ describe('Focus Visibility and Management Integration Tests', () => {
         />
       );
 
-      const button = screen.getByRole('button', { name: 'Customize scale settings' });
-      expect(button).toHaveAttribute('tabIndex', '0');
+      const menuitem = screen.getByRole('menuitem', { name: 'Customize scale settings' });
+      expect(menuitem).toHaveAttribute('tabIndex', '-1');
     });
 
     it('should maintain focus when component updates', () => {
