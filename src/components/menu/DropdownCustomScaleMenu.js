@@ -26,6 +26,12 @@ const DropdownCustomScaleMenu = (props) => {
   }, []);
 
   const handleKeyDown = (event) => {
+    // Allow arrow keys to bubble up for menu navigation
+    if (['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape'].includes(event.key)) {
+      // Don't handle these - let the menu container handle them
+      return;
+    }
+
     // Keyboard accessibility: Activate on Enter or Space key
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault(); // Prevent Space from scrolling page
@@ -62,9 +68,10 @@ const DropdownCustomScaleMenu = (props) => {
             handleShow();
           }}
           onKeyDown={handleKeyDown}
-          tabIndex={0}
-          role="button"
+          tabIndex={-1}
+          role="menuitem"
           aria-label="Customize scale settings"
+          aria-haspopup="dialog"
           aria-expanded={show}>
           Customize
         </div>
