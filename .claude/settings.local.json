@@ -30,7 +30,9 @@
       "Bash(npx playwright:*)",
       "Bash(xargs:*)",
       "Bash(if [ -d \"/Users/saxjax/developer/notio-with-ai/notio/specs/003-menu-arrow-navigation/checklists\" ])",
-      "Bash(then ls -1 \"/Users/saxjax/developer/notio-with-ai/notio/specs/003-menu-arrow-navigation/checklists\")"
+      "Bash(then ls -1 \"/Users/saxjax/developer/notio-with-ai/notio/specs/003-menu-arrow-navigation/checklists\")",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

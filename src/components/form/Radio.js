@@ -25,6 +25,12 @@ class Radio extends React.Component{
     }
 
     handleKeyDown = (event) => {
+        // Allow arrow keys to bubble up for menu navigation
+        if (['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape'].includes(event.key)) {
+            // Don't handle these - let the menu container handle them
+            return;
+        }
+
         // Activate on Enter or Space
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();

@@ -32,6 +32,12 @@ class SubMenu extends Component {
   }
 
   handleKeyDown = (event) => {
+    // If menu is open, delegate to menu navigation handler
+    if (this.state.active && ['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape'].includes(event.key)) {
+      this.handleMenuKeyDown(event);
+      return;
+    }
+
     // Keyboard accessibility: Activate on Enter or Space key
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault(); // Prevent Space from scrolling page
