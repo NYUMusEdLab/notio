@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 
 import Overlay from "../OverlayPlugins/Overlay";
@@ -10,11 +10,20 @@ const DropdownCustomScaleMenu = (props) => {
   // const { onClickMenuHandler = () => {} } = props;
   // const { onClickCloseHandler = () => {} } = props;
   const [show, setShow] = useState(false);
+  const triggerRef = useRef(null);
 
-  const handleShow = () => {
-    const tempshow = !show;
-    setShow(tempshow);
-  };
+  const handleShow = useCallback(() => {
+    setShow(prevShow => {
+      const newShow = !prevShow;
+      // If closing, restore focus to trigger
+      if (prevShow) {
+        setTimeout(() => {
+          triggerRef.current?.focus();
+        }, 0);
+      }
+      return newShow;
+    });
+  }, []);
 
   const handleKeyDown = (event) => {
     // Keyboard accessibility: Activate on Enter or Space key
@@ -24,10 +33,30 @@ const DropdownCustomScaleMenu = (props) => {
     }
   };
 
+  const handleOverlayKeyDown = useCallback((event) => {
+    // Escape key closes overlay and returns focus
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      handleShow(); // Close overlay
+    }
+  }, [handleShow]);
+
+  // Add escape key listener when overlay is open
+  useEffect(() => {
+    if (show) {
+      document.addEventListener('keydown', handleOverlayKeyDown);
+      return () => {
+        document.removeEventListener('keydown', handleOverlayKeyDown);
+      };
+    }
+  }, [show, handleOverlayKeyDown]);
+
   return (
     <>
       <div className={props.menuTextClassName}>
         <div
+          ref={triggerRef}
           className="label-wrapper"
           onClick={(e) => {
             handleShow();
@@ -35,7 +64,8 @@ const DropdownCustomScaleMenu = (props) => {
           onKeyDown={handleKeyDown}
           tabIndex={0}
           role="button"
-          aria-label="Customize scale settings">
+          aria-label="Customize scale settings"
+          aria-expanded={show}>
           Customize
         </div>
       </div>
