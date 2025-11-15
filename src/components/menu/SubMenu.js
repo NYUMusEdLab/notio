@@ -193,7 +193,7 @@ class SubMenu extends Component {
   updateMenuItemRefs = () => {
     // Query all elements with menu item roles within this menu
     if (this.menuContainerRef) {
-      const menuItems = this.menuContainerRef.querySelectorAll('[role="menuitemradio"], [role="menuitem"]');
+      const menuItems = this.menuContainerRef.querySelectorAll('[role="menuitemradio"], [role="menuitem"], [role="menuitemcheckbox"]');
       this.menuItemRefs = Array.from(menuItems);
     }
   };
