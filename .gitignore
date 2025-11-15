@@ -7,8 +7,9 @@
 .pnp.js
 
 # testing
-/coverage
-/playwright-report
+coverage/**
+playwright-report/**
+test-results/**
 
 
 # production
@@ -43,3 +44,4 @@ notio.code-workspace
 # Logs
 *.log
 logs
+

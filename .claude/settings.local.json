@@ -19,7 +19,13 @@
       "Bash(.specify/scripts/bash/create-new-feature.sh:*)",
       "Bash(mkdir:*)",
       "Bash(yarn build)",
-      "Bash(git rev-parse:*)"
+      "Bash(git rev-parse:*)",
+      "Bash(if [ -d \"/Users/saxjax/developer/notio-with-ai/notio/specs/002-fix-a11y-errors/checklists\" ])",
+      "Bash(then ls -1 \"/Users/saxjax/developer/notio-with-ai/notio/specs/002-fix-a11y-errors/checklists\")",
+      "Bash(else echo \"NO_CHECKLISTS\")",
+      "Bash(fi)",
+      "Bash(npm run test:a11y:*)",
+      "Bash(npm run test:e2e:*)"
     ],
     "deny": [],
     "ask": []
