@@ -10,10 +10,11 @@ class HelpButton extends Component {
     hasBG: false,
     hasMinize: false,
     draggable: false,
+    startOpen: true, // Default to open for first-time users
   };
   state = {
     minimized: false,
-    show: this.props.active ? false : true,
+    show: this.props.startOpen !== undefined ? this.props.startOpen : true,
   };
 
   handleShow = () => {
