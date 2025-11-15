@@ -195,11 +195,16 @@ class Root extends Component {
                       value={root.note}
                       data-rootdisplayed={root.note}
                       checked={this.state.rootDisplayed === root.note ? true : false}
+                      tabIndex={-1}
+                      aria-hidden="true"
                     />
                     <Form.Check.Label
                       data-color={root.color}
                       className={`${rootLabel}-label-${root.note}`}
-                      htmlFor={`${rootLabel}-` + root.note}>
+                      htmlFor={`${rootLabel}-` + root.note}
+                      role="menuitemradio"
+                      aria-checked={this.state.rootDisplayed === root.note}
+                      tabIndex={-1}>
                       {root.note}
                     </Form.Check.Label>
                   </Form.Check>
@@ -216,11 +221,16 @@ class Root extends Component {
                         value={root.note}
                         data-rootdisplayed={root.note_romance}
                         checked={this.state.rootDisplayed === root.note_romance ? true : false}
+                        tabIndex={-1}
+                        aria-hidden="true"
                       />
                       <Form.Check.Label
                         data-color={root.color}
                         className={`${rootLabel}-label-${root.note_romance}`}
-                        htmlFor={`${rootLabel}-` + root.note_romance}>
+                        htmlFor={`${rootLabel}-` + root.note_romance}
+                        role="menuitemradio"
+                        aria-checked={this.state.rootDisplayed === root.note_romance}
+                        tabIndex={-1}>
                         {root.note_romance}
                       </Form.Check.Label>
                     </Form.Check>
@@ -248,12 +258,18 @@ class Root extends Component {
                         checked={
                           rootState[root.note][accidentalLabel][root.accidentals[0]]["checked"]
                         }
+                        tabIndex={-1}
+                        aria-hidden="true"
                       />
                       <Form.Check.Label
                         data-root={root.note}
                         className={`${accidentalLabel}-label-${root.note}`}
                         data-color={root.color}
-                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}>
+                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}
+                        role="menuitemradio"
+                        aria-checked={rootState[root.note][accidentalLabel][root.accidentals[0]]["checked"]}
+                        aria-disabled={this.state.root.charAt(0) === root.note ? undefined : "true"}
+                        tabIndex={-1}>
                         {root.accidentals[0]}
                       </Form.Check.Label>
                     </Form.Check>
@@ -281,11 +297,17 @@ class Root extends Component {
                         checked={
                           rootState[root.note][accidentalLabel][root.accidentals[1]]["checked"]
                         }
+                        tabIndex={-1}
+                        aria-hidden="true"
                       />
                       <Form.Check.Label
                         className={`${accidentalLabel}-label-${root.note}`}
                         data-color={root.color}
-                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}>
+                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}
+                        role="menuitemradio"
+                        aria-checked={rootState[root.note][accidentalLabel][root.accidentals[1]]["checked"]}
+                        aria-disabled={this.state.root.charAt(0) === root.note ? undefined : "true"}
+                        tabIndex={-1}>
                         {root.accidentals[1]}
                       </Form.Check.Label>
                     </Form.Check>
