@@ -9,6 +9,8 @@ Auto-generated from all feature plans. Last updated: 2025-11-13
 - N/A (no data model changes) (002-fix-a11y-errors)
 - JavaScript ES6+, React 18.2.0 + React event system (onKeyDown), existing menu components (003-menu-arrow-navigation)
 - N/A (no data persistence, pure UI interaction) (003-menu-arrow-navigation)
+- JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh (001-piano-key-keyboard-navigation)
+- Firebase (^9.9.4) for user data, localStorage for client-side state (scales, progress), existing scale state managemen (001-piano-key-keyboard-navigation)
 
 - JavaScript ES6+, React 18.2.0 (001-constitution-compliance)
 
@@ -85,9 +87,9 @@ Icon-only buttons must have descriptive aria-labels:
 - DropdownCustomScaleMenu: `aria-label="Customize scale settings"`
 
 ## Recent Changes
+- 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh
 - 003-menu-arrow-navigation: Added JavaScript ES6+, React 18.2.0 + React event system (onKeyDown), existing menu components
 - 002-fix-a11y-errors: Added JavaScript ES6+, React 18.2.0 + React event system, eslint-plugin-jsx-a11y (already configured)
-- 001-constitution-compliance: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), Jest (^29.0.3), Playwright (@playwright/test)
 
 
 <!-- MANUAL ADDITIONS START -->

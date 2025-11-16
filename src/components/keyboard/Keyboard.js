@@ -72,7 +72,12 @@ class Keyboard extends Component {
         volume: 4,
         handleSoundsAreLoaded: this.props.handleSoundsAreLoaded,
       }),
+      // NEW: Track focused key for keyboard navigation - will be set to root note
+      focusedKeyIndex: null,
     };
+
+    // NEW: Refs array for programmatic focus management
+    this.keyRefs = [];
   }
 
   scaleStart = () => {
@@ -80,6 +85,13 @@ class Keyboard extends Component {
   };
   ambitus = () => {
     return this.props.extendedKeyboard ? 24 : 13;
+  };
+
+  // NEW: Find the keyboard index of the root note
+  findRootKeyIndex = () => {
+    // In extended keyboard: starts 5 semitones below root, so root is at index 5
+    // In standard keyboard: starts at root, so root is at index 0
+    return this.props.extendedKeyboard ? 5 : 0;
   };
 
   //   synth = new SoundMaker({
@@ -105,6 +117,16 @@ class Keyboard extends Component {
   //#region Keypress Handlers
   handleKeyDown = (e) => {
     console.log(e.code);
+
+    // NEW: If keyboard or one of its keys has focus, let container handler manage arrow navigation
+    const keyboardContainer = document.querySelector(".Keyboard");
+    if (keyboardContainer && keyboardContainer.contains(document.activeElement)) {
+      // Don't handle ArrowLeft/ArrowRight/Home/End - let container handler manage them
+      if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
+        return; // Exit early, let container handler manage these keys
+      }
+    }
+
     // if (this.state.instrumentSound !== this.props.instrumentSound) {
     //   this.handleChangeSound(this.props.instrumentSound);
     // }
@@ -194,6 +216,9 @@ class Keyboard extends Component {
     if (e.code === "ArrowUp") {
       this.props.handleClickOctave(e.code);
     }
+
+    // NEW: Don't handle ArrowLeft/ArrowRight/Home/End here - let container handler manage them
+    // These are handled by handleContainerKeyDown when keyboard has focus
     //}
   };
 
@@ -251,6 +276,116 @@ class Keyboard extends Component {
 
   mouseUp = () => {
     this.setState({ mouse_is_down: false });
+  };
+
+  //#endregion
+
+  //#region Keyboard Navigation Handlers
+  // NEW: Handle container receiving focus - focus the root key
+  handleContainerFocus = () => {
+    let { focusedKeyIndex } = this.state;
+
+    // If focusedKeyIndex is not set yet, initialize it to root note
+    if (focusedKeyIndex === null) {
+      focusedKeyIndex = this.findRootKeyIndex();
+      this.setState({ focusedKeyIndex });
+    }
+
+    // When container receives focus via Tab, programmatically focus the current key
+    if (this.keyRefs[focusedKeyIndex]) {
+      this.keyRefs[focusedKeyIndex].focus();
+    }
+  };
+
+  // NEW: Container-level keyboard event handler for arrow key navigation
+  handleContainerKeyDown = (e) => {
+    const { extendedKeyboard } = this.props;
+    const totalKeys = extendedKeyboard ? 24 : 13;
+
+    // Use callback form of setState to ensure we have the latest value
+    this.setState((prevState) => {
+      let currentFocusedIndex = prevState.focusedKeyIndex;
+
+      // If focusedKeyIndex is not set yet, initialize it to root note
+      if (currentFocusedIndex === null) {
+        currentFocusedIndex = this.findRootKeyIndex();
+      }
+
+      let newIndex = currentFocusedIndex;
+
+      switch (e.key) {
+        case 'ArrowRight':
+          e.preventDefault();
+          newIndex = currentFocusedIndex + 1;
+          break;
+
+        case 'ArrowLeft':
+          e.preventDefault();
+          newIndex = currentFocusedIndex - 1;
+          break;
+
+        case 'Home':
+          e.preventDefault();
+          newIndex = 0;
+          break;
+
+        case 'End':
+          e.preventDefault();
+          newIndex = totalKeys - 1;
+          break;
+
+        case 'ArrowUp':
+        case 'ArrowDown':
+          // TODO: Implement octave navigation in future iteration
+          // For now, prevent default scroll behavior
+          e.preventDefault();
+          return prevState; // No state change
+
+        default:
+          // Let other keys (A-Z, Enter, Space) propagate
+          return prevState; // No state change
+      }
+
+      // Wrap around at boundaries (circular navigation)
+      if (newIndex < 0) {
+        newIndex = totalKeys - 1;
+      } else if (newIndex >= totalKeys) {
+        newIndex = 0;
+      }
+
+      // Focus the new key after state update
+      if (this.keyRefs[newIndex]) {
+        // Use setTimeout to ensure focus happens after state update
+        setTimeout(() => {
+          if (this.keyRefs[newIndex]) {
+            this.keyRefs[newIndex].focus();
+          }
+        }, 0);
+      }
+
+      return { focusedKeyIndex: newIndex };
+    });
+  };
+
+  // NEW: Navigate to specific key index
+  navigateToKey = (newIndex) => {
+    const { extendedKeyboard } = this.props;
+    const totalKeys = extendedKeyboard ? 24 : 13;
+
+    // Wrap around at boundaries (circular navigation)
+    let wrappedIndex = newIndex;
+    if (newIndex < 0) {
+      wrappedIndex = totalKeys - 1;
+    } else if (newIndex >= totalKeys) {
+      wrappedIndex = 0;
+    }
+
+    this.setState({ focusedKeyIndex: wrappedIndex });
+
+    // Programmatic focus using refs
+    if (this.keyRefs[wrappedIndex]) {
+      this.keyRefs[wrappedIndex].focus();
+    }
   };
 
   //#endregion
@@ -569,6 +704,7 @@ class Keyboard extends Component {
       return (
         <Key
           key={index} // Index in loop of notes
+          ref={(el) => (this.keyRefs[index] = el)} // NEW: Store ref for programmatic focus
           index={index} // index on Keyboard
           note={namedNote} //sounding note //could use the function in MusicScale: NoteNameWithOctaveNumber = (currentOctave,distToCurrentOctave,distFromRoot)
           noteNameEnglish={keyboardNote.note_english}
@@ -588,6 +724,7 @@ class Keyboard extends Component {
           trebleStaffOn={trebleStaffOn}
           showOffNotes={showOffNotes}
           isActive={this.state.activeNotes.has(namedNote)}
+          isFocused={index === this.state.focusedKeyIndex} // NEW: Pass focus state
           noteOnHandler={this.noteOnHandler}
           noteOffHandler={this.noteOffHandler}
           extendedKeyboard={extendedKeyboard}
@@ -633,9 +770,19 @@ class Keyboard extends Component {
     });
 
     return (
-      <div className="Keyboard" data-testid="Keyboard">
+      /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */
+      <div
+        className="Keyboard"
+        data-testid="Keyboard"
+        tabIndex={0}
+        role="application"
+        aria-label="Piano keyboard, use arrow keys to select notes, Enter or Space to play"
+        onFocus={this.handleContainerFocus}
+        onKeyDown={this.handleContainerKeyDown}
+      >
         {noteList}
       </div>
+      /* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */
     );
   }
   //#endregion
