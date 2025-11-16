@@ -88,8 +88,8 @@ Icon-only buttons must have descriptive aria-labels:
 
 ## Recent Changes
 - 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh
+- 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh
 - 003-menu-arrow-navigation: Added JavaScript ES6+, React 18.2.0 + React event system (onKeyDown), existing menu components
-- 002-fix-a11y-errors: Added JavaScript ES6+, React 18.2.0 + React event system, eslint-plugin-jsx-a11y (already configured)
 
 
 <!-- MANUAL ADDITIONS START -->
