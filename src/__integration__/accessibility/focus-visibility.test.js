@@ -191,8 +191,9 @@ describe('Focus Visibility and Management Integration Tests', () => {
       const keys = screen.getAllByRole('button', { name: /Play/ });
       expect(keys).toHaveLength(2);
 
+      // Key components use tabIndex="-1" for roving tabIndex pattern (container has tabIndex="0")
       keys.forEach(key => {
-        expect(key).toHaveAttribute('tabIndex', '0');
+        expect(key).toHaveAttribute('tabIndex', '-1');
       });
     });
 

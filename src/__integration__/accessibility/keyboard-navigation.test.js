@@ -70,9 +70,9 @@ describe('Keyboard Navigation Integration Tests', () => {
       expect(keys[1]).toHaveAttribute('aria-label', 'Play D4');
       expect(keys[2]).toHaveAttribute('aria-label', 'Play E4');
 
-      // Verify all keys are focusable (tabIndex=0)
+      // Verify all keys use roving tabIndex pattern (tabIndex="-1", container has tabIndex="0")
       keys.forEach(key => {
-        expect(key).toHaveAttribute('tabIndex', '0');
+        expect(key).toHaveAttribute('tabIndex', '-1');
       });
     });
 
@@ -415,7 +415,7 @@ describe('Keyboard Navigation Integration Tests', () => {
       });
     });
 
-    it('should have tabIndex=0 on all interactive elements', () => {
+    it('should have tabIndex=-1 on Key components (roving tabIndex pattern)', () => {
       const mockNoteOn = jest.fn();
       const mockNoteOff = jest.fn();
 
@@ -433,7 +433,8 @@ describe('Keyboard Navigation Integration Tests', () => {
       );
 
       const key = screen.getByRole('button', { name: 'Play C4' });
-      expect(key).toHaveAttribute('tabIndex', '0');
+      // Key components use tabIndex="-1" for roving tabIndex pattern (container has tabIndex="0")
+      expect(key).toHaveAttribute('tabIndex', '-1');
     });
   });
 });

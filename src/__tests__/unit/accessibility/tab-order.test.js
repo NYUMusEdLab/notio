@@ -145,8 +145,8 @@ describe('Tab Order and Focus Stability Unit Tests', () => {
       // Fire Tab event (browser would move focus, but we test event handling)
       fireEvent.keyDown(keys[0], { key: 'Tab' });
 
-      // Key should still have proper attributes after Tab event
-      expect(keys[0]).toHaveAttribute('tabIndex', '0');
+      // Key should still have proper attributes after Tab event (tabIndex="-1" for roving tabIndex pattern)
+      expect(keys[0]).toHaveAttribute('tabIndex', '-1');
       expect(keys[0]).toHaveAttribute('role', 'button');
     });
   });
@@ -170,7 +170,7 @@ describe('Tab Order and Focus Stability Unit Tests', () => {
       );
 
       const key = screen.getByRole('button', { name: 'Play C4' });
-      expect(key).toHaveAttribute('tabIndex', '0');
+      expect(key).toHaveAttribute('tabIndex', '-1'); // Roving tabIndex pattern
 
       // Re-render with different props
       rerender(
@@ -186,9 +186,9 @@ describe('Tab Order and Focus Stability Unit Tests', () => {
         />
       );
 
-      // TabIndex should still be present
+      // TabIndex should still be present (roving tabIndex pattern uses "-1")
       const updatedKey = screen.getByRole('button', { name: 'Play C4' });
-      expect(updatedKey).toHaveAttribute('tabIndex', '0');
+      expect(updatedKey).toHaveAttribute('tabIndex', '-1');
     });
 
     it('should handle conditional rendering without breaking tab order', () => {
@@ -255,12 +255,12 @@ describe('Tab Order and Focus Stability Unit Tests', () => {
 
       keys = screen.getAllByRole('button');
       expect(keys).toHaveLength(1);
-      expect(keys[0]).toHaveAttribute('tabIndex', '0');
+      expect(keys[0]).toHaveAttribute('tabIndex', '-1'); // Roving tabIndex pattern
     });
   });
 
   describe('TabIndex Edge Cases', () => {
-    it('should only use tabIndex=0 (natural tab order)', () => {
+    it('should use tabIndex=-1 for roving tabIndex pattern', () => {
       const mockNoteOn = jest.fn();
       const mockNoteOff = jest.fn();
 
@@ -284,14 +284,13 @@ describe('Tab Order and Focus Stability Unit Tests', () => {
 
       const keys = screen.getAllByRole('button');
 
-      // All keys should have tabIndex="0", not positive integers
+      // All keys should have tabIndex="-1" for roving tabIndex pattern (container has tabIndex="0")
       keys.forEach(key => {
-        expect(key.getAttribute('tabIndex')).toBe('0');
-        expect(parseInt(key.getAttribute('tabIndex'))).not.toBeGreaterThan(0);
+        expect(key.getAttribute('tabIndex')).toBe('-1');
       });
     });
 
-    it('should not use tabIndex=-1 (unfocusable)', () => {
+    it('should use tabIndex=-1 to implement roving tabIndex pattern', () => {
       const mockNoteOn = jest.fn();
       const mockNoteOff = jest.fn();
 
@@ -310,8 +309,8 @@ describe('Tab Order and Focus Stability Unit Tests', () => {
 
       const key = screen.getByRole('button');
 
-      // Should NOT use tabIndex="-1" which makes element unfocusable via Tab
-      expect(key.getAttribute('tabIndex')).not.toBe('-1');
+      // Should use tabIndex="-1" as part of roving tabIndex pattern
+      expect(key.getAttribute('tabIndex')).toBe('-1');
     });
   });
 
@@ -341,8 +340,8 @@ describe('Tab Order and Focus Stability Unit Tests', () => {
 
       // Click should not remove focus
       fireEvent.mouseDown(key);
-      // Note: Focus behavior on click depends on browser, but element should remain focusable
-      expect(key).toHaveAttribute('tabIndex', '0');
+      // Note: Focus behavior on click depends on browser, but element should remain focusable (tabIndex="-1" for roving tabIndex pattern)
+      expect(key).toHaveAttribute('tabIndex', '-1');
     });
 
     it('should not interfere with sequential focus navigation', () => {

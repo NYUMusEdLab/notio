@@ -188,7 +188,7 @@ describe('Focus Management Edge Cases (Unit Tests)', () => {
         />
       );
 
-      // Button should still be focusable
+      // Button should still be focusable (ShareButton uses tabIndex="0")
       const updatedButton = screen.getByRole('button', { name: 'Share' });
       expect(updatedButton).toHaveAttribute('tabIndex', '0');
     });
@@ -271,10 +271,10 @@ describe('Focus Management Edge Cases (Unit Tests)', () => {
 
       const key = screen.getByRole('button', { name: 'Play C4' });
 
-      // Should be focusable despite nesting
+      // Should be focusable despite nesting (Key uses tabIndex="-1" for roving tabIndex pattern)
       key.focus();
       expect(document.activeElement).toBe(key);
-      expect(key).toHaveAttribute('tabIndex', '0');
+      expect(key).toHaveAttribute('tabIndex', '-1');
     });
 
     it('should handle focus/blur cycles without memory leaks', () => {
@@ -302,11 +302,11 @@ describe('Focus Management Edge Cases (Unit Tests)', () => {
         fireEvent.blur(key);
       }
 
-      // Element should still be functional
+      // Element should still be functional (Key uses tabIndex="-1" for roving tabIndex pattern)
       expect(key).toHaveAttribute('role', 'button');
-      expect(key).toHaveAttribute('tabIndex', '0');
+      expect(key).toHaveAttribute('tabIndex', '-1');
 
-      // Should still be focusable
+      // Should still be focusable programmatically
       key.focus();
       expect(document.activeElement).toBe(key);
     });
