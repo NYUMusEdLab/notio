@@ -69,35 +69,11 @@
 
 <!--
   ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right edge cases. Note: These edge cases will guide
-  unit test creation (10-20% of test suite). Most testing will be integration-based.
+  Fill them out with the right edge cases.
 -->
 
 - What happens when [boundary condition]?
 - How does system handle [error scenario]?
-- What complex algorithms require edge case testing (e.g., musical calculations, interval computations)?
-
-### Testing Strategy *(mandatory)*
-
-<!--
-  All features MUST achieve 100% code coverage using Rainer Hahnekamp's integration-first approach:
-  - Integration tests (60-70%): Primary strategy for realistic workflows
-  - E2E tests (20-30%): Critical user journeys
-  - Unit tests (10-20%): Edge cases and complex algorithms only
--->
-
-**Integration Test Focus**:
-- [Key workflow to test via integration: e.g., "User creates exercise → system validates → feedback displays"]
-- [Component interaction to test: e.g., "Notation renderer + audio playback synchronization"]
-- [Error scenario workflow: e.g., "Invalid input handling across form → validation → error display"]
-
-**E2E Test Focus**:
-- [Critical user journey: e.g., "Student completes full exercise from start to submission"]
-- [Cross-browser requirement: e.g., "Audio playback works in Chrome, Firefox, Safari"]
-
-**Unit Test Focus** (edge cases only):
-- [Complex algorithm edge case: e.g., "Interval calculation with edge cases: unison, octave, compound intervals"]
-- [Boundary condition: e.g., "Tuning algorithm with frequencies at extremes (20Hz, 20kHz)"]
 
 ## Requirements *(mandatory)*
 
