@@ -53,7 +53,8 @@ export default class Overlay extends Component {
           onClick={(e) => {
             // this.handleMakeSmaller();
             this.handleMinimize();
-          }}>
+          }}
+          aria-label="Minimize window">
           <UnderscoreSVG />
         </Button>
 
@@ -61,7 +62,8 @@ export default class Overlay extends Component {
           className="overlay__header__buttonContainer__button--close"
           onClick={(e) => {
             this.props.close();
-          }}>
+          }}
+          aria-label="Close window">
           <CrossSVG />
         </Button>
       </div>
