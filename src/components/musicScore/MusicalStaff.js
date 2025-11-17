@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Vex from "vexflow";
+import * as VexFlow from "vexflow";
 import PropTypes from "prop-types";
 
-//INFO: vexFlow 4 documentation: https://github.com/0xfe/vexflow/wiki/Tutorial
-// const { Renderer, Stave, Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
+//INFO: VexFlow 5 documentation: https://github.com/vexflow/vexflow/wiki
+// const { Renderer, Stave, Accidental, StaveNote, Voice, Formatter } = VexFlow;
 
 let stave, ctx, renderer;
 
@@ -20,10 +20,10 @@ class MusicalStaff extends Component {
   }
 
   setupStaff() {
-    const { Renderer, Stave } = Vex.Flow;
+    const { Renderer, Stave } = VexFlow;
 
     let containerSVG = this.musicalStaff.current;
-    renderer = new Renderer(containerSVG, Vex.Flow.Renderer.Backends.SVG);
+    renderer = new Renderer(containerSVG, VexFlow.Renderer.Backends.SVG);
     // renderer.resize(0, 0, 60, 140);
     ctx = renderer.getContext();
     //For some reason this works dispite the error
@@ -31,12 +31,12 @@ class MusicalStaff extends Component {
     ctx.setViewBox(0, 0, 60, 140); //size
     stave = new Stave(0, 10, 60, { fill_style: "black" });
     //Hides the barlines
-    stave.setBegBarType(Vex.Flow.Barline.type.NONE);
+    stave.setBegBarType(VexFlow.Barline.type.NONE);
     stave.setContext(ctx).draw();
   }
 
   drawNotes() {
-    const { Accidental, StaveNote, Voice, Formatter } = Vex.Flow;
+    const { Accidental, StaveNote, Voice, Formatter } = VexFlow;
 
     // console.log("A");
     // console.log("drawNotes this.props.note", this.props.note);

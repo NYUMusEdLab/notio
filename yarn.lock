@@ -10136,10 +10136,10 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-vexflow@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/vexflow/-/vexflow-4.0.3.tgz#03f5a013724be89268f1df3d0b397432cfc92d99"
-  integrity sha512-0gucH04apVISxY86gnjKwzV8IMr7ndYsBmYCOPioCr0m38NfS4rQt7yrGQQtl1jB7JAiaOCjN0lKMUflFeMIXA==
+vexflow@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/vexflow/-/vexflow-5.0.0.tgz#4307c84979657c6f733facd1aed60c99be56ed88"
+  integrity sha512-rjB7TV4ygKE5Fl3W5OlG+0dHv22CFufUJdMG6oNgvcn0zp34u+sOboZsadQXnF1O3tZ3myXThaUIaLkJlpNM2Q==
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"
