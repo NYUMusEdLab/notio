@@ -18,6 +18,7 @@
 
         &__title{
             grid-area: head;
+            font-size: 18px;
 
         }
 
@@ -37,10 +38,12 @@
 
         &__explainer{
             grid-area: text;
+            font-size: 18px;
         }
 
         &__currently-watching{
             grid-area:currenturl;
+            font-size: 16px;
         }
 
         // & .text-muted {

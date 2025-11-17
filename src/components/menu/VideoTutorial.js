@@ -79,24 +79,23 @@ const VideoTutorial = (props) => {
                 onReady={playerOnReady}
               />
             </Tab>
-            <Tab eventKey="Enter_url" title="Enter url">
+            <Tab eventKey="Enter_url" title="Enter URL">
               <div>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="video-url" controlId="formYoutubeUrl">
-                    <Form.Label className="video-url__title">Video url</Form.Label>
+                    <Form.Label className="video-url__title">Video URL</Form.Label>
 
                     <Form.Control
                       className="video-url__url-field"
                       type="text"
-                      placeholder={"Enter url"}
+                      placeholder={"Enter URL"}
                       ref={urlInputRef}></Form.Control>
 
                     <Form.Text className="video-url__explainer text-muted">
-                      Enter the url for any youtube video or playlist that you want to use with
-                      Notio and hit Enter.
+                      Enter the URL for any video or playlist you want to use with Notio, then press Enter.
                     </Form.Text>
                     <Form.Text className="video-url__currently-watching">
-                      You are curently watching:
+                      You are currently watching:
                       <a href={props.videoUrl}> {props.videoUrl} </a>
                     </Form.Text>
                     {/* <Form.Text className="text-muted">Current url: {videoUrl}</Form.Text> */}
