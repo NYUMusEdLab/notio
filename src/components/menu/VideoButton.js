@@ -23,22 +23,49 @@ export default class VideoButton extends Component {
     show: this.props.active ? true : false,
   };
 
-  handleShow = () => {
-    this.setState({ show: !this.state.show });
-    this.props.handleChangeVideoVisibility();
+  constructor(props) {
+    super(props);
+    this.triggerRef = React.createRef();
+  }
 
+  handleShow = () => {
+    this.setState(prevState => {
+      // If closing, restore focus to trigger
+      if (prevState.show) {
+        setTimeout(() => {
+          this.triggerRef.current?.focus();
+        }, 0);
+      }
+      return { show: !prevState.show };
+    });
+    this.props.handleChangeVideoVisibility();
+  };
+
+  handleKeyDown = (event) => {
+    // Keyboard accessibility: Activate on Enter or Space key
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Prevent Space from scrolling page
+      this.props.onClickMenuHandler();
+      this.handleShow();
+      this.props.handleChangeVideoVisibility();
+    }
   };
 
   render() {
     return (
       <React.Fragment>
         <div
+          ref={this.triggerRef}
           className="circledButton"
           onClick={(e) => {
             this.props.onClickMenuHandler();
             this.handleShow();
             this.props.handleChangeVideoVisibility();
-          }}>
+          }}
+          onKeyDown={this.handleKeyDown}
+          tabIndex={0}
+          role="button"
+          aria-label="Watch tutorial video">
           {components[this.props.label]}
         </div>
         <div className="title-wrapper">

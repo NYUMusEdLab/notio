@@ -138,9 +138,17 @@ class WholeApp extends Component {
   handleSelectScale = (selectedScale) => {
     // console.log(selectedScale + " SCALE selected");
     const newScaleObject = this.state.scaleList.find((obj) => obj.name === selectedScale);
+
+    // US2: Disable Relative mode for chromatic scales
+    const isChromatic = selectedScale === 'Chromatic';
+    const updatedNotation = isChromatic
+      ? this.state.notation.filter(n => n !== 'Relative')
+      : this.state.notation;
+
     this.setState({
       scale: selectedScale,
       scaleObject: newScaleObject,
+      notation: updatedNotation,
     });
   };
 
@@ -164,7 +172,14 @@ class WholeApp extends Component {
 
   handleChangeNotation = (selectedNotation) => {
     // console.log(selectedNotation + " Notation selected");
-    this.setState({ notation: selectedNotation });
+
+    // US2: Prevent enabling Relative mode for chromatic scales
+    const isChromatic = this.state.scale === 'Chromatic';
+    const filteredNotation = isChromatic
+      ? selectedNotation.filter(n => n !== 'Relative')
+      : selectedNotation;
+
+    this.setState({ notation: filteredNotation });
   };
 
   handleChangeCustomScale = (customScaleName, customsteps, customNumbers, firstRun = false) => {

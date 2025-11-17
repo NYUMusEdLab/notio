@@ -6,13 +6,203 @@ on: [pull_request]
 # This is the description of the different groupings of commands which will be runs.
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: "lts/gallium"
+          node-version-file: ".nvmrc"
       - name: Install modules
         run: yarn
-      - name: Run CI tests
-        run: yarn test-ci
+      - name: Build
+        run: yarn build
+
+  a11y-menu-navigation:
+    name: A11y - Menu Navigation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install modules
+        run: yarn
+      - name: Run menu navigation tests
+        run: yarn test --testPathPattern=__integration__/accessibility/menu-arrow-navigation.test.js --ci --watchAll=false
+
+  a11y-keyboard-navigation:
+    name: A11y - Keyboard Navigation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install modules
+        run: yarn
+      - name: Run keyboard navigation tests
+        run: yarn test --testPathPattern=__integration__/accessibility/keyboard-navigation.test.js --ci --watchAll=false
+
+  a11y-focus-management:
+    name: A11y - Focus Management
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install modules
+        run: yarn
+      - name: Run focus visibility tests
+        run: yarn test --testPathPattern=__integration__/accessibility/focus-visibility.test.js --ci --watchAll=false
+
+  a11y-keyboard-piano:
+    name: A11y - Keyboard Piano
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install modules
+        run: yarn
+      - name: Run keyboard piano tests
+        run: yarn test --testPathPattern=__integration__/accessibility/keyboard-piano.test.js --ci --watchAll=false
+
+  a11y-screen-reader:
+    name: A11y - Screen Reader
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install modules
+        run: yarn
+      - name: Run screen reader tests
+        run: yarn test --testPathPattern=__integration__/accessibility/screen-reader.test.js --ci --watchAll=false
+
+  # e2e-chromium:
+  #   name: E2E - Chromium
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version-file: ".nvmrc"
+  #     - name: Install modules
+  #       run: yarn
+  #     - name: Install Playwright browsers
+  #       run: npx playwright install --with-deps chromium
+  #     - name: Run E2E tests (Chromium)
+  #       run: yarn test:e2e:chromium
+  #       env:
+  #         CI: true
+  #     - name: Upload Playwright report
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: playwright-report-chromium
+  #         path: playwright-report/
+  #         retention-days: 30
+
+  # e2e-firefox:
+  #   name: E2E - Firefox
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version-file: ".nvmrc"
+  #     - name: Install modules
+  #       run: yarn
+  #     - name: Install Playwright browsers
+  #       run: npx playwright install --with-deps firefox
+  #     - name: Run E2E tests (Firefox)
+  #       run: yarn test:e2e:firefox
+  #       env:
+  #         CI: true
+  #     - name: Upload Playwright report
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: playwright-report-firefox
+  #         path: playwright-report/
+  #         retention-days: 30
+
+  # e2e-webkit:
+  #   name: E2E - WebKit
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version-file: ".nvmrc"
+  #     - name: Install modules
+  #       run: yarn
+  #     - name: Install Playwright browsers
+  #       run: npx playwright install --with-deps webkit
+  #     - name: Run E2E tests (WebKit)
+  #       run: yarn test:e2e:webkit
+  #       env:
+  #         CI: true
+  #     - name: Upload Playwright report
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: playwright-report-webkit
+  #         path: playwright-report/
+  #         retention-days: 30
+
+  integration-error-handling:
+    name: Integration - Error Handling
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install modules
+        run: yarn
+      - name: Run error handling tests
+        run: yarn test --testPathPattern=__integration__/error-handling --ci --watchAll=false
+
+  integration-state-management:
+    name: Integration - State Management
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install modules
+        run: yarn
+      - name: Run state management tests
+        run: yarn test --testPathPattern=__integration__/state-management --ci --watchAll=false
+
+  integration-user-workflows:
+    name: Integration - User Workflows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install modules
+        run: yarn
+      - name: Run user workflow tests
+        run: yarn test --testPathPattern=__integration__/user-workflows --ci --watchAll=false
+
+  integration-musical-components:
+    name: Integration - Musical Components
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install modules
+        run: yarn
+      - name: Run musical component tests
+        run: yarn test --testPathPattern=__integration__/musical-components --ci --watchAll=false

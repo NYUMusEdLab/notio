@@ -38,6 +38,36 @@ You can see the project [here. 2019 dev of project](https://notio.pestanias.now.
 -tab size 2
 -allow double and single quotes
 
+## Testing
+
+Notio follows **constitutional testing principles** (v2.0.0) with integration-first testing:
+
+- **Integration Tests**: 60-70% of test suite (PRIMARY)
+- **E2E Tests**: 20-30% of test suite (SECONDARY)
+- **Unit Tests**: 10-20% of test suite (MINIMAL - edge cases only)
+
+### Run Tests
+
+```bash
+# Integration and unit tests
+yarn test                    # Run all tests in watch mode
+yarn test --coverage        # Generate coverage report (100% required)
+yarn test:a11y              # Run accessibility tests
+
+# E2E tests (Playwright)
+yarn test:e2e               # Run in all browsers
+yarn test:e2e:headed        # Run with visible browser
+yarn test:e2e:debug         # Run with Playwright Inspector
+```
+
+### Documentation
+
+- **[Testing Guide](docs/TESTING.md)** - Complete testing documentation
+- **[Constitutional Quickstart](specs/001-constitution-compliance/quickstart.md)** - Copy-paste test templates
+- **[Constitution v2.0.0](.specify/memory/constitution.md)** - Core development principles
+
+All tests must pass with 100% code coverage before merging.
+
 ## Info to developers
 
 use nvm to install the latest node-version found int the .nvmrc file

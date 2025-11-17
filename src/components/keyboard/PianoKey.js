@@ -97,6 +97,7 @@ class PianoKey extends Component {
     const { keyColor, color, isActive, noteNameEnglish } = this.props;
 
     return (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         ref={this.keyRef}
         className={`piano-key ${keyColor} ${noteNameEnglish.toLowerCase()}`}

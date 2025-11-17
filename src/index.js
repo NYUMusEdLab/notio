@@ -9,6 +9,14 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import WholeAppWrapper from "WholeAppWrapper";
 import WholeApp from "./WholeApp";
+
+// T014: Configure @axe-core/react for development-only runtime accessibility auditing
+// This provides real-time accessibility feedback in the browser console during development
+if (process.env.NODE_ENV !== 'production') {
+  import('@axe-core/react').then((axe) => {
+    axe.default(React, ReactDOM, 1000);
+  });
+}
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 //INFO: to learn about react-roue-dom v6 https://reactrouter.com/en/v6.3.0/upgrading/v5

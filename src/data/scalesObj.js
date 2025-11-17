@@ -67,7 +67,7 @@ const scales = [
   {
     name: "Minor Blues",
     steps: [0, 3, 5, 6, 7, 10],
-    numbers: ["1", "b3", "4", "b5", "5", "7"],
+    numbers: ["1", "b3", "4", "#4", "5", "7"],
   },
   {
     name: "Major Blues",

@@ -85,6 +85,18 @@
         // content: url(../../../img/tick_submenu.svg);
         position: absolute;
       }
+      // Show checkmark when checked class is present (for accessibility-enhanced checkboxes)
+      &.checked {
+        &:after {
+          font-size: 2rem;
+          text-align: center;
+          width: 2rem !important;
+          height: 2rem !important;
+          display: block;
+          content: "\2713";
+          top: -0.5rem;
+        }
+      }
     }
   }
 }
