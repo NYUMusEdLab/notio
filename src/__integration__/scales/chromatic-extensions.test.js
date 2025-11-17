@@ -3,7 +3,7 @@ import scales from '../../data/scalesObj';
 
 describe('Chromatic Scale Extensions (US1)', () => {
   const chromaticScale = scales.find(s => s.name === 'Chromatic');
-  const chromaticScalesWithFlats = ['Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb', 'B'];
+  const chromaticScalesWithFlats = ['Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb'];
 
   test.each(chromaticScalesWithFlats)(
     'Chromatic scale %s with Extensions mode should not show extra "m" extension',
@@ -27,7 +27,7 @@ describe('Chromatic Scale Extensions (US1)', () => {
     }
   );
 
-  test.each(['C', 'C#', 'D', 'D#', 'E', 'F#', 'G', 'G#', 'A', 'A#'])(
+  test.each(['C', 'C#', 'D', 'D#', 'E', 'F#', 'G', 'G#', 'A', 'A#', 'B'])(
     'Chromatic scale %s with sharps should not show "m" extension',
     (rootNote) => {
       const scale = new MusicScale(chromaticScale, rootNote);
