@@ -94,6 +94,7 @@ class TopMenu extends Component {
       <>
         <div
           className="navbar "
+          data-testid="top-menu"
           data-tip="custom"
           data-for="keyboardTooltip"
           data-event="null"
@@ -192,6 +193,7 @@ class TopMenu extends Component {
           {/* Notation */}
           <div
             className="navbar__item menu-notation"
+            data-testid="menu-notation"
             data-tip="custom"
             data-for="notationTooltip"
             data-event="null"
@@ -225,6 +227,7 @@ class TopMenu extends Component {
           {/* Root */}
           <div
             className="navbar__item menu-root"
+            data-testid="menu-root"
             data-tip="custom"
             data-for="rootTooltip"
             data-event="null"
@@ -267,6 +270,7 @@ class TopMenu extends Component {
           {/* Scale */}
           <div
             className="navbar__item menu-scale"
+            data-testid="menu-scale"
             data-tip="custom"
             data-for="scaleTooltip"
             data-event="null"

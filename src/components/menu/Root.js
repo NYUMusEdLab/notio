@@ -115,7 +115,7 @@ class Root extends Component {
   };
 
   handleClickRoot = (e) => {
-    let root = e.target.value;
+    let root = e.target.value || e.target.dataset.value;
 
     if (this.state.root !== root) {
       this.setState({
@@ -132,11 +132,11 @@ class Root extends Component {
   // Handle (un)select of accidentals radio buttons
   handleClick = (e) => {
     let root = e.target.dataset.root;
-    let accidentalValue = e.target.value;
+    let accidentalValue = e.target.value || e.target.dataset.value;
 
     if (this.state.accidental !== accidentalValue) {
       this.setState({
-        accidental: e.target.value,
+        accidental: accidentalValue,
         rootState: this.setRootState(root + accidentalValue, true),
       });
     } else {
@@ -145,6 +145,48 @@ class Root extends Component {
         rootState: this.setRootState(root, false),
       });
     }
+  };
+
+  // Keyboard handler for root labels
+  handleRootLabelKeyDown = (event, rootValue, rootDisplayed) => {
+    // Allow arrow keys to bubble up for menu navigation
+    if (['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape'].includes(event.key)) {
+      return;
+    }
+
+    // Activate on Enter or Space
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.handleClickRoot({ target: { value: rootValue, dataset: { value: rootValue } } });
+      this.handleChange({ target: { name: rootLabel, value: rootValue, dataset: { rootdisplayed: rootDisplayed } } });
+    }
+  };
+
+  // Click handler for root labels
+  handleRootLabelClick = (rootValue, rootDisplayed) => {
+    this.handleClickRoot({ target: { value: rootValue, dataset: { value: rootValue } } });
+    this.handleChange({ target: { name: rootLabel, value: rootValue, dataset: { rootdisplayed: rootDisplayed } } });
+  };
+
+  // Keyboard handler for accidental labels
+  handleAccidentalLabelKeyDown = (event, root, accidentalValue) => {
+    // Allow arrow keys to bubble up for menu navigation
+    if (['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape'].includes(event.key)) {
+      return;
+    }
+
+    // Activate on Enter or Space
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.handleClick({ target: { value: accidentalValue, dataset: { root, value: accidentalValue } } });
+      this.handleChange({ target: { name: accidentalLabel, value: accidentalValue } });
+    }
+  };
+
+  // Click handler for accidental labels
+  handleAccidentalLabelClick = (root, accidentalValue) => {
+    this.handleClick({ target: { value: accidentalValue, dataset: { root, value: accidentalValue } } });
+    this.handleChange({ target: { name: accidentalLabel, value: accidentalValue } });
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -195,11 +237,17 @@ class Root extends Component {
                       value={root.note}
                       data-rootdisplayed={root.note}
                       checked={this.state.rootDisplayed === root.note ? true : false}
+                      tabIndex={-1}
+                      aria-hidden="true"
                     />
                     <Form.Check.Label
                       data-color={root.color}
                       className={`${rootLabel}-label-${root.note}`}
-                      htmlFor={`${rootLabel}-` + root.note}>
+                      role="menuitemradio"
+                      aria-checked={this.state.rootDisplayed === root.note}
+                      tabIndex={-1}
+                      onClick={() => this.handleRootLabelClick(root.note, root.note)}
+                      onKeyDown={(e) => this.handleRootLabelKeyDown(e, root.note, root.note)}>
                       {root.note}
                     </Form.Check.Label>
                   </Form.Check>
@@ -216,11 +264,17 @@ class Root extends Component {
                         value={root.note}
                         data-rootdisplayed={root.note_romance}
                         checked={this.state.rootDisplayed === root.note_romance ? true : false}
+                        tabIndex={-1}
+                        aria-hidden="true"
                       />
                       <Form.Check.Label
                         data-color={root.color}
                         className={`${rootLabel}-label-${root.note_romance}`}
-                        htmlFor={`${rootLabel}-` + root.note_romance}>
+                        role="menuitemradio"
+                        aria-checked={this.state.rootDisplayed === root.note_romance}
+                        tabIndex={-1}
+                        onClick={() => this.handleRootLabelClick(root.note, root.note_romance)}
+                        onKeyDown={(e) => this.handleRootLabelKeyDown(e, root.note, root.note_romance)}>
                         {root.note_romance}
                       </Form.Check.Label>
                     </Form.Check>
@@ -248,12 +302,19 @@ class Root extends Component {
                         checked={
                           rootState[root.note][accidentalLabel][root.accidentals[0]]["checked"]
                         }
+                        tabIndex={-1}
+                        aria-hidden="true"
                       />
                       <Form.Check.Label
                         data-root={root.note}
                         className={`${accidentalLabel}-label-${root.note}`}
                         data-color={root.color}
-                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[0]}>
+                        role="menuitemradio"
+                        aria-checked={rootState[root.note][accidentalLabel][root.accidentals[0]]["checked"]}
+                        aria-disabled={this.state.root.charAt(0) === root.note ? undefined : "true"}
+                        tabIndex={-1}
+                        onClick={() => this.handleAccidentalLabelClick(root.note, root.accidentals[0])}
+                        onKeyDown={(e) => this.handleAccidentalLabelKeyDown(e, root.note, root.accidentals[0])}>
                         {root.accidentals[0]}
                       </Form.Check.Label>
                     </Form.Check>
@@ -281,11 +342,18 @@ class Root extends Component {
                         checked={
                           rootState[root.note][accidentalLabel][root.accidentals[1]]["checked"]
                         }
+                        tabIndex={-1}
+                        aria-hidden="true"
                       />
                       <Form.Check.Label
                         className={`${accidentalLabel}-label-${root.note}`}
                         data-color={root.color}
-                        htmlFor={`${accidentalLabel}-` + root.note + `-` + root.accidentals[1]}>
+                        role="menuitemradio"
+                        aria-checked={rootState[root.note][accidentalLabel][root.accidentals[1]]["checked"]}
+                        aria-disabled={this.state.root.charAt(0) === root.note ? undefined : "true"}
+                        tabIndex={-1}
+                        onClick={() => this.handleAccidentalLabelClick(root.note, root.accidentals[1])}
+                        onKeyDown={(e) => this.handleAccidentalLabelKeyDown(e, root.note, root.accidentals[1])}>
                         {root.accidentals[1]}
                       </Form.Check.Label>
                     </Form.Check>
