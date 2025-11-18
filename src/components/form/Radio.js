@@ -24,21 +24,38 @@ class Radio extends React.Component{
         }
     }
 
+    handleKeyDown = (event) => {
+        // Allow arrow keys to bubble up for menu navigation
+        if (['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape'].includes(event.key)) {
+            // Don't handle these - let the menu container handle them
+            return;
+        }
+
+        // Activate on Enter or Space
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            this.props.onRadioChange({
+                target: { value: this.props.label }
+            });
+        }
+    };
+
     render(){
         return(
             <div className="form-radio">
-                <label className={`label-wrapper ${this.props.isSelected ? 'active' : ''}`}>
+                <div
+                    className={`label-wrapper ${this.props.isSelected ? 'active' : ''}`}
+                    tabIndex={-1}
+                    role="menuitemradio"
+                    aria-checked={this.props.isSelected ? 'true' : 'false'}
+                    onKeyDown={this.handleKeyDown}
+                    onClick={() => this.props.onRadioChange({
+                        target: { value: this.props.label }
+                    })}
+                    data-testid={"Radio:"+this.props.label}>
                     {components[this.props.label]}
-                    <input
-                        type="radio"
-                        value={this.props.label}
-                        data-testid={"Radio:"+this.props.label}
-                        name={this.props.nameField}
-                        checked={this.props.isSelected}
-                        onChange={this.props.onRadioChange}
-                    />
                     <span className="form-radio__label">{this.props.label}</span>
-                </label>
+                </div>
             </div>
         )
     }

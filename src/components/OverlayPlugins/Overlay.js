@@ -6,12 +6,40 @@ import UnderscoreSVG from "../../assets/img/Underscore";
 import CrossSVG from "../../assets/img/Cross";
 
 export default class Overlay extends Component {
-  state = {
-    minimized: false,
-    hidden: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      minimized: false,
+      hidden: false,
+    };
+    this.overlayRef = React.createRef();
+  }
 
   content = (<Fragment>{this.props.children}</Fragment>);
+
+  componentDidMount() {
+    // Add Escape key listener when overlay mounts
+    document.addEventListener('keydown', this.handleKeyDown);
+
+    // Focus the overlay so Escape key works immediately
+    if (this.overlayRef.current) {
+      this.overlayRef.current.focus();
+    }
+  }
+
+  componentWillUnmount() {
+    // Remove Escape key listener when overlay unmounts
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = (event) => {
+    // Close overlay on Escape key
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.props.close();
+    }
+  };
 
   grabBar() {
     return <div className="overlay__grabbar drag "></div>;
@@ -25,7 +53,8 @@ export default class Overlay extends Component {
           onClick={(e) => {
             // this.handleMakeSmaller();
             this.handleMinimize();
-          }}>
+          }}
+          aria-label="Minimize window">
           <UnderscoreSVG />
         </Button>
 
@@ -33,7 +62,8 @@ export default class Overlay extends Component {
           className="overlay__header__buttonContainer__button--close"
           onClick={(e) => {
             this.props.close();
-          }}>
+          }}
+          aria-label="Close window">
           <CrossSVG />
         </Button>
       </div>
@@ -58,9 +88,13 @@ export default class Overlay extends Component {
     return ReactDOM.createPortal(
       <Draggable handle={".drag"}>
         <div
+          ref={this.overlayRef}
           className={`overlay${this.state.minimized ? " minimized" : ""}${
             this.state.hidden ? " hide" : ""
-          }`}>
+          }`}
+          tabIndex={-1}
+          role="dialog"
+          aria-modal="true">
           <header className="overlay__header">
             {this.grabBar()}
             {this.navBarButtons()}

@@ -152,34 +152,61 @@ class ColorKey extends Component {
     // console.log("ColorKey note", note);
 
     const noteNames = noteName
-      ? noteName.map(function (item, i) {
-          var name = item.value.toString();
-          const regexFlat = /[b]/gi;
-          const regexSharp = /[#]/gi;
+  ? noteName.map(function (item, i) {
+      var name = item.value.toString();
+      const regexFlat = /[b]/gi;
+      const regexSharp = /[#]/gi;
 
-          let flats = name.match(regexFlat);
-          let sharps = name.match(regexSharp);
-          if (flats && flats.length === 2) {
-            //doubleflat
-            name = name.replace("bb", "𝄫");
-            //item = item.replace("bb", "\u1D12B");
-          } else if (flats && flats.length === 1) {
-            //flat
-            name = name.replace("b", "\u266D");
-          } else if (sharps && sharps.length === 2) {
-            //doubleSharp
-            name = name.replace("##", "×"); //𝄪
-          }
+      let flats = name.match(regexFlat);
+      let sharps = name.match(regexSharp);
+      if (flats && flats.length === 2) {
+        //doubleflat
+        name = name.replace("bb", "𝄫");
+      } else if (flats && flats.length === 1) {
+        //flat
+        name = name.replace("b", "\u266D");
+      } else if (sharps && sharps.length === 2) {
+        //doubleSharp
+        name = name.replace("##", "×");
+      }
 
-          return (
-            <div className={`noteName noteWrapper--${item.key}`} key={i}>
-              {name}
-            </div>
-          );
-        })
-      : null;
+      // Different fontSize based on notation type
+      // Romance needs smaller font due to longer text
+      let fontSize = 40;
+      if (item.key === 'Romance') {
+        fontSize = 35;
+      }  else {
+        fontSize = 40;
+      }
+
+      return (
+        <svg 
+          className={`noteName noteWrapper--${item.key}`}
+          key={i}
+          viewBox="0 0 100 50"
+          preserveAspectRatio="xMidYMid meet"
+          style={{ 
+            width: '100%', 
+            height: '100%',
+            display: 'block'
+          }}>
+          <text 
+            x="50" 
+            y="30" 
+            textAnchor="middle" 
+            fontWeight="bold"
+            fontSize={fontSize}
+            fill="currentColor"
+            style={{ opacity: 1 }}>
+            {name}
+          </text>
+        </svg>
+      );
+    })
+  : null;
 
     return (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/mouse-events-have-key-events
       <div
         ref={this.keyRef}
         data-testid={"ColorKey:" + note}
@@ -211,7 +238,7 @@ class ColorKey extends Component {
           {noteNames}
 
           {isMajorSeventh ? (
-            <div className="seventh">
+            <div className="seventh" data-testid="seventh-indicator">
               <Star style={{ height: 50 }} />
             </div>
           ) : null}

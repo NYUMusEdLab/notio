@@ -7,7 +7,10 @@
 .pnp.js
 
 # testing
-/coverage
+/coverage/**
+/playwright-report/**
+/test-results/**
+
 
 # production
 /build
@@ -24,3 +27,21 @@ yarn-debug.log*
 yarn-error.log*
 
 notio.code-workspace
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs
+playwright-report/index.html
