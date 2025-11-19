@@ -419,15 +419,29 @@ class MusicScale {
 
   /*
    *  Used for creating complete scale description, based on major scale like 1,2,b3,#11,5,13
+   *  For chromatic scales, converts numeric positions (1-12) to proper scale degrees with accidentals
    */
   makeScaleNumbers(recipe, scaleFormula) {
     let extendedNumbers = [];
     let extensions = recipe.numbers;
     let relative = this.findScaleStartIndexRelativToRoot(scaleFormula, recipe.steps.length);
+
+    // Check if this is a chromatic scale with numeric notation (1-12)
+    const isNumericChromatic = recipe.name === "Chromatic" &&
+                                extensions.length === 12 &&
+                                extensions.every(n => !isNaN(n));
+
     extendedNumbers = scaleFormula.map((step, index) => {
       // get number (1, b3, #4...)
       let relativeToneIndex = (index + relative) % extensions.length;
       let numberString = extensions[relativeToneIndex];
+
+      // For chromatic scales with numeric notation, convert to scale degrees with accidentals
+      if (isNumericChromatic) {
+        const useFlats = this.RootNoteName === "F" || this.RootNoteName.includes("b");
+        numberString = this.convertChromaticNumberToScaleDegree(numberString, useFlats);
+      }
+
       return numberString;
     });
     return extendedNumbers;
@@ -590,6 +604,54 @@ class MusicScale {
   ////#endregion
 
   //#region Helpers
+
+  /**
+   * Converts chromatic scale numbers (1-12) to proper scale degree notation with accidentals.
+   * Used for chromatic scales to map numeric positions to scale degree names.
+   * @param {string|number} chromaticNumber - Number from 1-12
+   * @param {boolean} useFlats - If true, uses flats (b2, b3, etc.), otherwise sharps (#1, #2, etc.)
+   * @returns {string} Scale degree notation (e.g., "1", "#1", "b2", "7")
+   */
+  convertChromaticNumberToScaleDegree(chromaticNumber, useFlats = false) {
+    const num = parseInt(chromaticNumber);
+
+    if (useFlats) {
+      // Flat chromatic: 1, b2, 2, b3, 3, 4, b5, 5, b6, 6, b7, 7
+      const flatMap = {
+        1: "1",
+        2: "b2",
+        3: "2",
+        4: "b3",
+        5: "3",
+        6: "4",
+        7: "b5",
+        8: "5",
+        9: "b6",
+        10: "6",
+        11: "b7",
+        12: "7"
+      };
+      return flatMap[num] || chromaticNumber.toString();
+    } else {
+      // Sharp chromatic: 1, #1, 2, #2, 3, 4, #4, 5, #5, 6, #6, 7
+      const sharpMap = {
+        1: "1",
+        2: "#1",
+        3: "2",
+        4: "#2",
+        5: "3",
+        6: "4",
+        7: "#4",
+        8: "5",
+        9: "#5",
+        10: "6",
+        11: "#6",
+        12: "7"
+      };
+      return sharpMap[num] || chromaticNumber.toString();
+    }
+  }
+
   noteNameToIndex(noteName) {
     let i;
     let IndexNumber = -1; // default if not found
