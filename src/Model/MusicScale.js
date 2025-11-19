@@ -70,6 +70,28 @@ class MusicScale {
   Notations = [];
   Colors = [];
 
+  // Map scale degree numbers to relative solfège syllables
+  relativeScale = {
+    "1": "DO",
+    "1#": "DI",
+    "b2": "RA",
+    "2": "RE",
+    "2#": "RI",
+    "b3": "ME",
+    "3": "MI",
+    "4": "FA",
+    "4#": "FI",
+    "b5": "SE",
+    "5": "SO",
+    "5#": "SI",
+    "b6": "LE",
+    "6": "LA",
+    "6#": "LI",
+    "b7": "TE",
+    "7": "TI",
+    "△7": "TI",
+  };
+
   NoteNameWithOctaveNumber = (currentOctave, distToCurrentOctave, distFromRoot) => {
     const note =
       this.BasisScale[
@@ -313,9 +335,18 @@ class MusicScale {
           break;
 
         case "Relative":
-          theScale["Relative"] = semiToneSteps.map(
-            (step) => notes[step % notes.length].note_relative
-          );
+          if (this.Name === "Chromatic") {
+            theScale["Relative"] = this.MakeChromatic(
+              semiToneSteps,
+              rootNoteName,
+              "Relative"
+            );
+          } else {
+            // Get scale degree numbers (e.g., "1", "b3", "5") for the extended scale
+            let numbers = this.makeScaleNumbers(this.Recipe, semiToneSteps);
+            // Map each scale degree to its relative solfège syllable (e.g., "1" -> "DO", "b3" -> "ME")
+            theScale["Relative"] = numbers.map(number => this.relativeScale[number] || number);
+          }
           break;
 
         case "Scale Steps":
@@ -506,6 +537,10 @@ class MusicScale {
       German: {
         sharps: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"],
         flats: ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "H"],
+      },
+      Relative: {
+        sharps: ["DO", "DI", "RE", "RI", "MI", "FA", "FI", "SO", "SI", "LA", "LI", "TI"],
+        flats: ["DO", "RA", "RE", "ME", "MI", "FA", "SE", "SO", "LE", "LA", "TE", "TI"],
       },
       Romance: {
         sharps: ["Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"],
