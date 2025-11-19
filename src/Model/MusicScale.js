@@ -419,17 +419,17 @@ class MusicScale {
 
   /*
    *  Used for creating complete scale description, based on major scale like 1,2,b3,#11,5,13
-   *  For chromatic scales, converts numeric positions (1-12) to proper scale degrees with accidentals
+   *  For chromatic scales, converts numeric positions (1-11) to proper scale degrees with accidentals
    */
   makeScaleNumbers(recipe, scaleFormula) {
     let extendedNumbers = [];
     let extensions = recipe.numbers;
     let relative = this.findScaleStartIndexRelativToRoot(scaleFormula, recipe.steps.length);
 
-    // Check if this is a chromatic scale with numeric notation (1-12)
+    // Check if this is a chromatic scale with numeric notation (1-11, plus △7)
     const isNumericChromatic = recipe.name === "Chromatic" &&
                                 extensions.length === 12 &&
-                                extensions.every(n => !isNaN(n));
+                                extensions.slice(0, 11).every(n => !isNaN(n));
 
     extendedNumbers = scaleFormula.map((step, index) => {
       // get number (1, b3, #4...)
@@ -437,7 +437,8 @@ class MusicScale {
       let numberString = extensions[relativeToneIndex];
 
       // For chromatic scales with numeric notation, convert to scale degrees with accidentals
-      if (isNumericChromatic) {
+      // (except for △7 which is already in the correct format)
+      if (isNumericChromatic && numberString !== "△7") {
         const useFlats = this.RootNoteName === "F" || this.RootNoteName.includes("b");
         numberString = this.convertChromaticNumberToScaleDegree(numberString, useFlats);
       }
