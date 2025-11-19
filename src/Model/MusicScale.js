@@ -419,17 +419,17 @@ class MusicScale {
 
   /*
    *  Used for creating complete scale description, based on major scale like 1,2,b3,#11,5,13
-   *  For chromatic scales, converts numeric positions (1-11) to proper scale degrees with accidentals
+   *  For chromatic scales, converts numeric positions (1-12) to proper scale degrees with accidentals
    */
   makeScaleNumbers(recipe, scaleFormula) {
     let extendedNumbers = [];
     let extensions = recipe.numbers;
     let relative = this.findScaleStartIndexRelativToRoot(scaleFormula, recipe.steps.length);
 
-    // Check if this is a chromatic scale with numeric notation (1-11, plus △7)
+    // Check if this is a chromatic scale with numeric notation (1-12)
     const isNumericChromatic = recipe.name === "Chromatic" &&
                                 extensions.length === 12 &&
-                                extensions.slice(0, 11).every(n => !isNaN(n));
+                                extensions.every(n => !isNaN(n));
 
     extendedNumbers = scaleFormula.map((step, index) => {
       // get number (1, b3, #4...)
@@ -437,8 +437,8 @@ class MusicScale {
       let numberString = extensions[relativeToneIndex];
 
       // For chromatic scales with numeric notation, convert to scale degrees with accidentals
-      // (except for △7 which is already in the correct format)
-      if (isNumericChromatic && numberString !== "△7") {
+      // This converts 12 to △7, which then maps to TI in the relativeScale mapping
+      if (isNumericChromatic) {
         const useFlats = this.RootNoteName === "F" || this.RootNoteName.includes("b");
         numberString = this.convertChromaticNumberToScaleDegree(numberString, useFlats);
       }
@@ -611,13 +611,13 @@ class MusicScale {
    * Used for chromatic scales to map numeric positions to scale degree names.
    * @param {string|number} chromaticNumber - Number from 1-12
    * @param {boolean} useFlats - If true, uses flats (b2, b3, etc.), otherwise sharps (#1, #2, etc.)
-   * @returns {string} Scale degree notation (e.g., "1", "#1", "b2", "7")
+   * @returns {string} Scale degree notation (e.g., "1", "#1", "b2", "△7")
    */
   convertChromaticNumberToScaleDegree(chromaticNumber, useFlats = false) {
     const num = parseInt(chromaticNumber);
 
     if (useFlats) {
-      // Flat chromatic: 1, b2, 2, b3, 3, 4, b5, 5, b6, 6, b7, 7
+      // Flat chromatic: 1, b2, 2, b3, 3, 4, b5, 5, b6, 6, b7, △7
       const flatMap = {
         1: "1",
         2: "b2",
@@ -630,11 +630,11 @@ class MusicScale {
         9: "b6",
         10: "6",
         11: "b7",
-        12: "7"
+        12: "△7"
       };
       return flatMap[num] || chromaticNumber.toString();
     } else {
-      // Sharp chromatic: 1, #1, 2, #2, 3, 4, #4, 5, #5, 6, #6, 7
+      // Sharp chromatic: 1, #1, 2, #2, 3, 4, #4, 5, #5, 6, #6, △7
       const sharpMap = {
         1: "1",
         2: "#1",
@@ -647,7 +647,7 @@ class MusicScale {
         9: "#5",
         10: "6",
         11: "#6",
-        12: "7"
+        12: "△7"
       };
       return sharpMap[num] || chromaticNumber.toString();
     }
