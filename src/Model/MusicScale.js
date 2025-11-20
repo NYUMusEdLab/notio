@@ -545,6 +545,10 @@ class MusicScale {
         sharps: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"],
         flats: ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "H"],
       },
+      Relative: {
+        sharps: ["DO", "DI", "RE", "RI", "MI", "FA", "FI", "SO", "SI", "LA", "LI", "TI"],
+        flats: ["DO", "RA", "RE", "ME", "Mi", "FA", "SE", "SO", "LE", "La", "TE", "TI"],
+      },
       Romance: {
         sharps: ["Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"],
         flats: ["Do", "Reb", "Re", "Mib", "Mi", "Fa", "Solb", "Sol", "Lab", "La", "Sib", "Si"],
@@ -554,8 +558,8 @@ class MusicScale {
         flats: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
       },
       Chord_extensions: {
-        sharps: [" ", "b9", "9", "#9", " ", "11", "#11", "5", "#5", "13", "7", "△7"],
-        flats: [" ", "b9", "9", "m", " ", "11", "b5", "5", "b13", "13", "7", "△7"],
+        sharps: [" ", "b9", "9", "#9", " ", "11", "#11", "5", "b13", "13", "7", "△7"],
+        flats: [" ", "b9", "9", "#9", " ", "11", "#11", "5", "b13", "13", "7", "△7"],
       },
     };
 
