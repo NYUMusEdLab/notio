@@ -1,38 +1,48 @@
 .video{ 
-    &-url {
 
+    &-url {
+    font-size: 2rem;
     color: white;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
 
     display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    grid-template-columns: 6fr 1fr 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-columns: 1fr auto auto;
     grid-template-areas:
         "head   .   .   "
-        "url   url reset"
-        "text text submit"
+        "url   reset submit"
+        "text text text"
         "currenturl currenturl currenturl ";
     grid-column-gap: 10px;
     grid-row-gap: 1px;
-    align-items: end;
-    justify-items: start;
+    align-items: stretch;
+    justify-items: stretch;
 
         &__title{
             grid-area: head;
-
         }
 
         &__btn{
             &--reset{
                 grid-area: reset;
+                font-size: 2rem;
+
             }
             &--submit{
                 background:green;
                 grid-area: submit;
+                font-size: 2rem;
+
             }
         }
 
         &__url-field{
             grid-area: url;
+            font-size: 2rem;
+
+
         }
 
         &__explainer{
