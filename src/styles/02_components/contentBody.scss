@@ -38,31 +38,21 @@
   .color-key {
     background: yellow;
     display: grid;
-    grid-template-rows: 60% 30%;
+    grid-template-rows: 30vh 1fr;
     grid-gap: 0px;
     grid-template-areas:
       "noteName"
-      "staff"
-      ".";
-    align-items: end;
+      "staff";
+    align-items: stretch;
 
     .noteWrapper {
       opacity: 1;
       grid-area: noteName;
-      display: grid;
-      grid-template-rows: repeat(6, auto);
-      grid-gap: 1px;
-      grid-template-areas:
-        "extension"
-        "step"
-        "relative"
-        "romance"
-        "german"
-        "english";
-      align-items: end;
-      justify-items: stretch;
-      align-content: end;
-      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: stretch;
+      gap: 1px;
 
       // Base styling for all notation names (SVG elements)
       .noteName {
@@ -70,31 +60,11 @@
         width: 100%;
         height: auto;
       }
-
-      // Grid area assignments
-      &--English {
-        grid-area: english;
-      }
-      &--German {
-        grid-area: german;
-      }
-      &--Romance {
-        grid-area: romance;
-      }
-      &--Relative {
-        grid-area: relative;
-      }
-      &--Step {
-        grid-area: step;
-      }
-      &--Extension {
-        grid-area: extension;
-      }
     }
 
     .musical-staff {
       grid-area: staff;
-      align-self: center;
+      align-self: flex-end;
     }
   }
 

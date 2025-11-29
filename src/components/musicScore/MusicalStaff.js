@@ -126,7 +126,7 @@ class MusicalStaff extends Component {
   }
 
   render() {
-    const { width, extendedKeyboard } = this.props;
+    const { width } = this.props;
 
     return (
       <div
@@ -135,7 +135,6 @@ class MusicalStaff extends Component {
         data-testid="musical-staff"
         style={{
           width: width,
-          top: extendedKeyboard ? "47%" : "37%",
         }}
       />
     );
