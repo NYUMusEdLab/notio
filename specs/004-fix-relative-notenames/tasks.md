@@ -450,60 +450,60 @@ Single project structure:
 
 ### Edge Case Handling
 
-- [ ] T084 [P] Test pentatonic scales in src/__integration__/relative-notenames.test.js
+- [X] T084 [P] Test pentatonic scales in src/__integration__/relative-notenames.test.js
   - Minor Pentatonic: verify ["DO", "ME", "FA", "SO", "TE"] (5-note subset)
   - Major Pentatonic: verify ["DO", "RE", "MI", "SO", "LA"] (5-note subset)
-- [ ] T085 [P] Test enharmonic equivalents produce identical syllables in src/__integration__/relative-notenames.test.js
+- [X] T085 [P] Test enharmonic equivalents produce identical syllables in src/__integration__/relative-notenames.test.js
   - C# vs Db: verify absolutely identical relative syllables
   - D# vs Eb: verify identical
   - F# vs Gb: verify identical
   - G# vs Ab: verify identical
   - A# vs Bb: verify identical
-- [ ] T086 [P] Test custom scales fallback behavior in src/__integration__/relative-notenames.test.js
+- [X] T086 [P] Test custom scales fallback behavior in src/__integration__/relative-notenames.test.js
   - Test scale without numbers array: verify chromatic fallback
   - Test scale with unusual interval combination: verify graceful handling
 
 ### Backward Compatibility Verification
 
-- [ ] T087 [P] Test English notation mode still works in src/__integration__/relative-notenames.test.js
+- [X] T087 [P] Test English notation mode still works in src/__integration__/relative-notenames.test.js
   - Natural Minor: verify C D Eb F G Ab Bb (unchanged)
-- [ ] T088 [P] Test German notation mode still works in src/__integration__/relative-notenames.test.js
+- [X] T088 [P] Test German notation mode still works in src/__integration__/relative-notenames.test.js
   - Natural Minor: verify C D Eb F G Ab B (unchanged)
-- [ ] T089 [P] Test Romance notation mode still works in src/__integration__/relative-notenames.test.js
+- [X] T089 [P] Test Romance notation mode still works in src/__integration__/relative-notenames.test.js
   - Natural Minor: verify Do Re Mib Fa Sol Lab Sib (unchanged)
-- [ ] T090 [P] Test Scale Steps notation mode still works in src/__integration__/relative-notenames.test.js
+- [X] T090 [P] Test Scale Steps notation mode still works in src/__integration__/relative-notenames.test.js
   - Natural Minor: verify 1 2 b3 4 5 b6 7 (unchanged)
-- [ ] T091 [P] Test Chord Extensions notation mode still works in src/__integration__/relative-notenames.test.js
+- [X] T091 [P] Test Chord Extensions notation mode still works in src/__integration__/relative-notenames.test.js
   - Verify chord extension display unchanged
-- [ ] T092 Test switching between notation modes mid-use in e2e/relative-notenames.spec.js
+- [X] T092 Test switching between notation modes mid-use in e2e/relative-notenames.spec.js
   - Switch English → Relative → German → Relative → Romance
   - Verify instant updates, no errors, correct display for each mode
 
 ### Performance Optimization
 
-- [ ] T093 Measure syllable update performance on scale change
+- [X] T093 Measure syllable update performance on scale change
   - Use Chrome DevTools Performance tab
   - Verify <50ms syllable update time (target from spec.md)
   - Optimize if necessary (though O(1) lookups should be <1ms per data-model.md)
-- [ ] T094 Measure syllable update performance on key change
+- [X] T094 Measure syllable update performance on key change
   - Test all 12 chromatic keys
   - Verify <50ms per key change
   - Profile if any outliers found
-- [ ] T095 Verify no visual flicker during syllable updates
+- [X] T095 Verify no visual flicker during syllable updates
   - Test rapid scale switching
   - Test rapid key switching
   - Verify smooth transitions, no layout shifts
 
 ### Final Coverage Verification (MANDATORY)
 
-- [ ] T096 Run full test suite and verify 100% code coverage across all user stories
+- [X] T096 Run full test suite and verify 100% code coverage across all user stories
   - npm test -- --coverage
   - Verify all lines, branches, functions, statements covered
-- [ ] T097 Verify final test distribution: 60-70% integration, 20-30% E2E, 10-20% unit
+- [X] T097 Verify final test distribution: 60-70% integration, 20-30% E2E, 10-20% unit
   - Count integration tests (should be ~40-50 tests across all scales/modes/keys)
   - Count E2E tests (should be ~10-15 tests for critical user journeys)
   - Count unit tests (should be ~8-12 tests for edge cases only)
-- [ ] T098 Verify all performance targets met
+- [X] T098 Verify all performance targets met
   - Integration tests <5s per test: npm test (measure total time / test count)
   - E2E tests <30s per test: npm run test:e2e (measure total time / test count)
 - [ ] T099 Review coverage report for any untested edge cases
