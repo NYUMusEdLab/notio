@@ -8,7 +8,7 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: Tests are MANDATORY per Constitution v2.0.0 Principle I (Pragmatic Testing Strategy). All features MUST achieve 100% code coverage with integration-first approach (60-70% integration, 20-30% E2E, 10-20% unit tests for edge cases only).
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -79,21 +79,42 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 1 (MANDATORY - Constitution v2.0.0) ✅
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+> **TARGET: 60-70% integration tests, 20-30% E2E tests, 10-20% unit tests (edge cases only)**
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
+**Integration Tests (Primary - 60-70%)**:
+- [ ] T010 [P] [US1] Integration test for [primary user workflow] in tests/integration/test_[name].test.js
+  - Tests components working together: [list components]
+  - Covers happy path and common errors
+  - Tests data flow through multiple layers
+- [ ] T011 [P] [US1] Integration test for [secondary workflow] in tests/integration/test_[name].test.js
+
+**E2E Tests (Secondary - 20-30%)**:
+- [ ] T012 [US1] E2E test for [critical user journey] in e2e/[name].spec.js
+  - Tests complete feature workflow end-to-end
+  - Verifies cross-browser compatibility
+
+**Unit Tests (Minimal - 10-20%, edge cases ONLY)**:
+- [ ] T013 [P] [US1] Unit test for [complex algorithm edge cases] in tests/unit/test_[name].test.js
+  - ONLY if integration tests don't cover these edge cases
+  - Reserved for complex calculations, boundary conditions
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+- [ ] T014 [P] [US1] Create [Entity1] model in src/models/[entity1].py
+- [ ] T015 [P] [US1] Create [Entity2] model in src/models/[entity2].py
+- [ ] T016 [US1] Implement [Service] in src/services/[service].py (depends on T014, T015)
+- [ ] T017 [US1] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T018 [US1] Add validation and error handling
+- [ ] T019 [US1] Add logging for user story 1 operations
+
+### Coverage Verification for User Story 1
+
+- [ ] T020 [US1] Run coverage report and verify 100% code coverage achieved
+- [ ] T021 [US1] Verify test distribution: 60-70% integration, 20-30% E2E, 10-20% unit
+- [ ] T022 [US1] Verify all tests pass and performance targets met (<5s integration, <30s E2E)
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -105,17 +126,33 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 2 (MANDATORY - Constitution v2.0.0) ✅
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+> **TARGET: 60-70% integration tests, 20-30% E2E tests, 10-20% unit tests (edge cases only)**
+
+**Integration Tests (Primary - 60-70%)**:
+- [ ] T023 [P] [US2] Integration test for [primary user workflow] in tests/integration/test_[name].test.js
+- [ ] T024 [P] [US2] Integration test for [secondary workflow] in tests/integration/test_[name].test.js
+
+**E2E Tests (Secondary - 20-30%)**:
+- [ ] T025 [US2] E2E test for [critical user journey] in e2e/[name].spec.js
+
+**Unit Tests (Minimal - 10-20%, edge cases ONLY)**:
+- [ ] T026 [P] [US2] Unit test for [complex algorithm edge cases] in tests/unit/test_[name].test.js (if needed)
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+- [ ] T027 [P] [US2] Create [Entity] model in src/models/[entity].py
+- [ ] T028 [US2] Implement [Service] in src/services/[service].py
+- [ ] T029 [US2] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T030 [US2] Integrate with User Story 1 components (if needed)
+
+### Coverage Verification for User Story 2
+
+- [ ] T031 [US2] Run coverage report and verify 100% code coverage maintained
+- [ ] T032 [US2] Verify test distribution targets met
+- [ ] T033 [US2] Verify all tests pass with performance targets
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -127,16 +164,32 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 3 (MANDATORY - Constitution v2.0.0) ✅
 
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
+> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+> **TARGET: 60-70% integration tests, 20-30% E2E tests, 10-20% unit tests (edge cases only)**
+
+**Integration Tests (Primary - 60-70%)**:
+- [ ] T034 [P] [US3] Integration test for [primary user workflow] in tests/integration/test_[name].test.js
+- [ ] T035 [P] [US3] Integration test for [secondary workflow] in tests/integration/test_[name].test.js
+
+**E2E Tests (Secondary - 20-30%)**:
+- [ ] T036 [US3] E2E test for [critical user journey] in e2e/[name].spec.js
+
+**Unit Tests (Minimal - 10-20%, edge cases ONLY)**:
+- [ ] T037 [P] [US3] Unit test for [complex algorithm edge cases] in tests/unit/test_[name].test.js (if needed)
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T038 [P] [US3] Create [Entity] model in src/models/[entity].py
+- [ ] T039 [US3] Implement [Service] in src/services/[service].py
+- [ ] T040 [US3] Implement [endpoint/feature] in src/[location]/[file].py
+
+### Coverage Verification for User Story 3
+
+- [ ] T041 [US3] Run coverage report and verify 100% code coverage maintained
+- [ ] T042 [US3] Verify test distribution targets met
+- [ ] T043 [US3] Verify all tests pass with performance targets
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -153,9 +206,15 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX [P] Documentation updates in docs/
 - [ ] TXXX Code cleanup and refactoring
 - [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
 - [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation
+
+### Final Coverage Verification (MANDATORY)
+
+- [ ] TXXX Run full test suite and verify 100% code coverage across all user stories
+- [ ] TXXX Verify final test distribution: 60-70% integration, 20-30% E2E, 10-20% unit
+- [ ] TXXX Verify all performance targets met: integration tests <5s, E2E tests <30s per test
+- [ ] TXXX Review coverage report for any untested edge cases and add tests if needed
 
 ---
 
