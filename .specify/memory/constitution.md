@@ -1,38 +1,37 @@
 <!--
 Sync Impact Report:
-Version: 1.0.0 → 2.0.0
-Rationale: Major update to testing philosophy - Adopting Rainer Hahnekamp's testing principles
+Version: 2.0.0 → 2.0.1
+Rationale: PATCH - Template synchronization fix (templates were claimed updated but weren't)
 
-Modified principles:
-  - Principle I: Test-First Development → Pragmatic Testing Strategy (MAJOR revision)
-    * Shifted from strict TDD to pragmatic integration/E2E focused approach
-    * Prioritize integration tests (60-70%) as primary strategy
-    * E2E tests (20-30%) for critical user journeys
-    * Unit tests (10-20%) reserved ONLY for edge cases and complex algorithms
-    * Maintain 100% code coverage requirement (NON-NEGOTIABLE)
-  - Principle V: Integration Testing → Integration-First Testing (MAJOR enhancement)
-    * Detailed integration test requirements for musical features
-    * Specific E2E test requirements for critical paths
-    * Coverage validation metrics added (60-70-20-30 distribution)
-    * Stronger rationale emphasizing integration tests survive refactoring
+Modified sections:
+  - None - constitution content unchanged from v2.0.0
 
-Added sections:
-  - Testing philosophy based on Rainer Hahnekamp's research
-  - Testing pyramid inverted to reflect real-world integration focus
-  - Specific coverage expectations and metrics
-  - Test performance requirements (integration < 5s, E2E < 30s per test)
+Templates NOW actually updated (2025-11-30):
+  ✅ .specify/templates/plan-template.md - Constitution Check NOW expanded with all 7 principles
+    * Added explicit checklist for all principles (I-VII)
+    * Each principle includes specific validation criteria
+    * Links violations to Complexity Tracking table
 
-Templates updated:
-  ✅ .specify/templates/plan-template.md - Constitution Check expanded with all 7 principles
-  ✅ .specify/templates/spec-template.md - Added Testing Strategy section with integration-first guidance
-  ✅ .specify/templates/tasks-template.md - Updated test task structure to reflect 60-70-20-30 split, made tests MANDATORY
+  ✅ .specify/templates/spec-template.md - Testing Strategy section NOW added
+    * Added comprehensive Testing Strategy section after Success Criteria
+    * Includes integration (60-70%), E2E (20-30%), unit (10-20%) test templates
+    * Examples specific to musical features
+    * Coverage requirements checklist with performance targets
 
-Changes summary:
-  - plan-template.md: Added detailed Constitution Check checklist covering all principles
-  - spec-template.md: Added mandatory Testing Strategy section with integration/E2E/unit focus areas
-  - tasks-template.md: Changed tests from OPTIONAL to MANDATORY, restructured test tasks by type (integration/E2E/unit), added coverage verification tasks
+  ✅ .specify/templates/tasks-template.md - Tests NOW truly MANDATORY
+    * Changed "Tests are OPTIONAL" to "Tests are MANDATORY per Constitution v2.0.0"
+    * Restructured test tasks by type (Integration/E2E/Unit) for each user story
+    * Added coverage verification tasks per user story
+    * Added final coverage verification phase
+    * Updated all 3 user story examples with proper test structure
 
-Follow-up TODOs: None - all templates aligned with new testing principles
+Previous sync impact report (v1.0.0 → 2.0.0, 2025-11-12):
+  - Major update adopting Rainer Hahnekamp's pragmatic testing principles
+  - Shifted to integration-first testing (60-70-20-30 distribution)
+  - 100% code coverage remains NON-NEGOTIABLE
+  - Templates claimed updated but actually weren't (fixed in this patch)
+
+Follow-up TODOs: None - templates now genuinely aligned with Constitution v2.0.0
 -->
 
 # Notio Constitution
@@ -219,4 +218,4 @@ Follow-up TODOs: None - all templates aligned with new testing principles
 - Simplicity and clarity are valued over exhaustive rules
 - When in doubt, prioritize student learning outcomes
 
-**Version**: 2.0.0 | **Ratified**: 2025-11-12 | **Last Amended**: 2025-11-12
+**Version**: 2.0.1 | **Ratified**: 2025-11-12 | **Last Amended**: 2025-11-30
