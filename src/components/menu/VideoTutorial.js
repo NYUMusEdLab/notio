@@ -96,7 +96,7 @@ const VideoTutorial = (props) => {
                       Notio and hit Enter.
                     </Form.Text>
                     <Form.Text className="video-url__currently-watching">
-                      You are curently watching:
+                      You are currently watching:
                       <a href={props.videoUrl}> {props.videoUrl} </a>
                     </Form.Text>
                     {/* <Form.Text className="text-muted">Current URL: {videoUrl}</Form.Text> */}
