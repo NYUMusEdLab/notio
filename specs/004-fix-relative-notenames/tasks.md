@@ -27,10 +27,10 @@ Single project structure:
 
 **Purpose**: Verify project structure and dependencies are in place
 
-- [ ] T001 Verify existing project structure matches plan.md specification
-- [ ] T002 Verify Jest (^29.0.3) and React Testing Library (@testing-library/react ^13.0.0) are configured
-- [ ] T003 [P] Verify Playwright (@playwright/test) is configured for E2E tests
-- [ ] T004 [P] Verify existing test infrastructure runs successfully (npm test)
+- [X] T001 Verify existing project structure matches plan.md specification
+- [X] T002 Verify Jest (^29.0.3) and React Testing Library (@testing-library/react ^13.0.0) are configured
+- [X] T003 [P] Verify Playwright (@playwright/test) is configured for E2E tests
+- [X] T004 [P] Verify existing test infrastructure runs successfully (npm test)
 
 ---
 
@@ -40,17 +40,17 @@ Single project structure:
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Add SCALE_DEGREE_TO_SYLLABLE constant to src/Model/MusicScale.js with complete mapping table
+- [X] T005 Add SCALE_DEGREE_TO_SYLLABLE constant to src/Model/MusicScale.js with complete mapping table
   - Diatonic: "1"→"DO", "2"→"RE", "3"→"MI", "4"→"FA", "5"→"SO", "6"→"LA", "7"→"TE", "△7"→"TI"
   - Chromatic descending: "b2"→"RA", "b3"→"ME", "b5"→"SE", "b6"→"LE", "b7"→"TE"
   - Chromatic ascending: "#1"→"DI", "#2"→"RI", "#4"→"FI", "#5"→"SI", "#6"→"LI"
-- [ ] T006 Create makeRelativeScaleSyllables() method in src/Model/MusicScale.js
+- [X] T006 Create makeRelativeScaleSyllables() method in src/Model/MusicScale.js
   - Signature: makeRelativeScaleSyllables(semiToneSteps, scaleNumbers, extendedSteps): string[]
   - Handle chromatic scale special case (call this.MakeChromatic for chromatic scale)
   - Find root position using this.findScaleStartIndexRelativToRoot()
   - Map each step to syllable based on scale degree position (NOT chromatic position)
   - Return syllable array matching semiToneSteps.length
-- [ ] T007 Update BuildExtendedScaleToneNames() case "Relative" in src/Model/MusicScale.js
+- [X] T007 Update BuildExtendedScaleToneNames() case "Relative" in src/Model/MusicScale.js
   - Replace chromatic mapping (lines 316-318) with call to makeRelativeScaleSyllables()
   - Pass semiToneSteps, this.Recipe.numbers, this.ExtendedScaleSteps as parameters
   - Preserve existing chromatic fallback for scales without numbers array
