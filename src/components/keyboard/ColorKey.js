@@ -170,13 +170,17 @@ class ColorKey extends Component {
         name = name.replace("##", "×");
       }
 
-      // Different fontSize based on notation type
+    // Different fontSize based on notation type
+    const maxNotationCount = 6;
+    const notenameAreaHeight = 60/2; //vh
+    const maxHeightVh = notenameAreaHeight / maxNotationCount; // e.g., 60vh / 6 = 10vh each
+
       // Romance needs smaller font due to longer text
-      let fontSize = 40;
+      let fontSize = 35;
       if (item.key === 'Romance') {
-        fontSize = 35;
+        fontSize = 30;
       }  else {
-        fontSize = 40;
+        fontSize = 35;
       }
 
       return (
@@ -188,6 +192,7 @@ class ColorKey extends Component {
           style={{ 
             width: '100%', 
             height: '100%',
+            maxHeight: `${maxHeightVh}vh`,
             display: 'block'
           }}>
           <text 

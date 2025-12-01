@@ -1,5 +1,8 @@
 {
   "prettier.printWidth": 100,
   "prettier.bracketSameLine": true,
-  "jest.jestCommandLine": "yarn test"
+  "jest.jestCommandLine": "yarn test",
+  "eslint.codeActionsOnSave.options": {
+    
+  }
 }
