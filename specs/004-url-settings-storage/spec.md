@@ -15,6 +15,12 @@
 - Q: How should the system validate video URLs to prevent XSS attacks while maintaining flexibility for future video platforms? → A: Validate URL format with regex (https only, no javascript: protocol) but allow any domain
 - Q: When should the system update the browser URL as users change settings? → A: Debounced updates on any setting change (wait 500-1000ms after last change before updating)
 
+### Session 2025-12-02 (Update)
+
+- Q: Should URL parameters use abbreviated names (o, s, bn) or human-readable names (octave, scale, baseNote)? → A: Use human-readable names for manual editability. Feature not yet released, so no backwards compatibility needed.
+- Q: Should help overlay visibility be controlled via URL? → A: Yes, teachers want to share links with help visible for tutorials, while experienced users want it hidden.
+- Q: Should modal positions be encoded in URLs? → A: Yes, users want to share links with multiple modals open and positioned in a cascaded arrangement to avoid overlap, especially for tutorial scenarios.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Load Shared Settings from URL (Priority: P1)
@@ -99,6 +105,43 @@ The system must support adding new settings parameters to URLs in future updates
 1. **Given** a URL created with version N of the app, **When** opened in version N+1 with new settings, **Then** old parameters are read correctly and new parameters use defaults
 2. **Given** a URL with an unrecognized parameter name, **When** the URL is parsed, **Then** unknown parameters are ignored gracefully
 3. **Given** a URL created in version N+1, **When** opened in version N (older version), **Then** known parameters load correctly and unknown parameters are ignored
+
+---
+
+### User Story 6 - Help Overlay Visibility Control (Priority: P2)
+
+Teachers and content creators want to share links with the help overlay either visible or hidden depending on their audience's experience level.
+
+**Why this priority**: Enhances tutorial and educational use cases, allowing teachers to provide different experiences for beginners vs. experienced users.
+
+**Independent Test**: Can be fully tested by creating URLs with helpVisible=true and helpVisible=false, verifying the help overlay opens/closes accordingly.
+
+**Acceptance Scenarios**:
+
+1. **Given** a URL with `helpVisible=true`, **When** user opens the URL, **Then** the help overlay is displayed automatically
+2. **Given** a URL with `helpVisible=false`, **When** user opens the URL, **Then** the help overlay is hidden
+3. **Given** a URL without the helpVisible parameter, **When** user opens the URL, **Then** the help overlay uses the application default (hidden)
+4. **Given** a teacher creating a tutorial link, **When** they enable the help overlay and generate a share link, **Then** the URL includes `helpVisible=true`
+5. **Given** a user manually edits a URL to change `helpVisible=true` to `helpVisible=false`, **When** they open the modified URL, **Then** the help overlay is hidden as specified
+
+---
+
+### User Story 7 - Modal Positioning Control (Priority: P3)
+
+Users want to share links with multiple modals (Share, Video, Help) open simultaneously and positioned in a cascaded arrangement to avoid complete overlap, especially useful for complex tutorial scenarios.
+
+**Why this priority**: Nice-to-have enhancement for advanced sharing scenarios, but core functionality works without it.
+
+**Independent Test**: Can be fully tested by positioning modals, generating a share link, and verifying the modals reopen at the specified positions.
+
+**Acceptance Scenarios**:
+
+1. **Given** a URL with share modal position parameters (`shareModalX=100&shareModalY=50`), **When** user opens the URL, **Then** the share modal opens at the specified coordinates
+2. **Given** a URL with multiple modal positions encoded (`videoModalOpen=true&videoModalX=50&videoModalY=100&helpVisible=true&helpModalX=300&helpModalY=150`), **When** user opens the URL, **Then** all specified modals open at their respective positions in a cascaded arrangement
+3. **Given** a URL with `shareModalOpen=true` but no position parameters, **When** user opens the URL, **Then** the share modal opens at the default position (top: 7%, left: 5%)
+4. **Given** invalid position values (e.g., `videoModalX=-100` or `videoModalY=abc`), **When** user opens the URL, **Then** the modal opens at the default position and an error is logged
+5. **Given** position values that would place a modal off-screen, **When** user opens the URL, **Then** the position is adjusted to keep the modal visible within the viewport
+6. **Given** a user manually edits a URL to add modal position parameters, **When** they open the modified URL, **Then** the modals open at the hand-edited positions
 
 ---
 
