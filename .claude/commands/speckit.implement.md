@@ -12,9 +12,11 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Outline
 
-1. Run `.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks` from repo root and parse FEATURE_DIR and AVAILABLE_DOCS list. All paths must be absolute. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
+**Main Conversation (UI Layer / Coordinator):**
 
-2. **Check checklists status** (if FEATURE_DIR/checklists/ exists):
+1. **Setup**: Run `.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks` from repo root and parse FEATURE_DIR and AVAILABLE_DOCS list. All paths must be absolute. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
+
+2. **Check checklists status** (if FEATURE_DIR/checklists/ exists) **[In Main Conversation - needs user interaction]**:
    - Scan all checklist files in the checklists/ directory
    - For each checklist, count:
      - Total items: All lines matching `- [ ]` or `- [X]` or `- [x]`
@@ -45,91 +47,167 @@ You **MUST** consider the user input before proceeding (if not empty).
      - Display the table showing all checklists passed
      - Automatically proceed to step 3
 
-3. Load and analyze the implementation context:
-   - **REQUIRED**: Read tasks.md for the complete task list and execution plan
-   - **REQUIRED**: Read plan.md for tech stack, architecture, and file structure
-   - **IF EXISTS**: Read data-model.md for entities and relationships
-   - **IF EXISTS**: Read contracts/ for API specifications and test requirements
-   - **IF EXISTS**: Read research.md for technical decisions and constraints
-   - **IF EXISTS**: Read quickstart.md for integration scenarios
+3. **Parse tasks.md structure** **[In Main Conversation - lightweight parsing]**:
+   - Read tasks.md and extract phase names
+   - For each phase, collect task IDs (T001, T002, etc.)
+   - Note which tasks are marked [P] (parallel)
+   - Store phase structure for delegation loop
 
-4. **Project Setup Verification**:
-   - **REQUIRED**: Create/verify ignore files based on actual project setup:
+4. **Execute implementation by delegating phases to agents** **[Main Conversation coordinates, agents execute]**:
 
-   **Detection & Creation Logic**:
-   - Check if the following command succeeds to determine if the repository is a git repo (create/verify .gitignore if so):
+   **IMPORTANT**: Delegate each phase to a specialized agent for token efficiency.
 
-     ```sh
-     git rev-parse --git-dir 2>/dev/null
-     ```
+   **Phase Execution Loop** (in main conversation):
 
-   - Check if Dockerfile* exists or Docker in plan.md → create/verify .dockerignore
-   - Check if .eslintrc* exists → create/verify .eslintignore
-   - Check if eslint.config.* exists → ensure the config's `ignores` entries cover required patterns
-   - Check if .prettierrc* exists → create/verify .prettierignore
-   - Check if .npmrc or package.json exists → create/verify .npmignore (if publishing)
-   - Check if terraform files (*.tf) exist → create/verify .terraformignore
-   - Check if .helmignore needed (helm charts present) → create/verify .helmignore
+   For each phase in order (Setup → Foundational → User Story 1 → User Story 2 → ... → Polish):
 
-   **If ignore file already exists**: Verify it contains essential patterns, append missing critical patterns only
-   **If ignore file missing**: Create with full pattern set for detected technology
+   a. **Extract phase info** (in main - lightweight):
+      - Phase name
+      - List of task IDs for this phase (from step 3 parsing)
 
-   **Common Patterns by Technology** (from plan.md tech stack):
-   - **Node.js/JavaScript/TypeScript**: `node_modules/`, `dist/`, `build/`, `*.log`, `.env*`
-   - **Python**: `__pycache__/`, `*.pyc`, `.venv/`, `venv/`, `dist/`, `*.egg-info/`
-   - **Java**: `target/`, `*.class`, `*.jar`, `.gradle/`, `build/`
-   - **C#/.NET**: `bin/`, `obj/`, `*.user`, `*.suo`, `packages/`
-   - **Go**: `*.exe`, `*.test`, `vendor/`, `*.out`
-   - **Ruby**: `.bundle/`, `log/`, `tmp/`, `*.gem`, `vendor/bundle/`
-   - **PHP**: `vendor/`, `*.log`, `*.cache`, `*.env`
-   - **Rust**: `target/`, `debug/`, `release/`, `*.rs.bk`, `*.rlib`, `*.prof*`, `.idea/`, `*.log`, `.env*`
-   - **Kotlin**: `build/`, `out/`, `.gradle/`, `.idea/`, `*.class`, `*.jar`, `*.iml`, `*.log`, `.env*`
-   - **C++**: `build/`, `bin/`, `obj/`, `out/`, `*.o`, `*.so`, `*.a`, `*.exe`, `*.dll`, `.idea/`, `*.log`, `.env*`
-   - **C**: `build/`, `bin/`, `obj/`, `out/`, `*.o`, `*.a`, `*.so`, `*.exe`, `Makefile`, `config.log`, `.idea/`, `*.log`, `.env*`
-   - **Swift**: `.build/`, `DerivedData/`, `*.swiftpm/`, `Packages/`
-   - **R**: `.Rproj.user/`, `.Rhistory`, `.RData`, `.Ruserdata`, `*.Rproj`, `packrat/`, `renv/`
-   - **Universal**: `.DS_Store`, `Thumbs.db`, `*.tmp`, `*.swp`, `.vscode/`, `.idea/`
+   b. **Delegate entire phase to agent**:
 
-   **Tool-Specific Patterns**:
-   - **Docker**: `node_modules/`, `.git/`, `Dockerfile*`, `.dockerignore`, `*.log*`, `.env*`, `coverage/`
-   - **ESLint**: `node_modules/`, `dist/`, `build/`, `coverage/`, `*.min.js`
-   - **Prettier**: `node_modules/`, `dist/`, `build/`, `coverage/`, `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`
-   - **Terraform**: `.terraform/`, `*.tfstate*`, `*.tfvars`, `.terraform.lock.hcl`
-   - **Kubernetes/k8s**: `*.secret.yaml`, `secrets/`, `.kube/`, `kubeconfig*`, `*.key`, `*.crt`
+      Use Task tool with:
+      - `subagent_type: "general-purpose"`
+      - `model: "sonnet"` (implementation needs full capability)
+      - `description: "Implement Phase N: [phase name]"`
+      - `prompt`:
 
-5. Parse tasks.md structure and extract:
-   - **Task phases**: Setup, Tests, Core, Integration, Polish
-   - **Task dependencies**: Sequential vs parallel execution rules
-   - **Task details**: ID, description, file paths, parallel markers [P]
-   - **Execution flow**: Order and dependency requirements
+```text
+You are implementing Phase [N]: [Phase Name] for a feature.
 
-6. Execute implementation following the task plan:
-   - **Phase-by-phase execution**: Complete each phase before moving to the next
-   - **Respect dependencies**: Run sequential tasks in order, parallel tasks [P] can run together  
-   - **Follow TDD approach**: Execute test tasks before their corresponding implementation tasks
-   - **File-based coordination**: Tasks affecting the same files must run sequentially
-   - **Validation checkpoints**: Verify each phase completion before proceeding
+## Context Files (read these)
 
-7. Implementation execution rules:
-   - **Setup first**: Initialize project structure, dependencies, configuration
-   - **Tests before code**: If you need to write tests for contracts, entities, and integration scenarios
-   - **Core development**: Implement models, services, CLI commands, endpoints
-   - **Integration work**: Database connections, middleware, logging, external services
-   - **Polish and validation**: Unit tests, performance optimization, documentation
+- Feature spec: [FEATURE_DIR]/spec.md
+- Implementation plan: [FEATURE_DIR]/plan.md
+- Tasks list: [FEATURE_DIR]/tasks.md
+- Data model (if exists): [FEATURE_DIR]/data-model.md
+- Contracts (if exists): [FEATURE_DIR]/contracts/
+- Research (if exists): [FEATURE_DIR]/research.md
+- Quickstart (if exists): [FEATURE_DIR]/quickstart.md
+- Project constitution: .specify/memory/constitution.md
+- Project guidelines: CLAUDE.md
 
-8. Progress tracking and error handling:
-   - Report progress after each completed task
-   - Halt execution if any non-parallel task fails
-   - For parallel tasks [P], continue with successful tasks, report failed ones
-   - Provide clear error messages with context for debugging
-   - Suggest next steps if implementation cannot proceed
-   - **IMPORTANT** For completed tasks, make sure to mark the task off as [X] in the tasks file.
+## Your Tasks
 
-9. Completion validation:
-   - Verify all required tasks are completed
-   - Check that implemented features match the original specification
-   - Validate that tests pass and coverage meets requirements
-   - Confirm the implementation follows the technical plan
-   - Report final status with summary of completed work
+Tasks to complete in this phase (from tasks.md):
+[List of task IDs for this phase]
+
+## Execution Workflow
+
+### Step 1: Project Setup (ONLY if this is Setup/Phase 1)
+
+If this is the Setup phase, perform project setup verification:
+
+**Create/verify ignore files** based on actual project setup:
+
+**Detection Logic**:
+- Git repo? Run: `git rev-parse --git-dir 2>/dev/null` → create/verify .gitignore
+- Dockerfile* exists or Docker in plan.md? → create/verify .dockerignore
+- .eslintrc* exists? → create/verify .eslintignore
+- eslint.config.* exists? → ensure config's ignores entries cover required patterns
+- .prettierrc* exists? → create/verify .prettierignore
+- .npmrc or package.json exists? → create/verify .npmignore (if publishing)
+- terraform files (*.tf) exist? → create/verify .terraformignore
+- helm charts present? → create/verify .helmignore
+
+**If ignore file exists**: Verify essential patterns, append missing critical ones only
+**If ignore file missing**: Create with full pattern set for detected technology
+
+**Common Patterns by Technology** (from plan.md tech stack):
+- Node.js/JavaScript/TypeScript: `node_modules/`, `dist/`, `build/`, `*.log`, `.env*`
+- Python: `__pycache__/`, `*.pyc`, `.venv/`, `venv/`, `dist/`, `*.egg-info/`
+- Java: `target/`, `*.class`, `*.jar`, `.gradle/`, `build/`
+- C#/.NET: `bin/`, `obj/`, `*.user`, `*.suo`, `packages/`
+- Go: `*.exe`, `*.test`, `vendor/`, `*.out`
+- Ruby: `.bundle/`, `log/`, `tmp/`, `*.gem`, `vendor/bundle/`
+- PHP: `vendor/`, `*.log`, `*.cache`, `*.env`
+- Rust: `target/`, `debug/`, `release/`, `*.rs.bk`, `*.rlib`, `*.prof*`, `.idea/`, `*.log`, `.env*`
+- Kotlin: `build/`, `out/`, `.gradle/`, `.idea/`, `*.class`, `*.jar`, `*.iml`, `*.log`, `.env*`
+- C++: `build/`, `bin/`, `obj/`, `out/`, `*.o`, `*.so`, `*.a`, `*.exe`, `*.dll`, `.idea/`, `*.log`, `.env*`
+- C: `build/`, `bin/`, `obj/`, `out/`, `*.o`, `*.a`, `*.so`, `*.exe`, `Makefile`, `config.log`, `.idea/`, `*.log`, `.env*`
+- Swift: `.build/`, `DerivedData/`, `*.swiftpm/`, `Packages/`
+- R: `.Rproj.user/`, `.Rhistory`, `.RData`, `.Ruserdata`, `*.Rproj`, `packrat/`, `renv/`
+- Universal: `.DS_Store`, `Thumbs.db`, `*.tmp`, `*.swp`, `.vscode/`, `.idea/`
+
+**Tool-Specific Patterns**:
+- Docker: `node_modules/`, `.git/`, `Dockerfile*`, `.dockerignore`, `*.log*`, `.env*`, `coverage/`
+- ESLint: `node_modules/`, `dist/`, `build/`, `coverage/`, `*.min.js`
+- Prettier: `node_modules/`, `dist/`, `build/`, `coverage/`, `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`
+- Terraform: `.terraform/`, `*.tfstate*`, `*.tfvars`, `.terraform.lock.hcl`
+- Kubernetes/k8s: `*.secret.yaml`, `secrets/`, `.kube/`, `kubeconfig*`, `*.key`, `*.crt`
+
+### Step 2: Execute Phase Tasks
+
+For each task in this phase:
+
+1. **Read task details** from tasks.md:
+   - Task ID, description, file path
+   - Check if marked [P] (parallelizable)
+   - Understand dependencies
+
+2. **Execute task**:
+   - **Respect dependencies**: Sequential tasks in order, parallel [P] can run together
+   - **File coordination**: Tasks on same files must run sequentially
+   - **TDD approach**: Tests before implementation if requested
+   - **Follow guidelines**: Adhere to CLAUDE.md and constitution.md
+
+3. **Mark completed**: Update tasks.md by changing `- [ ]` to `- [X]` for completed task
+
+4. **Report progress**: After each task, note completion (internal tracking)
+
+### Step 3: Error Handling
+
+- **Non-parallel task fails**: Halt phase execution, report failure with context
+- **Parallel task fails**: Continue with other tasks, report failure at end
+- **Provide clear errors**: Include file paths, error messages, debugging hints
+
+## Output Requirements
+
+Return a summary in this format:
+
+```
+Phase [N]: [Phase Name] Complete
+
+Status: [SUCCESS | PARTIAL | FAILED]
+
+Completed tasks: X/Y
+- T001: [task description] ✓
+- T002: [task description] ✓
+- T003: [task description] ✗ (reason)
+
+Failed tasks (if any):
+- T003: [detailed error with context and suggested fix]
+
+Files modified:
+- [list of files created/modified]
+
+Ready for: [Next phase name or "Final validation"]
+```
+
+## Important Notes
+
+- Use absolute paths for all file operations
+- Mark tasks as [X] in tasks.md immediately after completion
+- Report after EACH task for progress visibility
+- If blocked, provide clear next steps for user intervention
+```
+
+   c. **Display phase result** (in main - just show agent's summary):
+      - Display agent's returned summary
+      - Show: Phase N of M complete
+      - Show: X/Y tasks completed
+      - Show: Any failures or blockers
+      - If failures: Ask user whether to continue or fix first
+
+   d. **Proceed to next phase or halt**:
+      - If phase success: continue to next phase
+      - If phase partial/failed: ask user to decide (continue anyway, fix manually, or stop)
+
+5. **Final completion report** (in main - aggregate results):
+   - Count total tasks completed across all phases
+   - List any remaining incomplete tasks
+   - Suggest next steps: tests, deployment, or PR creation
+   - Report final implementation status
 
 Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.

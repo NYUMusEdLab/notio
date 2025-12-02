@@ -11,6 +11,8 @@ Auto-generated from all feature plans. Last updated: 2025-11-13
 - N/A (no data persistence, pure UI interaction) (003-menu-arrow-navigation)
 - JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh (001-piano-key-keyboard-navigation)
 - Firebase (^9.9.4) for user data, localStorage for client-side state (scales, progress), existing scale state managemen (001-piano-key-keyboard-navigation)
+- JavaScript ES6+, React 18.2.0 + React 18.2.0, React Router DOM 6.3.0, Firebase 10.9.0 (read-only legacy support) (004-url-settings-storage)
+- URL query parameters (primary), Firebase Firestore (read-only fallback for legacy `/shared/{id}` links) (004-url-settings-storage)
 
 - JavaScript ES6+, React 18.2.0 (001-constitution-compliance)
 
@@ -87,9 +89,9 @@ Icon-only buttons must have descriptive aria-labels:
 - DropdownCustomScaleMenu: `aria-label="Customize scale settings"`
 
 ## Recent Changes
+- 004-url-settings-storage: Added JavaScript ES6+, React 18.2.0 + React 18.2.0, React Router DOM 6.3.0, Firebase 10.9.0 (read-only legacy support)
 - 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh
 - 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh
-- 003-menu-arrow-navigation: Added JavaScript ES6+, React 18.2.0 + React event system (onKeyDown), existing menu components
 
 
 <!-- MANUAL ADDITIONS START -->
