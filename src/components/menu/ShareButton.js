@@ -95,6 +95,7 @@ export default class ShareButton extends Component {
         </div>
         {this.state.show && (
           <Share
+            settings={this.props.state}
             saveSessionToDB={this.props.saveSessionToDB}
             sessionID={this.props.sessionID}
             onClickCloseHandler={this.handleShow}></Share>

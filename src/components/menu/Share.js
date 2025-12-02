@@ -11,7 +11,10 @@ const Share = (props) => {
           <Tabs id="controlled-tab-example">
             <Tab eventKey="share" title="Share">
               <div>
-                <ShareLink saveSessionToDB={props.saveSessionToDB} />
+                <ShareLink
+                  settings={props.settings}
+                  saveSessionToDB={props.saveSessionToDB}
+                />
               </div>
             </Tab>
           </Tabs>

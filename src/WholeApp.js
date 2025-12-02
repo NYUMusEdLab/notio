@@ -10,6 +10,10 @@ import scales from "./data/scalesObj";
 import { MobileView } from 'react-device-detect';
 import Popup from 'reactjs-popup';
 import SoundLibraryNames from "data/TonejsSoundNames";
+import { decodeSettingsFromURL, encodeSettingsToURL } from "./services/urlEncoder";
+import { validateURLLength } from "./services/urlValidator";
+import debounce from "./services/debounce";
+import ErrorMessage from "./components/OverlayPlugins/ErrorMessage";
 
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
 //This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
@@ -39,6 +43,7 @@ class WholeApp extends Component {
     showOffNotes: true,
     sessionID: null,
     sessionError: null,
+    urlErrors: [],
     loading: true,
     // videoUrl: "https://www.youtube.com/watch?v=g4mHPeMGTJM", // silence test video for coding
     videoUrl: notio_tutorial,
@@ -69,6 +74,13 @@ class WholeApp extends Component {
     this.handleChangeVideoVisibility = this.handleChangeVideoVisibility.bind(this);
     this.handleChangeTooltip = this.handleChangeTooltip.bind(this);
     this.setRef = this.setRef.bind(this);
+
+    // Create debounced URL update function (500ms delay)
+    // This prevents excessive history entries when user rapidly changes settings
+    this.debouncedUpdateBrowserURL = debounce(this.updateBrowserURL.bind(this), 500);
+
+    // Bind popstate handler
+    this.handlePopState = this.handlePopState.bind(this);
   }
 
   setRef = (ref, menu) => {
@@ -376,12 +388,15 @@ class WholeApp extends Component {
     // TODO: when rewriting to use functional component this should read: = useParams()
     const sessionId = this.props.sessionId === undefined ? null : this.props.sessionId;
     console.log("********************** componentDidMount sessionId", sessionId);
+
+    // Check if this is a legacy Firebase shared link (/shared/{id})
     if (sessionId !== null) {
+      // Legacy Firebase link - use existing flow
       this.openSavedSession(sessionId);
     } else {
-      this.setState({
-        loading: false,
-      });
+      // New URL parameter-based sharing
+      // Parse URL parameters and restore settings
+      this.loadSettingsFromURL();
     }
 
     //Initialze the tooltip
@@ -394,7 +409,227 @@ class WholeApp extends Component {
         this.handleChangeTooltip();
     })
     */
+
+    // Add popstate listener for browser back/forward navigation
+    window.addEventListener('popstate', this.handlePopState);
   }
+
+  /**
+   * Updates browser URL when settings change (debounced).
+   * Called automatically after any setting modification.
+   */
+  componentDidUpdate(prevProps, prevState) {
+    // Only update URL if settings have actually changed
+    // Exclude transient UI state (menuOpen, loading, tooltips, sessionID, urlErrors)
+    const settingsChanged =
+      prevState.octave !== this.state.octave ||
+      prevState.octaveDist !== this.state.octaveDist ||
+      prevState.scale !== this.state.scale ||
+      prevState.baseNote !== this.state.baseNote ||
+      prevState.clef !== this.state.clef ||
+      JSON.stringify(prevState.notation) !== JSON.stringify(this.state.notation) ||
+      prevState.instrumentSound !== this.state.instrumentSound ||
+      prevState.pianoOn !== this.state.pianoOn ||
+      prevState.extendedKeyboard !== this.state.extendedKeyboard ||
+      prevState.trebleStaffOn !== this.state.trebleStaffOn ||
+      prevState.theme !== this.state.theme ||
+      prevState.showOffNotes !== this.state.showOffNotes ||
+      prevState.videoUrl !== this.state.videoUrl ||
+      prevState.videoActive !== this.state.videoActive ||
+      prevState.activeVideoTab !== this.state.activeVideoTab ||
+      JSON.stringify(prevState.scaleObject) !== JSON.stringify(this.state.scaleObject);
+
+    if (settingsChanged && !this.state.loading) {
+      // Debounced URL update (prevents excessive history entries)
+      this.debouncedUpdateBrowserURL();
+    }
+  }
+
+  /**
+   * Cleanup on component unmount
+   */
+  componentWillUnmount() {
+    // Remove popstate listener
+    window.removeEventListener('popstate', this.handlePopState);
+
+    // Cancel any pending debounced URL updates
+    if (this.debouncedUpdateBrowserURL && this.debouncedUpdateBrowserURL.cancel) {
+      this.debouncedUpdateBrowserURL.cancel();
+    }
+  }
+
+  /**
+   * Loads settings from URL query parameters
+   *
+   * Parses URLSearchParams and updates component state with decoded settings.
+   * Handles validation errors gracefully by showing error messages while
+   * continuing to load other valid settings.
+   *
+   * This enables URL-based sharing without requiring Firebase database access.
+   *
+   * **Bookmark Support**: Because settings are stored in the URL, users can
+   * bookmark any configuration for quick access. When the bookmarked URL is
+   * opened, this function automatically restores all settings from the URL
+   * parameters. This works seamlessly across browser sessions and devices.
+   */
+  loadSettingsFromURL = () => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+
+      // If no parameters, just set loading to false with defaults
+      if (!params.toString()) {
+        this.setState({ loading: false });
+        return;
+      }
+
+      // Decode settings from URL parameters
+      const { settings, errors } = decodeSettingsFromURL(params);
+
+      // Handle custom scale specially - need to add to scaleList if not present
+      let newScaleList = [...this.state.scaleList];
+      if (settings.scaleObject) {
+        const scaleExists = newScaleList.some(
+          scale => scale.name === settings.scaleObject.name
+        );
+
+        if (!scaleExists) {
+          newScaleList.push(settings.scaleObject);
+        }
+      }
+
+      // Update state with decoded settings
+      this.setState({
+        octave: settings.octave,
+        octaveDist: settings.octaveDist,
+        scale: settings.scale,
+        scaleObject: settings.scaleObject,
+        scaleList: newScaleList,
+        baseNote: settings.baseNote,
+        clef: settings.clef,
+        notation: settings.notation,
+        instrumentSound: settings.instrumentSound,
+        pianoOn: settings.pianoOn,
+        extendedKeyboard: settings.extendedKeyboard,
+        trebleStaffOn: settings.trebleStaffOn,
+        theme: settings.theme,
+        showOffNotes: settings.showOffNotes,
+        videoUrl: settings.videoUrl || this.state.resetVideoUrl,
+        videoActive: settings.videoActive,
+        activeVideoTab: settings.activeVideoTab,
+        urlErrors: errors,
+        loading: false
+      });
+
+      // Log errors to console for debugging
+      if (errors.length > 0) {
+        console.warn('URL parameter errors:', errors);
+      }
+    } catch (error) {
+      console.error('Error loading settings from URL:', error);
+      // On error, just use defaults and continue
+      this.setState({
+        urlErrors: ['Failed to load settings from URL. Using defaults.'],
+        loading: false
+      });
+    }
+  };
+
+  /**
+   * Updates browser URL with current settings.
+   * Uses history.replaceState to update URL without page reload.
+   * Validates URL length before updating.
+   *
+   * This enables bookmark support and browser back/forward navigation.
+   */
+  updateBrowserURL = () => {
+    try {
+      // Encode current settings to URL parameters
+      // Pass empty string as baseURL to get just "?param=value" format (or empty string if no params)
+      const queryStringWithQuestion = encodeSettingsToURL(this.state, '');
+
+      // Build clean URL: "/" or "/?param=value"
+      const newUrl = queryStringWithQuestion ? '/' + queryStringWithQuestion : '/';
+
+      // Validate URL length before updating history
+      const validation = validateURLLength(window.location.origin + newUrl);
+
+      if (!validation.valid) {
+        // URL too long - skip history update but don't show error
+        // (user is still interacting, we don't want to interrupt them)
+        console.warn('URL too long, skipping history update:', validation.length, 'characters');
+        return;
+      }
+
+      // Update browser URL using replaceState (doesn't create new history entry)
+      // Using replaceState instead of pushState prevents filling history with every setting change
+      window.history.replaceState(
+        { settingsUpdate: true },
+        '',
+        newUrl
+      );
+    } catch (error) {
+      console.error('Error updating browser URL:', error);
+      // Don't throw - this is a non-critical enhancement
+    }
+  };
+
+  /**
+   * Handles browser back/forward button clicks.
+   * Restores settings from URL when user navigates history.
+   *
+   * @param {PopStateEvent} event - The popstate event from browser navigation
+   */
+  handlePopState = (event) => {
+    try {
+      // Parse URL parameters from current location
+      const params = new URLSearchParams(window.location.search);
+
+      // Decode settings from URL
+      const { settings, errors } = decodeSettingsFromURL(params, this.state);
+
+      // Handle custom scale - add to scaleList if not present
+      let newScaleList = [...this.state.scaleList];
+      if (settings.scaleObject) {
+        const scaleExists = newScaleList.some(
+          scale => scale.name === settings.scaleObject.name
+        );
+
+        if (!scaleExists) {
+          newScaleList.push(settings.scaleObject);
+        }
+      }
+
+      // Update state with settings from URL
+      this.setState({
+        octave: settings.octave,
+        octaveDist: settings.octaveDist,
+        scale: settings.scale,
+        scaleObject: settings.scaleObject,
+        scaleList: newScaleList,
+        baseNote: settings.baseNote,
+        clef: settings.clef,
+        notation: settings.notation,
+        instrumentSound: settings.instrumentSound,
+        pianoOn: settings.pianoOn,
+        extendedKeyboard: settings.extendedKeyboard,
+        trebleStaffOn: settings.trebleStaffOn,
+        theme: settings.theme,
+        showOffNotes: settings.showOffNotes,
+        videoUrl: settings.videoUrl || this.state.resetVideoUrl,
+        videoActive: settings.videoActive,
+        activeVideoTab: settings.activeVideoTab,
+        urlErrors: errors
+      });
+
+      // Log errors if any
+      if (errors.length > 0) {
+        console.warn('URL parameter errors during popstate:', errors);
+      }
+    } catch (error) {
+      console.error('Error handling popstate:', error);
+      // Don't crash the app - just log the error
+    }
+  };
 
   toggleMenu = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
@@ -448,6 +683,14 @@ class WholeApp extends Component {
             setRef={this.setRef}
           />
         </div>
+
+        {this.state.urlErrors && this.state.urlErrors.length > 0 && (
+          <ErrorMessage
+            errors={this.state.urlErrors}
+            title="URL Parameter Errors"
+            className="url-error-message"
+          />
+        )}
 
         <div className={`content-body Piano${showOffNotes === true ? " showOffNotes" : ""}`}>
           <Keyboard
