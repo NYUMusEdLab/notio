@@ -23,6 +23,12 @@ describe('URL Encoder - Modal Positions Integration', () => {
   // Helper to create a complete state object with modal positions
   const createState = (partialState) => ({
     ...DEFAULT_SETTINGS,
+    // Deep clone modalPositions from DEFAULT_SETTINGS to avoid shared references
+    modalPositions: {
+      video: { ...DEFAULT_SETTINGS.modalPositions.video },
+      help: { ...DEFAULT_SETTINGS.modalPositions.help },
+      share: { ...DEFAULT_SETTINGS.modalPositions.share }
+    },
     ...partialState
   });
 
@@ -30,8 +36,11 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('encodes video modal position when videoActive is true', () => {
       const state = createState({
         videoActive: true,
-        videoModalX: 100,
-        videoModalY: 150
+        modalPositions: {
+          video: { x: 100, y: 150 },
+          help: { x: null, y: null },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -45,8 +54,11 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('does NOT encode video modal position when videoActive is false', () => {
       const state = createState({
         videoActive: false,
-        videoModalX: 100,
-        videoModalY: 150
+        modalPositions: {
+          video: { x: 100, y: 150 },
+          help: { x: null, y: null },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -58,8 +70,11 @@ describe('URL Encoder - Modal Positions Integration', () => {
 
     test('does NOT encode video modal position when videoActive is undefined', () => {
       const state = createState({
-        videoModalX: 100,
-        videoModalY: 150
+        modalPositions: {
+          video: { x: 100, y: 150 },
+          help: { x: null, y: null },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -72,8 +87,11 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('encodes help modal position when helpVisible is true', () => {
       const state = createState({
         helpVisible: true,
-        helpModalX: 200,
-        helpModalY: 250
+        modalPositions: {
+          video: { x: null, y: null },
+          help: { x: 200, y: 250 },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -87,8 +105,11 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('does NOT encode help modal position when helpVisible is false', () => {
       const state = createState({
         helpVisible: false,
-        helpModalX: 200,
-        helpModalY: 250
+        modalPositions: {
+          video: { x: null, y: null },
+          help: { x: 200, y: 250 },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -101,8 +122,11 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('encodes share modal position when shareModalOpen is true', () => {
       const state = createState({
         shareModalOpen: true,
-        shareModalX: 300,
-        shareModalY: 350
+        modalPositions: {
+          video: { x: null, y: null },
+          help: { x: null, y: null },
+          share: { x: 300, y: 350 }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -116,8 +140,11 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('does NOT encode share modal position when shareModalOpen is false', () => {
       const state = createState({
         shareModalOpen: false,
-        shareModalX: 300,
-        shareModalY: 350
+        modalPositions: {
+          video: { x: null, y: null },
+          help: { x: null, y: null },
+          share: { x: 300, y: 350 }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -130,14 +157,13 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('encodes multiple modal positions simultaneously', () => {
       const state = createState({
         videoActive: true,
-        videoModalX: 100,
-        videoModalY: 150,
         helpVisible: true,
-        helpModalX: 200,
-        helpModalY: 250,
         shareModalOpen: true,
-        shareModalX: 300,
-        shareModalY: 350
+        modalPositions: {
+          video: { x: 100, y: 150 },
+          help: { x: 200, y: 250 },
+          share: { x: 300, y: 350 }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -157,8 +183,11 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('rounds floating point positions to integers', () => {
       const state = createState({
         videoActive: true,
-        videoModalX: 123.456,
-        videoModalY: 789.987
+        modalPositions: {
+          video: { x: 123.456, y: 789.987 },
+          help: { x: null, y: null },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -171,8 +200,11 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('ignores null position values', () => {
       const state = createState({
         videoActive: true,
-        videoModalX: null,
-        videoModalY: 150
+        modalPositions: {
+          video: { x: null, y: 150 },
+          help: { x: null, y: null },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -185,8 +217,11 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('ignores undefined position values', () => {
       const state = createState({
         videoActive: true,
-        videoModalX: 100,
-        videoModalY: undefined
+        modalPositions: {
+          video: { x: 100, y: undefined },
+          help: { x: null, y: null },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -202,8 +237,8 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const params = new URLSearchParams('videoModalX=100&videoModalY=150');
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBe(100);
-      expect(settings.videoModalY).toBe(150);
+      expect(settings.modalPositions.video.x).toBe(100);
+      expect(settings.modalPositions.video.y).toBe(150);
       expect(errors).toHaveLength(0);
     });
 
@@ -211,8 +246,8 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const params = new URLSearchParams('helpModalX=200&helpModalY=250');
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.helpModalX).toBe(200);
-      expect(settings.helpModalY).toBe(250);
+      expect(settings.modalPositions.help.x).toBe(200);
+      expect(settings.modalPositions.help.y).toBe(250);
       expect(errors).toHaveLength(0);
     });
 
@@ -220,8 +255,8 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const params = new URLSearchParams('shareModalX=300&shareModalY=350');
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.shareModalX).toBe(300);
-      expect(settings.shareModalY).toBe(350);
+      expect(settings.modalPositions.share.x).toBe(300);
+      expect(settings.modalPositions.share.y).toBe(350);
       expect(errors).toHaveLength(0);
     });
 
@@ -233,12 +268,12 @@ describe('URL Encoder - Modal Positions Integration', () => {
       );
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBe(100);
-      expect(settings.videoModalY).toBe(150);
-      expect(settings.helpModalX).toBe(200);
-      expect(settings.helpModalY).toBe(250);
-      expect(settings.shareModalX).toBe(300);
-      expect(settings.shareModalY).toBe(350);
+      expect(settings.modalPositions.video.x).toBe(100);
+      expect(settings.modalPositions.video.y).toBe(150);
+      expect(settings.modalPositions.help.x).toBe(200);
+      expect(settings.modalPositions.help.y).toBe(250);
+      expect(settings.modalPositions.share.x).toBe(300);
+      expect(settings.modalPositions.share.y).toBe(350);
       expect(errors).toHaveLength(0);
     });
 
@@ -246,8 +281,8 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const params = new URLSearchParams('videoModalX=-100&videoModalY=-50');
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBe(0);
-      expect(settings.videoModalY).toBe(0);
+      expect(settings.modalPositions.video.x).toBe(0);
+      expect(settings.modalPositions.video.y).toBe(0);
       expect(errors).toHaveLength(0);
     });
 
@@ -255,8 +290,8 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const params = new URLSearchParams('videoModalX=15000&videoModalY=20000');
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBe(10000);
-      expect(settings.videoModalY).toBe(10000);
+      expect(settings.modalPositions.video.x).toBe(10000);
+      expect(settings.modalPositions.video.y).toBe(10000);
       expect(errors).toHaveLength(0);
     });
 
@@ -264,8 +299,8 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const params = new URLSearchParams('videoModalX=foo&videoModalY=bar');
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBeNull();
-      expect(settings.videoModalY).toBeNull();
+      expect(settings.modalPositions.video.x).toBeNull();
+      expect(settings.modalPositions.video.y).toBeNull();
       expect(errors.length).toBeGreaterThan(0);
       expect(errors.some(e => e.includes('video modal X'))).toBe(true);
       expect(errors.some(e => e.includes('video modal Y'))).toBe(true);
@@ -275,8 +310,8 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const params = new URLSearchParams('videoModalX=100');
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBe(100);
-      expect(settings.videoModalY).toBeNull(); // Default value
+      expect(settings.modalPositions.video.x).toBe(100);
+      expect(settings.modalPositions.video.y).toBeNull(); // Default value
       expect(errors).toHaveLength(0);
     });
 
@@ -284,8 +319,8 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const params = new URLSearchParams('videoModalY=150');
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBeNull(); // Default value
-      expect(settings.videoModalY).toBe(150);
+      expect(settings.modalPositions.video.x).toBeNull(); // Default value
+      expect(settings.modalPositions.video.y).toBe(150);
       expect(errors).toHaveLength(0);
     });
 
@@ -293,8 +328,8 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const params = new URLSearchParams('videoModalX=0&videoModalY=10000');
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBe(0);
-      expect(settings.videoModalY).toBe(10000);
+      expect(settings.modalPositions.video.x).toBe(0);
+      expect(settings.modalPositions.video.y).toBe(10000);
       expect(errors).toHaveLength(0);
     });
   });
@@ -303,48 +338,53 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('round-trip preserves single modal position', () => {
       const originalState = createState({
         videoActive: true,
-        videoModalX: 123,
-        videoModalY: 456
+        modalPositions: {
+          video: { x: 123, y: 456 },
+          help: { x: null, y: null },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(originalState);
       const params = getParamsFromURL(url);
       const { settings } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBe(123);
-      expect(settings.videoModalY).toBe(456);
+      expect(settings.modalPositions.video.x).toBe(123);
+      expect(settings.modalPositions.video.y).toBe(456);
     });
 
     test('round-trip preserves all modal positions', () => {
       const originalState = createState({
         videoActive: true,
-        videoModalX: 100,
-        videoModalY: 150,
         helpVisible: true,
-        helpModalX: 200,
-        helpModalY: 250,
         shareModalOpen: true,
-        shareModalX: 300,
-        shareModalY: 350
+        modalPositions: {
+          video: { x: 100, y: 150 },
+          help: { x: 200, y: 250 },
+          share: { x: 300, y: 350 }
+        }
       });
 
       const url = encodeSettingsToURL(originalState);
       const params = getParamsFromURL(url);
       const { settings } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBe(100);
-      expect(settings.videoModalY).toBe(150);
-      expect(settings.helpModalX).toBe(200);
-      expect(settings.helpModalY).toBe(250);
-      expect(settings.shareModalX).toBe(300);
-      expect(settings.shareModalY).toBe(350);
+      expect(settings.modalPositions.video.x).toBe(100);
+      expect(settings.modalPositions.video.y).toBe(150);
+      expect(settings.modalPositions.help.x).toBe(200);
+      expect(settings.modalPositions.help.y).toBe(250);
+      expect(settings.modalPositions.share.x).toBe(300);
+      expect(settings.modalPositions.share.y).toBe(350);
     });
 
     test('round-trip handles clamping correctly', () => {
       const originalState = createState({
         videoActive: true,
-        videoModalX: -100, // Should clamp to 0
-        videoModalY: 15000 // Should clamp to 10000
+        modalPositions: {
+          video: { x: -100, y: 15000 }, // Should clamp to 0 and 10000
+          help: { x: null, y: null },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(originalState);
@@ -352,23 +392,26 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const { settings } = decodeSettingsFromURL(params);
 
       // Encoding doesn't clamp, but decoding does
-      expect(settings.videoModalX).toBe(0);
-      expect(settings.videoModalY).toBe(10000);
+      expect(settings.modalPositions.video.x).toBe(0);
+      expect(settings.modalPositions.video.y).toBe(10000);
     });
 
     test('round-trip handles floating point rounding', () => {
       const originalState = createState({
         videoActive: true,
-        videoModalX: 123.7,
-        videoModalY: 456.3
+        modalPositions: {
+          video: { x: 123.7, y: 456.3 },
+          help: { x: null, y: null },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(originalState);
       const params = getParamsFromURL(url);
       const { settings } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBe(124); // Rounded
-      expect(settings.videoModalY).toBe(456); // Rounded
+      expect(settings.modalPositions.video.x).toBe(124); // Rounded
+      expect(settings.modalPositions.video.y).toBe(456); // Rounded
     });
   });
 
@@ -403,20 +446,23 @@ describe('URL Encoder - Modal Positions Integration', () => {
       const params = new URLSearchParams('octave=4&scale=Major');
       const { settings, errors } = decodeSettingsFromURL(params);
 
-      expect(settings.videoModalX).toBeNull();
-      expect(settings.videoModalY).toBeNull();
-      expect(settings.helpModalX).toBeNull();
-      expect(settings.helpModalY).toBeNull();
-      expect(settings.shareModalX).toBeNull();
-      expect(settings.shareModalY).toBeNull();
+      expect(settings.modalPositions.video.x).toBeNull();
+      expect(settings.modalPositions.video.y).toBeNull();
+      expect(settings.modalPositions.help.x).toBeNull();
+      expect(settings.modalPositions.help.y).toBeNull();
+      expect(settings.modalPositions.share.x).toBeNull();
+      expect(settings.modalPositions.share.y).toBeNull();
       expect(errors).toHaveLength(0);
     });
 
     test('handles zero values for positions', () => {
       const state = createState({
         videoActive: true,
-        videoModalX: 0,
-        videoModalY: 0
+        modalPositions: {
+          video: { x: 0, y: 0 },
+          help: { x: null, y: null },
+          share: { x: null, y: null }
+        }
       });
 
       const url = encodeSettingsToURL(state);
@@ -429,14 +475,13 @@ describe('URL Encoder - Modal Positions Integration', () => {
     test('performance: encodes all positions within time budget', () => {
       const state = createState({
         videoActive: true,
-        videoModalX: 100,
-        videoModalY: 150,
         helpVisible: true,
-        helpModalX: 200,
-        helpModalY: 250,
         shareModalOpen: true,
-        shareModalX: 300,
-        shareModalY: 350
+        modalPositions: {
+          video: { x: 100, y: 150 },
+          help: { x: 200, y: 250 },
+          share: { x: 300, y: 350 }
+        }
       });
 
       const startTime = performance.now();

@@ -46,7 +46,8 @@
       "Bash(if [ -f \".gitignore\" ])",
       "Bash(then echo \"EXISTS\")",
       "Bash(else echo \"MISSING\")",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(node -e:*)"
     ],
     "deny": [],
     "ask": []

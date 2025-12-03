@@ -54,12 +54,12 @@ class WholeApp extends Component {
     // Modal visibility and positioning
     helpVisible: false,
     shareModalOpen: false,
-    videoModalX: null,
-    videoModalY: null,
-    helpModalX: null,
-    helpModalY: null,
-    shareModalX: null,
-    shareModalY: null,
+    // T067-T068: Consolidated modal position state (nested structure)
+    modalPositions: {
+      video: { x: null, y: null },
+      help: { x: null, y: null },
+      share: { x: null, y: null }
+    },
     showTooltip: true,
     keyboardTooltipRef: null,
     showKeyboardTooltipRef: null,
@@ -257,71 +257,44 @@ class WholeApp extends Component {
     });
   };
 
-  // Modal position handlers
-  handleVideoModalPositionChange = (position) => {
-    this.setState({
-      videoModalX: position.x,
-      videoModalY: position.y,
-    });
+  // T069-T070: Factory function for creating position handlers
+  // Generates position update handlers dynamically, eliminating duplication
+  createPositionHandler = (modalName) => {
+    return (position) => {
+      this.setState(prevState => ({
+        modalPositions: {
+          ...prevState.modalPositions,
+          [modalName]: { x: position.x, y: position.y }
+        }
+      }));
+    };
   };
 
-  handleHelpModalPositionChange = (position) => {
-    this.setState({
-      helpModalX: position.x,
-      helpModalY: position.y,
-    });
-  };
+  // Modal position handlers using factory pattern (T069-T070)
+  handleVideoModalPositionChange = this.createPositionHandler('video');
+  handleHelpModalPositionChange = this.createPositionHandler('help');
+  handleShareModalPositionChange = this.createPositionHandler('share');
 
-  handleShareModalPositionChange = (position) => {
-    this.setState({
-      shareModalX: position.x,
-      shareModalY: position.y,
-    });
-  };
-
-  // Unified modal position update handler for Context API (T042-T044)
+  // T071: Unified modal position update handler for Context API
+  // Uses nested state structure with spread operator
   updateModalPosition = (modalName, position) => {
-    const stateUpdates = {};
-
-    // Map modal name to state fields
-    switch (modalName) {
-      case 'video':
-        stateUpdates.videoModalX = position.x;
-        stateUpdates.videoModalY = position.y;
-        break;
-      case 'help':
-        stateUpdates.helpModalX = position.x;
-        stateUpdates.helpModalY = position.y;
-        break;
-      case 'share':
-        stateUpdates.shareModalX = position.x;
-        stateUpdates.shareModalY = position.y;
-        break;
-      default:
-        console.warn(`Unknown modal name: ${modalName}`);
-        return;
+    if (!['video', 'help', 'share'].includes(modalName)) {
+      console.warn(`Unknown modal name: ${modalName}`);
+      return;
     }
 
-    this.setState(stateUpdates);
+    this.setState(prevState => ({
+      modalPositions: {
+        ...prevState.modalPositions,
+        [modalName]: { x: position.x, y: position.y }
+      }
+    }));
   };
 
-  // Generate context value for ModalPositionProvider (T043)
+  // T071: Generate context value from nested state structure
   getModalPositionContextValue = () => {
     return {
-      positions: {
-        video: {
-          x: this.state.videoModalX,
-          y: this.state.videoModalY
-        },
-        help: {
-          x: this.state.helpModalX,
-          y: this.state.helpModalY
-        },
-        share: {
-          x: this.state.shareModalX,
-          y: this.state.shareModalY
-        }
-      },
+      positions: this.state.modalPositions,
       updatePosition: this.updateModalPosition
     };
   };
@@ -531,12 +504,7 @@ class WholeApp extends Component {
       prevState.activeVideoTab !== this.state.activeVideoTab ||
       prevState.helpVisible !== this.state.helpVisible ||
       prevState.shareModalOpen !== this.state.shareModalOpen ||
-      prevState.videoModalX !== this.state.videoModalX ||
-      prevState.videoModalY !== this.state.videoModalY ||
-      prevState.helpModalX !== this.state.helpModalX ||
-      prevState.helpModalY !== this.state.helpModalY ||
-      prevState.shareModalX !== this.state.shareModalX ||
-      prevState.shareModalY !== this.state.shareModalY ||
+      JSON.stringify(prevState.modalPositions) !== JSON.stringify(this.state.modalPositions) ||
       JSON.stringify(prevState.scaleObject) !== JSON.stringify(this.state.scaleObject);
 
     if (settingsChanged && !this.state.loading) {
@@ -618,12 +586,7 @@ class WholeApp extends Component {
         activeVideoTab: settings.activeVideoTab,
         helpVisible: settings.helpVisible,
         shareModalOpen: settings.shareModalOpen,
-        videoModalX: settings.videoModalX,
-        videoModalY: settings.videoModalY,
-        helpModalX: settings.helpModalX,
-        helpModalY: settings.helpModalY,
-        shareModalX: settings.shareModalX,
-        shareModalY: settings.shareModalY,
+        modalPositions: settings.modalPositions,
         urlErrors: errors,
         loading: false
       });
@@ -728,12 +691,7 @@ class WholeApp extends Component {
         activeVideoTab: settings.activeVideoTab,
         helpVisible: settings.helpVisible,
         shareModalOpen: settings.shareModalOpen,
-        videoModalX: settings.videoModalX,
-        videoModalY: settings.videoModalY,
-        helpModalX: settings.helpModalX,
-        helpModalY: settings.helpModalY,
-        shareModalX: settings.shareModalX,
-        shareModalY: settings.shareModalY,
+        modalPositions: settings.modalPositions,
         urlErrors: errors
       });
 

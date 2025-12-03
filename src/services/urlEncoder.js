@@ -38,12 +38,11 @@ const DEFAULT_SETTINGS = {
   // Modal visibility and positioning
   helpVisible: false,
   shareModalOpen: false,
-  videoModalX: null,
-  videoModalY: null,
-  helpModalX: null,
-  helpModalY: null,
-  shareModalX: null,
-  shareModalY: null
+  modalPositions: {
+    video: { x: null, y: null },
+    help: { x: null, y: null },
+    share: { x: null, y: null }
+  }
 };
 
 /**
@@ -150,8 +149,8 @@ export function encodeSettingsToURL(state, baseURL = null) {
 
   // Encode video URL (only if present and valid)
   if (state.videoUrl && state.videoUrl.trim() !== '') {
-    const validation = isValidVideoURL(state.videoUrl);
-    if (validation.valid) {
+    const isValid = isValidVideoURL(state.videoUrl);
+    if (isValid) {
       params.set('videoUrl', state.videoUrl);
     }
   }
@@ -179,28 +178,32 @@ export function encodeSettingsToURL(state, baseURL = null) {
     params.set('shareModalOpen', state.shareModalOpen ? 'true' : 'false');
   }
 
+  // Encode modal positions from nested structure
+  // Note: URL parameters remain flat (videoModalX, helpModalX, etc.) for backward compatibility
+  // But we now read from state.modalPositions.video.x instead of state.videoModalX
+
   // Encode video modal position (only if videoActive is true)
-  if (state.videoActive && state.videoModalX !== null && state.videoModalX !== undefined) {
-    params.set('videoModalX', Math.round(state.videoModalX).toString());
+  if (state.videoActive && state.modalPositions?.video?.x !== null && state.modalPositions?.video?.x !== undefined) {
+    params.set('videoModalX', Math.round(state.modalPositions.video.x).toString());
   }
-  if (state.videoActive && state.videoModalY !== null && state.videoModalY !== undefined) {
-    params.set('videoModalY', Math.round(state.videoModalY).toString());
+  if (state.videoActive && state.modalPositions?.video?.y !== null && state.modalPositions?.video?.y !== undefined) {
+    params.set('videoModalY', Math.round(state.modalPositions.video.y).toString());
   }
 
   // Encode help modal position (only if helpVisible is true)
-  if (state.helpVisible && state.helpModalX !== null && state.helpModalX !== undefined) {
-    params.set('helpModalX', Math.round(state.helpModalX).toString());
+  if (state.helpVisible && state.modalPositions?.help?.x !== null && state.modalPositions?.help?.x !== undefined) {
+    params.set('helpModalX', Math.round(state.modalPositions.help.x).toString());
   }
-  if (state.helpVisible && state.helpModalY !== null && state.helpModalY !== undefined) {
-    params.set('helpModalY', Math.round(state.helpModalY).toString());
+  if (state.helpVisible && state.modalPositions?.help?.y !== null && state.modalPositions?.help?.y !== undefined) {
+    params.set('helpModalY', Math.round(state.modalPositions.help.y).toString());
   }
 
   // Encode share modal position (only if shareModalOpen is true)
-  if (state.shareModalOpen && state.shareModalX !== null && state.shareModalX !== undefined) {
-    params.set('shareModalX', Math.round(state.shareModalX).toString());
+  if (state.shareModalOpen && state.modalPositions?.share?.x !== null && state.modalPositions?.share?.x !== undefined) {
+    params.set('shareModalX', Math.round(state.modalPositions.share.x).toString());
   }
-  if (state.shareModalOpen && state.shareModalY !== null && state.shareModalY !== undefined) {
-    params.set('shareModalY', Math.round(state.shareModalY).toString());
+  if (state.shareModalOpen && state.modalPositions?.share?.y !== null && state.modalPositions?.share?.y !== undefined) {
+    params.set('shareModalY', Math.round(state.modalPositions.share.y).toString());
   }
 
   // Build final URL
@@ -224,7 +227,15 @@ export function encodeSettingsToURL(state, baseURL = null) {
  * }
  */
 export function decodeSettingsFromURL(params) {
-  const settings = { ...DEFAULT_SETTINGS };
+  const settings = {
+    ...DEFAULT_SETTINGS,
+    // Deep clone modalPositions to avoid shared references
+    modalPositions: {
+      video: { ...DEFAULT_SETTINGS.modalPositions.video },
+      help: { ...DEFAULT_SETTINGS.modalPositions.help },
+      share: { ...DEFAULT_SETTINGS.modalPositions.share }
+    }
+  };
   const errors = [];
 
   // Helper function to parse boolean values
@@ -389,8 +400,8 @@ export function decodeSettingsFromURL(params) {
   // Decode video URL
   if (params.has('videoUrl')) {
     const videoUrl = params.get('videoUrl');
-    const validation = isValidVideoURL(videoUrl);
-    if (validation.valid) {
+    const isValid = isValidVideoURL(videoUrl);
+    if (isValid) {
       settings.videoUrl = videoUrl;
     } else {
       errors.push('Invalid video URL (must use HTTPS and contain no dangerous content), ignoring.');
@@ -450,11 +461,15 @@ export function decodeSettingsFromURL(params) {
     return Math.max(min, Math.min(max, pos));
   };
 
+  // Decode modal positions into nested structure
+  // Note: URL parameters are flat (videoModalX, helpModalX, etc.) for backward compatibility
+  // But we populate the nested modalPositions structure
+
   // Decode video modal position
   if (params.has('videoModalX')) {
     const videoModalX = parseModalPosition(params.get('videoModalX'));
     if (videoModalX !== null) {
-      settings.videoModalX = videoModalX;
+      settings.modalPositions.video.x = videoModalX;
     } else {
       errors.push('Invalid video modal X position (must be numeric), using default.');
     }
@@ -462,7 +477,7 @@ export function decodeSettingsFromURL(params) {
   if (params.has('videoModalY')) {
     const videoModalY = parseModalPosition(params.get('videoModalY'));
     if (videoModalY !== null) {
-      settings.videoModalY = videoModalY;
+      settings.modalPositions.video.y = videoModalY;
     } else {
       errors.push('Invalid video modal Y position (must be numeric), using default.');
     }
@@ -472,7 +487,7 @@ export function decodeSettingsFromURL(params) {
   if (params.has('helpModalX')) {
     const helpModalX = parseModalPosition(params.get('helpModalX'));
     if (helpModalX !== null) {
-      settings.helpModalX = helpModalX;
+      settings.modalPositions.help.x = helpModalX;
     } else {
       errors.push('Invalid help modal X position (must be numeric), using default.');
     }
@@ -480,7 +495,7 @@ export function decodeSettingsFromURL(params) {
   if (params.has('helpModalY')) {
     const helpModalY = parseModalPosition(params.get('helpModalY'));
     if (helpModalY !== null) {
-      settings.helpModalY = helpModalY;
+      settings.modalPositions.help.y = helpModalY;
     } else {
       errors.push('Invalid help modal Y position (must be numeric), using default.');
     }
@@ -490,7 +505,7 @@ export function decodeSettingsFromURL(params) {
   if (params.has('shareModalX')) {
     const shareModalX = parseModalPosition(params.get('shareModalX'));
     if (shareModalX !== null) {
-      settings.shareModalX = shareModalX;
+      settings.modalPositions.share.x = shareModalX;
     } else {
       errors.push('Invalid share modal X position (must be numeric), using default.');
     }
@@ -498,7 +513,7 @@ export function decodeSettingsFromURL(params) {
   if (params.has('shareModalY')) {
     const shareModalY = parseModalPosition(params.get('shareModalY'));
     if (shareModalY !== null) {
-      settings.shareModalY = shareModalY;
+      settings.modalPositions.share.y = shareModalY;
     } else {
       errors.push('Invalid share modal Y position (must be numeric), using default.');
     }
