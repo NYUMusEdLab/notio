@@ -11,9 +11,20 @@ export default class Overlay extends Component {
     this.state = {
       minimized: false,
       hidden: false,
+      position: props.initialPosition || { x: 0, y: 0 },
     };
     this.overlayRef = React.createRef();
   }
+
+  handleDragStop = (e, data) => {
+    // Update local position state
+    this.setState({ position: { x: data.x, y: data.y } });
+
+    // Notify parent component of position change if callback provided
+    if (this.props.onPositionChange) {
+      this.props.onPositionChange({ x: data.x, y: data.y });
+    }
+  };
 
   content = (<Fragment>{this.props.children}</Fragment>);
 
@@ -86,7 +97,10 @@ export default class Overlay extends Component {
 
   render() {
     return ReactDOM.createPortal(
-      <Draggable handle={".drag"}>
+      <Draggable
+        handle={".drag"}
+        position={this.state.position}
+        onStop={this.handleDragStop}>
         <div
           ref={this.overlayRef}
           className={`overlay${this.state.minimized ? " minimized" : ""}${

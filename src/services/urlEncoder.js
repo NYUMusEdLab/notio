@@ -34,7 +34,16 @@ const DEFAULT_SETTINGS = {
   showOffNotes: true,
   videoUrl: '',
   videoActive: false,
-  activeVideoTab: 'Enter_url'
+  activeVideoTab: 'Enter_url',
+  // Modal visibility and positioning
+  helpVisible: false,
+  shareModalOpen: false,
+  videoModalX: null,
+  videoModalY: null,
+  helpModalX: null,
+  helpModalY: null,
+  shareModalX: null,
+  shareModalY: null
 };
 
 /**
@@ -156,6 +165,42 @@ export function encodeSettingsToURL(state, baseURL = null) {
   // Encode active video tab (Player vs Enter_url)
   if (state.activeVideoTab && state.activeVideoTab !== DEFAULT_SETTINGS.activeVideoTab) {
     params.set('videoTab', state.activeVideoTab);
+  }
+
+  // === MODAL VISIBILITY AND POSITIONING ===
+
+  // Encode help overlay visibility
+  if (state.helpVisible !== undefined && state.helpVisible !== DEFAULT_SETTINGS.helpVisible) {
+    params.set('helpVisible', state.helpVisible ? 'true' : 'false');
+  }
+
+  // Encode share modal open state
+  if (state.shareModalOpen !== undefined && state.shareModalOpen !== DEFAULT_SETTINGS.shareModalOpen) {
+    params.set('shareModalOpen', state.shareModalOpen ? 'true' : 'false');
+  }
+
+  // Encode video modal position (only if videoActive is true)
+  if (state.videoActive && state.videoModalX !== null && state.videoModalX !== undefined) {
+    params.set('videoModalX', Math.round(state.videoModalX).toString());
+  }
+  if (state.videoActive && state.videoModalY !== null && state.videoModalY !== undefined) {
+    params.set('videoModalY', Math.round(state.videoModalY).toString());
+  }
+
+  // Encode help modal position (only if helpVisible is true)
+  if (state.helpVisible && state.helpModalX !== null && state.helpModalX !== undefined) {
+    params.set('helpModalX', Math.round(state.helpModalX).toString());
+  }
+  if (state.helpVisible && state.helpModalY !== null && state.helpModalY !== undefined) {
+    params.set('helpModalY', Math.round(state.helpModalY).toString());
+  }
+
+  // Encode share modal position (only if shareModalOpen is true)
+  if (state.shareModalOpen && state.shareModalX !== null && state.shareModalX !== undefined) {
+    params.set('shareModalX', Math.round(state.shareModalX).toString());
+  }
+  if (state.shareModalOpen && state.shareModalY !== null && state.shareModalY !== undefined) {
+    params.set('shareModalY', Math.round(state.shareModalY).toString());
   }
 
   // Build final URL
@@ -372,6 +417,90 @@ export function decodeSettingsFromURL(params) {
       settings.activeVideoTab = activeVideoTab;
     } else {
       errors.push('Invalid video tab value (must be Enter_url or Player), using default.');
+    }
+  }
+
+  // === MODAL VISIBILITY AND POSITIONING ===
+
+  // Decode help overlay visibility
+  if (params.has('helpVisible')) {
+    const helpVisible = parseBoolean(params.get('helpVisible'));
+    if (helpVisible !== null) {
+      settings.helpVisible = helpVisible;
+    } else {
+      errors.push('Invalid help visibility value (must be true or false), using default.');
+    }
+  }
+
+  // Decode share modal open state
+  if (params.has('shareModalOpen')) {
+    const shareModalOpen = parseBoolean(params.get('shareModalOpen'));
+    if (shareModalOpen !== null) {
+      settings.shareModalOpen = shareModalOpen;
+    } else {
+      errors.push('Invalid share modal open value (must be true or false), using default.');
+    }
+  }
+
+  // Helper function to parse and validate modal position
+  const parseModalPosition = (value, min = 0, max = 10000) => {
+    const pos = parseInt(value, 10);
+    if (isNaN(pos)) return null;
+    // Clamp to reasonable bounds to keep modals on screen
+    return Math.max(min, Math.min(max, pos));
+  };
+
+  // Decode video modal position
+  if (params.has('videoModalX')) {
+    const videoModalX = parseModalPosition(params.get('videoModalX'));
+    if (videoModalX !== null) {
+      settings.videoModalX = videoModalX;
+    } else {
+      errors.push('Invalid video modal X position (must be numeric), using default.');
+    }
+  }
+  if (params.has('videoModalY')) {
+    const videoModalY = parseModalPosition(params.get('videoModalY'));
+    if (videoModalY !== null) {
+      settings.videoModalY = videoModalY;
+    } else {
+      errors.push('Invalid video modal Y position (must be numeric), using default.');
+    }
+  }
+
+  // Decode help modal position
+  if (params.has('helpModalX')) {
+    const helpModalX = parseModalPosition(params.get('helpModalX'));
+    if (helpModalX !== null) {
+      settings.helpModalX = helpModalX;
+    } else {
+      errors.push('Invalid help modal X position (must be numeric), using default.');
+    }
+  }
+  if (params.has('helpModalY')) {
+    const helpModalY = parseModalPosition(params.get('helpModalY'));
+    if (helpModalY !== null) {
+      settings.helpModalY = helpModalY;
+    } else {
+      errors.push('Invalid help modal Y position (must be numeric), using default.');
+    }
+  }
+
+  // Decode share modal position
+  if (params.has('shareModalX')) {
+    const shareModalX = parseModalPosition(params.get('shareModalX'));
+    if (shareModalX !== null) {
+      settings.shareModalX = shareModalX;
+    } else {
+      errors.push('Invalid share modal X position (must be numeric), using default.');
+    }
+  }
+  if (params.has('shareModalY')) {
+    const shareModalY = parseModalPosition(params.get('shareModalY'));
+    if (shareModalY !== null) {
+      settings.shareModalY = shareModalY;
+    } else {
+      errors.push('Invalid share modal Y position (must be numeric), using default.');
     }
   }
 

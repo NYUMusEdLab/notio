@@ -148,20 +148,24 @@ Users want to share links with multiple modals (Share, Video, Help) open simulta
 ### Edge Cases
 
 - When URL would exceed 2000 characters, share creation is blocked and user is shown a message suggesting they disable the video URL or simplify custom scale names/definitions to reduce URL length
-- How does the system handle special characters in custom scale names or video URLs?
+- Special characters in custom scale names or video URLs are URL-encoded using standard URLSearchParams encoding
 - When URL contains duplicate/conflicting parameters (e.g., `scale=Major&scale=Minor`), the system uses the last occurrence in the URL
-- How does the system handle malformed or partially corrupted URLs?
+- Malformed or partially corrupted URLs are parsed gracefully, with invalid parameters falling back to defaults while valid parameters are applied
 - When URL contains invalid custom scale data (steps outside 0-11 range, non-numeric values, mismatched array lengths), the system uses default Major scale for that parameter and displays an error message while loading other settings correctly
 - Video URLs are validated using regex to ensure https-only protocol and reject dangerous protocols (javascript:, data:, file:) while allowing any domain for flexibility with future video platforms
-- What happens to tooltip refs and other UI state that shouldn't be encoded in URLs?
-- How does the system handle locale-specific characters in base note names (e.g., H vs B for different regions)?
+- Tooltip refs and other transient UI state are never encoded in URLs (excluded from encoding logic)
+- Locale-specific characters in base note names follow standard Western notation (A-G with # or b modifiers)
+- Modal position coordinates outside viewport bounds are clamped to keep modals visible (with minimum padding from edges)
+- Negative modal position values are treated as invalid and fall back to default positions
+- Non-numeric modal position values are ignored and fall back to default positions
+- Help overlay visibility defaults to false (hidden) when parameter is not present in URL
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
 - **FR-001**: System MUST parse URL query parameters on application load to populate all user-configurable settings
-- **FR-002**: System MUST support encoding all current Firebase-stored settings in URL format: octave, scale name, scale object (steps and numbers), base note, notation array, instrument sound, piano visibility, extended keyboard state, treble staff visibility, theme, show off-notes toggle, clef, video URL, video active state, and active video tab
+- **FR-002**: System MUST support encoding all current Firebase-stored settings in URL format: octave, scale name, scale object (steps and numbers), base note, notation array, instrument sound, piano visibility, extended keyboard state, treble staff visibility, theme, show off-notes toggle, clef, video URL, video active state, active video tab, help overlay visibility, and modal positions
 - **FR-003**: System MUST generate a shareable URL containing all current settings when user requests to share
 - **FR-004**: System MUST maintain backwards compatibility by attempting to load from Firebase when detecting legacy `/shared/{id}` URL format
 - **FR-005**: System MUST use URL-safe encoding for all parameters, especially for special characters in video URLs and custom scale names
@@ -172,7 +176,7 @@ Users want to share links with multiple modals (Share, Video, Help) open simulta
 - **FR-010**: System MUST validate parsed URL parameters to ensure data integrity (e.g., octave within valid range 1-8, valid note names, etc.)
 - **FR-010a**: System MUST handle duplicate/conflicting parameters by using the last occurrence in the URL (following standard URLSearchParams behavior)
 - **FR-010b**: System MUST detect invalid custom scale data (steps outside 0-11 range, non-numeric values, mismatched array lengths), fall back to default Major scale, display an error message to the user, and continue loading other valid settings
-- **FR-011**: System MUST handle URL length limitations by using compact parameter names and efficient encoding
+- **FR-011**: System MUST use human-readable parameter names (octave, scale, baseNote, pianoVisible, etc.) instead of abbreviated names to support manual URL editing
 - **FR-011a**: System MUST block share creation when generated URL would exceed 2000 characters and display a message suggesting user disable video URL or simplify custom scales
 - **FR-012**: System MUST prevent parsing of tooltip refs and other transient UI state from URLs
 - **FR-013**: System MUST validate video URLs using regex to ensure https-only protocol and reject dangerous protocols (javascript:, data:, file:) while allowing any domain
@@ -180,26 +184,46 @@ Users want to share links with multiple modals (Share, Video, Help) open simulta
 - **FR-015**: Copy to clipboard functionality MUST work with the new URL-based share links
 - **FR-016**: System MAY retain Firebase as read-only for existing shared links during transition period
 - **FR-017**: System MUST document the URL parameter schema for future developers
+- **FR-018**: System MUST support encoding and decoding help overlay visibility state via `helpVisible` parameter (boolean: true/false)
+- **FR-019**: System MUST support encoding and decoding share modal open state and position via `shareModalOpen`, `shareModalX`, and `shareModalY` parameters
+- **FR-020**: System MUST support encoding and decoding video modal position via `videoModalX` and `videoModalY` parameters (when `videoModalOpen=true`)
+- **FR-021**: System MUST support encoding and decoding help modal position via `helpModalX` and `helpModalY` parameters (when `helpVisible=true`)
+- **FR-022**: System MUST validate modal position parameters to ensure they are numeric and within reasonable viewport bounds
+- **FR-023**: System MUST clamp modal positions to keep modals visible within the viewport with minimum padding from edges
+- **FR-024**: System MUST use pixel coordinates for modal positions (not percentages) for precise control across different screen sizes
+- **FR-025**: System MUST default help overlay visibility to false (hidden) when parameter is not present in URL
 
 ### Key Entities
 
 - **URL Parameter Schema**: Defines the mapping between application state and URL query parameters, including:
-  - Compact parameter names (e.g., `o` for octave, `s` for scale, `bn` for baseNote)
-  - Encoding strategies for complex objects (scaleObject)
-  - Array serialization format (notation)
+  - Human-readable parameter names (e.g., `octave`, `scale`, `baseNote`, `pianoVisible`, `videoModalOpen`, `helpVisible`)
+  - Encoding strategies for complex objects (scaleObject encoded as separate parameters: `scaleName`, `scaleSteps`, `scaleNumbers`)
+  - Array serialization format (notation as comma-separated values)
+  - Boolean encoding as `true`/`false` strings
+  - Numeric values for modal positions (pixels)
   - Version indicator for future format changes
 
 - **Settings State**: The complete user configuration that can be encoded/decoded:
   - Musical settings (octave, scale, base note, clef)
   - Display settings (notation, theme, visibility toggles)
   - Sound settings (instrument, piano state)
-  - Video settings (URL, active state, tab)
+  - Video settings (URL, active state, tab, modal position)
   - Custom scales (user-defined scale objects)
+  - Help overlay settings (visibility, modal position)
+  - Share modal settings (open state, modal position)
+
+- **Modal State**: Defines the state for each modal/overlay that can be encoded:
+  - Video Modal: open state (`videoModalOpen`), X position (`videoModalX`), Y position (`videoModalY`)
+  - Help Modal: visibility (`helpVisible`), X position (`helpModalX`), Y position (`helpModalY`)
+  - Share Modal: open state (`shareModalOpen`), X position (`shareModalX`), Y position (`shareModalY`)
+  - Default positions: top 7%, left 5% when positions not specified
+  - Position validation: must be numeric, clamped to viewport bounds
 
 - **Migration Strategy**: Handles transition from Firebase to URL-based storage:
   - Legacy URL detection pattern (`/shared/{id}`)
   - Fallback mechanism for reading Firebase
   - Deprecation timeline for Firebase dependency
+  - No backwards compatibility needed for abbreviated parameter names (feature not yet released)
 
 ## Success Criteria *(mandatory)*
 
@@ -215,19 +239,28 @@ Users want to share links with multiple modals (Share, Video, Help) open simulta
 - **SC-008**: URLs created today continue to work in future versions of the application (backwards compatibility)
 - **SC-009**: Zero Firebase database writes for new share operations (complete migration from write operations)
 - **SC-010**: Custom scales with up to 12 steps can be encoded and restored from URLs
+- **SC-011**: Users can manually edit URL parameters to change settings without consulting documentation (human-readable parameter names)
+- **SC-012**: Help overlay visibility state is preserved in shared URLs with 100% accuracy
+- **SC-013**: Multiple modals can be opened simultaneously with positions preserved in shared URLs
+- **SC-014**: Modal positions are restored within 10 pixels of original position when URL is opened on same screen size
+- **SC-015**: Modals remain visible on screen even when URL contains out-of-bounds position values (automatic clamping)
 
 ## Assumptions
 
-1. **URL Encoding Format**: We will use standard URL query parameter format with abbreviated parameter names to minimize length (e.g., `?o=4&s=Major&bn=C`)
-2. **Complex Object Serialization**: Scale objects will be encoded as separate parameters (e.g., `scaleSteps=0,2,4,5,7,9,11&scaleNumbers=1,2,3,4,5,6,7`) or as base64-encoded JSON for very complex scales
+1. **URL Encoding Format**: We will use standard URL query parameter format with human-readable parameter names for manual editability (e.g., `?octave=4&scale=Major&baseNote=C&videoModalOpen=true&videoModalX=100&videoModalY=150`)
+2. **Complex Object Serialization**: Scale objects will be encoded as separate parameters (e.g., `scaleName=Custom&scaleSteps=0,2,4,5,7,9,11&scaleNumbers=1,2,3,4,5,6,7`)
 3. **Browser History Updates**: The app will use `history.pushState()` or `history.replaceState()` to update URLs without page reloads, with 500-1000ms debouncing on any setting change to avoid excessive history entries from rapid changes
-4. **Default Values**: Any parameter not present in the URL will fall back to the same defaults currently used in `WholeApp.js` initial state
+4. **Default Values**: Any parameter not present in the URL will fall back to the same defaults currently used in `WholeApp.js` initial state. Help overlay defaults to hidden when not specified.
 5. **Security**: Video URLs will be validated using regex to ensure https-only protocol and reject dangerous protocols (javascript:, data:, file:) while allowing any domain for flexibility with future video platforms
-6. **Backwards Compatibility Window**: Firebase read capability will be maintained for at least 6 months to support existing shared links
+6. **Backwards Compatibility Window**: Firebase read capability will be maintained for at least 6 months to support existing shared links. No backwards compatibility needed for abbreviated parameter names since feature is not yet released.
 7. **URL Length Management**: If a configuration would generate a URL exceeding 2000 characters, the system will block share creation and display a message suggesting the user disable video URL or simplify custom scale definitions
 8. **Browser Support**: The History API is supported in all modern browsers (IE10+), which aligns with the app's existing browser support policy
-9. **Share Link Format**: New share links will use the same domain and path structure, just replacing the Firebase ID with query parameters (e.g., `/` or `/?o=4&s=Major...` instead of `/shared/abc123`)
+9. **Share Link Format**: New share links will use the same domain and path structure, just replacing the Firebase ID with query parameters (e.g., `/` or `/?octave=4&scale=Major...` instead of `/shared/abc123`)
 10. **Performance**: URL parsing and state initialization will occur synchronously during app mount, with minimal performance impact compared to asynchronous Firebase reads
+11. **Modal Positioning**: Modal positions will be encoded as pixel coordinates (not percentages) relative to viewport. Positions will be validated and clamped to ensure modals remain visible with minimum 20px padding from screen edges.
+12. **Modal Position Persistence**: Modal positions are only encoded when modals are open. Dragging a modal updates its position in the app state, which will be included in the next URL update (debounced).
+13. **Cross-Device Position Behavior**: Modal positions encoded in URLs may not translate perfectly across devices with different screen sizes. Positions will be clamped to viewport bounds on smaller screens.
+14. **Help Overlay Default**: The help overlay defaults to hidden (false) when the `helpVisible` parameter is not present in the URL, aligning with the current application behavior of not showing help on initial load.
 
 ## Dependencies
 
@@ -235,6 +268,9 @@ Users want to share links with multiple modals (Share, Video, Help) open simulta
 - Browser History API support
 - URL encoding/decoding utilities
 - React component lifecycle (for URL parameter parsing on mount)
+- React Draggable library (for modal positioning and drag functionality)
+- Modal component state management (ShareButton, VideoButton, HelpButton)
+- Overlay component positioning system
 
 ## Out of Scope
 
@@ -245,3 +281,8 @@ Users want to share links with multiple modals (Share, Video, Help) open simulta
 - Analytics or tracking of shared link usage
 - Social media preview cards/metadata for shared links (Open Graph tags)
 - QR code generation for shared links
+- Backwards compatibility with abbreviated parameter names (feature not yet released)
+- Automatic cascading layout algorithm for multiple modals (positions must be manually arranged by user)
+- Responsive modal repositioning for different screen sizes (positions are clamped but not adjusted proportionally)
+- Z-index management for stacked modals (browser default behavior used)
+- Modal size encoding in URLs (only positions are encoded, sizes use defaults)

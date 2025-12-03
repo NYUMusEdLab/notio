@@ -50,6 +50,15 @@ class WholeApp extends Component {
     resetVideoUrl: notio_tutorial,
     videoActive: false,
     activeVideoTab: "Enter_url", //Player or Enter_url
+    // Modal visibility and positioning
+    helpVisible: false,
+    shareModalOpen: false,
+    videoModalX: null,
+    videoModalY: null,
+    helpModalX: null,
+    helpModalY: null,
+    shareModalX: null,
+    shareModalY: null,
     showTooltip: true,
     keyboardTooltipRef: null,
     showKeyboardTooltipRef: null,
@@ -247,6 +256,41 @@ class WholeApp extends Component {
     });
   };
 
+  // Modal position handlers
+  handleVideoModalPositionChange = (position) => {
+    this.setState({
+      videoModalX: position.x,
+      videoModalY: position.y,
+    });
+  };
+
+  handleHelpModalPositionChange = (position) => {
+    this.setState({
+      helpModalX: position.x,
+      helpModalY: position.y,
+    });
+  };
+
+  handleShareModalPositionChange = (position) => {
+    this.setState({
+      shareModalX: position.x,
+      shareModalY: position.y,
+    });
+  };
+
+  // Modal visibility handlers
+  handleHelpVisibilityChange = (visible) => {
+    this.setState({
+      helpVisible: visible,
+    });
+  };
+
+  handleShareModalOpenChange = (open) => {
+    this.setState({
+      shareModalOpen: open,
+    });
+  };
+
   handleChangeTooltip = () => {
     const tooltip = !this.state.showTooltip;
     this.setState({
@@ -437,6 +481,14 @@ class WholeApp extends Component {
       prevState.videoUrl !== this.state.videoUrl ||
       prevState.videoActive !== this.state.videoActive ||
       prevState.activeVideoTab !== this.state.activeVideoTab ||
+      prevState.helpVisible !== this.state.helpVisible ||
+      prevState.shareModalOpen !== this.state.shareModalOpen ||
+      prevState.videoModalX !== this.state.videoModalX ||
+      prevState.videoModalY !== this.state.videoModalY ||
+      prevState.helpModalX !== this.state.helpModalX ||
+      prevState.helpModalY !== this.state.helpModalY ||
+      prevState.shareModalX !== this.state.shareModalX ||
+      prevState.shareModalY !== this.state.shareModalY ||
       JSON.stringify(prevState.scaleObject) !== JSON.stringify(this.state.scaleObject);
 
     if (settingsChanged && !this.state.loading) {
@@ -516,6 +568,14 @@ class WholeApp extends Component {
         videoUrl: settings.videoUrl || this.state.resetVideoUrl,
         videoActive: settings.videoActive,
         activeVideoTab: settings.activeVideoTab,
+        helpVisible: settings.helpVisible,
+        shareModalOpen: settings.shareModalOpen,
+        videoModalX: settings.videoModalX,
+        videoModalY: settings.videoModalY,
+        helpModalX: settings.helpModalX,
+        helpModalY: settings.helpModalY,
+        shareModalX: settings.shareModalX,
+        shareModalY: settings.shareModalY,
         urlErrors: errors,
         loading: false
       });
@@ -618,6 +678,14 @@ class WholeApp extends Component {
         videoUrl: settings.videoUrl || this.state.resetVideoUrl,
         videoActive: settings.videoActive,
         activeVideoTab: settings.activeVideoTab,
+        helpVisible: settings.helpVisible,
+        shareModalOpen: settings.shareModalOpen,
+        videoModalX: settings.videoModalX,
+        videoModalY: settings.videoModalY,
+        helpModalX: settings.helpModalX,
+        helpModalY: settings.helpModalY,
+        shareModalX: settings.shareModalX,
+        shareModalY: settings.shareModalY,
         urlErrors: errors
       });
 
@@ -681,6 +749,11 @@ class WholeApp extends Component {
             sessionID={this.state.sessionID}
             state={this.state}
             setRef={this.setRef}
+            handleVideoModalPositionChange={this.handleVideoModalPositionChange}
+            handleHelpModalPositionChange={this.handleHelpModalPositionChange}
+            handleShareModalPositionChange={this.handleShareModalPositionChange}
+            handleHelpVisibilityChange={this.handleHelpVisibilityChange}
+            handleShareModalOpenChange={this.handleShareModalOpenChange}
           />
         </div>
 

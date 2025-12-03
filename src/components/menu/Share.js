@@ -6,7 +6,11 @@ import { Tabs, Tab } from "react-bootstrap";
 const Share = (props) => {
   return (
     <React.Fragment>
-      <Overlay key={props.sessionID} close={props.onClickCloseHandler}>
+      <Overlay
+        key={props.sessionID}
+        close={props.onClickCloseHandler}
+        initialPosition={props.initialPosition}
+        onPositionChange={props.onPositionChange}>
         <div className="tabs-wrapper">
           <Tabs id="controlled-tab-example">
             <Tab eventKey="share" title="Share">
