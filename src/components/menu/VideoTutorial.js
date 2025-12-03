@@ -59,11 +59,10 @@ const VideoTutorial = (props) => {
     <React.Fragment>
       {/* <Overlay visible={show} key={videoUrl}> */}
       <Overlay
+        modalName="video"
         visible={true}
         key={videoUrl}
-        close={props.onClickCloseHandler}
-        initialPosition={props.initialPosition}
-        onPositionChange={props.onPositionChange}>
+        close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
           {/* <Tabs defaultActiveKey="Player" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
           {/* <Tabs defaultActiveKey="Player" activeTab={activeTab} id="controlled-tab-example"> */}

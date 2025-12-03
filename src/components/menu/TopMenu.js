@@ -365,11 +365,6 @@ class TopMenu extends Component {
               videoUrl={this.props.state.videoUrl}
               resetVideoUrl={this.props.resetVideoUrl}
               handleResetVideoUrl={this.props.handleResetVideoUrl}
-              initialPosition={{
-                x: this.props.state.videoModalX || 0,
-                y: this.props.state.videoModalY || 0
-              }}
-              onPositionChange={this.props.handleVideoModalPositionChange}
             />
           </div>
           <ReactTooltip
@@ -399,11 +394,6 @@ class TopMenu extends Component {
               saveSessionToDB={this.props.saveSessionToDB}
               sessionID={this.props.sessionID}
               state={this.props.state}
-              initialPosition={{
-                x: this.props.state.shareModalX || 0,
-                y: this.props.state.shareModalY || 0
-              }}
-              onPositionChange={this.props.handleShareModalPositionChange}
               onVisibilityChange={this.props.handleShareModalOpenChange}
             />
           </div>
@@ -432,11 +422,6 @@ class TopMenu extends Component {
               title="Help"
               label="help"
               startOpen={this.props.state.helpVisible}
-              initialPosition={{
-                x: this.props.state.helpModalX || 0,
-                y: this.props.state.helpModalY || 0
-              }}
-              onPositionChange={this.props.handleHelpModalPositionChange}
               onVisibilityChange={this.props.handleHelpVisibilityChange}
             />
           </div>

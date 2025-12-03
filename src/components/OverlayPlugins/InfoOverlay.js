@@ -10,11 +10,10 @@ const InfoOverlay = (props) => {
   return (
     <React.Fragment>
       <Overlay
+        modalName="help"
         overlayId={overlayId}
         visible={true}
-        close={props.onClickCloseHandler}
-        initialPosition={props.initialPosition}
-        onPositionChange={props.onPositionChange}>
+        close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
           <Tabs defaultActiveKey="Howto" id="controlled-tab-example">
             <Tab eventKey="Howto" title="How to">

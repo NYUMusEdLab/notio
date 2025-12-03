@@ -7,10 +7,9 @@ const Share = (props) => {
   return (
     <React.Fragment>
       <Overlay
+        modalName="share"
         key={props.sessionID}
-        close={props.onClickCloseHandler}
-        initialPosition={props.initialPosition}
-        onPositionChange={props.onPositionChange}>
+        close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
           <Tabs id="controlled-tab-example">
             <Tab eventKey="share" title="Share">

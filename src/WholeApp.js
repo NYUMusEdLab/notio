@@ -14,6 +14,7 @@ import { decodeSettingsFromURL, encodeSettingsToURL } from "./services/urlEncode
 import { validateURLLength } from "./services/urlValidator";
 import debounce from "./services/debounce";
 import ErrorMessage from "./components/OverlayPlugins/ErrorMessage";
+import { ModalPositionProvider } from "./contexts/ModalPositionContext";
 
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
 //This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
@@ -276,6 +277,53 @@ class WholeApp extends Component {
       shareModalX: position.x,
       shareModalY: position.y,
     });
+  };
+
+  // Unified modal position update handler for Context API (T042-T044)
+  updateModalPosition = (modalName, position) => {
+    const stateUpdates = {};
+
+    // Map modal name to state fields
+    switch (modalName) {
+      case 'video':
+        stateUpdates.videoModalX = position.x;
+        stateUpdates.videoModalY = position.y;
+        break;
+      case 'help':
+        stateUpdates.helpModalX = position.x;
+        stateUpdates.helpModalY = position.y;
+        break;
+      case 'share':
+        stateUpdates.shareModalX = position.x;
+        stateUpdates.shareModalY = position.y;
+        break;
+      default:
+        console.warn(`Unknown modal name: ${modalName}`);
+        return;
+    }
+
+    this.setState(stateUpdates);
+  };
+
+  // Generate context value for ModalPositionProvider (T043)
+  getModalPositionContextValue = () => {
+    return {
+      positions: {
+        video: {
+          x: this.state.videoModalX,
+          y: this.state.videoModalY
+        },
+        help: {
+          x: this.state.helpModalX,
+          y: this.state.helpModalY
+        },
+        share: {
+          x: this.state.shareModalX,
+          y: this.state.shareModalY
+        }
+      },
+      updatePosition: this.updateModalPosition
+    };
   };
 
   // Modal visibility handlers
@@ -718,11 +766,14 @@ class WholeApp extends Component {
   render() {
     const { loading, showOffNotes } = this.state;
 
+    // Generate context value for modal positions (T042-T043)
+    const modalPositionContextValue = this.getModalPositionContextValue();
+
     // console.log("whole app", this.state.notation);
     return loading ? (
       <LoadingScreen />
     ) : (
-      <>
+      <ModalPositionProvider value={modalPositionContextValue}>
         <div className="topmenu">
           <TopMenu
             togglePiano={this.togglePiano}
@@ -800,7 +851,7 @@ class WholeApp extends Component {
             </div>
           </Popup>
         </MobileView>
-      </>
+      </ModalPositionProvider>
     );
   }
 }

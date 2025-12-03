@@ -98,9 +98,7 @@ export default class ShareButton extends Component {
             settings={this.props.state}
             saveSessionToDB={this.props.saveSessionToDB}
             sessionID={this.props.sessionID}
-            onClickCloseHandler={this.handleShow}
-            initialPosition={this.props.initialPosition}
-            onPositionChange={this.props.onPositionChange}></Share>
+            onClickCloseHandler={this.handleShow}></Share>
         )}
       </React.Fragment>
     );
