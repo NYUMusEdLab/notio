@@ -5,6 +5,34 @@ import { notations } from "../components/menu/Notation";
 import sc from "../data/scalesObj";
 import absoluteMajorScales from "../data/absoluteMajorScales";
 
+// Movable-do solfege syllable mapping for relative notation
+// Maps scale degree alterations to their corresponding syllables
+const SCALE_DEGREE_TO_SYLLABLE = {
+  // Diatonic degrees (major scale)
+  "1": "DO",
+  "2": "RE",
+  "3": "MI",
+  "4": "FA",
+  "5": "SO",
+  "6": "LA",
+  "7": "TE",      // Minor 7th (b7 in major scale context)
+  "△7": "TI",     // Major 7th (leading tone)
+
+  // Chromatic alterations (descending - preferred for lowered degrees)
+  "b2": "RA",     // Lowered 2nd (Phrygian, Locrian)
+  "b3": "ME",     // Lowered 3rd (all minor scales)
+  "b5": "SE",     // Lowered 5th (Locrian, diminished)
+  "b6": "LE",     // Lowered 6th (Natural Minor, Harmonic Minor, Phrygian, Locrian)
+  "b7": "TE",     // Lowered 7th (same as "7" - Mixolydian, Dorian, minor scales)
+
+  // Chromatic alterations (ascending - for raised degrees)
+  "#1": "DI",     // Raised 1st (rare)
+  "#2": "RI",     // Raised 2nd (rare)
+  "#4": "FI",     // Raised 4th (Lydian)
+  "#5": "SI",     // Raised 5th (rare in scales)
+  "#6": "LI"      // Raised 6th (Melodic Minor ascending - rare)
+};
+
 //*A scale consists of 3 parts:
 //  prefix                 middle               postfix
 //a partial octave   one or more octaves       a partial octave
@@ -335,10 +363,18 @@ class MusicScale {
           break;
 
         case "Relative":
-          // Get scale degree numbers (e.g., "1", "b3", "5") for the extended scale
-          let numbers = this.makeScaleNumbers(this.Recipe, semiToneSteps);
-          // Map each scale degree to its relative solfège syllable (e.g., "1" -> "DO", "b3" -> "ME")
-          theScale["Relative"] = numbers.map(number => this.relativeScale[number] || number);
+          if (this.Name === "Chromatic") {
+            let numbers = this.makeScaleNumbers(this.Recipe, semiToneSteps);
+            theScale["Relative"] = numbers.map(number => this.relativeScale[number] || number);
+          }
+          else {
+            theScale["Relative"] = this.makeRelativeScaleSyllables(
+              semiToneSteps,
+              this.Recipe.numbers,
+              this.ExtendedScaleSteps
+            );
+          }
+          
           break;
 
         case "Scale Steps":
@@ -671,6 +707,47 @@ class MusicScale {
       }
     }
     return Number(IndexNumber); // it should be a number already, but...
+  }
+
+  /**
+   * Generate relative (movable-do solfege) syllables for a scale based on scale degrees
+   *
+   * This method maps scale degrees (from Recipe.numbers array) to solfege syllables,
+   * ensuring that syllables are context-aware and key-independent. For example,
+   * Natural Minor always shows DO RE ME FA SO LE TE regardless of the root note.
+   *
+   * @param {number[]} semiToneSteps - All chromatic steps in the extended scale
+   * @param {string[]} scaleNumbers - Scale degree labels from recipe (e.g., ["1", "2", "b3", "4", "5", "b6", "7"])
+   * @param {number[]} extendedSteps - All extended scale steps including octave offsets
+   * @returns {string[]} Array of solfege syllables matching semiToneSteps.length
+   */
+  makeRelativeScaleSyllables(semiToneSteps, scaleNumbers, extendedSteps) {
+    // Handle chromatic scale special case - use existing chromatic mapping
+    if (this.Name === "Chromatic") {
+      return this.MakeChromatic(semiToneSteps, this.RootNoteName, "Relative");
+    }
+
+    // Fallback if scale doesn't have numbers array (shouldn't happen with standard scales)
+    if (!scaleNumbers || scaleNumbers.length === 0) {
+      // Fall back to chromatic mapping for unknown scales
+      return semiToneSteps.map(
+        (step) => notes[step % notes.length].note_relative
+      );
+    }
+
+    // Find where the root (DO) appears in the extended scale
+    const rootIndex = this.findScaleStartIndexRelativToRoot(
+      extendedSteps,
+      scaleNumbers.length
+    );
+
+    // Map each step to its syllable based on scale degree position (NOT chromatic position)
+    return semiToneSteps.map((step, index) => {
+      const degreeIndex = (index + rootIndex) % scaleNumbers.length;
+      const degree = scaleNumbers[degreeIndex];
+      // Look up syllable for this scale degree, default to "DO" if unknown
+      return SCALE_DEGREE_TO_SYLLABLE[degree] || "DO";
+    });
   }
 
   //Calculates what index in scale contains the root

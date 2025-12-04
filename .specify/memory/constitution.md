@@ -1,3 +1,40 @@
+<!--
+Sync Impact Report:
+Version: 2.0.0 → 2.0.1
+Rationale: PATCH - Template synchronization fix (templates were claimed updated but weren't)
+
+Modified sections:
+  - None - constitution content unchanged from v2.0.0
+
+Templates NOW actually updated (2025-11-30):
+  ✅ .specify/templates/plan-template.md - Constitution Check NOW expanded with all 7 principles
+    * Added explicit checklist for all principles (I-VII)
+    * Each principle includes specific validation criteria
+    * Links violations to Complexity Tracking table
+
+  ✅ .specify/templates/spec-template.md - Testing Strategy section NOW added
+    * Added comprehensive Testing Strategy section after Success Criteria
+    * Includes integration (60-70%), E2E (20-30%), unit (10-20%) test templates
+    * Examples specific to musical features
+    * Coverage requirements checklist with performance targets
+
+  ✅ .specify/templates/tasks-template.md - Tests NOW truly MANDATORY
+    * Changed "Tests are OPTIONAL" to "Tests are MANDATORY per Constitution v2.0.0"
+    * Restructured test tasks by type (Integration/E2E/Unit) for each user story
+    * Added coverage verification tasks per user story
+    * Added final coverage verification phase
+    * Updated all 3 user story examples with proper test structure
+
+Previous sync impact report (v1.0.0 → 2.0.0, 2025-11-12):
+  - Major update adopting Rainer Hahnekamp's pragmatic testing principles
+  - Shifted to integration-first testing (60-70-20-30 distribution)
+  - 100% code coverage remains NON-NEGOTIABLE
+  - Templates claimed updated but actually weren't (fixed in this patch)
+
+Follow-up TODOs: None - templates now genuinely aligned with Constitution v2.0.0
+-->
+
+# Notio Constitution
 # [PROJECT_NAME] Constitution
 <!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
 
@@ -46,5 +83,4 @@
 [GOVERNANCE_RULES]
 <!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 2.0.1 | **Ratified**: 2025-11-12 | **Last Amended**: 2025-11-30
