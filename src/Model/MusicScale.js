@@ -5,32 +5,21 @@ import { notations } from "../components/menu/Notation";
 import sc from "../data/scalesObj";
 import absoluteMajorScales from "../data/absoluteMajorScales";
 
-// Movable-do solfege syllable mapping for relative notation
-// Maps scale degree alterations to their corresponding syllables
+// Module-level constant: Maps scale degree numbers to relative solfège syllables (movable-do)
 const SCALE_DEGREE_TO_SYLLABLE = {
-  // Diatonic degrees (major scale)
-  "1": "DO",
-  "2": "RE",
-  "3": "MI",
-  "4": "FA",
-  "5": "SO",
-  "6": "LA",
-  "7": "TE",      // Minor 7th (b7 in major scale context)
-  "△7": "TI",     // Major 7th (leading tone)
+  // Diatonic degrees
+  "1": "DO",   "2": "RE",   "3": "MI",   "4": "FA",
+  "5": "SO",   "6": "LA",   "7": "TE",   "△7": "TI",
 
-  // Chromatic alterations (descending - preferred for lowered degrees)
-  "b2": "RA",     // Lowered 2nd (Phrygian, Locrian)
-  "b3": "ME",     // Lowered 3rd (all minor scales)
-  "b5": "SE",     // Lowered 5th (Locrian, diminished)
-  "b6": "LE",     // Lowered 6th (Natural Minor, Harmonic Minor, Phrygian, Locrian)
-  "b7": "TE",     // Lowered 7th (same as "7" - Mixolydian, Dorian, minor scales)
+  // Chromatic alterations (lowered)
+  "b2": "RA",  "b3": "ME",  "b5": "SE",  "b6": "LE",  "b7": "TE",
 
-  // Chromatic alterations (ascending - for raised degrees)
-  "#1": "DI",     // Raised 1st (rare)
-  "#2": "RI",     // Raised 2nd (rare)
-  "#4": "FI",     // Raised 4th (Lydian)
-  "#5": "SI",     // Raised 5th (rare in scales)
-  "#6": "LI"      // Raised 6th (Melodic Minor ascending - rare)
+  // Raised alterations
+  "#1": "DI",  "#2": "RI",  "#4": "FI",  "#5": "SI",  "#6": "LI",
+
+  // Chord extensions (for completeness)
+  "b9": "RA",  "9": "RE",   "#9": "RI",
+  "11": "FA",  "#11": "FI", "b13": "LE", "13": "LA"
 };
 
 //*A scale consists of 3 parts:
@@ -98,28 +87,6 @@ class MusicScale {
   Notations = [];
   Colors = [];
 
-  // Map scale degree numbers to relative solfège syllables
-  relativeScale = {
-    "1": "DO",
-    "#1": "DI",
-    "b2": "RA",
-    "2": "RE",
-    "#2": "RI",
-    "b3": "ME",
-    "3": "MI",
-    "4": "FA",
-    "#4": "FI",
-    "b5": "SE",
-    "5": "SO",
-    "#5": "SI",
-    "b6": "LE",
-    "6": "LA",
-    "#6": "LI",
-    "b7": "TE",
-    "7": "TE",
-    "△7": "TI",
-  };
-
   NoteNameWithOctaveNumber = (currentOctave, distToCurrentOctave, distFromRoot) => {
     const note =
       this.BasisScale[
@@ -137,14 +104,6 @@ class MusicScale {
   //#region Public Functions
 
   init() {
-    // //Testing
-    // let test = this.addAccidental("Cb","bb")//A
-    // test = this.addAccidental("C#","##")//D#
-    // test = this.addAccidental("Cx","##")//E
-    // test = this.addAccidental("Bb","bb")//Ab
-    // test = this.addAccidental("B#","bb")//Bb
-    // test = this.addAccidental("Bbb","bb")//G
-
     this.Name = this.Recipe.name;
     this.SemitoneSteps = [...this.Recipe.steps];
     this.ExtensionNumbers = [...this.Recipe["numbers"]];
@@ -185,12 +144,10 @@ class MusicScale {
 
   //#region ScaleSteps Creators
   BuildExtendedScaleSteps() {
-    //console.log("Building new Scale from recipe:" + this.Name)
 
     //Calculate how long an Ambitus is needed for the different parts of the long scale
     const { AmbitusPrefixHalfNotes, AmbitusFullOctaves, AmbitusPostfixHalfnotes } =
       this.calculateAmbitusForScaleParts();
-    //console.log("the scace is split into 3 parts\n"+"prefixed ambitus: "+AmbitusPrefixHalfNotes+"\nmiddle Octaves Ambitus: "+AmbitusFullOctaves+"\npostfixed ambitus: "+AmbitusPostfixHalfnotes);
 
     let scale = [];
     let octaveOffset = 0;
@@ -213,8 +170,6 @@ class MusicScale {
       }
       octaveOffset++;
     }
-    //console.log("prefix "+AmbitusPrefixHalfNotes+"scalenumbers",scale);
-
     //  middleScale add whole octaves
     if (AmbitusFullOctaves > 0) {
       let calculateSemitoneWithOffset = (semitone) => semitone + octaveOffset * 12;
@@ -224,7 +179,6 @@ class MusicScale {
         octaveOffset++;
       }
     }
-    //console.log("middle scalenumbers",scale);
 
     //  postfixScale add notes for the last partial octave
     if (AmbitusPostfixHalfnotes > 0) {
@@ -242,7 +196,7 @@ class MusicScale {
     return scale;
   }
 
-  ////convert steps to notes
+  //convert steps to notes
   BuildExtendedScaleTones(scaleSteps, toneNames) {
     let theScale = scaleSteps.map((step, index) => {
       let tempnote = notes[(step + this.Transposition) % notes.length];
@@ -321,28 +275,14 @@ class MusicScale {
         case "Romance":
           switch (maxDist) {
             case 2: //All scales with a max distance of 2 , is expected to contain one of each letter (ABCDEFG), if that is not the intention add "Custom" to the name"
-              // if (scaleName.includes("Custom"))
               theScale[whichNotation] = this.MakeScaleNotations(
                 semiToneSteps,
                 rootNoteName,
                 scaleName,
                 whichNotation
               );
-
-              // else {
-              //   theScale[whichNotation] = this.MakeScaleNotations(
-              //     semiToneSteps,
-              //     rootNoteName,
-              //     scaleName,
-              //     whichNotation
-              //   );
-              // theScale[whichNotation] = this.makeScaleMajorMinor(
-              //   semiToneSteps,
-              //   rootNoteName,
-              //   whichNotation
-              // );
-              // }
               break;
+            
             case 1:
               theScale[whichNotation] = this.MakeChromatic(
                 semiToneSteps,
@@ -363,18 +303,10 @@ class MusicScale {
           break;
 
         case "Relative":
-          if (this.Name === "Chromatic") {
-            let numbers = this.makeScaleNumbers(this.Recipe, semiToneSteps);
-            theScale["Relative"] = numbers.map(number => this.relativeScale[number] || number);
-          }
-          else {
-            theScale["Relative"] = this.makeRelativeScaleSyllables(
-              semiToneSteps,
-              this.Recipe.numbers,
-              this.ExtendedScaleSteps
-            );
-          }
-          
+          theScale["Relative"] = this.makeRelativeScaleSyllables(
+            semiToneSteps,
+            this.Recipe.numbers
+          );
           break;
 
         case "Scale Steps":
@@ -426,7 +358,6 @@ class MusicScale {
       theScale = this.MakeChromatic(
         scaleFormula,
         keyName,
-        //scaleName,
         whichNotation
       );
     } //(scaleName.includes("Custom"))
@@ -444,7 +375,6 @@ class MusicScale {
           theScale = this.MakeChromatic(
             scaleFormula,
             keyName,
-            //scaleName,
             whichNotation
           );
       }
@@ -482,6 +412,35 @@ class MusicScale {
       return numberString;
     });
     return extendedNumbers;
+  }
+
+  /**
+   * Generate relative (movable-do solfège) syllables for a scale based on scale degrees
+   *
+   * This method maps scale degrees (from Recipe.numbers array) to solfège syllables,
+   * ensuring that syllables are context-aware and key-independent. For example,
+   * Natural Minor always shows DO RE ME FA SO LE TE regardless of the root note.
+   *
+   * @param {number[]} semiToneSteps - All chromatic steps in the extended scale
+   * @param {string[]} scaleNumbers - Scale degree labels from recipe (e.g., ["1", "2", "b3", "4", "5", "b6", "7"])
+   * @returns {string[]} Array of solfège syllables matching semiToneSteps.length
+   */
+  makeRelativeScaleSyllables(semiToneSteps, scaleNumbers) {
+    // Get scale degrees with proper handling of chromatic scales
+    const degrees = this.makeScaleNumbers(this.Recipe, semiToneSteps);
+
+    // Map degrees to syllables with error handling
+    return degrees.map((degree, index) => {
+      const syllable = SCALE_DEGREE_TO_SYLLABLE[degree];
+      if (!syllable) {
+        console.warn(
+          `[MusicScale] Missing syllable mapping for degree "${degree}" ` +
+          `in scale "${this.Name}" at index ${index}`
+        );
+        return degree; // Fallback to showing the degree itself
+      }
+      return syllable;
+    });
   }
 
   makeChordExtensions(recipe, scaleFormula) {
@@ -603,11 +562,8 @@ class MusicScale {
     let startingNote = tonenameOffset;
 
     if (whichNotation === "Chord_extensions" || whichNotation === "Scale_Steps") {
-      // let relative = this.findScaleStartIndexRelativToRoot(
-      //   scaleFormula,
-      //   this.Recipe.steps.length
-      // );
-      startingNote = 0; //relative;
+      
+      startingNote = 0;
     }
 
     let myScaleFormula = scaleFormula;
@@ -641,7 +597,6 @@ class MusicScale {
 
     return myScale;
   }
-
   ////#endregion
 
   //#region Helpers
@@ -707,47 +662,6 @@ class MusicScale {
       }
     }
     return Number(IndexNumber); // it should be a number already, but...
-  }
-
-  /**
-   * Generate relative (movable-do solfege) syllables for a scale based on scale degrees
-   *
-   * This method maps scale degrees (from Recipe.numbers array) to solfege syllables,
-   * ensuring that syllables are context-aware and key-independent. For example,
-   * Natural Minor always shows DO RE ME FA SO LE TE regardless of the root note.
-   *
-   * @param {number[]} semiToneSteps - All chromatic steps in the extended scale
-   * @param {string[]} scaleNumbers - Scale degree labels from recipe (e.g., ["1", "2", "b3", "4", "5", "b6", "7"])
-   * @param {number[]} extendedSteps - All extended scale steps including octave offsets
-   * @returns {string[]} Array of solfege syllables matching semiToneSteps.length
-   */
-  makeRelativeScaleSyllables(semiToneSteps, scaleNumbers, extendedSteps) {
-    // Handle chromatic scale special case - use existing chromatic mapping
-    if (this.Name === "Chromatic") {
-      return this.MakeChromatic(semiToneSteps, this.RootNoteName, "Relative");
-    }
-
-    // Fallback if scale doesn't have numbers array (shouldn't happen with standard scales)
-    if (!scaleNumbers || scaleNumbers.length === 0) {
-      // Fall back to chromatic mapping for unknown scales
-      return semiToneSteps.map(
-        (step) => notes[step % notes.length].note_relative
-      );
-    }
-
-    // Find where the root (DO) appears in the extended scale
-    const rootIndex = this.findScaleStartIndexRelativToRoot(
-      extendedSteps,
-      scaleNumbers.length
-    );
-
-    // Map each step to its syllable based on scale degree position (NOT chromatic position)
-    return semiToneSteps.map((step, index) => {
-      const degreeIndex = (index + rootIndex) % scaleNumbers.length;
-      const degree = scaleNumbers[degreeIndex];
-      // Look up syllable for this scale degree, default to "DO" if unknown
-      return SCALE_DEGREE_TO_SYLLABLE[degree] || "DO";
-    });
   }
 
   //Calculates what index in scale contains the root
