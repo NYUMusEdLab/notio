@@ -340,7 +340,6 @@ class MusicScale {
               // Get scale degree from numbers array (e.g., "#4", "b5")
               const scaleDegree = ScaleStepNumbers[(index + relative) % length];
 
-              // Map scale degree → syllable via dictionary (NO semitone calculation!)
               const syllable = SCALE_DEGREE_TO_RELATIVE[scaleDegree];
               if (!syllable) {
                 console.warn(`Missing dictionary entry for scale degree "${scaleDegree}" in scale "${this.Name}". Falling back to semitone logic.`);
