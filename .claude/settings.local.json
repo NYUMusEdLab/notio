@@ -48,6 +48,9 @@
       "Bash(else echo \"MISSING\")",
       "Bash(npm run build:*)",
       "Bash(node -e:*)"
+      "Bash(test:*)",
+      "Bash(npm run build:*)"
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []

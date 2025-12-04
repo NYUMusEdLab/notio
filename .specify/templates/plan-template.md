@@ -31,7 +31,18 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Verify this feature aligns with Notio Constitution v2.0.0 principles:
+
+- [ ] **I. Pragmatic Testing Strategy**: 100% code coverage planned with 60-70% integration tests, 20-30% E2E tests, 10-20% unit tests (edge cases only)
+- [ ] **II. Component Reusability**: Components designed with single responsibility, reusable across musical contexts, clearly documented props
+- [ ] **III. Educational Pedagogy First**: Features support learner personas, progressive disclosure, immediate feedback, music theory alignment, accessibility
+- [ ] **IV. Performance & Responsiveness**: Audio latency <50ms, notation rendering <200ms, 60fps animations, tested on target devices
+- [ ] **V. Integration-First Testing**: Musical features tested together (notation+audio+interaction), critical journeys have E2E coverage
+- [ ] **VI. Accessibility & Inclusive Design**: Full keyboard navigation, color not sole indicator, WCAG 2.1 AA compliance, audio complements visual
+- [ ] **VII. Simplicity & Maintainability**: Simplest solution implemented, abstractions justified, dependencies evaluated, complexity documented
+
+**Violations requiring justification** (fill Complexity Tracking section if any):
+- None expected - if violations exist, document in Complexity Tracking table below
 
 ## Project Structure
 

@@ -5,6 +5,23 @@ import { notations } from "../components/menu/Notation";
 import sc from "../data/scalesObj";
 import absoluteMajorScales from "../data/absoluteMajorScales";
 
+// Module-level constant: Maps scale degree numbers to relative solfège syllables (movable-do)
+const SCALE_DEGREE_TO_SYLLABLE = {
+  // Diatonic degrees
+  "1": "DO",   "2": "RE",   "3": "MI",   "4": "FA",
+  "5": "SO",   "6": "LA",   "7": "TE",   "△7": "TI",
+
+  // Chromatic alterations (lowered)
+  "b2": "RA",  "b3": "ME",  "b5": "SE",  "b6": "LE",  "b7": "TE",
+
+  // Raised alterations
+  "#1": "DI",  "#2": "RI",  "#4": "FI",  "#5": "SI",  "#6": "LI",
+
+  // Chord extensions (for completeness)
+  "b9": "RA",  "9": "RE",   "#9": "RI",
+  "11": "FA",  "#11": "FI", "b13": "LE", "13": "LA"
+};
+
 //*A scale consists of 3 parts:
 //  prefix                 middle               postfix
 //a partial octave   one or more octaves       a partial octave
@@ -87,14 +104,6 @@ class MusicScale {
   //#region Public Functions
 
   init() {
-    // //Testing
-    // let test = this.addAccidental("Cb","bb")//A
-    // test = this.addAccidental("C#","##")//D#
-    // test = this.addAccidental("Cx","##")//E
-    // test = this.addAccidental("Bb","bb")//Ab
-    // test = this.addAccidental("B#","bb")//Bb
-    // test = this.addAccidental("Bbb","bb")//G
-
     this.Name = this.Recipe.name;
     this.SemitoneSteps = [...this.Recipe.steps];
     this.ExtensionNumbers = [...this.Recipe["numbers"]];
@@ -135,12 +144,10 @@ class MusicScale {
 
   //#region ScaleSteps Creators
   BuildExtendedScaleSteps() {
-    //console.log("Building new Scale from recipe:" + this.Name)
 
     //Calculate how long an Ambitus is needed for the different parts of the long scale
     const { AmbitusPrefixHalfNotes, AmbitusFullOctaves, AmbitusPostfixHalfnotes } =
       this.calculateAmbitusForScaleParts();
-    //console.log("the scace is split into 3 parts\n"+"prefixed ambitus: "+AmbitusPrefixHalfNotes+"\nmiddle Octaves Ambitus: "+AmbitusFullOctaves+"\npostfixed ambitus: "+AmbitusPostfixHalfnotes);
 
     let scale = [];
     let octaveOffset = 0;
@@ -163,8 +170,6 @@ class MusicScale {
       }
       octaveOffset++;
     }
-    //console.log("prefix "+AmbitusPrefixHalfNotes+"scalenumbers",scale);
-
     //  middleScale add whole octaves
     if (AmbitusFullOctaves > 0) {
       let calculateSemitoneWithOffset = (semitone) => semitone + octaveOffset * 12;
@@ -174,7 +179,6 @@ class MusicScale {
         octaveOffset++;
       }
     }
-    //console.log("middle scalenumbers",scale);
 
     //  postfixScale add notes for the last partial octave
     if (AmbitusPostfixHalfnotes > 0) {
@@ -192,7 +196,7 @@ class MusicScale {
     return scale;
   }
 
-  ////convert steps to notes
+  //convert steps to notes
   BuildExtendedScaleTones(scaleSteps, toneNames) {
     let theScale = scaleSteps.map((step, index) => {
       let tempnote = notes[(step + this.Transposition) % notes.length];
@@ -271,28 +275,14 @@ class MusicScale {
         case "Romance":
           switch (maxDist) {
             case 2: //All scales with a max distance of 2 , is expected to contain one of each letter (ABCDEFG), if that is not the intention add "Custom" to the name"
-              // if (scaleName.includes("Custom"))
               theScale[whichNotation] = this.MakeScaleNotations(
                 semiToneSteps,
                 rootNoteName,
                 scaleName,
                 whichNotation
               );
-
-              // else {
-              //   theScale[whichNotation] = this.MakeScaleNotations(
-              //     semiToneSteps,
-              //     rootNoteName,
-              //     scaleName,
-              //     whichNotation
-              //   );
-              // theScale[whichNotation] = this.makeScaleMajorMinor(
-              //   semiToneSteps,
-              //   rootNoteName,
-              //   whichNotation
-              // );
-              // }
               break;
+            
             case 1:
               theScale[whichNotation] = this.MakeChromatic(
                 semiToneSteps,
@@ -313,8 +303,9 @@ class MusicScale {
           break;
 
         case "Relative":
-          theScale["Relative"] = semiToneSteps.map(
-            (step) => notes[step % notes.length].note_relative
+          theScale["Relative"] = this.makeRelativeScaleSyllables(
+            semiToneSteps,
+            this.Recipe.numbers
           );
           break;
 
@@ -367,7 +358,6 @@ class MusicScale {
       theScale = this.MakeChromatic(
         scaleFormula,
         keyName,
-        //scaleName,
         whichNotation
       );
     } //(scaleName.includes("Custom"))
@@ -385,7 +375,6 @@ class MusicScale {
           theScale = this.MakeChromatic(
             scaleFormula,
             keyName,
-            //scaleName,
             whichNotation
           );
       }
@@ -396,18 +385,62 @@ class MusicScale {
 
   /*
    *  Used for creating complete scale description, based on major scale like 1,2,b3,#11,5,13
+   *  For chromatic scales, converts numeric positions (1-12) to proper scale degrees with accidentals
    */
   makeScaleNumbers(recipe, scaleFormula) {
     let extendedNumbers = [];
     let extensions = recipe.numbers;
     let relative = this.findScaleStartIndexRelativToRoot(scaleFormula, recipe.steps.length);
+
+    // Check if this is a chromatic scale with numeric notation (1-12)
+    const isNumericChromatic = recipe.name === "Chromatic" &&
+                                extensions.length === 12 &&
+                                extensions.every(n => !isNaN(n));
+
     extendedNumbers = scaleFormula.map((step, index) => {
       // get number (1, b3, #4...)
       let relativeToneIndex = (index + relative) % extensions.length;
       let numberString = extensions[relativeToneIndex];
+
+      // For chromatic scales with numeric notation, convert to scale degrees with accidentals
+      // This converts 12 to △7, which then maps to TI in the relativeScale mapping
+      if (isNumericChromatic) {
+        const useFlats = this.RootNoteName === "F" || this.RootNoteName.includes("b");
+        numberString = this.convertChromaticNumberToScaleDegree(numberString, useFlats);
+      }
+
       return numberString;
     });
     return extendedNumbers;
+  }
+
+  /**
+   * Generate relative (movable-do solfège) syllables for a scale based on scale degrees
+   *
+   * This method maps scale degrees (from Recipe.numbers array) to solfège syllables,
+   * ensuring that syllables are context-aware and key-independent. For example,
+   * Natural Minor always shows DO RE ME FA SO LE TE regardless of the root note.
+   *
+   * @param {number[]} semiToneSteps - All chromatic steps in the extended scale
+   * @param {string[]} scaleNumbers - Scale degree labels from recipe (e.g., ["1", "2", "b3", "4", "5", "b6", "7"])
+   * @returns {string[]} Array of solfège syllables matching semiToneSteps.length
+   */
+  makeRelativeScaleSyllables(semiToneSteps, scaleNumbers) {
+    // Get scale degrees with proper handling of chromatic scales
+    const degrees = this.makeScaleNumbers(this.Recipe, semiToneSteps);
+
+    // Map degrees to syllables with error handling
+    return degrees.map((degree, index) => {
+      const syllable = SCALE_DEGREE_TO_SYLLABLE[degree];
+      if (!syllable) {
+        console.warn(
+          `[MusicScale] Missing syllable mapping for degree "${degree}" ` +
+          `in scale "${this.Name}" at index ${index}`
+        );
+        return degree; // Fallback to showing the degree itself
+      }
+      return syllable;
+    });
   }
 
   makeChordExtensions(recipe, scaleFormula) {
@@ -529,11 +562,8 @@ class MusicScale {
     let startingNote = tonenameOffset;
 
     if (whichNotation === "Chord_extensions" || whichNotation === "Scale_Steps") {
-      // let relative = this.findScaleStartIndexRelativToRoot(
-      //   scaleFormula,
-      //   this.Recipe.steps.length
-      // );
-      startingNote = 0; //relative;
+      
+      startingNote = 0;
     }
 
     let myScaleFormula = scaleFormula;
@@ -567,10 +597,57 @@ class MusicScale {
 
     return myScale;
   }
-
   ////#endregion
 
   //#region Helpers
+
+  /**
+   * Converts chromatic scale numbers (1-12) to proper scale degree notation with accidentals.
+   * Used for chromatic scales to map numeric positions to scale degree names.
+   * @param {string|number} chromaticNumber - Number from 1-12
+   * @param {boolean} useFlats - If true, uses flats (b2, b3, etc.), otherwise sharps (#1, #2, etc.)
+   * @returns {string} Scale degree notation (e.g., "1", "#1", "b2", "△7")
+   */
+  convertChromaticNumberToScaleDegree(chromaticNumber, useFlats = false) {
+    const num = parseInt(chromaticNumber);
+
+    if (useFlats) {
+      // Flat chromatic: 1, b2, 2, b3, 3, 4, b5, 5, b6, 6, b7, △7
+      const flatMap = {
+        1: "1",
+        2: "b2",
+        3: "2",
+        4: "b3",
+        5: "3",
+        6: "4",
+        7: "b5",
+        8: "5",
+        9: "b6",
+        10: "6",
+        11: "b7",
+        12: "△7"
+      };
+      return flatMap[num] || chromaticNumber.toString();
+    } else {
+      // Sharp chromatic: 1, #1, 2, #2, 3, 4, #4, 5, #5, 6, #6, △7
+      const sharpMap = {
+        1: "1",
+        2: "#1",
+        3: "2",
+        4: "#2",
+        5: "3",
+        6: "4",
+        7: "#4",
+        8: "5",
+        9: "#5",
+        10: "6",
+        11: "#6",
+        12: "△7"
+      };
+      return sharpMap[num] || chromaticNumber.toString();
+    }
+  }
+
   noteNameToIndex(noteName) {
     let i;
     let IndexNumber = -1; // default if not found

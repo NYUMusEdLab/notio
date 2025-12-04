@@ -126,17 +126,11 @@ class MusicalStaff extends Component {
   }
 
   render() {
-    const { width, extendedKeyboard } = this.props;
-
     return (
       <div
         ref={this.musicalStaff}
         className="musical-staff"
         data-testid="musical-staff"
-        style={{
-          width: width,
-          top: extendedKeyboard ? "47%" : "37%",
-        }}
       />
     );
   }
