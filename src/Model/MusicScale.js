@@ -313,9 +313,44 @@ class MusicScale {
           break;
 
         case "Relative":
-          theScale["Relative"] = semiToneSteps.map(
-            (step) => notes[step % notes.length].note_relative
-          );
+          if (this.Name === "Chromatic") {
+            // Preserve existing chromatic logic (uses MakeChromatic with special syllables)
+            theScale["Relative"] = this.MakeChromatic(
+              semiToneSteps,
+              rootNoteName,
+              "Relative"
+            );
+          } else {
+            // Use scaleRecipe.numbers → dictionary mapping (bypasses semitones!)
+            const SCALE_DEGREE_TO_RELATIVE = {
+              "1": "DO", "#1": "DI", "b2": "RA", "b9": "RA",
+              "2": "RE", "9": "RE", "#2": "RI", "#9": "RI", "b3": "ME",
+              "3": "MI",
+              "4": "FA", "11": "FA", "#4": "FI", "#11": "FI", "b5": "SE",
+              "5": "SO", "#5": "SI", "b6": "LE", "b13": "LE",
+              "6": "LA", "13": "LA", "#6": "LI", "b7": "TE",
+              "7": "TE", "△7": "TI"  // "7" means natural/dominant 7th (same as b7 in Relative notation)
+            };
+
+            let length = this.Recipe.numbers.length;
+            let relative = this.findScaleStartIndexRelativToRoot(
+              this.ExtendedScaleSteps,
+              ScaleStepNumbers.length
+            );
+
+            theScale["Relative"] = semiToneSteps.map((step, index) => {
+              // Get scale degree from numbers array (e.g., "#4", "b5")
+              const scaleDegree = ScaleStepNumbers[(index + relative) % length];
+
+              // Map scale degree → syllable via dictionary (NO semitone calculation!)
+              const syllable = SCALE_DEGREE_TO_RELATIVE[scaleDegree];
+              if (!syllable) {
+                console.warn(`Missing dictionary entry for scale degree "${scaleDegree}" in scale "${this.Name}". Falling back to semitone logic.`);
+                return notes[step % notes.length].note_relative;
+              }
+              return syllable;
+            });
+          }
           break;
 
         case "Scale Steps":
