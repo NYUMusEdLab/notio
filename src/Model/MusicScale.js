@@ -314,12 +314,12 @@ class MusicScale {
 
         case "Relative":
           if (this.Name === "Chromatic") {
-            theScale["Relative"] = this.MakeChromatic(
-              semiToneSteps,
-              rootNoteName,
-              "Relative"
+            // OLD: Use original semitone-based notes array lookup for Chromatic
+            theScale["Relative"] = semiToneSteps.map(
+              (step) => notes[step % notes.length].note_relative
             );
           } else {
+            // NEW: Use scaleRecipe.numbers → dictionary mapping for all other scales
             const SCALE_DEGREE_TO_RELATIVE = {
               "1": "DO", "#1": "DI", "b2": "RA", "b9": "RA",
               "2": "RE", "9": "RE", "#2": "RI", "#9": "RI", "b3": "ME",
@@ -340,6 +340,7 @@ class MusicScale {
               // Get scale degree from numbers array (e.g., "#4", "b5")
               const scaleDegree = ScaleStepNumbers[(index + relative) % length];
 
+              // Map scale degree → syllable via dictionary (NO semitone calculation!)
               const syllable = SCALE_DEGREE_TO_RELATIVE[scaleDegree];
               if (!syllable) {
                 console.warn(`Missing dictionary entry for scale degree "${scaleDegree}" in scale "${this.Name}". Falling back to semitone logic.`);

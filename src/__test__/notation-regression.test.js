@@ -78,18 +78,19 @@ describe("Notation Regression - Other Notations Remain Unaffected", () => {
     const chromaticRecipe = scales.find((s) => s.name === "Chromatic");
     const scale = new MusicScale(chromaticRecipe, "C", 0, 12);
 
+    // OLD implementation: uses notes array which has mix of raised/flattened syllables
     expect(scale.ExtendedScaleToneNames.Relative).toEqual([
       "DO",
-      "DI",
+      "RA",  // b2 (flattened)
       "RE",
-      "RI",
+      "ME",  // b3 (flattened)
       "MI",
       "FA",
-      "FI",
+      "FI",  // #4 (raised)
       "SO",
-      "SI",
+      "SI",  // #5 (raised)
       "LA",
-      "LI",
+      "TE",  // b7 (flattened)
       "TI",
     ]);
   });
