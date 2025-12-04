@@ -207,6 +207,7 @@ Always test all notation modes when modifying `BuildExtendedScaleToneNames()`.
 
 ## Recent Changes
 - 004-fix-relative-notenames: Added JavaScript ES6+, React 18.2.0 + React 18.2.0 (existing), no new dependencies required
+- 004-text-size-in-video-overlay: Added JavaScript ES6+, React 18.2.0 + React Bootstrap, ReactPlayer, react-draggable, Firebase (^9.9.4), SCSS
 - 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh
 - 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh
 
