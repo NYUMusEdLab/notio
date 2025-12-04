@@ -314,7 +314,6 @@ class MusicScale {
 
         case "Relative":
           if (this.Name === "Chromatic") {
-            // Preserve existing chromatic logic (uses MakeChromatic with special syllables)
             theScale["Relative"] = this.MakeChromatic(
               semiToneSteps,
               rootNoteName,
