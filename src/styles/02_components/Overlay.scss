@@ -115,7 +115,6 @@
   .content {
     flex: 1;
     display: flex;
-    // background-color: rgb(21, 111, 255);
     margin-top: -6rem;
     height: 96%;
     width: 100%;
@@ -128,7 +127,12 @@
       flex: 1;
       height: 100%;
       overflow: scroll;
+      scrollbar-width: none;
       // background-color: rgba(95, 255, 21, 0.829);
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 
