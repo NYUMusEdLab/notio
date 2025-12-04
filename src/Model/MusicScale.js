@@ -320,7 +320,6 @@ class MusicScale {
               "Relative"
             );
           } else {
-            // Use scaleRecipe.numbers → dictionary mapping (bypasses semitones!)
             const SCALE_DEGREE_TO_RELATIVE = {
               "1": "DO", "#1": "DI", "b2": "RA", "b9": "RA",
               "2": "RE", "9": "RE", "#2": "RI", "#9": "RI", "b3": "ME",
