@@ -206,6 +206,9 @@ The relative notation fix MUST NOT affect other notation modes:
 Always test all notation modes when modifying `BuildExtendedScaleToneNames()`.
 
 ## Recent Changes
+- 005-url-storage-completion: Added JavaScript ES6+, React 18.2.0 + React 18.2.0, React Testing Library (@testing-library/react ^13.0.0), Jest (^29.0.3), Playwright (@playwright/test), jest-axe, @axe-core/playwright, react-draggable
+- 004-url-settings-storage: Added JavaScript ES6+, React 18.2.0 + React 18.2.0, React Router DOM 6.3.0, Firebase 10.9.0 (read-only legacy support)
+- 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh
 - 004-fix-relative-notenames: Added JavaScript ES6+, React 18.2.0 + React 18.2.0 (existing), no new dependencies required
 - 004-text-size-in-video-overlay: Added JavaScript ES6+, React 18.2.0 + React Bootstrap, ReactPlayer, react-draggable, Firebase (^9.9.4), SCSS
 - 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh

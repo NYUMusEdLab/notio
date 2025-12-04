@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Form, Button } from "react-bootstrap";
 
@@ -9,6 +9,21 @@ const VideoTutorial = (props) => {
   const [playing, setPlaying] = useState(false);
   const [videoUrl, setVideoUrl] = useState(props.videoUrl);
   const [activeTab, setActiveTab] = useState(props.activeVideoTab);
+
+  // Sync local videoUrl state with props when props change
+  // This ensures the video URL updates when loaded from a shared link
+  useEffect(() => {
+    if (props.videoUrl !== videoUrl) {
+      setVideoUrl(props.videoUrl);
+    }
+  }, [props.videoUrl, videoUrl]);
+
+  // Sync active tab with props when props change
+  useEffect(() => {
+    if (props.activeVideoTab !== activeTab) {
+      setActiveTab(props.activeVideoTab);
+    }
+  }, [props.activeVideoTab, activeTab]);
 
   // TODO:use this : handleChangeActiveVideoTab={this.props.handleChangeActiveVideoTab}, when a tab is selected to persist the selection
   const tabKeys = ["Player", "Enter_url", "Tutorials"];
@@ -58,7 +73,11 @@ const VideoTutorial = (props) => {
   return (
     <React.Fragment>
       {/* <Overlay visible={show} key={videoUrl}> */}
-      <Overlay visible={true} key={videoUrl} close={props.onClickCloseHandler}>
+      <Overlay
+        modalName="video"
+        visible={true}
+        key={videoUrl}
+        close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
           {/* <Tabs defaultActiveKey="Player" activeKey={state.activeTab} onSelect={handleSelect}  id="controlled-tab-example"> */}
           {/* <Tabs defaultActiveKey="Player" activeTab={activeTab} id="controlled-tab-example"> */}

@@ -69,34 +69,66 @@ You **MUST** consider the user input before proceeding (if not empty).
 
    Output the questions (label Q1/Q2/Q3). After answers: if ≥2 scenario classes (Alternate / Exception / Recovery / Non-Functional domain) remain unclear, you MAY ask up to TWO more targeted follow‑ups (Q4/Q5) with a one-line justification each (e.g., "Unresolved recovery path risk"). Do not exceed five total questions. Skip escalation if user explicitly declines more.
 
-3. **Understand user request**: Combine `$ARGUMENTS` + clarifying answers:
+3. **Understand user request** (in main): Combine `$ARGUMENTS` + clarifying answers:
    - Derive checklist theme (e.g., security, review, deploy, ux)
    - Consolidate explicit must-have items mentioned by user
    - Map focus selections to category scaffolding
-   - Infer any missing context from spec/plan/tasks (do NOT hallucinate)
+   - Prepare context for agent
 
-4. **Load feature context**: Read from FEATURE_DIR:
-   - spec.md: Feature requirements and scope
-   - plan.md (if exists): Technical details, dependencies
-   - tasks.md (if exists): Implementation tasks
+4. **Delegate to checklist generation agent**: Use Task tool with complete instructions (see Agent Delegation section below)
 
-   **Context Loading Strategy**:
-   - Load only necessary portions relevant to active focus areas (avoid full-file dumping)
-   - Prefer summarizing long sections into concise scenario/requirement bullets
-   - Use progressive disclosure: add follow-on retrieval only if gaps detected
-   - If source docs are large, generate interim summary items instead of embedding raw text
+5. **Display results** (in main): Show path to created checklist, item count, focus areas
 
-5. **Generate checklist** - Create "Unit Tests for Requirements":
-   - Create `FEATURE_DIR/checklists/` directory if it doesn't exist
-   - Generate unique checklist filename:
-     - Use short, descriptive name based on domain (e.g., `ux.md`, `api.md`, `security.md`)
-     - Format: `[domain].md`
-     - If file exists, append to existing file
-   - Number items sequentially starting from CHK001
-   - Each `/speckit.checklist` run creates a NEW file (never overwrites existing checklists)
+## Agent Delegation
 
-   **CORE PRINCIPLE - Test the Requirements, Not the Implementation**:
-   Every checklist item MUST evaluate the REQUIREMENTS THEMSELVES for:
+Use Task tool with:
+- `subagent_type: "general-purpose"`
+- `model: "sonnet"` (checklist generation requires sophistication)
+- `description: "Generate requirements quality checklist"`
+- `prompt`:
+
+```text
+You are generating a requirements quality checklist - "Unit Tests for English".
+
+## Context from Main Conversation
+
+User request: $ARGUMENTS
+
+Clarified intent:
+- Checklist theme: [theme from step 3]
+- Focus areas: [areas from step 3]
+- Depth level: [depth from step 3]
+- Audience: [audience from step 3]
+- Must-have items: [items from step 3]
+
+Feature directory: [FEATURE_DIR]
+
+## Your Workflow
+
+### Step 1: Load Feature Context
+
+Read from FEATURE_DIR (use progressive disclosure):
+- spec.md: Feature requirements and scope
+- plan.md (if exists): Technical details, dependencies
+- tasks.md (if exists): Implementation tasks
+
+**Context Loading Strategy**:
+- Load only portions relevant to focus areas
+- Summarize long sections into concise bullets
+- Progressive disclosure: add retrieval only if gaps detected
+- If docs are large, generate interim summary items
+
+### Step 2: Generate Checklist - "Unit Tests for Requirements"
+
+Create checklist file:
+- Create `FEATURE_DIR/checklists/` directory if doesn't exist
+- Filename: `[domain].md` (e.g., `ux.md`, `api.md`, `security.md`)
+- If file exists, APPEND to it (don't overwrite)
+- Number items sequentially starting from CHK001
+
+**CORE PRINCIPLE - Test Requirements, NOT Implementation**
+
+Every item MUST evaluate REQUIREMENTS THEMSELVES for:
    - **Completeness**: Are all necessary requirements present?
    - **Clarity**: Are requirements unambiguous and specific?
    - **Consistency**: Do requirements align with each other?
@@ -187,29 +219,86 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Merge near-duplicates checking the same requirement aspect
    - If >5 low-impact edge cases, create one item: "Are edge cases X, Y, Z addressed in requirements? [Coverage]"
 
-   **🚫 ABSOLUTELY PROHIBITED** - These make it an implementation test, not a requirements test:
-   - ❌ Any item starting with "Verify", "Test", "Confirm", "Check" + implementation behavior
-   - ❌ References to code execution, user actions, system behavior
-   - ❌ "Displays correctly", "works properly", "functions as expected"
-   - ❌ "Click", "navigate", "render", "load", "execute"
-   - ❌ Test cases, test plans, QA procedures
-   - ❌ Implementation details (frameworks, APIs, algorithms)
+**🚫 ABSOLUTELY PROHIBITED** - These make it an implementation test:
+- ❌ Any item starting with "Verify", "Test", "Confirm", "Check" + implementation behavior
+- ❌ References to code execution, user actions, system behavior
+- ❌ "Displays correctly", "works properly", "functions as expected"
+- ❌ "Click", "navigate", "render", "load", "execute"
+- ❌ Test cases, test plans, QA procedures
+- ❌ Implementation details (frameworks, APIs, algorithms)
 
-   **✅ REQUIRED PATTERNS** - These test requirements quality:
-   - ✅ "Are [requirement type] defined/specified/documented for [scenario]?"
-   - ✅ "Is [vague term] quantified/clarified with specific criteria?"
-   - ✅ "Are requirements consistent between [section A] and [section B]?"
-   - ✅ "Can [requirement] be objectively measured/verified?"
-   - ✅ "Are [edge cases/scenarios] addressed in requirements?"
-   - ✅ "Does the spec define [missing aspect]?"
+**✅ REQUIRED PATTERNS** - These test requirements quality:
+- ✅ "Are [requirement type] defined/specified/documented for [scenario]?"
+- ✅ "Is [vague term] quantified/clarified with specific criteria?"
+- ✅ "Are requirements consistent between [section A] and [section B]?"
+- ✅ "Can [requirement] be objectively measured/verified?"
+- ✅ "Are [edge cases/scenarios] addressed in requirements?"
+- ✅ "Does the spec define [missing aspect]?"
 
-6. **Structure Reference**: Generate the checklist following the canonical template in `.specify/templates/checklist-template.md` for title, meta section, category headings, and ID formatting. If template is unavailable, use: H1 title, purpose/created meta lines, `##` category sections containing `- [ ] CHK### <requirement item>` lines with globally incrementing IDs starting at CHK001.
+### Step 3: Format Checklist
 
-7. **Report**: Output full path to created checklist, item count, and remind user that each run creates a new file. Summarize:
-   - Focus areas selected
-   - Depth level
-   - Actor/timing
-   - Any explicit user-specified must-have items incorporated
+Follow template from `.specify/templates/checklist-template.md` if available.
+
+Otherwise use this structure:
+```markdown
+# [Domain] Requirements Quality Checklist: [Feature Name]
+
+**Purpose**: Validate requirements quality for [domain] aspects
+**Created**: [DATE]
+**Feature**: [Link to spec.md]
+
+## Category 1: Requirement Completeness
+
+- [ ] CHK001 [Completeness] requirement question [Traceability]
+- [ ] CHK002 [Completeness] requirement question [Traceability]
+
+## Category 2: Requirement Clarity
+
+- [ ] CHK003 [Clarity] requirement question [Traceability]
+
+[Continue for all categories]
+
+## Notes
+
+[Any observations about requirements quality, patterns, areas needing attention]
+```
+
+## Output Requirements
+
+Return a summary:
+
+```
+Checklist Generation Complete
+
+Created: [FEATURE_DIR]/checklists/[domain].md
+Total items: N
+
+Focus areas addressed:
+- [Focus area 1]: N items
+- [Focus area 2]: N items
+
+Quality dimensions covered:
+- Completeness: N items
+- Clarity: N items
+- Consistency: N items
+- Coverage: N items
+- [etc.]
+
+Traceability: N% of items include references
+
+Key findings:
+- [Major gaps or issues found in requirements]
+- [Suggested improvements to spec/plan]
+```
+
+## Important Notes
+
+- This creates a NEW file for each domain (ux, api, security, etc.)
+- Test REQUIREMENTS quality, NOT implementation behavior
+- Every item must be a question about what's written in the spec
+- Include traceability references for ≥80% of items
+- Use absolute paths for all file operations
+```
 
 **Important**: Each `/speckit.checklist` command invocation creates a checklist file using short, descriptive names unless file already exists. This allows:
 

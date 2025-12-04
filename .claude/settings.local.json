@@ -38,6 +38,16 @@
       "Bash(yarn test:e2e:chromium:*)",
       "Bash(if [ -d \"/Users/saxjax/developer/notio-with-ai/notio/specs/001-piano-key-keyboard-navigation/checklists\" ])",
       "Bash(then ls -1 \"/Users/saxjax/developer/notio-with-ai/notio/specs/001-piano-key-keyboard-navigation/checklists\")",
+      "Bash(if [ -d \"/Users/saxjax/developer/notio-with-ai/notio/specs/004-url-settings-storage/checklists\" ])",
+      "Bash(then ls -1 \"/Users/saxjax/developer/notio-with-ai/notio/specs/004-url-settings-storage/checklists\")",
+      "SlashCommand(/speckit.analyze)",
+      "Bash(if [ -d \"/Users/saxjax/developer/notio-with-ai/notio/specs/005-url-storage-completion/checklists\" ])",
+      "Bash(then ls -1 \"/Users/saxjax/developer/notio-with-ai/notio/specs/005-url-storage-completion/checklists\")",
+      "Bash(if [ -f \".gitignore\" ])",
+      "Bash(then echo \"EXISTS\")",
+      "Bash(else echo \"MISSING\")",
+      "Bash(npm run build:*)",
+      "Bash(node -e:*)"
       "Bash(test:*)",
       "Bash(npm run build:*)"
       "Bash(git checkout:*)"

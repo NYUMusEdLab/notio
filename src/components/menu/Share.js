@@ -6,12 +6,18 @@ import { Tabs, Tab } from "react-bootstrap";
 const Share = (props) => {
   return (
     <React.Fragment>
-      <Overlay key={props.sessionID} close={props.onClickCloseHandler}>
+      <Overlay
+        modalName="share"
+        key={props.sessionID}
+        close={props.onClickCloseHandler}>
         <div className="tabs-wrapper">
           <Tabs id="controlled-tab-example">
             <Tab eventKey="share" title="Share">
               <div>
-                <ShareLink saveSessionToDB={props.saveSessionToDB} />
+                <ShareLink
+                  settings={props.settings}
+                  saveSessionToDB={props.saveSessionToDB}
+                />
               </div>
             </Tab>
           </Tabs>

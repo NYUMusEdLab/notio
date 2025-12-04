@@ -25,6 +25,9 @@
     margin-bottom: 2vw;
     font-size: 1.6rem;
   }
+  a{
+    text-wrap: balance;
+  }
   button {
     font-family: "Quicksand", sans-serif;
     margin-left: 1vw;
@@ -46,6 +49,8 @@
     &.show {
       visibility: visible;
       opacity: 1;
+      overflow-wrap: anywhere;
+
     }
   }
 }

@@ -22,7 +22,9 @@ Identify inconsistencies, duplications, ambiguities, and underspecified items ac
 
 ## Execution Steps
 
-### 1. Initialize Analysis Context
+**Main Conversation (UI Layer):**
+
+### 1. Setup
 
 Run `.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks` once from repo root and parse JSON for FEATURE_DIR and AVAILABLE_DOCS. Derive absolute paths:
 
@@ -33,152 +35,105 @@ Run `.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --inclu
 Abort with an error message if any required file is missing (instruct the user to run missing prerequisite command).
 For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
 
-### 2. Load Artifacts (Progressive Disclosure)
+### 2. Delegate to analysis agent
 
-Load only the minimal necessary context from each artifact:
+**IMPORTANT**: Use Task tool to delegate analysis for token efficiency and focused processing.
 
-**From spec.md:**
+Use Task tool with:
+- `subagent_type: "general-purpose"`
+- `model: "sonnet"` (analysis requires sophistication)
+- `description: "Analyze artifacts for consistency"`
+- `prompt`:
+  ```text
+  You are analyzing feature artifacts for consistency, quality, and completeness.
 
-- Overview/Context
-- Functional Requirements
-- Non-Functional Requirements
-- User Stories
-- Edge Cases (if present)
+  **STRICTLY READ-ONLY**: Do NOT modify any files. Output a structured analysis report only.
 
-**From plan.md:**
+  User arguments to consider: $ARGUMENTS
 
-- Architecture/stack choices
-- Data Model references
-- Phases
-- Technical constraints
+  ## Context files to read:
+  - [FEATURE_DIR]/spec.md (required)
+  - [FEATURE_DIR]/plan.md (required)
+  - [FEATURE_DIR]/tasks.md (required)
+  - [FEATURE_DIR]/data-model.md (optional)
+  - [FEATURE_DIR]/contracts/ (optional)
+  - [FEATURE_DIR]/research.md (optional)
+  - .specify/memory/constitution.md (required - principles are NON-NEGOTIABLE)
 
-**From tasks.md:**
+  **Analysis Process**:
 
-- Task IDs
-- Descriptions
-- Phase grouping
-- Parallel markers [P]
-- Referenced file paths
+  1. **Load minimal context** from each artifact:
+     - spec.md: Overview, requirements, user stories, edge cases
+     - plan.md: Architecture, stack, phases, constraints
+     - tasks.md: Task IDs, descriptions, phases, parallel markers [P], file paths
+     - constitution.md: MUST/SHOULD principles
 
-**From constitution:**
+  2. **Build semantic models** (internal only):
+     - Requirements inventory with stable keys
+     - User story/action inventory with acceptance criteria
+     - Task coverage mapping (task → requirement/story)
+     - Constitution rule set
 
-- Load `.specify/memory/constitution.md` for principle validation
+  3. **Detection passes** (max 50 findings):
 
-### 3. Build Semantic Models
+     A. **Duplication**: Near-duplicate requirements
+     B. **Ambiguity**: Vague adjectives, unresolved placeholders (TODO, ???)
+     C. **Underspecification**: Missing measurable outcomes, undefined components
+     D. **Constitution Alignment**: MUST principle violations (ALWAYS CRITICAL)
+     E. **Coverage Gaps**: Requirements without tasks, tasks without requirements
+     F. **Inconsistency**: Terminology drift, conflicting requirements, ordering issues
 
-Create internal representations (do not include raw artifacts in output):
+  4. **Severity assignment**:
+     - CRITICAL: Constitution MUST violation, missing core artifact, zero coverage blocking baseline
+     - HIGH: Conflicting requirements, ambiguous security/performance, untestable criteria
+     - MEDIUM: Terminology drift, missing non-functional coverage, underspecified edge case
+     - LOW: Style improvements, minor redundancy
 
-- **Requirements inventory**: Each functional + non-functional requirement with a stable key (derive slug based on imperative phrase; e.g., "User can upload file" → `user-can-upload-file`)
-- **User story/action inventory**: Discrete user actions with acceptance criteria
-- **Task coverage mapping**: Map each task to one or more requirements or stories (inference by keyword / explicit reference patterns like IDs or key phrases)
-- **Constitution rule set**: Extract principle names and MUST/SHOULD normative statements
+  5. **Generate compact report** (markdown format):
 
-### 4. Detection Passes (Token-Efficient Analysis)
+     ## Specification Analysis Report
 
-Focus on high-signal findings. Limit to 50 findings total; aggregate remainder in overflow summary.
+     | ID | Category | Severity | Location(s) | Summary | Recommendation |
+     |----|----------|----------|-------------|---------|----------------|
+     | [stable IDs] | [category] | [severity] | [file:line] | [summary] | [recommendation] |
 
-#### A. Duplication Detection
+     **Coverage Summary Table**:
+     | Requirement Key | Has Task? | Task IDs | Notes |
 
-- Identify near-duplicate requirements
-- Mark lower-quality phrasing for consolidation
+     **Constitution Alignment Issues**: [if any]
+     **Unmapped Tasks**: [if any]
 
-#### B. Ambiguity Detection
+     **Metrics**:
+     - Total Requirements: N
+     - Total Tasks: N
+     - Coverage %: N% (requirements with ≥1 task)
+     - Ambiguity Count: N
+     - Duplication Count: N
+     - Critical Issues Count: N
 
-- Flag vague adjectives (fast, scalable, secure, intuitive, robust) lacking measurable criteria
-- Flag unresolved placeholders (TODO, TKTK, ???, `<placeholder>`, etc.)
+     **Next Actions**:
+     - If CRITICAL: Recommend resolving before /speckit.implement
+     - If LOW/MEDIUM only: May proceed with improvement suggestions
+     - Provide explicit command suggestions
 
-#### C. Underspecification
+  ## Operating Principles
 
-- Requirements with verbs but missing object or measurable outcome
-- User stories missing acceptance criteria alignment
-- Tasks referencing files or components not defined in spec/plan
+  - **Minimal high-signal tokens**: Focus on actionable findings, not exhaustive documentation
+  - **Progressive disclosure**: Load artifacts incrementally; don't dump all content
+  - **Token-efficient output**: Limit findings table to 50 rows; summarize overflow
+  - **Deterministic results**: Rerunning without changes should produce consistent IDs and counts
+  - **NEVER modify files** (this is read-only analysis)
+  - **NEVER hallucinate missing sections** (if absent, report them accurately)
+  - **Prioritize constitution violations** (these are always CRITICAL)
+  - **Use examples over exhaustive rules** (cite specific instances, not generic patterns)
+  - **Report zero issues gracefully** (emit success report with coverage statistics)
 
-#### D. Constitution Alignment
+  Return: The complete markdown report
+  ```
 
-- Any requirement or plan element conflicting with a MUST principle
-- Missing mandated sections or quality gates from constitution
+### 3. Display results
 
-#### E. Coverage Gaps
-
-- Requirements with zero associated tasks
-- Tasks with no mapped requirement/story
-- Non-functional requirements not reflected in tasks (e.g., performance, security)
-
-#### F. Inconsistency
-
-- Terminology drift (same concept named differently across files)
-- Data entities referenced in plan but absent in spec (or vice versa)
-- Task ordering contradictions (e.g., integration tasks before foundational setup tasks without dependency note)
-- Conflicting requirements (e.g., one requires Next.js while other specifies Vue)
-
-### 5. Severity Assignment
-
-Use this heuristic to prioritize findings:
-
-- **CRITICAL**: Violates constitution MUST, missing core spec artifact, or requirement with zero coverage that blocks baseline functionality
-- **HIGH**: Duplicate or conflicting requirement, ambiguous security/performance attribute, untestable acceptance criterion
-- **MEDIUM**: Terminology drift, missing non-functional task coverage, underspecified edge case
-- **LOW**: Style/wording improvements, minor redundancy not affecting execution order
-
-### 6. Produce Compact Analysis Report
-
-Output a Markdown report (no file writes) with the following structure:
-
-## Specification Analysis Report
-
-| ID | Category | Severity | Location(s) | Summary | Recommendation |
-|----|----------|----------|-------------|---------|----------------|
-| A1 | Duplication | HIGH | spec.md:L120-134 | Two similar requirements ... | Merge phrasing; keep clearer version |
-
-(Add one row per finding; generate stable IDs prefixed by category initial.)
-
-**Coverage Summary Table:**
-
-| Requirement Key | Has Task? | Task IDs | Notes |
-|-----------------|-----------|----------|-------|
-
-**Constitution Alignment Issues:** (if any)
-
-**Unmapped Tasks:** (if any)
-
-**Metrics:**
-
-- Total Requirements
-- Total Tasks
-- Coverage % (requirements with >=1 task)
-- Ambiguity Count
-- Duplication Count
-- Critical Issues Count
-
-### 7. Provide Next Actions
-
-At end of report, output a concise Next Actions block:
-
-- If CRITICAL issues exist: Recommend resolving before `/speckit.implement`
-- If only LOW/MEDIUM: User may proceed, but provide improvement suggestions
-- Provide explicit command suggestions: e.g., "Run /speckit.specify with refinement", "Run /speckit.plan to adjust architecture", "Manually edit tasks.md to add coverage for 'performance-metrics'"
-
-### 8. Offer Remediation
-
-Ask the user: "Would you like me to suggest concrete remediation edits for the top N issues?" (Do NOT apply them automatically.)
-
-## Operating Principles
-
-### Context Efficiency
-
-- **Minimal high-signal tokens**: Focus on actionable findings, not exhaustive documentation
-- **Progressive disclosure**: Load artifacts incrementally; don't dump all content into analysis
-- **Token-efficient output**: Limit findings table to 50 rows; summarize overflow
-- **Deterministic results**: Rerunning without changes should produce consistent IDs and counts
-
-### Analysis Guidelines
-
-- **NEVER modify files** (this is read-only analysis)
-- **NEVER hallucinate missing sections** (if absent, report them accurately)
-- **Prioritize constitution violations** (these are always CRITICAL)
-- **Use examples over exhaustive rules** (cite specific instances, not generic patterns)
-- **Report zero issues gracefully** (emit success report with coverage statistics)
-
-## Context
-
-$ARGUMENTS
+After agent returns:
+- Display the analysis report to user
+- Highlight CRITICAL issues if any (show count and locations)
+- Ask if user wants remediation suggestions for top issues (do NOT apply automatically)

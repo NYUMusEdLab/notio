@@ -393,6 +393,8 @@ class TopMenu extends Component {
               label="share"
               saveSessionToDB={this.props.saveSessionToDB}
               sessionID={this.props.sessionID}
+              state={this.props.state}
+              onVisibilityChange={this.props.handleShareModalOpenChange}
             />
           </div>
           <ReactTooltip
@@ -416,7 +418,12 @@ class TopMenu extends Component {
             data-for="helpTooltip"
             data-event="null"
             ref={(ref) => this.props.setRef(ref, "help")}>
-            <HelpButton title="Help" label="help" />
+            <HelpButton
+              title="Help"
+              label="help"
+              startOpen={this.props.state.helpVisible}
+              onVisibilityChange={this.props.handleHelpVisibilityChange}
+            />
           </div>
           <ReactTooltip
             id="helpTooltip"
