@@ -31,6 +31,7 @@ class MusicalStaff extends Component {
     ctx.setViewBox(0, 0, 60, 140); //size
     stave = new Stave(0, 10, 60, { fill_style: "black" });
     //Hides the barlines
+    stave.setEndBarType(Vex.Flow.Barline.type.NONE);
     stave.setBegBarType(Vex.Flow.Barline.type.NONE);
     stave.setContext(ctx).draw();
   }
