@@ -59,6 +59,7 @@ jest.mock('vexflow', () => {
   class MockStave {
     constructor() {
       this.setBegBarType = jest.fn().mockReturnThis();
+      this.setEndBarType = jest.fn().mockReturnThis();
       this.setContext = jest.fn().mockReturnThis();
       this.draw = jest.fn().mockReturnThis();
       this.addClef = jest.fn().mockReturnThis();
