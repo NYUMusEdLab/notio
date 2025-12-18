@@ -74,6 +74,9 @@ class PianoKey extends Component {
   componentDidMount() {
     this.keyRef.current.addEventListener("mouseenter", this.mouseEnter);
     this.keyRef.current.addEventListener("mouseleave", this.mouseLeave);
+    // Add touch event listeners with passive: false to allow preventDefault
+    this.keyRef.current.addEventListener("touchstart", this.touchDown, { passive: false });
+    this.keyRef.current.addEventListener("touchend", this.touchUp, { passive: false });
     //run it the first time
     this.updateDimensions();
     // and then run it on resize
@@ -84,6 +87,8 @@ class PianoKey extends Component {
     // Make sure to remove the DOM listener when the component is unmounted.
     this.keyRef.current.removeEventListener("mouseenter", this.mouseEnter);
     this.keyRef.current.removeEventListener("mouseleave", this.mouseLeave);
+    this.keyRef.current.removeEventListener("touchstart", this.touchDown);
+    this.keyRef.current.removeEventListener("touchend", this.touchUp);
     window.removeEventListener("resize", this.updateDimensions);
   }
 
@@ -106,8 +111,6 @@ class PianoKey extends Component {
         }}
         onMouseUp={this.unClickedMouse}
         onMouseDown={this.clickedMouse}
-        onTouchStart={this.touchDown}
-        onTouchEnd={this.touchUp}
         onMouseEnter={this.mouseEnter}
         onMouseLeave={this.mouseLeave}>
         {keyColor === "black" ? (

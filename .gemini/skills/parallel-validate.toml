@@ -1,0 +1,170 @@
+description = "Run multiple validation checks in parallel, returning only failures to minimize token usage"
+prompt = """
+---
+description: Run multiple validation checks in parallel, returning only failures to minimize token usage
+---
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+## Overview
+
+This skill runs multiple independent validation checks in parallel using Task agents, each reporting only violations/failures. Dramatically reduces token usage vs. sequential validation.
+
+## Expected Input Format
+
+Provide validation specs as JSON or natural language:
+
+**JSON Format:**
+```json
+{
+  "target": "/path/to/file-or-directory",
+  "checks": [
+    {
+      "name": "Content Quality",
+      "rules": ["No implementation details", "User-focused language", "Complete sections"],
+      "severity": "HIGH"
+    },
+    {
+      "name": "Requirements Completeness",
+      "rules": ["Testable requirements", "Measurable success criteria", "Edge cases identified"],
+      "severity": "CRITICAL"
+    }
+  ],
+  "model": "haiku"
+}
+```
+
+**Natural Language Format:**
+```
+Validate spec.md for:
+- Content quality (no impl details, user-focused)
+- Requirements completeness (testable, measurable)
+- Feature readiness (acceptance criteria, bounded scope)
+```
+
+## Execution
+
+1. **Parse input**: Extract target file(s) and validation check specifications
+
+2. **Launch parallel validation agents** (all in single message, using haiku):
+
+   For each validation check, create a Task:
+
+   ```
+   Task(
+     description="Validate {check_name}",
+     prompt="Read {target_file} and validate against these rules:
+            {list of rules}
+
+            For each rule:
+            - Check: PASS or FAIL
+            - If FAIL: Quote specific violations with line references
+            - Return ONLY failures (omit passing rules for token efficiency)
+
+            Output format:
+            ## {Check Name} - {PASS/FAIL}
+
+            {For failures only:}
+            - Rule: {rule description}
+              Violation: {specific quote from file}
+              Location: {file}:{line_number}
+              Fix: {suggested remediation}
+
+            If all rules pass, return: '## {Check Name} - PASS'
+
+            Maximum 20 lines per check.",
+     subagent_type="general-purpose",
+     model="haiku"
+   )
+   ```
+
+3. **Wait for all validators**: Collect results from parallel execution
+
+4. **Aggregate results**: Combine findings, deduplicate, sort by severity
+
+5. **Format output**: Return structured validation report:
+
+   ```json
+   {
+     "overall": "PASS" | "FAIL",
+     "checks": {
+       "Content Quality": {
+         "status": "FAIL",
+         "violations": [
+           {
+             "rule": "No implementation details",
+             "violation": "References React and TypeScript",
+             "location": "spec.md:45",
+             "fix": "Remove framework specifics, focus on behavior"
+           }
+         ]
+       },
+       "Requirements Completeness": {
+         "status": "PASS"
+       }
+     },
+     "summary": {
+       "total_checks": 3,
+       "passed": 2,
+       "failed": 1,
+       "critical_failures": 0
+     }
+   }
+   ```
+
+6. **Report**: Provide actionable summary:
+   - Checks run: {count}
+   - Passed: {count}
+   - Failed: {count} ({severity breakdown})
+   - Token savings: ~{percentage}% (only failures returned)
+   - Next actions: {recommendations}
+
+## Common Validation Patterns
+
+**Pattern 1: Spec Quality Validation**
+```
+Checks:
+- Content Quality (no impl details, stakeholder-focused, complete sections)
+- Requirements Completeness (testable, measurable, unambiguous, ≤3 clarifications)
+- Feature Readiness (acceptance criteria, bounded scope, no leaks)
+```
+
+**Pattern 2: Plan Compliance Validation**
+```
+Checks:
+- Constitution Alignment (all NON-NEGOTIABLE principles, quality gates)
+- Architecture Soundness (justified complexity, clear structure, documented decisions)
+- Completeness (all NEEDS CLARIFICATION resolved, research complete)
+```
+
+**Pattern 3: Code Quality Validation**
+```
+Checks:
+- Style Compliance (linting rules, formatting, naming conventions)
+- Test Coverage (100% required, integration-first pyramid)
+- Accessibility (zero axe violations, keyboard nav, ARIA attributes)
+```
+
+## Token Savings
+
+- **Only failures returned**: Passing checks report single line
+- **Parallel execution**: All checks run simultaneously
+- **Targeted reads**: Each validator reads only relevant sections
+- **Result**: ~75% token reduction vs. sequential full-file validation
+
+## Error Handling
+
+- If check fails to execute: Report error, continue with others
+- If target file missing: Abort with clear error
+- If check ambiguous: Ask for clarification before launching agents
+
+## Output Modes
+
+1. **JSON** - Structured output for programmatic use
+2. **Table** - Markdown table for human review
+3. **Summary** - Brief pass/fail with critical issues only
+"""

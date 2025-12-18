@@ -1,0 +1,195 @@
+description = "Research multiple topics in parallel, returning only actionable summaries to minimize token usage"
+prompt = """
+---
+description: Research multiple topics in parallel, returning only actionable summaries to minimize token usage
+---
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+## Overview
+
+This skill researches multiple topics simultaneously using parallel Task agents, each returning only decision-ready summaries (no full documentation dumps). Optimized for technical decision-making.
+
+## Expected Input Format
+
+**JSON Format:**
+```json
+{
+  "context": "Building a music education web app for K-12 students",
+  "topics": [
+    {
+      "topic": "Authentication methods for educational apps",
+      "focus": ["Security", "Student privacy", "Ease of use"]
+    },
+    {
+      "topic": "Database options for real-time collaboration",
+      "focus": ["Scalability", "Cost", "Learning curve"]
+    }
+  ],
+  "model": "haiku"
+}
+```
+
+**Natural Language Format:**
+```
+Research for music education app:
+- Authentication: Security and student privacy focused
+- Database: Real-time collaboration, scalable, cost-effective
+- Testing frameworks: React integration tests, accessibility testing
+- Deployment: Educational institution requirements
+```
+
+## Execution
+
+1. **Parse input**: Extract research topics and context
+
+2. **Launch parallel research agents** (all in single message, using haiku):
+
+   For each topic, create a Task:
+
+   ```
+   Task(
+     description="Research {topic}",
+     prompt="Research {topic} in the context of: {project_context}
+
+            Focus areas: {focus_list}
+
+            Return ONLY:
+            1. **Recommended Approach** (1 sentence)
+            2. **Key Rationale** (2-3 bullets, each ≤15 words)
+            3. **Alternatives Considered** (2-3 options, 1 sentence each)
+            4. **Implementation Complexity** (Low/Medium/High with justification)
+            5. **Trade-offs** (1-2 key trade-offs to be aware of)
+
+            Do NOT include:
+            - Full documentation or tutorials
+            - Installation instructions (unless specifically asked)
+            - Code examples (unless critical to decision)
+            - Historical context or background
+            - Marketing material or feature lists
+
+            Maximum 30 lines total.
+            Focus on decision-making information only.",
+     subagent_type="general-purpose",
+     model="haiku"
+   )
+   ```
+
+3. **Wait for all researchers**: Collect results from parallel execution
+
+4. **Consolidate findings**: Format as decision matrix
+
+5. **Generate research.md**: Create structured research document:
+
+   ```markdown
+   # Research: {Project Name}
+
+   **Context**: {project_context}
+   **Date**: {date}
+
+   ## Decision 1: {Topic 1}
+
+   **Recommended**: {approach}
+
+   **Rationale**:
+   - {reason 1}
+   - {reason 2}
+   - {reason 3}
+
+   **Alternatives Considered**:
+   - {alternative 1}: {brief description}
+   - {alternative 2}: {brief description}
+
+   **Complexity**: {Low/Medium/High} - {justification}
+
+   **Trade-offs**: {key trade-offs}
+
+   ---
+
+   ## Decision 2: {Topic 2}
+
+   ...
+   ```
+
+6. **Report**: Provide summary:
+   - Topics researched: {count}
+   - Research time: {duration}
+   - Token usage: ~{count} (vs ~{comparison} for full docs)
+   - Token savings: ~{percentage}%
+   - Next step: Review research.md and confirm decisions
+
+## Common Research Patterns
+
+**Pattern 1: Tech Stack Research**
+```
+Topics:
+- Backend framework (API performance, learning curve, ecosystem)
+- Database (scalability, cost, real-time features)
+- Frontend framework (React vs Vue vs Svelte for educational UX)
+- Testing stack (integration-first testing, a11y support)
+```
+
+**Pattern 2: Integration Research**
+```
+Topics:
+- OAuth providers (Google/Microsoft for education, student privacy)
+- Payment processing (PCI compliance, international support)
+- Email service (deliverability, templates, cost at scale)
+- CDN/hosting (edge performance, education pricing)
+```
+
+**Pattern 3: Compliance Research**
+```
+Topics:
+- FERPA compliance (student data protection requirements)
+- COPPA compliance (under-13 user requirements)
+- WCAG 2.1 AA (accessibility standards for education)
+- GDPR (EU student data handling)
+```
+
+## Token Optimization
+
+- **Parallel execution**: All topics researched simultaneously
+- **Summary-only output**: No full documentation dumps
+- **Focused queries**: Each agent gets specific focus areas
+- **Line limits**: Hard cap at 30 lines per topic
+- **Result**: ~70-80% token reduction vs. sequential full research
+
+## Output Format
+
+Returns both:
+1. **research.md file** - Structured markdown for project docs
+2. **JSON summary** - Programmatic access to decisions:
+
+```json
+{
+  "decisions": [
+    {
+      "topic": "Authentication",
+      "recommended": "OAuth 2.0 with Google/Microsoft",
+      "rationale": ["Student privacy built-in", "Familiar to educators", "SSO support"],
+      "complexity": "Medium",
+      "alternatives": ["Email/password: Higher maintenance", "SAML: Overkill for K-12"]
+    }
+  ]
+}
+```
+
+## Error Handling
+
+- If topic too vague: Ask for clarification or focus areas
+- If research fails: Report which topics failed, continue with others
+- If conflicting recommendations: Flag for human review
+
+## Follow-up Actions
+
+After research completes:
+1. Review research.md for decision confirmation
+2. Mark any decisions needing user input
+3. Update plan.md to resolve all NEEDS CLARIFICATION markers
+4. Proceed to design phase
+"""

@@ -34,38 +34,40 @@ Run `.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --inclu
 - TASKS = FEATURE_DIR/tasks.md
 
 Abort with an error message if any required file is missing (instruct the user to run missing prerequisite command).
-For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\\''m Groot' (or double-quote if possible: "I'm Groot").
+For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
 
-### 2. Load Artifacts (Progressive Disclosure)
+### 2. Load Artifacts (Progressive Disclosure + Parallel Agents)
 
-Load only the minimal necessary context from each artifact:
+**Token Optimization Strategy**: Use parallel agents to extract only needed sections from large files.
 
-**From spec.md:**
+```javascript
+const analysisContext = await Skill("parallel-extract", {
+  files: [
+    {
+      path: "spec.md",
+      extract: ["Functional Requirements list (IDs + 1-line summaries)", "Non-Functional Requirements list", "User Story titles and acceptance criteria", "Edge Cases mentioned"],
+      maxLines: 50
+    },
+    {
+      path: "plan.md",
+      extract: ["Tech stack (languages, frameworks, databases)", "Data Model entity names", "Architecture decisions (1 line each)", "Technical constraints"],
+      maxLines: 30
+    },
+    {
+      path: "tasks.md",
+      extract: ["All task IDs with 1-line descriptions", "Phase groupings", "Parallel markers [P]", "File paths referenced"],
+      maxLines: 100
+    },
+    {
+      path: ".specify/memory/constitution.md",
+      extract: ["Principle names and NON-NEGOTIABLE markers", "MUST requirements (exact quotes)", "Quality gates list"],
+      maxLines: 40
+    }
+  ]
+});
+```
 
-- Overview/Context
-- Functional Requirements
-- Non-Functional Requirements
-- User Stories
-- Edge Cases (if present)
-
-**From plan.md:**
-
-- Architecture/stack choices
-- Data Model references
-- Phases
-- Technical constraints
-
-**From tasks.md:**
-
-- Task IDs
-- Descriptions
-- Phase grouping
-- Parallel markers [P]
-- Referenced file paths
-
-**From constitution:**
-
-- Load `.specify/memory/constitution.md` for principle validation
+**Token Savings**: ~80% reduction by extracting summaries via parallel haiku agents instead of loading full files into main context
 
 ### 3. Build Semantic Models
 
@@ -76,43 +78,91 @@ Create internal representations (do not include raw artifacts in output):
 - **Task coverage mapping**: Map each task to one or more requirements or stories (inference by keyword / explicit reference patterns like IDs or key phrases)
 - **Constitution rule set**: Extract principle names and MUST/SHOULD normative statements
 
-### 4. Detection Passes (Token-Efficient Analysis)
+### 4. Detection Passes (Parallel Agent Analysis)
 
-Focus on high-signal findings. Limit to 50 findings total; aggregate remainder in overflow summary.
+**Token Optimization Strategy**: Run independent analysis passes in parallel, each returning only high-severity findings.
 
-#### A. Duplication Detection
+**Launch parallel analysis agents** (all in single message, using haiku):
 
-- Identify near-duplicate requirements
-- Mark lower-quality phrasing for consolidation
+**Agent A - Duplication Detector**:
+```
+Task(
+  description="Detect duplicates",
+  prompt="Analyze extracted spec requirements and identify:
+         - Near-duplicate requirements (>80% semantic overlap)
+         - Redundant user stories
+         Return ONLY high-severity duplications (max 10 findings).
+         Format: | ID | Location | Summary | Recommendation |",
+  subagent_type="general-purpose",
+  model="haiku"
+)
+```
 
-#### B. Ambiguity Detection
+**Agent B - Ambiguity Detector**:
+```
+Task(
+  description="Detect ambiguities",
+  prompt="Analyze spec and plan for:
+         - Vague adjectives (fast, scalable, secure) without metrics
+         - Unresolved placeholders (TODO, ???, <placeholder>)
+         - Untestable requirements
+         Return HIGH/CRITICAL findings only (max 10).
+         Format: | ID | Location | Issue | Fix |",
+  subagent_type="general-purpose",
+  model="haiku"
+)
+```
 
-- Flag vague adjectives (fast, scalable, secure, intuitive, robust) lacking measurable criteria
-- Flag unresolved placeholders (TODO, TKTK, ???, `<placeholder>`, etc.)
+**Agent C - Constitution Checker**:
+```
+Task(
+  description="Check constitution alignment",
+  prompt="Compare spec/plan against constitution MUST requirements.
+         Identify violations:
+         - Missing mandatory sections
+         - Conflicts with NON-NEGOTIABLE principles
+         - Missing quality gates
+         Return CRITICAL violations only (max 10).
+         Format: | Principle | Violation | Location | Required Fix |",
+  subagent_type="general-purpose",
+  model="haiku"
+)
+```
 
-#### C. Underspecification
+**Agent D - Coverage Analyzer**:
+```
+Task(
+  description="Analyze coverage gaps",
+  prompt="Map requirements to tasks and identify:
+         - Requirements with zero task coverage
+         - Tasks with no requirement mapping
+         - Missing non-functional coverage (performance, security)
+         Return HIGH-impact gaps only (max 15).
+         Format: | Requirement | Has Task? | Gap Type |",
+  subagent_type="general-purpose",
+  model="haiku"
+)
+```
 
-- Requirements with verbs but missing object or measurable outcome
-- User stories missing acceptance criteria alignment
-- Tasks referencing files or components not defined in spec/plan
+**Agent E - Consistency Checker**:
+```
+Task(
+  description="Check consistency",
+  prompt="Analyze cross-file consistency:
+         - Terminology drift (same concept, different names)
+         - Data entities in plan but not spec (or vice versa)
+         - Task ordering contradictions
+         - Conflicting tech requirements
+         Return HIGH/CRITICAL inconsistencies only (max 10).
+         Format: | Type | Files | Issue | Recommendation |",
+  subagent_type="general-purpose",
+  model="haiku"
+)
+```
 
-#### D. Constitution Alignment
+**Consolidate parallel results**: Wait for all agents, merge findings, deduplicate, sort by severity.
 
-- Any requirement or plan element conflicting with a MUST principle
-- Missing mandated sections or quality gates from constitution
-
-#### E. Coverage Gaps
-
-- Requirements with zero associated tasks
-- Tasks with no mapped requirement/story
-- Non-functional requirements not reflected in tasks (e.g., performance, security)
-
-#### F. Inconsistency
-
-- Terminology drift (same concept named differently across files)
-- Data entities referenced in plan but absent in spec (or vice versa)
-- Task ordering contradictions (e.g., integration tasks before foundational setup tasks without dependency note)
-- Conflicting requirements (e.g., one requires Next.js while other specifies Vue)
+**Token Savings**: ~85% reduction by parallel specialized analysis vs. sequential full-file analysis in main context
 
 ### 5. Severity Assignment
 
@@ -184,5 +234,5 @@ Ask the user: "Would you like me to suggest concrete remediation edits for the t
 
 ## Context
 
-{{args}}
-"""
+$ARGUMENTS
+"

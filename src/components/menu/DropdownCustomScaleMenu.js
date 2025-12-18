@@ -78,7 +78,7 @@ const DropdownCustomScaleMenu = (props) => {
       </div>
 
       {show && (
-        <Overlay visible={false} key="custom_scale" close={handleShow}>
+        <Overlay visible={false} key="custom_scale" close={handleShow} aria-label="Customize scale settings">
           <div className="tabs-wrapper">
             <Tabs defaultActiveKey="custom_scale" id="controlled-tab-example">
               <Tab eventKey="custom_scale" title="custom scale">

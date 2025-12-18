@@ -1,0 +1,133 @@
+description = "Extract specific sections from multiple files in parallel to minimize token usage"
+prompt = """
+---
+description: Extract specific sections from multiple files in parallel to minimize token usage
+---
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+## Overview
+
+This skill extracts only requested information from multiple large files using parallel Task agents, reducing token consumption by 75-85% compared to loading full files.
+
+## Expected Input Format
+
+Provide a JSON array of file extraction specifications:
+
+```json
+[
+  {
+    "path": "/absolute/path/to/file1.md",
+    "extract": ["Section Name 1", "Section Name 2"],
+    "maxLines": 50
+  },
+  {
+    "path": "/absolute/path/to/file2.md",
+    "extract": ["Requirements", "Acceptance Criteria"],
+    "maxLines": 60
+  }
+]
+```
+
+Alternatively, provide a simple list and I'll infer reasonable defaults:
+- `spec.md: User Stories, Requirements`
+- `plan.md: Tech Stack, Architecture`
+
+## Execution
+
+1. **Parse input**: Extract file specs from $ARGUMENTS (JSON or natural language)
+
+2. **Launch parallel extraction agents** (all in single message, using haiku):
+
+   For each file in the input list, create a Task:
+
+   ```
+   Task(
+     description="Extract from {filename}",
+     prompt="Read {filepath} and extract ONLY the following sections:
+            {list of sections to extract}
+
+            For each section:
+            - Include the section heading
+            - Include content up to maxLines limit
+            - Preserve structure (bullets, code blocks)
+            - Stop at next major heading
+
+            Return extracted sections as:
+            ## {Section Name}
+            {content}
+
+            Maximum {maxLines} lines total.
+            Do NOT include other sections.",
+     subagent_type="general-purpose",
+     model="haiku"
+   )
+   ```
+
+3. **Wait for all agents to complete**: Collect results from parallel execution
+
+4. **Format output**: Return structured JSON with extracted content:
+
+   ```json
+   {
+     "file1.md": {
+       "Section Name 1": "extracted content...",
+       "Section Name 2": "extracted content..."
+     },
+     "file2.md": {
+       "Requirements": "extracted content...",
+       "Acceptance Criteria": "extracted content..."
+     }
+   }
+   ```
+
+5. **Report**: Provide summary:
+   - Files processed: {count}
+   - Total lines extracted: {count} (vs {full-file-count} if loaded completely)
+   - Token savings: ~{percentage}%
+   - Extraction time: {duration}
+
+## Common Usage Patterns
+
+**Pattern 1: Spec Workflow Context**
+```
+Extract:
+- spec.md: User Stories, Functional Requirements, Success Criteria (60 lines)
+- plan.md: Tech Stack, Architecture, Project Structure (40 lines)
+- constitution.md: Principles, Quality Gates (40 lines)
+```
+
+**Pattern 2: Implementation Context**
+```
+Extract:
+- tasks.md: All Tasks, Phase Dependencies, Parallel Opportunities (150 lines)
+- data-model.md: Entities, Relationships, Validation Rules (40 lines)
+- contracts/*.yaml: All endpoint definitions (60 lines)
+```
+
+**Pattern 3: Analysis Context**
+```
+Extract:
+- spec.md: All functional requirements (80 lines)
+- plan.md: Technical constraints, Architecture decisions (30 lines)
+- tasks.md: All task IDs and descriptions (100 lines)
+```
+
+## Error Handling
+
+- If file not found: Report which files failed, continue with others
+- If section not found: Report missing sections, extract what exists
+- If maxLines exceeded: Truncate cleanly at last complete paragraph/bullet
+
+## Output Format
+
+Return both:
+1. **JSON output** - Structured extracted content for programmatic use
+2. **Summary report** - Human-readable stats and token savings
+
+The calling code can parse the JSON and use extracted content immediately without additional file reads.
+"""

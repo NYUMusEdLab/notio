@@ -471,7 +471,7 @@ class WholeApp extends Component {
         </div>
         <MobileView>
           <div className="blackout"></div>
-          <Popup trigger={<div/>} modal open={true} closeOnDocumentClick={false}>
+          <Popup trigger={<div/>} modal open={true} closeOnDocumentClick={false} aria-label="Mobile not supported notification">
             <div style={{
               "backgroundColor": "white",
               "fontSize": "12px",

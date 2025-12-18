@@ -85,6 +85,8 @@ export default class Overlay extends Component {
   };
 
   render() {
+    const ariaLabel = this.props.ariaLabel || this.props['aria-label'] || "Dialog window";
+
     return ReactDOM.createPortal(
       <Draggable handle={".drag"}>
         <div
@@ -94,7 +96,8 @@ export default class Overlay extends Component {
           }`}
           tabIndex={-1}
           role="dialog"
-          aria-modal="true">
+          aria-modal="true"
+          aria-label={ariaLabel}>
           <header className="overlay__header">
             {this.grabBar()}
             {this.navBarButtons()}

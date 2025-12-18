@@ -1,0 +1,254 @@
+description = "Validate artifacts (spec, plan, tasks, code) against project constitution principles"
+prompt = """
+---
+description: Validate artifacts (spec, plan, tasks, code) against project constitution principles
+---
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+## Overview
+
+This skill validates project artifacts against constitutional principles, returning only violations to minimize token usage. Ensures governance compliance before implementation.
+
+## Expected Input Format
+
+**JSON Format:**
+```json
+{
+  "constitution": ".specify/memory/constitution.md",
+  "artifacts": [
+    {
+      "path": "specs/feature/spec.md",
+      "type": "specification"
+    },
+    {
+      "path": "specs/feature/plan.md",
+      "type": "plan"
+    }
+  ],
+  "mode": "strict"
+}
+```
+
+**Natural Language Format:**
+```
+Check spec.md and plan.md against constitution
+```
+
+Or:
+```
+Validate current feature artifacts for constitution compliance
+```
+
+## Execution
+
+1. **Load constitution** (using parallel-extract skill for efficiency):
+
+   ```
+   Skill("parallel-extract", {
+     files: [{
+       path: "{constitution_path}",
+       extract: ["Core Principles", "Quality Gates", "NON-NEGOTIABLE markers"],
+       maxLines: 60
+     }]
+   })
+   ```
+
+2. **Parse artifacts**: Identify what to validate and expected compliance
+
+3. **Launch parallel validation agents** (one per artifact type):
+
+   **Agent A - Specification Validator**:
+   ```
+   Task(
+     description="Validate spec compliance",
+     prompt="Read {spec_path} and constitution principles.
+
+            Check compliance with:
+            - Principle II (Accessibility-First): Verify a11y requirements present
+            - Principle III (Educational Clarity): Check for student-friendly language
+            - Quality Gates: Validate all mandatory sections present
+
+            Return ONLY violations:
+            | Principle | Violation | Location | Required Fix |
+            |-----------|-----------|----------|--------------|
+
+            If fully compliant, return: 'COMPLIANT'
+
+            Maximum 30 lines.",
+     subagent_type="general-purpose",
+     model="haiku"
+   )
+   ```
+
+   **Agent B - Plan Validator**:
+   ```
+   Task(
+     description="Validate plan compliance",
+     prompt="Read {plan_path} and constitution principles.
+
+            Check compliance with:
+            - Principle I (Integration-First Testing): Verify 60-70% integration tests
+            - Principle V (Simplicity): Check complexity justifications present
+            - Principle VI (Observability): Verify logging requirements
+
+            Return ONLY violations:
+            | Principle | Violation | Location | Required Fix |
+            |-----------|-----------|----------|--------------|
+
+            If fully compliant, return: 'COMPLIANT'
+
+            Maximum 30 lines.",
+     subagent_type="general-purpose",
+     model="haiku"
+   )
+   ```
+
+   **Agent C - Tasks Validator** (if tasks.md provided):
+   ```
+   Task(
+     description="Validate tasks compliance",
+     prompt="Read {tasks_path} and constitution principles.
+
+            Check compliance with:
+            - Principle I (Integration-First Testing): Count test tasks (should be 60-70%)
+            - Principle II (Accessibility): Verify a11y test tasks present
+            - Principle IV (Documentation): Check for doc tasks
+
+            Return task breakdown:
+            - Total tasks: {count}
+            - Test tasks: {count} ({percentage}%)
+            - Integration tests: {count}
+            - E2E tests: {count}
+            - Unit tests: {count}
+            - Compliance: PASS/FAIL
+
+            If failed, list violations.
+            Maximum 25 lines.",
+     subagent_type="general-purpose",
+     model="haiku"
+   )
+   ```
+
+4. **Consolidate results**: Aggregate violations, categorize by severity
+
+5. **Format output**: Return compliance report:
+
+   ```markdown
+   # Constitution Compliance Report
+
+   **Constitution**: v{version}
+   **Artifacts**: {list}
+   **Date**: {date}
+
+   ## Overall Status: {COMPLIANT / VIOLATIONS FOUND}
+
+   ### Critical Violations (MUST fix before proceeding)
+
+   | Principle | Artifact | Violation | Location | Required Fix |
+   |-----------|----------|-----------|----------|--------------|
+   | I. Integration-First Testing (NON-NEGOTIABLE) | plan.md | Only 40% integration tests specified | plan.md:67 | Increase integration tests to 60-70% |
+
+   ### Warnings (SHOULD address)
+
+   | Principle | Artifact | Issue | Recommendation |
+   |-----------|----------|-------|----------------|
+   | IV. Documentation | tasks.md | No quickstart validation task | Add task to validate quickstart.md |
+
+   ### Summary
+
+   - **Critical Violations**: {count} (blocking)
+   - **Warnings**: {count} (advisory)
+   - **Compliant Principles**: {list}
+
+   ### Next Actions
+
+   {If violations:}
+   1. Address critical violations before proceeding to implementation
+   2. Document any principle waivers with justification in Complexity Tracking table
+   3. Re-run constitution check after fixes
+
+   {If compliant:}
+   ✅ All artifacts comply with constitution. Proceed to next phase.
+   ```
+
+6. **Report**: Provide actionable summary:
+   - Principles checked: {count}
+   - Violations found: {count} ({severity breakdown})
+   - Blocking issues: {count}
+   - Compliant: {yes/no}
+   - Next step: {action}
+
+## Principle-Specific Checks
+
+**I. Integration-First Testing (NON-NEGOTIABLE)**:
+- ✓ Test pyramid percentages (60-70% integration, 20-30% E2E, 10-20% unit)
+- ✓ 100% coverage requirement mentioned
+- ✓ Tests written before implementation (if TDD specified)
+
+**II. Accessibility-First Development (NON-NEGOTIABLE)**:
+- ✓ ARIA requirements in spec
+- ✓ Keyboard navigation requirements
+- ✓ jest-axe and @axe-core/playwright in plan
+- ✓ A11y test tasks in tasks.md
+
+**III. Educational Clarity**:
+- ✓ Student-friendly language in spec
+- ✓ Music theory terminology (not abbreviations)
+- ✓ Pedagogical rationale for decisions
+
+**IV. Documentation & Guidance**:
+- ✓ CLAUDE.md update task exists
+- ✓ Quickstart validation task exists
+- ✓ Inline comment requirements for complex logic
+
+**V. Simplicity & Maintainability**:
+- ✓ Complexity justifications in Complexity Tracking table (if violations exist)
+- ✓ YAGNI principle followed
+- ✓ No premature abstractions
+
+**VI. Observability & Debugging**:
+- ✓ Logging requirements specified
+- ✓ Error context requirements
+- ✓ Performance measurement tasks
+
+**VII. Versioning & Breaking Changes**:
+- ✓ Semantic versioning mentioned
+- ✓ Migration guide tasks (if breaking changes)
+
+## Token Optimization
+
+- **Extract constitution once**: Reuse across all validators
+- **Parallel validation**: All artifacts checked simultaneously
+- **Violations-only output**: Compliant items report single line
+- **Result**: ~80% token reduction vs. sequential full-artifact validation
+
+## Modes
+
+- **strict**: All principles must pass (default)
+- **advisory**: Report violations but don't block
+- **focus**: Check only specific principles (e.g., "check NON-NEGOTIABLE only")
+
+## Integration with Speckit
+
+This skill is automatically invoked by:
+- `/speckit.plan` - After Phase 1 (design)
+- `/speckit.analyze` - During cross-artifact consistency check
+- `/speckit.implement` - Before implementation starts (optional)
+
+Can also be invoked manually:
+```
+/constitution-check spec.md plan.md tasks.md
+```
+
+Or via Skill tool:
+```
+Skill("constitution-check", {
+  artifacts: ["spec.md", "plan.md", "tasks.md"]
+})
+```
+"""

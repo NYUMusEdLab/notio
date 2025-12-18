@@ -24,25 +24,60 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Outline
 
-1. **Setup**: Run `.specify/scripts/bash/check-prerequisites.sh --json` from repo root and parse FEATURE_DIR and AVAILABLE_DOCS list. All paths must be absolute. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\\''m Groot' (or double-quote if possible: "I'm Groot").
+1. **Setup**: Run `.specify/scripts/bash/check-prerequisites.sh --json` from repo root and parse FEATURE_DIR and AVAILABLE_DOCS list. All paths must be absolute. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\'\'m Groot' (or double-quote if possible: "I'm Groot").
 
-2. **Load design documents**: Read from FEATURE_DIR:
-   - **Required**: plan.md (tech stack, libraries, structure), spec.md (user stories with priorities)
-   - **Optional**: data-model.md (entities), contracts/ (API endpoints), research.md (decisions), quickstart.md (test scenarios)
-   - Note: Not all projects have all documents. Generate tasks based on what's available.
+2. **Load design documents** (using parallel-extract skill for token efficiency):
 
-3. **Execute task generation workflow**:
-   - Load plan.md and extract tech stack, libraries, project structure
-   - Load spec.md and extract user stories with their priorities (P1, P2, P3, etc.)
-   - If data-model.md exists: Extract entities and map to user stories
-   - If contracts/ exists: Map endpoints to user stories
-   - If research.md exists: Extract decisions for setup tasks
+   **Token Optimization Strategy**: Extract only task-relevant information from each document via the parallel-extract skill.
+
+   ```javascript
+   const designDocs = await Skill("parallel-extract", {
+     files: [
+       {
+         path: "plan.md",
+         extract: ["Tech stack (languages, frameworks, tools)", "Project structure (directories, file organization)", "Libraries/dependencies to install", "Build/test commands"],
+         maxLines: 40
+       },
+       {
+         path: "spec.md",
+         extract: ["User stories with priorities (P1, P2, P3)", "Acceptance criteria for each story", "Functional requirements mapped to stories"],
+         maxLines: 60
+       },
+       {
+         path: "data-model.md",
+         extract: ["Entity names and relationships", "Which user story each entity supports"],
+         maxLines: 30
+       },
+       {
+         path: "contracts/",
+         extract: ["Endpoint paths and methods", "Which user story each endpoint supports"],
+         maxLines: 40
+       },
+       {
+         path: "research.md",
+         extract: ["Technology decisions made", "Setup requirements"],
+         maxLines: 20
+       }
+     ]
+   });
+   ```
+
+   **Token Savings**: ~80% reduction by extracting summaries via parallel agents instead of loading full documents
+
+   Note: Not all projects have all documents. The skill will handle missing files gracefully.
+
+3. **Execute task generation workflow** (using agent-extracted summaries from step 2):
+   - Use tech stack and structure from the extracted plan for setup tasks
+   - Use user stories from the extracted spec for phase organization
+   - Use entities from the extracted data model (if exists) for model tasks
+   - Use endpoints from the extracted contracts (if exists) for API tasks
+   - Use research from the extracted research (if exists) for setup decisions
    - Generate tasks organized by user story (see Task Generation Rules below)
    - Generate dependency graph showing user story completion order
    - Create parallel execution examples per user story
    - Validate task completeness (each user story has all needed tasks, independently testable)
 
-4. **Generate tasks.md**: Use `.specify.specify/templates/tasks-template.md` as structure, fill with:
+4. **Generate tasks.md**: Use `.specify/templates/tasks-template.md` as structure, fill with:
    - Correct feature name from plan.md
    - Phase 1: Setup tasks (project initialization)
    - Phase 2: Foundational tasks (blocking prerequisites for all user stories)
@@ -63,7 +98,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Suggested MVP scope (typically just User Story 1)
    - Format validation: Confirm ALL tasks follow the checklist format (checkbox, ID, labels, file paths)
 
-Context for task generation: {{args}}
+Context for task generation: $ARGUMENTS
 
 The tasks.md should be immediately executable - each task must be specific enough that an LLM can complete it without additional context.
 
@@ -138,4 +173,4 @@ Every task MUST strictly follow this format:
   - Within each story: Tests (if requested) → Models → Services → Endpoints → Integration
   - Each phase should be a complete, independently testable increment
 - **Final Phase**: Polish & Cross-Cutting Concerns
-"""
+"
