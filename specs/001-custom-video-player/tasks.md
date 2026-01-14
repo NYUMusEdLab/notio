@@ -81,19 +81,19 @@
 
 ### Tests for User Story 2
 
-- [ ] T016 [P] [US2] Integration test: URL input field renders in Enter_url tab in src/__integration__/CustomVideoPlayer.integration.test.js
-- [ ] T017 [P] [US2] Integration test: URL submission updates player content in src/__integration__/CustomVideoPlayer.integration.test.js
-- [ ] T018 [P] [US2] Integration test: "Currently watching" shows current URL in src/__integration__/CustomVideoPlayer.integration.test.js
+- [x] T016 [P] [US2] Integration test: URL input field renders in Enter_url tab in src/__integration__/CustomVideoPlayer.integration.test.js
+- [x] T017 [P] [US2] Integration test: URL submission updates player content in src/__integration__/CustomVideoPlayer.integration.test.js
+- [x] T018 [P] [US2] Integration test: "Currently watching" shows current URL in src/__integration__/CustomVideoPlayer.integration.test.js
 
 ### Implementation for User Story 2
 
-- [ ] T019 [US2] Add Tab component (react-bootstrap Tabs) with Player and Enter_url tabs in src/components/menu/CustomVideoPlayer.js
-- [ ] T020 [US2] Implement tab state management (activeTab) with onSelect handler in src/components/menu/CustomVideoPlayer.js
-- [ ] T021 [US2] Create URL input Form with text field in Enter_url tab in src/components/menu/CustomVideoPlayer.js
-- [ ] T022 [US2] Implement handleSubmit to update currentUrl state and switch to Player tab in src/components/menu/CustomVideoPlayer.js
-- [ ] T023 [US2] Add "Currently watching" display showing current URL in Enter_url tab in src/components/menu/CustomVideoPlayer.js
-- [ ] T024 [US2] Call onUrlChange callback when URL changes in src/components/menu/CustomVideoPlayer.js
-- [ ] T025 [US2] Add keyboard support for form submission (Enter key) in src/components/menu/CustomVideoPlayer.js
+- [x] T019 [US2] Add Tab component (react-bootstrap Tabs) with Player and Enter_url tabs in src/components/menu/CustomVideoPlayer.js
+- [x] T020 [US2] Implement tab state management (activeTab) with onSelect handler in src/components/menu/CustomVideoPlayer.js
+- [x] T021 [US2] Create URL input Form with text field in Enter_url tab in src/components/menu/CustomVideoPlayer.js
+- [x] T022 [US2] Implement handleSubmit to update currentUrl state and switch to Player tab in src/components/menu/CustomVideoPlayer.js
+- [x] T023 [US2] Add "Currently watching" display showing current URL in Enter_url tab in src/components/menu/CustomVideoPlayer.js
+- [x] T024 [US2] Call onUrlChange callback when URL changes in src/components/menu/CustomVideoPlayer.js
+- [x] T025 [US2] Add keyboard support for form submission (Enter key) in src/components/menu/CustomVideoPlayer.js
 
 **Checkpoint**: User Stories 1 AND 2 complete - can view default and enter custom URLs
 
@@ -107,17 +107,17 @@
 
 ### Tests for User Story 3
 
-- [ ] T026 [P] [US3] Integration test: Reset button visible in Enter_url tab in src/__integration__/CustomVideoPlayer.integration.test.js
-- [ ] T027 [P] [US3] Integration test: Reset restores defaultVideoUrl prop value in src/__integration__/CustomVideoPlayer.integration.test.js
-- [ ] T028 [P] [US3] Integration test: Reset when already default does not error in src/__integration__/CustomVideoPlayer.integration.test.js
+- [x] T026 [P] [US3] Integration test: Reset button visible in Enter_url tab in src/__integration__/CustomVideoPlayer.integration.test.js
+- [x] T027 [P] [US3] Integration test: Reset restores defaultVideoUrl prop value in src/__integration__/CustomVideoPlayer.integration.test.js
+- [x] T028 [P] [US3] Integration test: Reset when already default does not error in src/__integration__/CustomVideoPlayer.integration.test.js
 
 ### Implementation for User Story 3
 
-- [ ] T029 [US3] Add Reset button in Enter_url tab in src/components/menu/CustomVideoPlayer.js
-- [ ] T030 [US3] Implement resetVideoUrl handler that sets currentUrl = props.defaultVideoUrl in src/components/menu/CustomVideoPlayer.js
-- [ ] T031 [US3] Style Reset button with variant="outline-danger" matching existing pattern in src/components/menu/CustomVideoPlayer.js
-- [ ] T032 [US3] Add aria-label="Reset to default video" to Reset button in src/components/menu/CustomVideoPlayer.js
-- [ ] T033 [US3] Add keyboard activation (Enter/Space) to Reset button in src/components/menu/CustomVideoPlayer.js
+- [x] T029 [US3] Add Reset button in Enter_url tab in src/components/menu/CustomVideoPlayer.js
+- [x] T030 [US3] Implement resetVideoUrl handler that sets currentUrl = props.defaultVideoUrl in src/components/menu/CustomVideoPlayer.js
+- [x] T031 [US3] Style Reset button with variant="outline-danger" matching existing pattern in src/components/menu/CustomVideoPlayer.js
+- [x] T032 [US3] Add aria-label="Reset to default video" to Reset button in src/components/menu/CustomVideoPlayer.js
+- [x] T033 [US3] Add keyboard activation (Enter/Space) to Reset button in src/components/menu/CustomVideoPlayer.js
 
 **Checkpoint**: User Stories 1, 2, AND 3 complete - full URL management working
 
@@ -131,17 +131,17 @@
 
 ### Tests for User Story 4
 
-- [ ] T034 [P] [US4] Integration test: Overlay renders via portal in src/__integration__/CustomVideoPlayer.integration.test.js
-- [ ] T035 [P] [US4] Integration test: Escape key closes overlay in src/__integration__/CustomVideoPlayer.integration.test.js
-- [ ] T036 [P] [US4] E2E test: Full user journey in tests/e2e/custom-video-player.spec.js
-- [ ] T037 [P] [US4] E2E test: Keyboard-only navigation in tests/e2e/custom-video-player.spec.js
+- [x] T034 [P] [US4] Integration test: Overlay renders via portal in src/__integration__/CustomVideoPlayer.integration.test.js
+- [x] T035 [P] [US4] Integration test: Escape key closes overlay in src/__integration__/CustomVideoPlayer.integration.test.js
+- [x] T036 [P] [US4] E2E test: Full user journey in tests/e2e/custom-video-player.spec.js
+- [x] T037 [P] [US4] E2E test: Keyboard-only navigation in tests/e2e/custom-video-player.spec.js
 
 ### Implementation for User Story 4
 
-- [ ] T038 [US4] Verify Overlay component handles drag via react-draggable in src/components/menu/CustomVideoPlayer.js
-- [ ] T039 [US4] Verify Overlay component handles minimize/close buttons in src/components/menu/CustomVideoPlayer.js
-- [ ] T040 [US4] Verify Escape key handler from Overlay triggers onClose in src/components/menu/CustomVideoPlayer.js
-- [ ] T041 [US4] Add focus management: return focus to trigger on close in src/components/menu/CustomVideoPlayer.js
+- [x] T038 [US4] Verify Overlay component handles drag via react-draggable in src/components/menu/CustomVideoPlayer.js
+- [x] T039 [US4] Verify Overlay component handles minimize/close buttons in src/components/menu/CustomVideoPlayer.js
+- [x] T040 [US4] Verify Escape key handler from Overlay triggers onClose in src/components/menu/CustomVideoPlayer.js
+- [x] T041 [US4] Add focus management: return focus to trigger on close in src/components/menu/CustomVideoPlayer.js
 
 **Checkpoint**: All 4 user stories complete - full feature functional
 
@@ -151,11 +151,11 @@
 
 **Purpose**: Error handling, edge cases, and final validation
 
-- [ ] T042 [P] Unit test: Empty URL submission prevented in src/__test__/CustomVideoPlayer.unit.test.js
-- [ ] T043 [P] Unit test: Invalid URL error handling in src/__test__/CustomVideoPlayer.unit.test.js
-- [ ] T044 Implement onError handler for ReactPlayer with user-friendly message in src/components/menu/CustomVideoPlayer.js
-- [ ] T045 Add error state display (conditional render when error !== null) in src/components/menu/CustomVideoPlayer.js
-- [ ] T046 [P] E2E test: Cross-browser validation (Chrome, Firefox, Safari) in tests/e2e/custom-video-player.spec.js
+- [x] T042 [P] Unit test: Empty URL submission prevented in src/__test__/CustomVideoPlayer.unit.test.js
+- [x] T043 [P] Unit test: Invalid URL error handling in src/__test__/CustomVideoPlayer.unit.test.js
+- [x] T044 Implement onError handler for ReactPlayer with user-friendly message in src/components/menu/CustomVideoPlayer.js
+- [x] T045 Add error state display (conditional render when error !== null) in src/components/menu/CustomVideoPlayer.js
+- [x] T046 [P] E2E test: Cross-browser validation (Chrome, Firefox, Safari) in tests/e2e/custom-video-player.spec.js
 - [ ] T047 Add component styles in src/styles/ following existing patterns (if needed)
 - [ ] T048 Run quickstart.md validation checklist
 - [ ] T049 Run full test suite and verify 100% coverage for new code
