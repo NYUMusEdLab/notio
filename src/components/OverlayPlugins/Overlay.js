@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import ReactDOM from "react-dom";
 import Draggable from "react-draggable";
@@ -14,8 +14,6 @@ export default class Overlay extends Component {
     };
     this.overlayRef = React.createRef();
   }
-
-  content = (<Fragment>{this.props.children}</Fragment>);
 
   componentDidMount() {
     // Add Escape key listener when overlay mounts
@@ -99,7 +97,7 @@ export default class Overlay extends Component {
             {this.grabBar()}
             {this.navBarButtons()}
           </header>
-          <div className="content">{this.content}</div>
+          <div className="content">{this.props.children}</div>
         </div>
       </Draggable>,
       document.getElementById("plugin_root")

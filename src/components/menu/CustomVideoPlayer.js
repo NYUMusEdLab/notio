@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Form, Button } from "react-bootstrap";
@@ -13,22 +13,81 @@ import Overlay from "../OverlayPlugins/Overlay";
  * - Reset to default functionality (US3)
  * - Draggable overlay display (US4)
  *
- * @param {string} defaultVideoUrl - Required. The initial/default video URL from settings
+ * @param {string} defaultVideoUrl - Required. The original default video URL (used for reset)
+ * @param {string} currentVideoUrl - Optional. The current video URL to display
  * @param {function} onClose - Required. Callback when overlay closes
  * @param {string} initialTab - Optional. Initial tab to display ('Player' or 'Enter_url')
  * @param {function} onUrlChange - Optional. Callback when video URL changes
  */
-const CustomVideoPlayer = (props) => {
-  const { defaultVideoUrl, onClose, initialTab, onUrlChange } = props;
+// Helper to detect ReverbNation URLs
+const isReverbNationUrl = (url) => {
+  return url && url.includes("reverbnation.com");
+};
 
-  // Component state
-  const [currentUrl, setCurrentUrl] = useState(defaultVideoUrl);
+// Helper to convert ReverbNation URL to embed URL
+const getReverbNationEmbedUrl = (url) => {
+  // Extract artist name from URL like https://www.reverbnation.com/artistname
+  const match = url.match(/reverbnation\.com\/([^/?#]+)/);
+  if (match && match[1]) {
+    const artistName = match[1];
+    // Skip if it's a system page (widget_code, etc.)
+    if (artistName === "widget_code" || artistName === "main") {
+      return url;
+    }
+    return `https://www.reverbnation.com/widget_code/html_widget/artist_${artistName}?widget_id=55&pwc[design_id]=5&pwc[layout]=detailed&pwc[size]=fit`;
+  }
+  return url;
+};
+
+// Helper to detect YouTube playlist-only URLs (no video ID)
+const isYouTubePlaylistOnly = (url) => {
+  if (!url) return false;
+  // Playlist-only URL: has "list=" but no "v=" (video ID)
+  const hasPlaylist = url.includes("list=");
+  const hasVideoId = url.includes("v=");
+  const isPlaylistPage = url.includes("youtube.com/playlist");
+  return hasPlaylist && (!hasVideoId || isPlaylistPage);
+};
+
+// Helper to extract YouTube playlist ID
+const getYouTubePlaylistId = (url) => {
+  const match = url.match(/[?&]list=([^&]+)/);
+  return match ? match[1] : null;
+};
+
+// Helper to get YouTube playlist embed URL
+const getYouTubePlaylistEmbedUrl = (url) => {
+  const playlistId = getYouTubePlaylistId(url);
+  if (playlistId) {
+    return `https://www.youtube.com/embed/videoseries?list=${playlistId}`;
+  }
+  return url;
+};
+
+// Get ReactPlayer config based on URL type
+const getPlayerConfig = (url) => {
+  return {
+    youtube: {
+      playerVars: {
+        modestbranding: 1,
+        rel: 0,
+      },
+    },
+  };
+};
+
+const CustomVideoPlayer = (props) => {
+  const { defaultVideoUrl, currentVideoUrl, onClose, initialTab, onUrlChange } = props;
+
+  // Component state - use currentVideoUrl if provided, otherwise defaultVideoUrl
+  const [currentUrl, setCurrentUrl] = useState(currentVideoUrl || defaultVideoUrl);
   const [activeTab, setActiveTab] = useState(initialTab || "Player");
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState(null);
 
-  // Refs
-  const urlInputRef = useRef();
+  // Check if current URL needs special handling (iframe instead of ReactPlayer)
+  const isReverbNation = isReverbNationUrl(currentUrl);
+  const isPlaylistOnly = isYouTubePlaylistOnly(currentUrl);
 
   // US1: onReady handler
   const handlePlayerReady = () => {
@@ -50,7 +109,7 @@ const CustomVideoPlayer = (props) => {
   // US2: Handle URL form submission (T022)
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newUrl = urlInputRef.current?.value;
+    const newUrl = event.target.elements[0].value;
 
     // T042: Prevent empty URL submission
     if (!newUrl || newUrl.trim() === "") {
@@ -80,7 +139,7 @@ const CustomVideoPlayer = (props) => {
   };
 
   return (
-    <Overlay visible={true} close={onClose} key={currentUrl}>
+    <Overlay visible={true} close={onClose}>
       <div
         className="tabs-wrapper"
         data-testid="custom-video-player"
@@ -94,17 +153,44 @@ const CustomVideoPlayer = (props) => {
         >
           {/* US1: Player Tab */}
           <Tab eventKey="Player" title="Player">
-            <ReactPlayer
-              className="react-player"
-              playing={isPlaying}
-              width="100%"
-              height="100%"
-              url={currentUrl}
-              controls={true}
-              onReady={handlePlayerReady}
-              onError={handlePlayerError}
-            />
-            {error && (
+            {isReverbNation ? (
+              <iframe
+                className="react-player"
+                src={getReverbNationEmbedUrl(currentUrl)}
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                scrolling="no"
+                title="ReverbNation Player"
+                allow="autoplay"
+                style={{ minHeight: "300px" }}
+              />
+            ) : isPlaylistOnly ? (
+              <iframe
+                className="react-player"
+                src={getYouTubePlaylistEmbedUrl(currentUrl)}
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                title="YouTube Playlist"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ minHeight: "300px" }}
+              />
+            ) : (
+              <ReactPlayer
+                className="react-player"
+                playing={isPlaying}
+                width="100%"
+                height="100%"
+                url={currentUrl}
+                controls={true}
+                onReady={handlePlayerReady}
+                onError={handlePlayerError}
+                config={getPlayerConfig(currentUrl)}
+              />
+            )}
+            {error && !isReverbNation && !isPlaylistOnly && (
               <div
                 className="video-error"
                 role="alert"
@@ -127,7 +213,6 @@ const CustomVideoPlayer = (props) => {
                     className="video-url__url-field"
                     type="text"
                     placeholder="Enter URL"
-                    ref={urlInputRef}
                     aria-label="Enter video URL"
                   />
 
@@ -169,6 +254,77 @@ const CustomVideoPlayer = (props) => {
               </Form>
             </div>
           </Tab>
+
+          {/* Tutorials Tab - Pre-built tutorial videos */}
+          <Tab eventKey="Tutorials" title="Tutorials">
+            <div className="video__tutorial__list">
+              <div className="video__tutorial__list__item">
+                <div className="video__tutorial__list__item__title">Keyboard on/off</div>
+                <ReactPlayer
+                  className="react-player"
+                  width="100%"
+                  height="100%"
+                  url="https://youtu.be/dkIdl51TBXA"
+                  controls={true}
+                />
+              </div>
+
+              <div className="video__tutorial__list__item">
+                <div className="video__tutorial__list__item__title">Notation</div>
+                <ReactPlayer
+                  className="react-player"
+                  width="100%"
+                  height="100%"
+                  url="https://youtu.be/0z88NcJy8MQ"
+                  controls={true}
+                />
+              </div>
+
+              <div className="video__tutorial__list__item">
+                <div className="video__tutorial__list__item__title">Ambitus</div>
+                <ReactPlayer
+                  className="react-player"
+                  width="100%"
+                  height="100%"
+                  url="https://youtu.be/RuBru-zqINU"
+                  controls={true}
+                />
+              </div>
+
+              <div className="video__tutorial__list__item">
+                <div className="video__tutorial__list__item__title">Select different scales</div>
+                <ReactPlayer
+                  className="react-player"
+                  width="100%"
+                  height="100%"
+                  url="https://youtu.be/Ykgavi2EjZQ"
+                  controls={true}
+                />
+              </div>
+
+              <div className="video__tutorial__list__item">
+                <div className="video__tutorial__list__item__title">Video player</div>
+                <ReactPlayer
+                  className="react-player"
+                  width="100%"
+                  height="100%"
+                  url="https://youtu.be/qoeHCq0N4I0"
+                  controls={true}
+                />
+              </div>
+
+              <div className="video__tutorial__list__item">
+                <div className="video__tutorial__list__item__title">Share your setup</div>
+                <ReactPlayer
+                  className="react-player"
+                  width="100%"
+                  height="100%"
+                  url="https://youtu.be/t-NUdl19sww"
+                  controls={true}
+                />
+              </div>
+            </div>
+          </Tab>
         </Tabs>
       </div>
     </Overlay>
@@ -178,12 +334,14 @@ const CustomVideoPlayer = (props) => {
 // PropTypes definitions
 CustomVideoPlayer.propTypes = {
   defaultVideoUrl: PropTypes.string.isRequired,
+  currentVideoUrl: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  initialTab: PropTypes.oneOf(["Player", "Enter_url"]),
+  initialTab: PropTypes.oneOf(["Player", "Enter_url", "Tutorials"]),
   onUrlChange: PropTypes.func,
 };
 
 CustomVideoPlayer.defaultProps = {
+  currentVideoUrl: null,
   initialTab: "Player",
   onUrlChange: () => {},
 };

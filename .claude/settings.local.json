@@ -39,7 +39,7 @@
       "Bash(if [ -d \"/Users/saxjax/developer/notio-with-ai/notio/specs/001-piano-key-keyboard-navigation/checklists\" ])",
       "Bash(then ls -1 \"/Users/saxjax/developer/notio-with-ai/notio/specs/001-piano-key-keyboard-navigation/checklists\")",
       "Bash(test:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
       "Bash(git checkout:*)"
     ],
     "deny": [],

@@ -1,1 +1,1 @@
-export const notio_tutorial = "https://youtube.com/playlist?list=PL7imp2jxKd0Bcx4cjR3gEMirkAzd84G_C";
+export const notio_tutorial = "https://www.reverbnation.com/saxjaxlunaticorchestra";
