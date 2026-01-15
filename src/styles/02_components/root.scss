@@ -1,9 +1,11 @@
 //TODO:
 .menu-root {
+
   .form-row {
     margin-top: 0.5vw;
     margin-bottom: 0.5vw;
     margin-left: 0.3vw;
+
     // display: flex;
     // flex-wrap: wrap;
     // // margin-right: -5px;
@@ -12,12 +14,11 @@
 
 
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr 1fr;
-    grid-gap: 0;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1vw 0;
     justify-items: center;
-    align-items: baseline;
-    justify-content:flex-start;
-    
+    align-items: stretch;
+
   }
 
   .form-check {
@@ -29,6 +30,8 @@
     justify-items: flex-start;
     flex-direction: row;
     justify-content: flex-start;
+    width: 100%;
+    max-width: 150px;
 
     input[type="radio"] {
       opacity: 0;

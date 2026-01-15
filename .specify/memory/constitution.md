@@ -1,222 +1,159 @@
 <!--
-Sync Impact Report:
-Version: 1.0.0 → 2.0.0
-Rationale: Major update to testing philosophy - Adopting Rainer Hahnekamp's testing principles
+SYNC IMPACT REPORT
+==================
+Version Change: 1.0.0 (initial template) → 2.0.0 (fully populated)
+Bump Type: MAJOR - Initial population of template with concrete governance principles
 
-Modified principles:
-  - Principle I: Test-First Development → Pragmatic Testing Strategy (MAJOR revision)
-    * Shifted from strict TDD to pragmatic integration/E2E focused approach
-    * Prioritize integration tests (60-70%) as primary strategy
-    * E2E tests (20-30%) for critical user journeys
-    * Unit tests (10-20%) reserved ONLY for edge cases and complex algorithms
-    * Maintain 100% code coverage requirement (NON-NEGOTIABLE)
-  - Principle V: Integration Testing → Integration-First Testing (MAJOR enhancement)
-    * Detailed integration test requirements for musical features
-    * Specific E2E test requirements for critical paths
-    * Coverage validation metrics added (60-70-20-30 distribution)
-    * Stronger rationale emphasizing integration tests survive refactoring
+Modified Principles:
+- [PRINCIPLE_1_NAME] → I. Integration-First Testing
+- [PRINCIPLE_2_NAME] → II. Component Reusability
+- [PRINCIPLE_3_NAME] → III. Accessibility & Inclusive Design
+- [PRINCIPLE_4_NAME] → IV. Performance & Responsiveness
+- [PRINCIPLE_5_NAME] → V. Simplicity & Maintainability
 
-Added sections:
-  - Testing philosophy based on Rainer Hahnekamp's research
-  - Testing pyramid inverted to reflect real-world integration focus
-  - Specific coverage expectations and metrics
-  - Test performance requirements (integration < 5s, E2E < 30s per test)
+Added Sections:
+- Technology Stack (Section 2)
+- Development Workflow (Section 3)
+- Governance rules with amendment procedure
 
-Templates updated:
-  ✅ .specify/templates/plan-template.md - Constitution Check expanded with all 7 principles
-  ✅ .specify/templates/spec-template.md - Added Testing Strategy section with integration-first guidance
-  ✅ .specify/templates/tasks-template.md - Updated test task structure to reflect 60-70-20-30 split, made tests MANDATORY
+Removed Sections: None (template placeholders replaced)
 
-Changes summary:
-  - plan-template.md: Added detailed Constitution Check checklist covering all principles
-  - spec-template.md: Added mandatory Testing Strategy section with integration/E2E/unit focus areas
-  - tasks-template.md: Changed tests from OPTIONAL to MANDATORY, restructured test tasks by type (integration/E2E/unit), added coverage verification tasks
+Templates Status:
+- .specify/templates/plan-template.md ✅ Compatible (Constitution Check section exists)
+- .specify/templates/spec-template.md ✅ Compatible (Testing Strategy section aligns)
+- .specify/templates/tasks-template.md ✅ Compatible (User story organization aligns)
 
-Follow-up TODOs: None - all templates aligned with new testing principles
+Follow-up TODOs: None
 -->
 
-# Notio Constitution
+# Notio Project Constitution
 
 ## Core Principles
 
-### I. Pragmatic Testing Strategy (NON-NEGOTIABLE)
+### I. Integration-First Testing
 
-**Testing Philosophy** (Based on Rainer Hahnekamp's Principles): All features MUST achieve 100% code coverage through a pragmatic, integration-first testing approach:
+Testing MUST follow the integration-first pyramid with mandatory coverage ratios:
 
-**Coverage Requirements**:
-- **100% code coverage is MANDATORY** - All code paths must be exercised by tests
-- **Integration Tests (Primary)**: 60-70% of test suite
-  - Test realistic user workflows and feature interactions
-  - Verify components work together correctly
-  - Cover happy paths and common error scenarios
-  - Test data flow through multiple layers
-- **E2E Tests (Secondary)**: 20-30% of test suite
-  - Test critical user journeys from UI to backend
-  - Verify complete feature workflows
-  - Cover cross-browser compatibility for musical features
-  - Test performance under realistic conditions
-- **Unit Tests (Minimal, Strategic)**: 10-20% of test suite
-  - Reserved ONLY for edge cases and complex algorithms
-  - Test complex musical calculations (e.g., interval calculations, tuning algorithms)
-  - Test error handling in isolated utility functions
-  - Test boundary conditions and exceptional inputs
-  - Do NOT unit test simple getters, setters, or obvious code
+- **Integration Tests (60-70%)**: PRIMARY focus. Test component interactions, data flow, and user workflows using React Testing Library with jest-axe for accessibility audits
+- **E2E Tests (20-30%)**: SECONDARY focus. Validate complete user journeys across browsers (Chrome, Firefox, Safari) using Playwright with @axe-core/playwright
+- **Unit Tests (10-20%)**: MINIMAL scope. Reserved for edge cases, complex algorithms, and boundary conditions only
 
-**Testing Process**:
-- Tests SHOULD be written before or alongside implementation (pragmatic TDD)
-- Integration tests MUST cover the primary use cases
-- Unit tests MUST focus on edge cases not easily covered by integration tests
-- All tests MUST pass before code is merged
-- Coverage reports MUST show 100% line and branch coverage
-- Tests MUST be maintainable and fast (integration tests < 5s, E2E tests < 30s per test)
+**Non-Negotiable Rules**:
+- All PRs MUST maintain 100% code coverage threshold
+- Integration tests MUST complete in under 5 seconds per test
+- E2E tests MUST complete in under 30 seconds per test
+- Tests MUST be written BEFORE implementation (red-green-refactor cycle)
+- CI/CD pipeline MUST fail automatically when coverage drops below threshold
 
-**Rationale**: Traditional TDD with heavy unit testing creates brittle test suites that break with refactoring. Rainer Hahnekamp's research shows integration tests provide better ROI - they catch real bugs, survive refactoring, and reflect actual user behavior. For Notio's educational mission, testing how musical features work together (notation + audio + interaction) is more valuable than testing isolated components. Unit tests are still necessary for complex algorithms where edge cases are critical (e.g., music theory calculations), but should be the exception, not the rule.
+**Rationale**: Integration tests provide the highest confidence-to-maintenance ratio for a React application. Unit tests in isolation often miss the integration bugs that affect users.
 
 ### II. Component Reusability
 
-**React Component Architecture**: All UI components MUST be designed for reusability:
-- Components MUST have single, well-defined responsibilities
-- Components MUST be independently testable
-- Props interfaces MUST be clearly documented
-- Shared components MUST be placed in appropriate directories (e.g., `src/components/common/`)
-- Complex components MUST be broken into smaller, composable units
+All React components MUST follow single responsibility and clear interface principles:
 
-**Rationale**: Music education interfaces require consistent UI patterns (notation display, playback controls, theory exercises). Reusable components reduce duplication, improve maintainability, and ensure consistent user experience across pedagogical contexts.
+- Components MUST have a single, well-defined purpose
+- Props MUST be clearly documented (PropTypes or TypeScript interfaces)
+- Shared/reusable components MUST be organized in `src/components/common/`
+- Complex components MUST be composed from smaller, testable units
+- Components MUST be testable in isolation with proper dependency mocking
 
-### III. Educational Pedagogy First
+**Rationale**: Reusable components reduce duplication, improve consistency, and make the codebase easier to test and maintain.
 
-**User-Centered Design for Learning**: All features MUST prioritize educational effectiveness:
-- User stories MUST identify target learner personas (students, teachers, administrators)
-- Interfaces MUST support progressive disclosure of complexity
-- Feedback MUST be immediate and pedagogically meaningful
-- Features MUST align with music theory learning objectives
-- Accessibility MUST be considered for diverse learning needs
+### III. Accessibility & Inclusive Design
 
-**Rationale**: Notio exists to improve music education. Technical decisions must serve pedagogical goals. Features that confuse learners or obscure musical concepts violate the core mission, regardless of technical elegance.
+All interactive UI elements MUST be accessible to users with diverse abilities:
+
+- All interactive elements MUST support full keyboard navigation (Enter + Space activation)
+- All interactive elements MUST include proper ARIA attributes (`role`, `aria-label`, `tabIndex={0}`)
+- Color MUST NOT be the sole channel for conveying information
+- All UI elements MUST meet WCAG 2.1 AA contrast standards (4.5:1 normal text, 3:1 large text)
+- Text alternatives MUST exist for all visual musical content
+- Audio feedback MUST complement (not replace) visual feedback
+- Browser default focus indicators MUST be preserved (no `outline: none`)
+
+**Testing Requirement**: Use jest-axe for integration tests and @axe-core/playwright for E2E accessibility validation.
+
+**Rationale**: Music education should be accessible to all learners regardless of ability. Accessibility is not optional.
 
 ### IV. Performance & Responsiveness
 
-**Interactive Music Standards**: Musical interfaces MUST meet strict performance requirements:
+Musical interactions MUST feel immediate and timing MUST be accurate:
+
 - Audio latency MUST be under 50ms for interactive instruments
-- Notation rendering MUST complete within 200ms for typical exercises
-- UI interactions MUST feel responsive (60fps animations where applicable)
-- Performance MUST be validated on target educational device specs (not just developer machines)
-- Audio playback MUST synchronize accurately with visual notation
+- Notation rendering MUST complete in under 200ms for typical exercises
+- UI animations MUST maintain 60fps where applicable
+- Visual notation MUST synchronize accurately with audio playback
+- Performance MUST be validated on target educational devices (not just developer machines)
 
-**Rationale**: Musical timing is perceptually critical. Latency destroys the connection between student action and musical result, undermining learning. Visual-audio synchronization is essential for ear training and rhythm exercises.
+**Rationale**: Musical education requires precise timing. Latency destroys the learning experience for rhythm and real-time feedback.
 
-### V. Integration-First Testing for Musical Features
+### V. Simplicity & Maintainability
 
-**Integration Testing is Primary**: Musical and educational features MUST prioritize integration tests as the primary testing strategy:
+Code MUST be as simple as possible while meeting requirements:
 
-**Integration Test Requirements**:
-- Notation rendering + playback synchronization MUST be tested together
-- Student interaction flows (complete exercises, receive feedback) MUST have full integration coverage
-- Teacher workflows (create assignments, review student work) MUST be tested end-to-end
-- Cross-component data flow MUST be verified (e.g., user input → state management → rendering)
-- API integration with backend services MUST be tested with realistic data
-- Musical feature combinations MUST be tested (e.g., playback + visual feedback + user controls)
+- Prefer editing existing code over creating new files
+- Avoid over-engineering and premature abstractions
+- Do not add features, refactoring, or "improvements" beyond what was requested
+- Only add error handling for scenarios that can actually occur
+- Three similar lines of code is better than a premature abstraction
+- Delete unused code completely (no backwards-compatibility hacks)
 
-**E2E Test Requirements**:
-- Critical user journeys MUST have E2E test coverage (student completing an exercise, teacher grading)
-- Cross-browser audio/visual consistency MUST be validated via E2E tests
-- Performance characteristics MUST be measured in E2E tests
-- Data persistence for learning progress MUST be verified across sessions
+**Rationale**: Complexity is the enemy of maintainability. Every abstraction has a cost.
 
-**Coverage Validation**:
-- Integration tests MUST account for 60-70% of total test suite
-- E2E tests MUST account for 20-30% of total test suite
-- Combined integration + E2E tests MUST achieve 100% code coverage
-- Unit tests MUST only supplement where edge cases aren't covered by integration tests
+## Technology Stack
 
-**Rationale**: Musical pedagogy depends on integrated systems working seamlessly together. A student's learning experience spans notation rendering, audio synthesis, interaction handling, and progress tracking—testing these in isolation provides false confidence. Integration tests catch real bugs at component boundaries and survive refactoring better than unit tests. E2E tests validate the complete user experience but are slower and more brittle, so should be used strategically for critical paths.
+**Core Framework**: JavaScript ES6+, React 18.2.0
+**Testing**: Jest (^29.0.3), React Testing Library (^13.0.0), Playwright, jest-axe, @axe-core/playwright
+**Backend/Storage**: Firebase (^9.9.4) for user data, localStorage for client-side state
+**Audio**: Tone.js (^14.7.77), @tonejs/piano, soundfont-player
+**Notation**: VexFlow (^4.0.3)
+**Linting**: ESLint with eslint-plugin-jsx-a11y (strict mode)
 
-### VI. Accessibility & Inclusive Design
+## Development Workflow
 
-**Universal Access to Music Education**: Features MUST support diverse learners:
-- Keyboard navigation MUST be fully functional (not mouse-only)
-- Color MUST NOT be the sole channel for musical information
-- Text alternatives MUST exist for visual musical content where feasible
-- Font sizes and contrast MUST meet WCAG 2.1 AA standards minimum
-- Audio feedback MUST complement visual feedback, not replace it
+### Code Review Requirements
 
-**Rationale**: Music education benefits all students. Visual or motor impairments should not prevent learning music theory. Inclusive design broadens access and aligns with Notio's educational mission.
+All PRs and code reviews MUST verify:
+1. Test coverage meets 100% threshold with proper ratio distribution
+2. Accessibility compliance (keyboard navigation, ARIA, contrast)
+3. Performance targets are met (latency, render times)
+4. Component interfaces are clear and documented
+5. No unnecessary complexity introduced
 
-### VII. Simplicity & Maintainability
+### Test Execution
 
-**Avoid Premature Complexity**: Technical solutions MUST start simple:
-- Implement the simplest solution that meets requirements (YAGNI principle)
-- Abstractions MUST be justified by actual reuse or clear future need
-- External dependencies MUST be evaluated for necessity and maintenance burden
-- Complexity MUST be documented and justified in implementation plans
-- Refactoring toward simplicity is encouraged and valued
+```bash
+# Integration and unit tests
+yarn test                    # Watch mode for development
+yarn test --coverage         # Generate coverage report
+yarn test:a11y               # Accessibility-focused tests
 
-**Rationale**: Educational software has long lifecycles and evolving pedagogical requirements. Over-engineered solutions become maintenance burdens. Simple code is easier for educators contributing to the project and for students potentially learning from the codebase.
-
-## Educational Integrity
-
-### Pedagogical Accuracy
-
-- Musical notation MUST be rendered according to standard music engraving practices
-- Music theory exercises MUST reflect accepted pedagogical frameworks
-- Feedback to students MUST be musically and theoretically accurate
-- Audio synthesis MUST produce recognizable, properly-tuned pitches and rhythms
-
-### Data Privacy for Students
-
-- Student data MUST be handled according to educational privacy standards (e.g., FERPA, GDPR where applicable)
-- Personally identifiable information MUST be minimized and protected
-- Teachers MUST have appropriate access controls to student work
-- Student progress data MUST be exportable and portable
-
-## Development Standards
-
-### Code Quality
-
-- All code MUST pass ESLint and Prettier checks before merge
-- Functions MUST have clear, descriptive names reflecting musical or pedagogical intent
-- Complex musical algorithms MUST have explanatory comments or documentation
-- Magic numbers in musical calculations (e.g., frequencies, intervals) MUST be named constants
-
-### Documentation
-
-- Public APIs and components MUST have JSDoc or equivalent documentation
-- Musical domain concepts (e.g., "figured bass," "voice leading") MUST be explained for non-expert contributors
-- User-facing features MUST have corresponding user documentation or in-app help
-- Setup instructions MUST be validated on clean environments
-
-### Version Control
-
-- Commits MUST have descriptive messages explaining "why" not just "what"
-- Feature branches MUST be used for all non-trivial changes
-- Pull requests MUST reference related issues or user stories
-- Breaking changes MUST be clearly marked and migration paths documented
+# E2E tests
+yarn test:e2e                # All browsers
+yarn test:e2e:chromium       # Chrome only
+yarn test:e2e:firefox        # Firefox only
+yarn test:e2e:webkit         # Safari only
+```
 
 ## Governance
 
-### Amendment Process
+This constitution supersedes all other development practices for the Notio project.
 
-1. Proposed amendments MUST be documented in a pull request to this file
-2. Amendments MUST include rationale and examples of impact
-3. Constitution version MUST be incremented according to semantic versioning:
-   - **MAJOR**: Backward incompatible changes (removing/redefining principles)
-   - **MINOR**: New principles or materially expanded guidance
+### Amendment Procedure
+
+1. Proposed amendments MUST be documented with rationale
+2. Amendments MUST include migration plan for existing code
+3. Version MUST be incremented according to semantic versioning:
+   - **MAJOR**: Principle removal, redefinition, or backward-incompatible governance change
+   - **MINOR**: New principle added or materially expanded guidance
    - **PATCH**: Clarifications, wording fixes, non-semantic refinements
-4. Dependent templates (plan, spec, tasks) MUST be reviewed for consistency
-5. Amendments require project maintainer approval
+4. All dependent templates MUST be reviewed for consistency after amendments
 
 ### Compliance Review
 
-- All feature specifications (`spec.md`) MUST address how the feature aligns with constitutional principles
-- Implementation plans (`plan.md`) MUST include a "Constitution Check" section validating compliance
-- Pull request reviews MUST verify constitutional compliance
-- Violations MUST be justified in a "Complexity Tracking" section or rejected
+- All PRs MUST pass automated coverage and linting checks
+- Complexity additions MUST be explicitly justified in PR description
+- Accessibility violations MUST block merge
+- Performance regressions MUST be investigated before merge
 
-### Living Document
-
-- This constitution reflects Notio's current understanding of its mission and best practices
-- Principles may evolve as the project learns from educational deployment and user feedback
-- Simplicity and clarity are valued over exhaustive rules
-- When in doubt, prioritize student learning outcomes
-
-**Version**: 2.0.0 | **Ratified**: 2025-11-12 | **Last Amended**: 2025-11-12
+**Version**: 2.0.0 | **Ratified**: 2025-11-13 | **Last Amended**: 2026-01-14

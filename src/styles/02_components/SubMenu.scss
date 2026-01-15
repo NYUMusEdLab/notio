@@ -236,7 +236,7 @@
       /* grid-template-rows: repeat(8, 1fr); */
       flex-direction: column;
       flex-wrap: nowrap;
-      align-items: flex-start;
+      align-items: stretch;
 
       // flex: 1 1 auto;
     }

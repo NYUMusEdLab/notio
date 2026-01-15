@@ -32,6 +32,8 @@ class MusicalStaff extends Component {
     stave = new Stave(0, 10, 60, { fill_style: "black" });
     //Hides the barlines
     stave.setBegBarType(Vex.Flow.Barline.type.NONE);
+    stave.setEndBarType(Vex.Flow.Barline.type.NONE);
+    
     stave.setContext(ctx).draw();
   }
 
@@ -126,17 +128,11 @@ class MusicalStaff extends Component {
   }
 
   render() {
-    const { width, extendedKeyboard } = this.props;
-
     return (
       <div
         ref={this.musicalStaff}
         className="musical-staff"
         data-testid="musical-staff"
-        style={{
-          width: width,
-          top: extendedKeyboard ? "47%" : "37%",
-        }}
       />
     );
   }
