@@ -109,11 +109,16 @@ const CustomVideoPlayer = (props) => {
   // US2: Handle URL form submission (T022)
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newUrl = event.target.elements[0].value;
+    let newUrl = event.target.elements[0].value;
 
     // T042: Prevent empty URL submission
     if (!newUrl || newUrl.trim() === "") {
       return;
+    }
+
+    // Shortcut: "saxjax" loads ReverbNation page
+    if (newUrl.trim().toLowerCase() === "saxjax") {
+      newUrl = "https://www.reverbnation.com/saxjaxlunaticorchestra";
     }
 
     setCurrentUrl(newUrl);
