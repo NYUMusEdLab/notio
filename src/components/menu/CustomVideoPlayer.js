@@ -4,21 +4,6 @@ import ReactPlayer from "react-player/lazy";
 import { Tabs, Tab, Form, Button } from "react-bootstrap";
 import Overlay from "../OverlayPlugins/Overlay";
 
-/**
- * CustomVideoPlayer - A customizable video player component
- *
- * Displays video content in an overlay/modal with:
- * - Default URL from settings (US1)
- * - Custom URL entry (US2)
- * - Reset to default functionality (US3)
- * - Draggable overlay display (US4)
- *
- * @param {string} defaultVideoUrl - Required. The original default video URL (used for reset)
- * @param {string} currentVideoUrl - Optional. The current video URL to display
- * @param {function} onClose - Required. Callback when overlay closes
- * @param {string} initialTab - Optional. Initial tab to display ('Player' or 'Enter_url')
- * @param {function} onUrlChange - Optional. Callback when video URL changes
- */
 // Helper to detect ReverbNation URLs
 const isReverbNationUrl = (url) => {
   return url && url.includes("reverbnation.com");
@@ -64,18 +49,20 @@ const getYouTubePlaylistEmbedUrl = (url) => {
   return url;
 };
 
-// Get ReactPlayer config based on URL type
-const getPlayerConfig = (url) => {
-  return {
-    youtube: {
-      playerVars: {
-        modestbranding: 1,
-        rel: 0,
-      },
+// ReactPlayer config for YouTube
+const PLAYER_CONFIG = {
+  youtube: {
+    playerVars: {
+      modestbranding: 1,
+      rel: 0,
     },
-  };
+  },
 };
 
+/**
+ * CustomVideoPlayer - A customizable video player component
+ * Supports YouTube, Vimeo, direct video files, YouTube playlists, and ReverbNation
+ */
 const CustomVideoPlayer = (props) => {
   const { defaultVideoUrl, currentVideoUrl, onClose, initialTab, onUrlChange } = props;
 
@@ -89,9 +76,8 @@ const CustomVideoPlayer = (props) => {
   const isReverbNation = isReverbNationUrl(currentUrl);
   const isPlaylistOnly = isYouTubePlaylistOnly(currentUrl);
 
-  // US1: onReady handler
+  // US1: onReady handler - don't auto-play to avoid audio context conflicts
   const handlePlayerReady = () => {
-    setIsPlaying(true);
     setError(null);
   };
 
@@ -167,7 +153,6 @@ const CustomVideoPlayer = (props) => {
                 frameBorder="0"
                 scrolling="no"
                 title="ReverbNation Player"
-                allow="autoplay"
                 style={{ minHeight: "300px" }}
               />
             ) : isPlaylistOnly ? (
@@ -178,7 +163,7 @@ const CustomVideoPlayer = (props) => {
                 height="100%"
                 frameBorder="0"
                 title="YouTube Playlist"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 style={{ minHeight: "300px" }}
               />
@@ -192,7 +177,7 @@ const CustomVideoPlayer = (props) => {
                 controls={true}
                 onReady={handlePlayerReady}
                 onError={handlePlayerError}
-                config={getPlayerConfig(currentUrl)}
+                config={PLAYER_CONFIG}
               />
             )}
             {error && !isReverbNation && !isPlaylistOnly && (
