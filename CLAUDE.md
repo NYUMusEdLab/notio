@@ -13,6 +13,8 @@ Auto-generated from all feature plans. Last updated: 2025-11-13
 - Firebase (^9.9.4) for user data, localStorage for client-side state (scales, progress), existing scale state managemen (001-piano-key-keyboard-navigation)
 - JavaScript ES6+, React 18.2.0 + React 18.2.0 (existing), no new dependencies required (004-fix-relative-notenames)
 - N/A (no data persistence - pure display logic) (004-fix-relative-notenames)
+- JavaScript ES6+, React 18.2.0 + ReactPlayer (react-player ^2.10.1), React Bootstrap (^2.5.0), react-draggable (^4.4.5) (001-custom-video-player)
+- N/A (session state only, no persistence) (001-custom-video-player)
 
 - JavaScript ES6+, React 18.2.0 (001-constitution-compliance)
 
@@ -206,10 +208,9 @@ The relative notation fix MUST NOT affect other notation modes:
 Always test all notation modes when modifying `BuildExtendedScaleToneNames()`.
 
 ## Recent Changes
+- 001-custom-video-player: Added JavaScript ES6+, React 18.2.0 + ReactPlayer (react-player ^2.10.1), React Bootstrap (^2.5.0), react-draggable (^4.4.5)
 - 004-fix-relative-notenames: Added JavaScript ES6+, React 18.2.0 + React 18.2.0 (existing), no new dependencies required
 - 004-text-size-in-video-overlay: Added JavaScript ES6+, React 18.2.0 + React Bootstrap, ReactPlayer, react-draggable, Firebase (^9.9.4), SCSS
-- 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh
-- 001-piano-key-keyboard-navigation: Added JavaScript ES6+, React 18.2.0 + React Testing Library (@testing-library/react ^13.0.0), jest-axe, Playwright (@playwright/test), @axe-core/playwrigh
 
 
 <!-- MANUAL ADDITIONS START -->
