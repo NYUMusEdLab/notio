@@ -10,6 +10,7 @@ import scales from "./data/scalesObj";
 import { MobileView } from 'react-device-detect';
 import Popup from 'reactjs-popup';
 import SoundLibraryNames from "data/TonejsSoundNames";
+import * as Tone from "tone";
 
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
 //This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
@@ -362,6 +363,19 @@ class WholeApp extends Component {
   //     });
   // }
 
+  // Safari audio fix - resume audio context on first user interaction
+  resumeAudioContext = async () => {
+    if (Tone.context.state !== "running") {
+      await Tone.context.resume();
+      await Tone.start();
+      console.log("Audio context resumed for Safari");
+    }
+    // Remove listeners after first interaction
+    document.removeEventListener("click", this.resumeAudioContext);
+    document.removeEventListener("touchstart", this.resumeAudioContext);
+    document.removeEventListener("keydown", this.resumeAudioContext);
+  };
+
   componentDidMount() {
     /**
      * disable right click
@@ -369,6 +383,11 @@ class WholeApp extends Component {
     document.oncontextmenu = function () {
       return false;
     };
+
+    // Safari/iOS audio fix - add listeners to resume audio context on first user interaction
+    document.addEventListener("click", this.resumeAudioContext);
+    document.addEventListener("touchstart", this.resumeAudioContext);
+    document.addEventListener("keydown", this.resumeAudioContext);
 
     // const { match } = this.props;
     // const { params } = match;
@@ -394,6 +413,13 @@ class WholeApp extends Component {
         this.handleChangeTooltip();
     })
     */
+  }
+
+  componentWillUnmount() {
+    // Cleanup Safari audio fix listeners
+    document.removeEventListener("click", this.resumeAudioContext);
+    document.removeEventListener("touchstart", this.resumeAudioContext);
+    document.removeEventListener("keydown", this.resumeAudioContext);
   }
 
   toggleMenu = () => {
@@ -470,17 +496,25 @@ class WholeApp extends Component {
           />
         </div>
         <MobileView>
-          <div className="blackout"></div>
-          <Popup trigger={<div/>} modal open={true} closeOnDocumentClick={false}>
-            <div style={{
-              "backgroundColor": "white",
-              "fontSize": "12px",
-              "width": "100%",
-              "padding": "5px",
-              "textAlign": "center"
-            }}>
-              <h3>Notio does not have mobile support yet.</h3>
-              <h3>Please use a computer</h3>
+          <Popup
+            open={true}
+            closeOnDocumentClick={false}
+            contentStyle={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              border: "2px solid black",
+              padding: "20px",
+              backgroundColor: "white",
+              zIndex: 9999,
+              textAlign: "center",
+            }}
+            trigger={<div />}
+          >
+            <div>
+              <h3 style={{ margin: 0, fontSize: '14px' }}>Notio has limited mobile support.</h3>
+              <p style={{ margin: '5px 0 0 0', fontSize: '12px' }}>Please use a computer for the best experience.</p>
             </div>
           </Popup>
         </MobileView>
