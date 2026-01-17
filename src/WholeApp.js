@@ -496,17 +496,25 @@ class WholeApp extends Component {
           />
         </div>
         <MobileView>
-          <div className="blackout"></div>
-          <Popup trigger={<div/>} modal open={true} closeOnDocumentClick={false}>
-            <div style={{
-              "backgroundColor": "white",
-              "fontSize": "12px",
-              "width": "100%",
-              "padding": "5px",
-              "textAlign": "center"
-            }}>
-              <h3>Notio does not have mobile support yet.</h3>
-              <h3>Please use a computer</h3>
+          <Popup
+            open={true}
+            closeOnDocumentClick={false}
+            contentStyle={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              border: "2px solid black",
+              padding: "20px",
+              backgroundColor: "white",
+              zIndex: 9999,
+              textAlign: "center",
+            }}
+            trigger={<div />}
+          >
+            <div>
+              <h3 style={{ margin: 0, fontSize: '14px' }}>Notio has limited mobile support.</h3>
+              <p style={{ margin: '5px 0 0 0', fontSize: '12px' }}>Please use a computer for the best experience.</p>
             </div>
           </Popup>
         </MobileView>
