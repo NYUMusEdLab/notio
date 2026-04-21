@@ -24,7 +24,7 @@
 
 | Dependency | Version | Purpose |
 | --- | --- | --- |
-| eslint | ^8.57.1 | Standalone lint command for repo validation and DAL-A setup workflows |
+| eslint | ^8.3.0 | Standalone lint command for repo validation and DAL-A setup workflows |
 | jest | ^29.0.3 | Test runner for unit and integration coverage |
 | @testing-library/react | ^13.0.0 | Integration testing of React components |
 | @testing-library/jest-dom | ^5.16.5 | DOM-focused Jest matchers |

@@ -18,7 +18,7 @@ DANGEROUS_PATTERNS = [
     (r"TRUNCATE\s+TABLE", "Database TRUNCATE — removes all rows without logging"),
     (r"DELETE\s+FROM\s+\S+\s*($|;|WHERE\s+1)", "Broad DELETE — may remove more data than intended"),
     (r"rm\s+-rf\s+/", "Recursive delete from root — extremely dangerous"),
-    (r"rm\s+-rf\s+\.\s", "Recursive delete of current directory"),
+    (r"rm\s+-rf\s+\.(?:/|\s|$)", "Recursive delete of current directory"),
     (r"Remove-Item\s+.*-Recurse.*-Force", "PowerShell recursive force delete"),
     (r"docker\s+(system\s+prune|rm\s+-f|rmi\s+-f)", "Docker cleanup — may remove containers or images in use"),
     (r"npm\s+publish", "Publishing package to registry — public and hard to undo"),

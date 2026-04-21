@@ -22,9 +22,8 @@ Fix GitHub issue [#350](https://github.com/NYUMusEdLab/notio/issues/350). The re
 | 2026-04-21 | Revert prior fix commit `fb80ceb` and replan | Discovery showed it fixed the wrong seam (generic `ListCheckbox`) and missed the session-restore path |
 | 2026-04-21 | Scope limited to UI stacking order | Keyboard label ordering out of scope unless proven same root cause |
 | 2026-04-21 | Approach: Option 1 — state-boundary normalization in `WholeApp` | Single source of truth; fixes restored-array bug; small, test-friendly |
-| 2026-04-21 | Visual direction: top of stack = last item in checkbox list | Reverse of list order on screen; list read top-to-bottom stacks bottom-to-top |
+| 2026-04-21 | Visual direction: DOM order = canonical list order (Chord extensions on top, English at bottom) | `.noteWrapper` uses `flex-direction: column`, so DOM top = visual top; consistent with the issue reporter's expectation that numbers appear above note names |
 | 2026-04-21 | Git cleanup via `git revert fb80ceb` (no force-push) | Preserves history; safe on already-pushed branch |
-| 2026-04-21 | Visual direction confirmed: DOM order = canonical list order (Chord extensions first, English last) | Consistent with issue reporter saying "numbers below note names is wrong"; `.noteWrapper` uses `flex-direction: column` so DOM top = visual top |
 
 ## Roadmap
 
