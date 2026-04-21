@@ -10,6 +10,7 @@ import scales from "./data/scalesObj";
 import { MobileView } from 'react-device-detect';
 import Popup from 'reactjs-popup';
 import SoundLibraryNames from "data/TonejsSoundNames";
+import normalizeNotationOrder from "./Model/normalizeNotationOrder";
 
 // TODO:to meet the requirements for router-dom v6 useParam hook can not be used in class Components and props.match.params only works in v5:
 //This is using a wrapper function for wholeApp because wholeApp is a class and not a functional component, REWRITE wholeApp to a const wholeApp =()=>{...}
@@ -164,7 +165,10 @@ class WholeApp extends Component {
 
   handleChangeNotation = (selectedNotation) => {
     // console.log(selectedNotation + " Notation selected");
-    this.setState({ notation: selectedNotation });
+    // Normalize to canonical Notation-menu order so the rendered stack in
+    // Keyboard/ColorKey is stable regardless of the order in which
+    // ListCheckbox emits selected values (issue #350).
+    this.setState({ notation: normalizeNotationOrder(selectedNotation) });
   };
 
   handleChangeCustomScale = (customScaleName, customsteps, customNumbers, firstRun = false) => {
@@ -326,7 +330,7 @@ class WholeApp extends Component {
           scale: result.scale,
           scaleObject: result.scaleObject,
           baseNote: result.baseNote,
-          notation: result.notation,
+          notation: normalizeNotationOrder(result.notation),
           instrumentSound: result.instrumentSound,
           pianoOn: result.pianoOn,
           extendedKeyboard: result.extendedKeyboard,
@@ -394,6 +398,34 @@ class WholeApp extends Component {
         this.handleChangeTooltip();
     })
     */
+  }
+
+  /**
+   * Safety net for issue #350: enforce that `state.notation` is always in
+   * canonical Notation-menu order, no matter which writer produced it.
+   *
+   * Named writers (`handleChangeNotation`, `openSavedSession`) already pass
+   * through `normalizeNotationOrder` eagerly, so the common path renders in
+   * canonical order on the first frame. This hook guards against any other
+   * caller (direct setState, future writers, or legacy session shapes) that
+   * may bypass the named writers, making canonical order a true invariant of
+   * `state.notation` rather than a convention.
+   */
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.notation === this.state.notation) {
+      return;
+    }
+    const current = this.state.notation;
+    if (!Array.isArray(current)) {
+      return;
+    }
+    const normalized = normalizeNotationOrder(current);
+    const isAlreadyCanonical =
+      normalized.length === current.length &&
+      normalized.every((value, index) => value === current[index]);
+    if (!isAlreadyCanonical) {
+      this.setState({ notation: normalized });
+    }
   }
 
   toggleMenu = () => {
