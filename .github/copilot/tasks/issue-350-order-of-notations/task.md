@@ -1,9 +1,9 @@
 ---
 title: "Issue #350 order of notations"
 slug: "issue-350-order-of-notations"
-phase: "active"
+phase: "done"
 goal: "Make notation layers stack bottom-to-top in the UI in the exact order of the Notation checkbox list, and keep that order stable across all interactions, without regressing other notation modes or accessibility."
-current_action: "Slice 4 partial — full test suite ran (301/306 pass; 5 failures pre-existing on master, unrelated to this fix); flow-doc updated. Paused before push for authorization."
+current_action: "Task complete. Fix pushed to branch issue-350-order-of-notations-fix; PR #351 updated with new description."
 ---
 
 Fix GitHub issue [#350](https://github.com/NYUMusEdLab/notio/issues/350). The reporter observed that notation stacking on the staff sometimes becomes reversed/random, with scale-step and chord-extension numbers ending up below note names. The expected behavior is a stable stacking order that matches the order of items in the Notation checkbox list, bottom-to-top.
@@ -31,7 +31,7 @@ Fix GitHub issue [#350](https://github.com/NYUMusEdLab/notio/issues/350). The re
 - [x] Slice 1 — Revert `fb80ceb` and restore a clean baseline on branch `issue-350-order-of-notations-fix`.
 - [x] Slice 2 — Add failing integration tests asserting rendered notation row order after menu writer and session-restore writer, with confirmed visual direction (Chord extensions on top, English at bottom).
 - [x] Slice 3 — Introduce `normalizeNotationOrder` helper and apply it at every writer of `state.notation` in `WholeApp` (`handleChangeNotation`, session-restore, defaults); verify tests pass.
-- [ ] Slice 4 (in-progress) — Regression sweep: run full test suite + targeted a11y checks; update flow docs if behavior changed; push branch and update PR.
+- [x] Slice 4 — Regression sweep: run full test suite + targeted a11y checks; update flow docs if behavior changed; push branch and update PR.
 
 ## Changelog
 
@@ -42,6 +42,7 @@ Fix GitHub issue [#350](https://github.com/NYUMusEdLab/notio/issues/350). The re
 - 2026-04-21: Visual direction disambiguated with product: Chord extensions on top, English at bottom; DOM order = canonical order.
 - 2026-04-21: Slice 2 complete. Added `src/__integration__/notation-order.test.js` with two failing tests covering the menu writer and session-restore writer paths. Both fail on current baseline with the expected "order mirrors scrambled input" diff. Test runtime ~4s (within integration-suite budget).
 - 2026-04-21: Slice 3 complete. Added `src/Model/normalizeNotationOrder.js` helper and wired it into `handleChangeNotation`, `openSavedSession`, and a new `componentDidUpdate` safety net in `WholeApp.js` (Approach 3 — defense in depth). Both Slice 2 tests now pass; adjacent integration suites (34 tests) still pass.
+- 2026-04-21: Slice 4 complete. Full test suite ran: 301/306 pass. The 5 failures (`notation-regression.test.js`, `relative-notenames.test.js`, `CustomVideoPlayer.integration.test.js`) were verified to fail identically on `origin/master` — pre-existing, unrelated to this fix. Updated `.github/skills/flows/settings-propagation.md` with the new canonical-order invariant. Pushed 7 commits to `origin/issue-350-order-of-notations-fix` (fast-forward, no force-push). Updated PR #351 body to reflect the new approach.
 
 ## Improvements Queued
 
